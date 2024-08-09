@@ -1,8 +1,11 @@
 "use client"
 
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
+import {
+    ArrowLeftIcon,
+    ChevronDownIcon,
+    ChevronUpIcon,
+} from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -30,9 +33,15 @@ function AboutPayment() {
 
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Tentang Pembayaran</div>
+            </div>
             <div className="min-h-screen">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
                         Tentang Pembayaran
                     </div>
@@ -43,8 +52,8 @@ function AboutPayment() {
                         / Tentang Pembayaran
                     </div>
                 </div>
-                <div className="mt-6 border-b border-[#F0F3F7]"> </div>
-                <div className="mx-auto flex max-w-7xl px-[176px]">
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto flex max-w-7xl lg:px-[176px]">
                     <div className="p-7">
                         <div className="mb-4 rounded-xl bg-white shadow">
                             <div
@@ -183,7 +192,7 @@ function AboutPayment() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

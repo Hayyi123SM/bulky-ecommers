@@ -1,9 +1,9 @@
 "use client"
 
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import Link from "next/link"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import GoogleMapReact from "google-map-react"
+import Link from "next/link"
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>
 
@@ -18,9 +18,15 @@ function ContactUs() {
 
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Kontak Kami</div>
+            </div>
             <div className="min-h-screen">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
                         Kontak Kami
                     </div>
@@ -31,12 +37,12 @@ function ContactUs() {
                         / Kontak Kami
                     </div>
                 </div>
-                <div className="mt-6 border-b border-[#F0F3F7]"> </div>
-                <div className="mx-auto max-w-7xl p-7">
-                    <div className="flex">
-                        <div className="w-2/5">
-                            <div className="rounded-xl bg-white px-12 py-12 shadow">
-                                <div className="text-2xl font-bold">
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto max-w-7xl lg:p-7">
+                    <div className="flex flex-col lg:flex-row">
+                        <div className="lg:w-2/5">
+                            <div className="bg-white p-4 lg:rounded-xl lg:p-12 lg:shadow">
+                                <div className="text-sm font-bold lg:text-2xl">
                                     Pusat Bantuan
                                 </div>
                                 <div className="mt-4 text-sm font-normal leading-6">
@@ -44,7 +50,7 @@ function ContactUs() {
                                     pertanyaan seputar akun anda? Hubungi kami
                                     melalui kontak berikut
                                 </div>
-                                <div className="mt-10 text-sm font-extrabold text-[#6D7588]">
+                                <div className="mt-10 text-xs font-extrabold text-[#6D7588] lg:text-sm">
                                     Jakarta
                                 </div>
                                 <div className="mt-4 text-sm font-normal leading-6 opacity-80">
@@ -60,7 +66,7 @@ function ContactUs() {
                             </div>
                         </div>
                         <div
-                            className="ml-8 w-3/5 overflow-hidden rounded-xl"
+                            className="overflow-hidden lg:ml-8 lg:w-3/5 lg:rounded-xl"
                             style={{ height: "500px" }}>
                             <GoogleMapReact
                                 bootstrapURLKeys={{ key: "" }}
@@ -76,7 +82,7 @@ function ContactUs() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

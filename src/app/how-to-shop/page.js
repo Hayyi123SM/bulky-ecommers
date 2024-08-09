@@ -1,14 +1,20 @@
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 
 function HowToShop() {
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Cara Membeli di Bulky</div>
+            </div>
             <div className="min-h-screen">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
                         Cara Membeli di Bulky
                     </div>
@@ -19,12 +25,12 @@ function HowToShop() {
                         / Cara Membeli di Bulky
                     </div>
                 </div>
-                <div className="mt-6 border-b border-[#F0F3F7]"> </div>
-                <div className="mx-auto flex max-w-7xl px-[176px]">
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto flex max-w-7xl lg:px-[176px]">
                     <div className="p-7">
                         <div className="rounded-xl bg-white px-12 shadow">
-                            <div className="flex border-b border-[#F0F3F7] py-12">
-                                <div className="w-1/5">
+                            <div className="border-b border-[#F0F3F7] py-12 lg:flex">
+                                <div className="lg:w-1/5">
                                     <Image
                                         src="/image 43.png"
                                         width={120}
@@ -32,7 +38,7 @@ function HowToShop() {
                                         alt="Logo"
                                     />
                                 </div>
-                                <div className="w-4/5">
+                                <div className="lg:w-4/5">
                                     <div className="text-2xl font-bold">
                                         Buat Akun
                                     </div>
@@ -52,8 +58,8 @@ function HowToShop() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex py-12">
-                                <div className="w-1/5">
+                            <div className="py-12 lg:flex">
+                                <div className="lg:w-1/5">
                                     <Image
                                         src="/image 43-1.png"
                                         width={120}
@@ -61,7 +67,7 @@ function HowToShop() {
                                         alt="Logo"
                                     />
                                 </div>
-                                <div className="w-4/5">
+                                <div className="lg:w-4/5">
                                     <div className="text-2xl font-bold">
                                         Masuk ke halaman produk
                                     </div>
@@ -85,7 +91,7 @@ function HowToShop() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

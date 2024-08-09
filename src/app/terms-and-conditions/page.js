@@ -1,13 +1,19 @@
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 
 function TermsAndConditions() {
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Syarat & Ketentuan</div>
+            </div>
             <div className="min-h-screen">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
                         Syarat & Ketentuan
                     </div>
@@ -18,9 +24,9 @@ function TermsAndConditions() {
                         / Syarat & Ketentuan
                     </div>
                 </div>
-                <div className="mt-6 border-b border-[#F0F3F7]"> </div>
-                <div className="mx-auto flex max-w-7xl px-[176px]">
-                    <div className="p-7">
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto flex max-w-7xl lg:px-[176px]">
+                    <div className="lg:p-7">
                         <div className="items-center rounded-xl bg-white px-12 py-10 shadow">
                             <div className="text-2xl font-bold">
                                 Ketentuan Umum
@@ -293,7 +299,7 @@ function TermsAndConditions() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

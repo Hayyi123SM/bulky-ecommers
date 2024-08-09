@@ -1,9 +1,8 @@
 "use client"
 
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { ChevronUpIcon } from "@heroicons/react/24/outline"
-import { ChevronDownIcon } from "@heroicons/react/24/solid"
+import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -24,9 +23,17 @@ function Faq() {
 
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">
+                    Frequently Asked Questions
+                </div>
+            </div>
             <div className="min-h-screen">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
                         Frequently Asked Questions
                     </div>
@@ -37,8 +44,8 @@ function Faq() {
                         / Frequently Asked Questions
                     </div>
                 </div>
-                <div className="mt-6 border-b border-[#F0F3F7]"> </div>
-                <div className="mx-auto flex max-w-7xl px-[176px]">
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto flex max-w-7xl lg:px-[176px]">
                     <div className="p-7">
                         <div className="mb-4 rounded-xl bg-white shadow">
                             <div
@@ -192,7 +199,7 @@ function Faq() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }
