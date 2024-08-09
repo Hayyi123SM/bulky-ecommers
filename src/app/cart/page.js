@@ -1,18 +1,26 @@
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 
 function Cart() {
     return (
         <div>
-            <Navbar />
-            <div className="min-h-screen bg-[#F5F5F5] p-10">
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Keranjang</div>
+            </div>
+            <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
-                    <div className="text-2xl font-extrabold">Keranjang</div>
-                    <div className="grid grid-cols-3 gap-8 py-10">
-                        <div className="col-span-2 h-10 w-full">
-                            <div className="mb-4 flex rounded-t-lg bg-white px-5 py-4">
+                    <div className="hidden text-2xl font-extrabold lg:block">
+                        Keranjang
+                    </div>
+                    <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 lg:py-10">
+                        <div className="w-full lg:col-span-2">
+                            <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
                                 <div className="flex items-center">
                                     <input
                                         id="comments"
@@ -28,13 +36,13 @@ function Cart() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="mb-4 flex items-center bg-white px-5 py-4">
+                            <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4">
                                 <div className="flex w-1/5 items-center">
-                                    <div className="mr-5">
+                                    <div className="mr-3">
                                         <input
-                                            id="comments"
-                                            aria-describedby="comments-description"
-                                            name="comments"
+                                            id="comments1"
+                                            aria-describedby="comments1-description"
+                                            name="comments1"
                                             type="checkbox"
                                             className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                         />
@@ -44,6 +52,7 @@ function Cart() {
                                         width={100}
                                         height={100}
                                         alt="cart-product"
+                                        className="w-2/3"
                                     />
                                 </div>
                                 <div className="ml-5 w-3/5 text-sm leading-6">
@@ -57,13 +66,13 @@ function Cart() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="mb-4 flex items-center bg-white px-5 py-4">
+                            <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4">
                                 <div className="flex w-1/5 items-center">
-                                    <div className="mr-5">
+                                    <div className="mr-3">
                                         <input
-                                            id="comments"
-                                            aria-describedby="comments-description"
-                                            name="comments"
+                                            id="comments2"
+                                            aria-describedby="comments2-description"
+                                            name="comments2"
                                             type="checkbox"
                                             className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                         />
@@ -73,21 +82,23 @@ function Cart() {
                                         width={100}
                                         height={100}
                                         alt="cart-product"
+                                        className="w-2/3"
                                     />
                                 </div>
                                 <div className="ml-5 w-3/5 text-sm leading-6">
                                     <label className="text-md">
-                                        Toyo Proxes R888R Tires 104150
+                                        Royal Purple Extended Life Oil Filters
+                                        10-2867
                                     </label>
                                 </div>
                                 <div className="ml-5 w-1/5 text-right text-sm leading-6">
                                     <label className="text-md font-bold">
-                                        Rp8.126.777
+                                        Rp210.339
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div className="h-10 w-full">
+                        <div className="hidden w-full lg:block">
                             <div className="mb-0.5 rounded-t-lg bg-white px-5 py-4">
                                 <div className="text-md font-bold">
                                     Ringkasan Belanja
@@ -96,7 +107,7 @@ function Cart() {
                                     <div className="text-sm leading-6">
                                         <label className="text-sm">Total</label>
                                     </div>
-                                    <div className="ml-5 w-1/5 text-right text-sm leading-6">
+                                    <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-md font-bold">
                                             Rp8.126.777
                                         </label>
@@ -104,17 +115,34 @@ function Cart() {
                                 </div>
                             </div>
                             <div className="rounded-b-lg bg-white px-5 py-5">
-                                <Link href="/">
+                                <Link href="/payment-method">
                                     <div className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                         Beli
                                     </div>
                                 </Link>
                             </div>
                         </div>
+                        <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
+                            <div className="flex items-center justify-between">
+                                <div className="w-1/2 text-sm leading-6">
+                                    <label className="text-sm">Total</label>
+                                    <div className="text-base font-bold">
+                                        Rp197.061
+                                    </div>
+                                </div>
+                                <div className="w-1/2">
+                                    <Link href="/payment-method">
+                                        <div className="cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]">
+                                            Beli
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

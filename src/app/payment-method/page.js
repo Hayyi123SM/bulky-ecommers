@@ -1,15 +1,16 @@
 "use client"
 
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { ShieldCheckIcon } from "@heroicons/react/24/outline"
 import {
+    ArrowLeftIcon,
     CheckIcon,
     ChevronDownIcon,
     MinusCircleIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import Link from "next/link"
 import { useState } from "react"
 
 function PaymentMethod() {
@@ -34,21 +35,27 @@ function PaymentMethod() {
 
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Pembayaran</div>
+            </div>
             <div className="min-h-screen bg-[#F5F5F5] pb-10">
                 <div className="mx-auto max-w-7xl">
-                    <div className="flex justify-center py-5">
-                        <div className="w-full max-w-xl text-2xl font-extrabold">
+                    <div className="hidden justify-center py-5 lg:flex">
+                        <div className="w-full text-2xl font-extrabold lg:max-w-xl">
                             Pembayaran
                         </div>
                     </div>
-                    <div className="flex flex-col items-center justify-center py-2">
-                        <div className="h-fit w-full max-w-xl rounded-xl bg-white p-8">
+                    <div className="flex flex-col items-center justify-center lg:py-2">
+                        <div className="h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
                             <div className="py-2">
                                 <div className="py-2 text-sm font-bold text-[#6D7588]">
                                     PILIH CARA BAYAR
                                 </div>
-                                <div className="relative w-full max-w-xl">
+                                <div className="relative w-full lg:max-w-xl">
                                     <div
                                         className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                         onClick={() => setIsOpen(!isOpen)}>
@@ -112,13 +119,13 @@ function PaymentMethod() {
                             </div>
                         </div>
                         <div
-                            className={`h-fit w-full max-w-xl transition-all duration-500 ease-in-out ${isSplitPayment ? "mt-5 max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
-                            <div className="h-fit w-full max-w-xl rounded-t-xl bg-white p-8">
+                            className={`h-fit w-full transition-all duration-500 ease-in-out lg:max-w-xl ${isSplitPayment ? "mt-5 max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                            <div className="h-fit w-full rounded-t-xl bg-white p-8 lg:max-w-xl">
                                 <div className="py-2">
                                     <div className="py-2 text-sm font-bold text-[#6D7588]">
                                         ADD YOUR FRIEND
                                     </div>
-                                    <div className="relative w-full max-w-xl">
+                                    <div className="relative w-full lg:max-w-xl">
                                         <div className="mb-1 flex items-center justify-between">
                                             <div className="flex items-center py-1">
                                                 <div className="flex items-center">
@@ -164,7 +171,7 @@ function PaymentMethod() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-0.5 flex h-fit w-full max-w-xl items-center justify-center rounded-b-xl bg-white px-4 py-2">
+                            <div className="mt-0.5 flex h-fit w-full items-center justify-center rounded-b-xl bg-white px-4 py-2 lg:max-w-xl">
                                 <div
                                     className="flex w-fit cursor-pointer items-center justify-center p-2 hover:rounded-lg hover:bg-[#F5F5F5]"
                                     onClick={() =>
@@ -178,9 +185,9 @@ function PaymentMethod() {
                             </div>
                         </div>
                         <div
-                            className={`h-fit w-full max-w-xl rounded-xl bg-white transition-all duration-500 ease-in-out ${isOpenAddFriend ? "mt-5 max-h-screen p-8 opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                            className={`h-fit w-full rounded-xl bg-white transition-all duration-500 ease-in-out lg:max-w-xl ${isOpenAddFriend ? "mt-5 max-h-screen p-8 opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                             <div className="py-2">
-                                <div className="relative w-full max-w-xl">
+                                <div className="relative w-full lg:max-w-xl">
                                     <div
                                         className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                         onClick={() =>
@@ -329,7 +336,7 @@ function PaymentMethod() {
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-5 h-fit w-full max-w-xl rounded-t-xl bg-white p-8">
+                        <div className="mb-10 mt-5 h-fit w-full rounded-t-xl bg-white p-8 lg:mb-0 lg:max-w-xl">
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">
                                     Ringkasan Pembayaran
@@ -373,16 +380,26 @@ function PaymentMethod() {
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-0.5 h-fit w-full max-w-xl rounded-b-xl bg-white p-8">
-                            <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                Bayar
-                            </div>
+                        <div className="mt-0.5 hidden h-fit w-full rounded-b-xl bg-white p-8 lg:block lg:max-w-xl">
+                            <Link href="/payment">
+                                <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
+                                    Bayar
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
+                            <Link href="/payment">
+                                <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
+                                    Bayar
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

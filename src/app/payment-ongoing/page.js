@@ -1,6 +1,5 @@
 "use client"
 
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
@@ -16,10 +15,12 @@ function PaymentOnGoing() {
 
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
             <div className="mx-auto min-h-screen max-w-7xl bg-white pb-10">
                 <div className="flex justify-center py-5">
-                    <div className="mt-20 text-center">
+                    <div className="mt-5 text-center lg:mt-20">
                         <div className="pb-1 text-lg font-bold">
                             Selesaikan pembayaran dalam
                         </div>
@@ -39,7 +40,7 @@ function PaymentOnGoing() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col items-center justify-center py-2">
+                <div className="flex flex-col items-center justify-center px-4 py-2">
                     <div className="h-fit w-full max-w-xl rounded-t-2xl border border-[#BFC9D9] bg-white px-8 py-3">
                         <div className="flex items-center justify-between">
                             <div className="text-sm leading-6">
@@ -119,7 +120,7 @@ function PaymentOnGoing() {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-center py-5">
+                <div className="flex justify-center px-4 py-5">
                     <div className="w-full max-w-xl">
                         <div className="text-sm font-bold">Cara Pembayaran</div>
                         <div className="pb-4">
@@ -207,7 +208,7 @@ function PaymentOnGoing() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

@@ -1,6 +1,5 @@
 "use client"
 
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -9,7 +8,9 @@ import Link from "next/link"
 function PaymentSuccess() {
     return (
         <div>
-            <Navbar />
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
             <div className="mx-auto min-h-screen max-w-7xl bg-white pb-10">
                 <div className="flex justify-center py-5">
                     <div className="mt-20 flex items-center justify-center">
@@ -24,7 +25,7 @@ function PaymentSuccess() {
                         </Link>
                     </div>
                 </div>
-                <div className="flex flex-col items-center justify-center py-2">
+                <div className="flex flex-col items-center justify-center px-4 py-2">
                     <div className="mt-5 h-fit w-full max-w-xl rounded-t-xl border border-[#BFC9D9] bg-white px-8 py-4">
                         <div className="py-2">
                             <div className="py-2 text-lg font-bold">
@@ -116,7 +117,7 @@ function PaymentSuccess() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }
