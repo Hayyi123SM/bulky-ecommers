@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
@@ -8,22 +8,28 @@ import Link from "next/link"
 function OrderDetail() {
     return (
         <div>
-            <Navbar />
-            <div className="mx-auto flex min-h-screen max-w-7xl">
-                <div className="w-1/5 p-7">
+            <div className="hidden lg:block">
+                <Navbar />
+            </div>
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Detail Pesanan</div>
+            </div>
+            <div className="mx-auto min-h-screen max-w-7xl lg:flex">
+                <div className="hidden w-1/5 p-7 lg:block">
                     <SidebarProfile />
                 </div>
-                <div className="w-4/5 p-7">
-                    <div className="flex items-center">
-                        <Link href="/order-split">
+                <div className="w-5/5 py-4 lg:w-4/5 lg:p-7 lg:px-4">
+                    <div className="hidden items-center lg:flex">
+                        <Link href="/order">
                             <ArrowLeftIcon className="mr-3 h-7 w-7 cursor-pointer" />
                         </Link>
                         <div className="pb-1 text-2xl font-bold">
-                            Order Pesanan
+                            Detail Pesanan
                         </div>
                     </div>
-                    <div className="my-7 flex gap-8">
-                        <div className="w-1/2 rounded-xl bg-white px-5 py-4 shadow">
+                    <div className="flex flex-col lg:my-7 lg:flex-row lg:gap-8">
+                        <div className="rounded-xl bg-white px-5 lg:w-1/2 lg:py-4 lg:shadow">
                             <div className="flex items-center border-b">
                                 <div>
                                     <Image
@@ -43,7 +49,7 @@ function OrderDetail() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="border-b py-2">
+                            <div className="border-b py-2 text-sm">
                                 <div className="flex items-center p-1">
                                     <div className="w-1/2 text-[#6D7588]">
                                         Order ID
@@ -77,25 +83,41 @@ function OrderDetail() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="my-2 border-b p-1">
-                                <div className="w-1/2 text-[#6D7588]">
+                            <div className="my-2 mb-4 flex items-center justify-between border-b p-1 text-sm">
+                                <div>
+                                    <div className="text-[#6D7588] lg:w-1/2">
+                                        Split Link
+                                    </div>
+                                    <div className="text-[#007185] lg:w-1/2">
+                                        https://g.co/gemini/share/44ff9809b4ed
+                                    </div>
+                                </div>
+                                <div className="ml-5 flex items-center text-right text-sm">
+                                    <div className="mr-1 text-sm font-bold text-[#007185]">
+                                        Salin
+                                    </div>
+                                    <ClipboardDocumentIcon className="h-5 w-5 font-bold text-[#007185]" />
+                                </div>
+                            </div>
+                            <div className="my-2 border-b p-1 text-sm">
+                                <div className="text-[#6D7588] lg:w-1/2">
                                     Penjual
                                 </div>
-                                <div className="w-1/2">
+                                <div className="lg:w-1/2">
                                     AUTO INDO OFFICIAL STORE
                                 </div>
                             </div>
-                            <div className="my-2 mb-4 border-b p-1">
+                            <div className="my-2 mb-4 border-b p-1 text-sm">
                                 <div className="w-1/2 text-[#6D7588]">
                                     Nomor Resi
                                 </div>
                                 <div className="w-1/2">000123456789</div>
                             </div>
                             <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                Hubungi Penjual
+                                Bayar
                             </div>
                         </div>
-                        <div className="h-full w-1/2">
+                        <div className="h-full lg:w-1/2">
                             <div className="rounded-xl bg-white px-5 py-4 shadow">
                                 <div className="flex items-center justify-between">
                                     <div className="text-sm">Total Tagihan</div>
@@ -118,9 +140,16 @@ function OrderDetail() {
                                                 alt="single"
                                                 className="mr-4"
                                             />
-                                            Brooklyn Simmons
+                                            <div>
+                                                <div className="text-sm font-medium">
+                                                    Darrell Steward
+                                                </div>
+                                                <div className="w-fit rounded-lg bg-[#0071850D] px-4 py-1 text-[9px] font-semibold text-[#007185] lg:hidden">
+                                                    Paid
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="rounded-lg bg-[#0071850D] px-4 py-1 text-[9px] font-semibold text-[#007185]">
+                                        <div className="ml-14 hidden w-fit rounded-lg bg-[#0071850D] px-4 py-1 text-[9px] font-semibold text-[#007185] lg:block">
                                             Paid
                                         </div>
                                         <div className="text-xs font-bold">
@@ -138,9 +167,16 @@ function OrderDetail() {
                                                 alt="single"
                                                 className="mr-4"
                                             />
-                                            Brooklyn Simmons
+                                            <div>
+                                                <div className="text-sm font-medium">
+                                                    Darrell Steward
+                                                </div>
+                                                <div className="w-fit rounded-lg bg-[#FFCF020D] px-4 py-1 text-[9px] font-semibold text-[#FFCF02] lg:hidden">
+                                                    Waiting for payment
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="rounded-lg bg-[#FFCF020D] px-4 py-1 text-[9px] font-semibold text-[#FFCF02]">
+                                        <div className="ml-14 hidden w-fit rounded-lg bg-[#FFCF020D] px-4 py-1 text-[9px] font-semibold text-[#FFCF02] lg:block">
                                             Waiting for payment
                                         </div>
                                         <div className="text-xs font-bold">
@@ -158,13 +194,20 @@ function OrderDetail() {
                                                 alt="single"
                                                 className="mr-4"
                                             />
-                                            Brooklyn Simmons
+                                            <div>
+                                                <div className="text-sm font-medium">
+                                                    Darrell Steward
+                                                </div>
+                                                <div className="w-fit rounded-lg bg-[#C400000D] px-4 py-1 text-[9px] font-semibold text-[#C40000] lg:hidden">
+                                                    Unpaid
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="rounded-lg bg-[#C400000D] px-4 py-1 text-[9px] font-semibold text-[#C40000]">
+                                        <div className="ml-14 hidden w-fit rounded-lg bg-[#C400000D] px-4 py-1 text-[9px] font-semibold text-[#C40000] lg:block">
                                             Unpaid
                                         </div>
                                         <div className="text-xs font-bold">
-                                            Rp2.126.260
+                                            -
                                         </div>
                                     </div>
                                 </div>
@@ -183,7 +226,7 @@ function OrderDetail() {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

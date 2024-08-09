@@ -49,6 +49,7 @@ function Address() {
                             </Link>
                         </div>
                     </div>
+                    {/* Start : View Website */}
                     <div className="my-7 hidden items-center rounded-xl border border-[#007185] bg-white px-5 py-4 shadow lg:flex">
                         <div className="w-2/5 border-r">
                             <div className="flex items-center">
@@ -117,7 +118,9 @@ function Address() {
                             </div>
                         </div>
                     </div>
+                    {/* End : View Website */}
 
+                    {/* Start : View Mobile */}
                     <div className="my-7 rounded-xl border border-[#007185] bg-white px-5 py-4 shadow lg:hidden">
                         <div className="flex items-center border-b pb-4">
                             <div className="text-sm leading-6">
@@ -146,7 +149,6 @@ function Address() {
                             </div>
                         </div>
                     </div>
-
                     <div className="my-7 rounded-xl border bg-white px-5 py-4 shadow lg:hidden">
                         <div className="flex items-center border-b pb-4">
                             <div className="text-sm leading-6">
@@ -175,6 +177,7 @@ function Address() {
                             </div>
                         </div>
                     </div>
+                    {/* End : View Mobile */}
                     <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
                         <div className="mt-10">
                             <Link href="/profile">
