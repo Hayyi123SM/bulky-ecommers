@@ -2,6 +2,7 @@
 
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import {
     AdjustmentsHorizontalIcon,
@@ -15,6 +16,7 @@ import { useEffect, useState } from "react"
 
 function Product() {
     const [showPopup, setShowPopup] = useState(false)
+    const [showPopupMenu, setShowPopupMenu] = useState(false)
 
     const [showFilterGroup, setShowFilterGroup] = useState(true)
 
@@ -25,13 +27,22 @@ function Product() {
         setShowPopup(!showPopup)
     }
 
+    const togglePopupMenu = () => {
+        setShowPopupMenu(!showPopupMenu)
+    }
+
     useEffect(() => {
         if (showPopup) {
             document.body.classList.add("modal-open")
         } else {
             document.body.classList.remove("modal-open")
         }
-    }, [showPopup])
+        if (showPopupMenu) {
+            document.body.classList.add("modal-open")
+        } else {
+            document.body.classList.remove("modal-open")
+        }
+    }, [showPopup, showPopupMenu])
 
     return (
         <div>
@@ -47,7 +58,10 @@ function Product() {
                     />
                 </div>
                 <ArchiveBoxIcon className="h-6 w-6" />
-                <Bars3BottomRightIcon className="h-6 w-6" />
+                <Bars3BottomRightIcon
+                    className="h-6 w-6"
+                    onClick={togglePopupMenu}
+                />
             </div>
             <div className="flex items-center p-4 lg:hidden">
                 <div className="flex items-center overflow-x-auto">
@@ -75,7 +89,7 @@ function Product() {
             </div>
             {showPopup && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-                    <div className="w-full max-w-md rounded-lg bg-white p-6 pt-20 shadow-lg">
+                    <div className="w-full max-w-md rounded-lg bg-white p-6 pt-5 shadow-lg">
                         <div className="my-4 flex items-center justify-between">
                             <h2 className="text-base font-semibold">Filter</h2>
                             <button
@@ -178,6 +192,7 @@ function Product() {
                     </div>
                 </div>
             )}
+            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} />}
             <div className="mx-auto flex min-h-screen max-w-7xl">
                 <div className="hidden w-1/5 lg:block">
                     <div className="mb-2 p-4 font-bold">Filter</div>
