@@ -54,24 +54,20 @@ function OrderDetail() {
                                     <div className="w-1/2 text-[#6D7588]">
                                         Order ID
                                     </div>
-                                    <div className="w-1/2">
-                                        : AB123456890GDED
-                                    </div>
+                                    <div className="w-1/2">AB123456890GDED</div>
                                 </div>
                                 <div className="flex items-center p-1">
                                     <div className="w-1/2 text-[#6D7588]">
                                         Nomor Transaksi
                                     </div>
-                                    <div className="w-1/2">
-                                        : AB123456GGWPFDD
-                                    </div>
+                                    <div className="w-1/2">AB123456GGWPFDD</div>
                                 </div>
                                 <div className="flex items-center p-1">
                                     <div className="w-1/2 text-[#6D7588]">
                                         Metode Pembayaran
                                     </div>
                                     <div className="w-1/2">
-                                        : BCA Virtual Account
+                                        BCA Virtual Account
                                     </div>
                                 </div>
                                 <div className="flex items-center p-1">
@@ -79,7 +75,7 @@ function OrderDetail() {
                                         Waktu Transaksi
                                     </div>
                                     <div className="w-1/2">
-                                        : 11 Juni 2024 06.09
+                                        11 Juni 2024 06.09
                                     </div>
                                 </div>
                             </div>
@@ -99,14 +95,6 @@ function OrderDetail() {
                                     <ClipboardDocumentIcon className="h-5 w-5 font-bold text-[#007185]" />
                                 </div>
                             </div>
-                            <div className="my-2 border-b p-1 text-sm">
-                                <div className="text-[#6D7588] lg:w-1/2">
-                                    Penjual
-                                </div>
-                                <div className="lg:w-1/2">
-                                    AUTO INDO OFFICIAL STORE
-                                </div>
-                            </div>
                             <div className="my-2 mb-4 border-b p-1 text-sm">
                                 <div className="w-1/2 text-[#6D7588]">
                                     Nomor Resi
@@ -118,11 +106,37 @@ function OrderDetail() {
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">
-                            <div className="rounded-xl bg-white px-5 py-4 shadow">
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm">Total Tagihan</div>
-                                    <div className="font-extrabold">
-                                        Rp8.126.777
+                            <div className="h-full rounded-xl bg-white px-5 py-4 lg:shadow">
+                                <div className="flex items-center">
+                                    <div className="mb-5 text-sm leading-6">
+                                        <div className="text-base font-bold">
+                                            Ringkasan Pembayaran
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="text-sm leading-6">
+                                        <label className="text-sm font-light">
+                                            Total Harga
+                                        </label>
+                                    </div>
+                                    <div className="ml-5 text-right text-sm leading-6">
+                                        <label className="text-md font-light">
+                                            Rp428.260
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="my-3 border-b p-1"> </div>
+                                <div className="flex justify-between">
+                                    <div className="text-sm leading-6">
+                                        <label className="text-sm font-semibold">
+                                            Total Tagihan
+                                        </label>
+                                    </div>
+                                    <div className="ml-5 text-right text-sm leading-6">
+                                        <label className="text-lg font-bold">
+                                            Rp429.260
+                                        </label>
                                     </div>
                                 </div>
                             </div>

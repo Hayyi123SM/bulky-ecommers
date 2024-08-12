@@ -113,7 +113,7 @@ function Order() {
                                     <div className="text-md pb-1">
                                         Status Pesanan:
                                     </div>
-                                    <div className="text-md font-bold">
+                                    <div className="w-fit rounded-lg bg-[#F4FDFF] px-2 py-1 text-xs font-semibold text-[#007185]">
                                         Dikirim
                                     </div>
                                 </div>

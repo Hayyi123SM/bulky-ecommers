@@ -37,20 +37,11 @@ function ChangePassword() {
                     <SidebarProfile />
                 </div>
                 <div className="w-5/5 px-4 py-4 lg:w-4/5 lg:p-7">
-                    <div className="hidden pb-1 text-2xl font-bold lg:block">
-                        Profil
-                    </div>
-                    <div className="mt-10 hidden items-center justify-center lg:flex">
-                        <Link
-                            href="/profile"
-                            className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
-                            Biodata
-                        </Link>
-                        <Link
-                            href="/address"
-                            className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
-                            Daftar Alamat
-                        </Link>
+                    <div className="flex items-center border-[#F0F3F7]">
+                        <ArrowLeftIcon className="h-6 w-6" />
+                        <div className="ml-2 font-semibold">
+                            Ubah Kata Sandi
+                        </div>
                     </div>
 
                     <div className="items-center justify-between lg:mt-10 lg:flex">

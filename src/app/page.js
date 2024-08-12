@@ -33,8 +33,8 @@ function Home() {
     return (
         <div>
             <Navbar />
-            <div className="mx-auto max-w-7xl">
-                <div className="p-0 lg:p-5">
+            <div className="">
+                <div className="mx-auto max-w-7xl p-0 lg:p-5">
                     <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
                         {banners.map((banner, index) => (
                             <div
@@ -54,7 +54,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="p-5">
+                <div className="mx-auto max-w-7xl p-5">
                     <div className="mt-2 flex justify-between py-5">
                         <div className="text-xl font-bold">New Pallets</div>
                         <div className="text-base font-semibold text-[#007185]">
@@ -175,7 +175,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="bg-[#FFF5EB] p-10">
+                <div className="mt-10 bg-[#FFF5EB] p-10">
                     <div className="mx-auto max-w-7xl">
                         <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
                             TIPS & TRICK IN WHOLESALE BUSINESS

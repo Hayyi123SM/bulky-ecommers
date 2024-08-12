@@ -1,7 +1,6 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
-import { ShieldCheckIcon } from "@heroicons/react/24/outline"
 import {
     ArrowLeftIcon,
     CheckIcon,
@@ -26,7 +25,7 @@ function PaymentMethod() {
         setSelectedIcon(icon)
         setIsOpen(false)
 
-        if (option === "Split Payment") {
+        if (option === "Bayar Patungan dengan Teman") {
             setIsSplitPayment(true)
         } else {
             setIsSplitPayment(false)
@@ -102,7 +101,7 @@ function PaymentMethod() {
                                             onClick={() =>
                                                 handleOptionClick(
                                                     "/split.svg",
-                                                    "Split Payment",
+                                                    "Bayar Patungan dengan Teman",
                                                 )
                                             }>
                                             <Image
@@ -112,7 +111,7 @@ function PaymentMethod() {
                                                 alt="split"
                                                 className="mr-2"
                                             />
-                                            Split Payment
+                                            Bayar Patungan dengan Teman
                                         </div>
                                     </div>
                                 </div>
@@ -345,7 +344,7 @@ function PaymentMethod() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Harga (2 Barang)
+                                        Total Harga
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -354,23 +353,11 @@ function PaymentMethod() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="text-sm leading-6">
-                                    <label className="text-sm font-light">
-                                        Biaya Layanan
-                                    </label>
-                                </div>
-                                <div className="ml-5 text-right text-sm leading-6">
-                                    <label className="text-md font-light text-[#007185]">
-                                        Rp1.000
-                                    </label>
-                                </div>
-                            </div>
                             <div className="my-5 border-b p-1"> </div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">
-                                        Total
+                                        Total Belanja
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -383,16 +370,16 @@ function PaymentMethod() {
                         <div className="mt-0.5 hidden h-fit w-full rounded-b-xl bg-white p-8 lg:block lg:max-w-xl">
                             <Link href="/payment">
                                 <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                    Bayar
+                                    {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
+                                    Lanjutkan
                                 </div>
                             </Link>
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
                             <Link href="/payment">
                                 <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                    Bayar
+                                    {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
+                                    Lanjutkan
                                 </div>
                             </Link>
                         </div>

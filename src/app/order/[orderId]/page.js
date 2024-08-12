@@ -5,24 +5,6 @@ import Image from "next/image"
 import Link from "next/link"
 
 function OrderDetail() {
-    const trackingData = [
-        {
-            location: "Jakarta",
-            timestamp: "2024-07-12 10:00",
-            status: "Delivered",
-        },
-        {
-            location: "Bandung",
-            timestamp: "2024-07-11 08:00",
-            status: "In Transit",
-        },
-        {
-            location: "Surabaya",
-            timestamp: "2024-07-10 12:00",
-            status: "Dispatched",
-        },
-    ]
-
     return (
         <div>
             <div className="hidden lg:block">
@@ -71,24 +53,20 @@ function OrderDetail() {
                                     <div className="w-1/2 text-[#6D7588]">
                                         Order ID
                                     </div>
-                                    <div className="w-1/2">
-                                        : AB123456890GDED
-                                    </div>
+                                    <div className="w-1/2">AB123456890GDED</div>
                                 </div>
                                 <div className="flex items-center p-1">
                                     <div className="w-1/2 text-[#6D7588]">
                                         Nomor Transaksi
                                     </div>
-                                    <div className="w-1/2">
-                                        : AB123456GGWPFDD
-                                    </div>
+                                    <div className="w-1/2">AB123456GGWPFDD</div>
                                 </div>
                                 <div className="flex items-center p-1">
                                     <div className="w-1/2 text-[#6D7588]">
                                         Metode Pembayaran
                                     </div>
                                     <div className="w-1/2">
-                                        : BCA Virtual Account
+                                        BCA Virtual Account
                                     </div>
                                 </div>
                                 <div className="flex items-center p-1">
@@ -96,16 +74,18 @@ function OrderDetail() {
                                         Waktu Transaksi
                                     </div>
                                     <div className="w-1/2">
-                                        : 11 Juni 2024 06.09
+                                        11 Juni 2024 06.09
                                     </div>
                                 </div>
-                            </div>
-                            <div className="my-2 border-b p-1 text-sm">
-                                <div className="text-[#6D7588] lg:w-1/2">
-                                    Penjual
-                                </div>
-                                <div className="lg:w-1/2">
-                                    AUTO INDO OFFICIAL STORE
+                                <div className="flex items-center p-1">
+                                    <div className="w-1/2 text-[#6D7588]">
+                                        Status
+                                    </div>
+                                    <div className="w-1/2">
+                                        <div className="w-fit rounded-lg bg-[#F4FDFF] px-2 py-1 text-xs font-semibold text-[#007185]">
+                                            Dikirim
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="my-2 mb-4 border-b p-1 text-sm">
@@ -120,45 +100,36 @@ function OrderDetail() {
                         </div>
                         <div className="h-full rounded-xl bg-white px-5 py-4 lg:w-1/2 lg:shadow">
                             <div className="flex items-center">
-                                <div className="mb-5 ml-5 text-sm leading-6">
+                                <div className="mb-5 text-sm leading-6">
                                     <div className="text-base font-bold">
-                                        Status Pesanan
+                                        Ringkasan Pembayaran
                                     </div>
                                 </div>
                             </div>
-                            <div className="relative ml-5 border-l-2 border-dashed border-gray-300 pl-[10px]">
-                                {trackingData.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative mb-6 flex items-center">
-                                        {index === 0 ? (
-                                            <Image
-                                                src="/bullet-active.svg"
-                                                width={18}
-                                                height={18}
-                                                alt="check-circle"
-                                                className="absolute -left-5"
-                                            />
-                                        ) : (
-                                            <Image
-                                                src="/bullet-inactive.svg"
-                                                width={18}
-                                                height={18}
-                                                alt="check-circle"
-                                                className="absolute -left-5"
-                                            />
-                                        )}
-                                        <div className="ml-2 flex-grow">
-                                            <div
-                                                className={`text-sm ${index === 0 ? "font-semibold text-black" : "text-[#6D7588]"}`}>
-                                                {item.location}
-                                            </div>
-                                            <div className="text-sm text-[#6D7588]">
-                                                {item.timestamp}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+                            <div className="flex justify-between">
+                                <div className="text-sm leading-6">
+                                    <label className="text-sm font-light">
+                                        Total Harga
+                                    </label>
+                                </div>
+                                <div className="ml-5 text-right text-sm leading-6">
+                                    <label className="text-md font-light">
+                                        Rp428.260
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="my-3 border-b p-1"> </div>
+                            <div className="flex justify-between">
+                                <div className="text-sm leading-6">
+                                    <label className="text-sm font-semibold">
+                                        Total Tagihan
+                                    </label>
+                                </div>
+                                <div className="ml-5 text-right text-sm leading-6">
+                                    <label className="text-lg font-bold">
+                                        Rp429.260
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

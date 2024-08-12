@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
@@ -54,6 +55,10 @@ function Profile() {
                             </div>
                             <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
                                 Ubah Kata Sandi
+                            </div>
+                            <div className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                                <ArrowRightStartOnRectangleIcon className="mr-3 h-6 w-6" />
+                                Keluar Akun
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center lg:hidden">

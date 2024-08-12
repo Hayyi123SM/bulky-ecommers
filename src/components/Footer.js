@@ -8,13 +8,13 @@ import Link from "next/link"
 function Footer() {
     const payments = []
 
-    for (let i = 12; i < 31; i++) {
+    for (let i = 1; i < 20; i++) {
         payments.push(i)
     }
 
     return (
         <div className="bg-[#F5F5F5] p-14">
-            <div className="mt-14 font-normal text-[#212121] md:grid md:grid-cols-3 lg:grid-cols-5">
+            <div className="font-normal text-[#212121] md:grid md:grid-cols-3 lg:grid-cols-5">
                 <div className="w-full p-5">
                     <Link href="/">
                         <Image
@@ -135,6 +135,24 @@ function Footer() {
                                 alt="Logo"
                             />
                         ))}
+                    </div>
+
+                    <div className="mt-10 text-base font-bold">
+                        Akses Melalui Aplikasi
+                    </div>
+                    <div className="mt-3 flex items-center text-sm">
+                        <Image
+                            src={`/payment_method/apple.svg`}
+                            width={100}
+                            height={100}
+                            alt="Logo"
+                        />
+                        <Image
+                            src={`/payment_method/gplay.svg`}
+                            width={120}
+                            height={100}
+                            alt="Logo"
+                        />
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@ function WaitingPayment() {
                     </div>
                     {/* Start : View Website */}
                     <div className="hidden items-center border-b border-[#F0F3F7] bg-white px-5 py-4 lg:flex">
-                        <div className="w-1/2 border-r">
+                        <div className="w-1/2">
                             <div className="flex items-center">
                                 <div>
                                     <Image
@@ -66,17 +66,12 @@ function WaitingPayment() {
                             </div>
                         </div>
                         <div className="w-1/2">
-                            <div className="flex items-center justify-between">
-                                <div className="ml-5 text-sm leading-6">
-                                    <div className="text-md pb-1">
-                                        Status Pesanan:
-                                    </div>
-                                    <div className="text-md font-bold">
-                                        Menunggu Pembayaran
-                                    </div>
+                            <div className="flex items-center justify-end">
+                                <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                                    Detail Pesanan
                                 </div>
-                                <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Lacak Pesanan
+                                <div className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    Bayar Sekarang
                                 </div>
                             </div>
                         </div>
