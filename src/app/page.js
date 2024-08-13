@@ -2,6 +2,7 @@
 
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import TestimoniCard from "@/components/TestimoniCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
@@ -12,16 +13,34 @@ import {
     TruckIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 function Home() {
     const [current, setCurrent] = useState(0)
+    const [showPopupMenu, setShowPopupMenu] = useState(false)
 
     const banners = [
         { src: "/banner.png", alt: "Banner 1" },
         { src: "/banner.png", alt: "Banner 2" },
         { src: "/banner.png", alt: "Banner 3" },
     ]
+
+    const togglePopupMenu = () => {
+        setShowPopupMenu(!showPopupMenu)
+    }
+
+    const closePopupMenu = () => {
+        setShowPopupMenu(false)
+    }
+
+    useEffect(() => {
+        if (showPopupMenu) {
+            document.body.classList.add("modal-open")
+        } else {
+            document.body.classList.remove("modal-open")
+        }
+    }, [showPopupMenu])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -32,8 +51,14 @@ function Home() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar togglePopupMenu={togglePopupMenu} />
             <div className="">
+                {showPopupMenu && (
+                    <PopupMenuMobile
+                        showPopupMenu={showPopupMenu}
+                        closePopupMenu={closePopupMenu}
+                    />
+                )}
                 <div className="mx-auto max-w-7xl p-0 lg:p-5">
                     <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
                         {banners.map((banner, index) => (
@@ -64,12 +89,14 @@ function Home() {
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-6">
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                />
+                                <Link href="/product">
+                                    <ProductCard
+                                        image="/product.png"
+                                        location="Jakarta"
+                                        title="McGard Lug Nuts 64074"
+                                        price="Rp437.031"
+                                    />
+                                </Link>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <ProductCard
@@ -175,7 +202,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-10 bg-[#FFF5EB] p-10">
+                <div className="mt-10 bg-[#FFF5EB] px-4 py-10">
                     <div className="mx-auto max-w-7xl">
                         <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
                             TIPS & TRICK IN WHOLESALE BUSINESS
@@ -248,7 +275,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="mx-auto max-w-7xl p-10">
+                <div className="mx-auto max-w-7xl px-4 py-10">
                     <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
                         BETTER THAN WHOLESALE
                     </div>

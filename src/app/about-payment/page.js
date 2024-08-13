@@ -11,7 +11,7 @@ import Link from "next/link"
 import { useState } from "react"
 
 function AboutPayment() {
-    const [showFaq, setShowFaq] = useState(false)
+    const [showFaq, setShowFaq] = useState(true)
     const [showFaq2, setShowFaq2] = useState(false)
     const [showFaq3, setShowFaq3] = useState(false)
 
@@ -27,7 +27,7 @@ function AboutPayment() {
 
     const payments = []
 
-    for (let i = 12; i < 22; i++) {
+    for (let i = 1; i < 20; i++) {
         payments.push(i)
     }
 

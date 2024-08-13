@@ -17,7 +17,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
-function PopupMenuMobile({ showPopupMenu }) {
+function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const [showPopupMenuProfile, setShowPopupMenuProfile] = useState(false)
 
     const setTogglePopupMenuProfile = () => {
@@ -34,11 +34,14 @@ function PopupMenuMobile({ showPopupMenu }) {
     return (
         <div
             className={`transition-all duration-500 ease-in-out ${showPopupMenu ? "opacity-100" : "opacity-0"}`}>
-            <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
+            <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 pt-20">
                 <div className="min-h-screen w-full rounded-lg bg-[#F5F5F5] shadow-lg md:w-5/6">
                     <div className="bg-white p-4">
                         <div className="my-4 flex items-center">
-                            <XMarkIcon className="h-6 w-6 cursor-pointer" />
+                            <XMarkIcon
+                                className="h-6 w-6 cursor-pointer"
+                                onClick={closePopupMenu}
+                            />
                             <h2 className="ml-3 text-base font-bold">
                                 Menu Utama
                             </h2>
@@ -72,62 +75,87 @@ function PopupMenuMobile({ showPopupMenu }) {
                         </div>
                     </div>
                     <div className="mt-2 bg-white p-4">
-                        <div className="flex items-center py-3">
-                            <CreditCardIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">
-                                Menunggu Pembayaran
+                        <Link href="/waiting-payment">
+                            <div className="flex items-center py-3">
+                                <CreditCardIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">
+                                    Menunggu Pembayaran
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">Daftar Transaksi</div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <BanknotesIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">Split Payment</div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <StarIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">Ulasan</div>
-                        </div>
+                        </Link>
+                        <Link href="/order">
+                            <div className="flex items-center py-3">
+                                <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">
+                                    Daftar Transaksi
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/order-split">
+                            <div className="flex items-center py-3">
+                                <BanknotesIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">
+                                    Split Payment
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/review">
+                            <div className="flex items-center py-3">
+                                <StarIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">Ulasan</div>
+                            </div>
+                        </Link>
                     </div>
                     <div className="mt-2 bg-white p-4">
-                        <div className="flex items-center py-3">
-                            <ShieldCheckIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">
-                                Kebijakan Privasi
+                        <Link href="/privacy-policy">
+                            <div className="flex items-center py-3">
+                                <ShieldCheckIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">
+                                    Kebijakan Privasi
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">
-                                Syarat & Ketentuan
+                        </Link>
+                        <Link href="/terms-and-conditions">
+                            <div className="flex items-center py-3">
+                                <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">
+                                    Syarat & Ketentuan
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <BanknotesIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">
-                                Tentang Pembayaran
+                        </Link>
+                        <Link href="/about-payment">
+                            <div className="flex items-center py-3">
+                                <BanknotesIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">
+                                    Tentang Pembayaran
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <QuestionMarkCircleIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">How to Buy</div>
-                        </div>
-                        <div className="flex items-center py-3">
-                            <ChatBubbleBottomCenterTextIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">FAQ</div>
-                        </div>
+                        </Link>
+                        <Link href="/how-to-buy">
+                            <div className="flex items-center py-3">
+                                <QuestionMarkCircleIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">How to Buy</div>
+                            </div>
+                        </Link>
+                        <Link href="/faq">
+                            <div className="flex items-center py-3">
+                                <ChatBubbleBottomCenterTextIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm">FAQ</div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
 
             {showPopupMenuProfile && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
+                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 pt-20">
                     <div className="min-h-screen w-full rounded-lg bg-[#F5F5F5] shadow-lg md:w-5/6">
                         <div className="bg-white p-4">
                             <div className="my-4 flex items-center">
-                                <XMarkIcon className="h-6 w-6 cursor-pointer" />
+                                <XMarkIcon
+                                    className="h-6 w-6 cursor-pointer"
+                                    onClick={closePopupMenu}
+                                />
                                 <h2 className="ml-3 text-base font-bold">
                                     Menu Utama
                                 </h2>
@@ -163,32 +191,37 @@ function PopupMenuMobile({ showPopupMenu }) {
                                     Pengaturan Akun
                                 </div>
                             </div>
-                            <div className="flex items-center py-3">
-                                <BuildingStorefrontIcon className="h-6 w-6 cursor-pointer" />
-                                <div className="ml-3">
-                                    <div className="pb-1 text-base font-bold">
-                                        Daftar Alamat
-                                    </div>
-                                    <div className="text-xs">
-                                        <div className="cursor-pointer">
-                                            Atur alamat pengiriman belanjaan
+                            <Link href="/address">
+                                <div className="flex items-center py-3">
+                                    <BuildingStorefrontIcon className="h-6 w-6 cursor-pointer" />
+                                    <div className="ml-3">
+                                        <div className="pb-1 text-base font-bold">
+                                            Daftar Alamat
+                                        </div>
+                                        <div className="text-xs">
+                                            <div className="cursor-pointer">
+                                                Atur alamat pengiriman belanjaan
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="flex items-center py-3">
-                                <LockClosedIcon className="h-6 w-6 cursor-pointer" />
-                                <div className="ml-3">
-                                    <div className="pb-1 text-base font-bold">
-                                        Daftar Alamat
-                                    </div>
-                                    <div className="text-xs">
-                                        <div className="cursor-pointer">
-                                            Atur alamat pengiriman belanjaan
+                            </Link>
+                            <Link href="/change-password">
+                                <div className="flex items-center py-3">
+                                    <LockClosedIcon className="h-6 w-6 cursor-pointer" />
+                                    <div className="ml-3">
+                                        <div className="pb-1 text-base font-bold">
+                                            Ubah Kata Sandi
+                                        </div>
+                                        <div className="text-xs">
+                                            <div className="cursor-pointer">
+                                                Atur kata sandi yang kamu ingin
+                                                gunakan
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                         <div className="mt-2 bg-white p-4">
                             <div className="flex items-center py-3">

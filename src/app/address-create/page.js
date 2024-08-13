@@ -18,7 +18,7 @@ function AddressCreate() {
                     <SidebarProfile />
                 </div>
                 <div className="w-5/5 px-4 py-4 lg:w-4/5 lg:p-7 lg:px-4">
-                    <div className="flex items-center border-[#F0F3F7]">
+                    <div className="hidden items-center border-[#F0F3F7] lg:flex">
                         <ArrowLeftIcon className="h-6 w-6" />
                         <div className="ml-2 font-semibold">Tambah Alamat</div>
                     </div>

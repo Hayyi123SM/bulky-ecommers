@@ -7,7 +7,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 
-function Navbar() {
+function Navbar({ togglePopupMenu }) {
     const isLogin = true
 
     return (
@@ -21,7 +21,10 @@ function Navbar() {
                         alt="Logo"
                         className="cursor-pointer"
                     />
-                    <Bars3BottomRightIcon className="h-8 w-8 font-bold text-white" />
+                    <Bars3BottomRightIcon
+                        className="h-8 w-8 font-bold text-white"
+                        onClick={togglePopupMenu}
+                    />
                 </div>
                 <div className="mt-2">
                     <input

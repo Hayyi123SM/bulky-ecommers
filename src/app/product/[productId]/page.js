@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
@@ -16,9 +16,27 @@ import "swiper/swiper-bundle.css"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, Navigation } from "swiper/modules"
 import Link from "next/link"
+import PopupMenuMobile from "@/components/PopupMenuMobile"
 
 function ProductDetail() {
     const [mainImage, setMainImage] = useState("/image 4.png")
+    const [showPopupMenu, setShowPopupMenu] = useState(false)
+
+    const togglePopupMenu = () => {
+        setShowPopupMenu(!showPopupMenu)
+    }
+
+    const closePopupMenu = () => {
+        setShowPopupMenu(false)
+    }
+
+    useEffect(() => {
+        if (showPopupMenu) {
+            document.body.classList.add("modal-open")
+        } else {
+            document.body.classList.remove("modal-open")
+        }
+    }, [showPopupMenu])
 
     const productImages = [
         "/image 4.png",
@@ -32,12 +50,23 @@ function ProductDetail() {
                 <Navbar />
             </div>
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <Link href="/product">
+                    <ArrowLeftIcon className="h-6 w-6" />
+                </Link>
                 <div className="flex items-center">
                     <ArrowUpOnSquareIcon className="mr-2 h-6 w-6" />
-                    <Bars3BottomRightIcon className="h-6 w-6" />
+                    <Bars3BottomRightIcon
+                        className="h-6 w-6"
+                        onClick={togglePopupMenu}
+                    />
                 </div>
             </div>
+            {showPopupMenu && (
+                <PopupMenuMobile
+                    showPopupMenu={showPopupMenu}
+                    closePopupMenu={closePopupMenu}
+                />
+            )}
             <div className="mx-auto max-w-7xl lg:p-8 lg:px-44">
                 <div className="flex flex-col lg:flex-row">
                     <div className="hidden flex-col lg:flex">
@@ -289,7 +318,7 @@ function ProductDetail() {
                     </div>
 
                     <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
-                        <Link href="/profile">
+                        <Link href="/cart">
                             <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 Masukan Keranjang
                             </div>

@@ -84,7 +84,7 @@ function PaymentMethod() {
                                             onClick={() =>
                                                 handleOptionClick(
                                                     "/single.svg",
-                                                    "Single Payment",
+                                                    "Bayar Langsung",
                                                 )
                                             }>
                                             <Image
@@ -94,7 +94,7 @@ function PaymentMethod() {
                                                 alt="single"
                                                 className="mr-2"
                                             />
-                                            Single Payment
+                                            Bayar Langsung
                                         </div>
                                         <div
                                             className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-sm hover:rounded-lg hover:bg-[#F5F5F5]"
@@ -217,7 +217,7 @@ function PaymentMethod() {
                                                 onClick={() =>
                                                     handleOptionClick(
                                                         "/single.svg",
-                                                        "Single Payment",
+                                                        "Bayar Langsung",
                                                     )
                                                 }>
                                                 <div className="flex items-center">
@@ -237,7 +237,7 @@ function PaymentMethod() {
                                                 onClick={() =>
                                                     handleOptionClick(
                                                         "/single.svg",
-                                                        "Single Payment",
+                                                        "Bayar Langsung",
                                                     )
                                                 }>
                                                 <div className="flex items-center">
@@ -256,27 +256,7 @@ function PaymentMethod() {
                                                 onClick={() =>
                                                     handleOptionClick(
                                                         "/single.svg",
-                                                        "Single Payment",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
-                                            </div>
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Single Payment",
+                                                        "Bayar Langsung",
                                                     )
                                                 }>
                                                 <div className="flex items-center">
@@ -296,7 +276,7 @@ function PaymentMethod() {
                                                 onClick={() =>
                                                     handleOptionClick(
                                                         "/single.svg",
-                                                        "Single Payment",
+                                                        "Bayar Langsung",
                                                     )
                                                 }>
                                                 <div className="flex items-center">
@@ -316,7 +296,27 @@ function PaymentMethod() {
                                                 onClick={() =>
                                                     handleOptionClick(
                                                         "/single.svg",
-                                                        "Single Payment",
+                                                        "Bayar Langsung",
+                                                    )
+                                                }>
+                                                <div className="flex items-center">
+                                                    <Image
+                                                        src="/Rectangle 1-2.png"
+                                                        width={32}
+                                                        height={32}
+                                                        alt="single"
+                                                        className="mr-4"
+                                                    />
+                                                    Brooklyn Simmons
+                                                </div>
+                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
+                                            </div>
+                                            <div
+                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
+                                                onClick={() =>
+                                                    handleOptionClick(
+                                                        "/single.svg",
+                                                        "Bayar Langsung",
                                                     )
                                                 }>
                                                 <div className="flex items-center">

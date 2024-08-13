@@ -1,18 +1,55 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
+import PopupMenuMobile from "@/components/PopupMenuMobile"
+import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 function Cart() {
+    const [showPopupMenu, setShowPopupMenu] = useState(false)
+
+    const togglePopupMenu = () => {
+        setShowPopupMenu(!showPopupMenu)
+    }
+
+    const closePopupMenu = () => {
+        setShowPopupMenu(false)
+    }
+
+    useEffect(() => {
+        if (showPopupMenu) {
+            document.body.classList.add("modal-open")
+        } else {
+            document.body.classList.remove("modal-open")
+        }
+    }, [showPopupMenu])
+
     return (
         <div>
             <div className="hidden lg:block">
                 <Navbar />
             </div>
-            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
-                <div className="ml-2 font-semibold">Keranjang</div>
+            <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <div className="flex items-center">
+                    <Link href="/product">
+                        <ArrowLeftIcon className="h-6 w-6" />
+                    </Link>
+                    <div className="ml-2 font-semibold">Keranjang</div>
+                </div>
+                <Bars3BottomRightIcon
+                    className="h-6 w-6"
+                    onClick={togglePopupMenu}
+                />
             </div>
+            {showPopupMenu && (
+                <PopupMenuMobile
+                    showPopupMenu={showPopupMenu}
+                    closePopupMenu={closePopupMenu}
+                />
+            )}
             <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
                     <div className="hidden text-2xl font-extrabold lg:block">

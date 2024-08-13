@@ -13,7 +13,7 @@ function Footer() {
     }
 
     return (
-        <div className="bg-[#F5F5F5] p-14">
+        <div className="bg-[#F5F5F5] lg:p-14">
             <div className="font-normal text-[#212121] md:grid md:grid-cols-3 lg:grid-cols-5">
                 <div className="w-full p-5">
                     <Link href="/">

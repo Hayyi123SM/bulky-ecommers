@@ -117,11 +117,13 @@ function Login() {
                         </div>
                         <div className="mt-3 w-1/5 border-t-2"> </div>
                     </div>
-                    <Link
-                        href="/register-method"
-                        className="w-full max-w-md cursor-pointer rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
-                        Buat akun bulkymu
-                    </Link>
+                    <div className="h-fit w-full max-w-md px-8 lg:px-0">
+                        <Link href="/register-method">
+                            <div className="w-full max-w-md cursor-pointer rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
+                                Buat akun bulkymu
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

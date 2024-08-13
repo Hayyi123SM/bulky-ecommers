@@ -9,9 +9,11 @@ import {
     ArchiveBoxIcon,
     ChevronDownIcon,
     ChevronUpIcon,
+    XMarkIcon,
 } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 function Product() {
@@ -29,6 +31,10 @@ function Product() {
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
+    }
+
+    const closePopupMenu = () => {
+        setShowPopupMenu(false)
     }
 
     useEffect(() => {
@@ -57,7 +63,9 @@ function Product() {
                         placeholder="Cari barang"
                     />
                 </div>
-                <ArchiveBoxIcon className="h-6 w-6" />
+                <Link href="/cart">
+                    <ArchiveBoxIcon className="h-6 w-6" />
+                </Link>
                 <Bars3BottomRightIcon
                     className="h-6 w-6"
                     onClick={togglePopupMenu}
@@ -88,15 +96,14 @@ function Product() {
                 </div>
             </div>
             {showPopup && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
+                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 pt-20">
                     <div className="w-full max-w-md rounded-lg bg-white p-6 pt-5 shadow-lg">
                         <div className="my-4 flex items-center justify-between">
                             <h2 className="text-base font-semibold">Filter</h2>
-                            <button
+                            <XMarkIcon
+                                className="h-6 w-6 cursor-pointer"
                                 onClick={togglePopup}
-                                className="text-gray-600 hover:text-gray-900">
-                                &times;
-                            </button>
+                            />
                         </div>
                         <div className="mb-4">
                             <div className="mt-2 flex justify-between py-5">
@@ -192,7 +199,12 @@ function Product() {
                     </div>
                 </div>
             )}
-            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} />}
+            {showPopupMenu && (
+                <PopupMenuMobile
+                    showPopupMenu={showPopupMenu}
+                    closePopupMenu={closePopupMenu}
+                />
+            )}
             <div className="mx-auto flex min-h-screen max-w-7xl">
                 <div className="hidden w-1/5 lg:block">
                     <div className="mb-2 p-4 font-bold">Filter</div>
@@ -482,13 +494,15 @@ function Product() {
                     <div className="pb-5 text-sm text-[#212121]">
                         Menampilkan 1 - 60 barang dari 100 barang
                     </div>
-                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
-                        <ProductCard
-                            image="/product.png"
-                            location={"Jakarta"}
-                            title="McGard Lug Nuts 64074"
-                            price="Rp437.031"
-                        />
+                    <div className="grid grid-cols-2 gap-2 lg:grid-cols-5">
+                        <Link href="/product/[id]" as={`/product/1`}>
+                            <ProductCard
+                                image="/product.png"
+                                location={"Jakarta"}
+                                title="McGard Lug Nuts 64074"
+                                price="Rp437.031"
+                            />
+                        </Link>
                         <ProductCard
                             image="/product.png"
                             location={"Jakarta"}
