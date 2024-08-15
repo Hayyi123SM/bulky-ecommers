@@ -6,6 +6,8 @@ import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import TestimoniCard from "@/components/TestimoniCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
+import { fetchBanners } from "@/store/slices/bannerSlice"
+import { fetchProducts } from "@/store/slices/productSlice"
 import {
     ClockIcon,
     CreditCardIcon,
@@ -14,16 +16,22 @@ import {
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Home() {
     const [current, setCurrent] = useState(0)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
 
-    const banners = [
-        { src: "/banner.png", alt: "Banner 1" },
-        { src: "/banner.png", alt: "Banner 2" },
-        { src: "/banner.png", alt: "Banner 3" },
-    ]
+    const dispatch = useDispatch()
+    const banners = useSelector(state => state.banners.items)
+    const products = useSelector(state => state.products.items)
+    console.log("banners from Redux state:", banners)
+    console.log("products from Redux state:", products)
+
+    useEffect(() => {
+        dispatch(fetchBanners())
+        dispatch(fetchProducts())
+    }, [dispatch])
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
@@ -64,7 +72,11 @@ function Home() {
                             <div
                                 key={index}
                                 className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
-                                <Image src={banner.src} alt={banner.alt} fill />
+                                <Image
+                                    src={banner.full_url}
+                                    alt={`Banner ${index}`}
+                                    fill
+                                />
                             </div>
                         ))}
                         <div className="absolute bottom-5 left-5 flex space-x-2">
@@ -87,60 +99,27 @@ function Home() {
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-6">
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
+                            {products.map(product => (
+                                <div
+                                    className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                    key={product.id}>
+                                    <ProductCard
+                                        image={product.images[0]}
+                                        location={"Jakarta"}
+                                        title={product.name}
+                                        price={product.price.formatted}
+                                        url={`/product/${product.slug}`}
+                                        sale={
+                                            product.show_price_before_discount
+                                        }
+                                        beforeDiscount={
+                                            product.price_before_discount
+                                                .formatted
+                                        }
+                                        totalQty={product.total_quantity}
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                     <div className="my-10 flex justify-center p-5 text-center text-3xl font-semibold leading-9">

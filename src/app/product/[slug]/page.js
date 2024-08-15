@@ -17,10 +17,29 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, Navigation } from "swiper/modules"
 import Link from "next/link"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchProductDetail } from "@/store/slices/productSlice"
 
-function ProductDetail() {
-    const [mainImage, setMainImage] = useState("/image 4.png")
+function ProductDetail({ params }) {
+    const productId = params.slug // Access the dynamic parameter
+    const [mainImage, setMainImage] = useState("")
+    const [productImages, setProductImages] = useState([])
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const dispatch = useDispatch()
+    const products = useSelector(state => state.products.productDetails)
+
+    useEffect(() => {
+        if (productId) {
+            dispatch(fetchProductDetail(productId))
+        }
+    }, [dispatch, productId])
+
+    useEffect(() => {
+        if (products?.images?.length > 0) {
+            setMainImage(products.images[0])
+            setProductImages(products.images)
+        }
+    }, [products])
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
@@ -38,12 +57,11 @@ function ProductDetail() {
         }
     }, [showPopupMenu])
 
-    const productImages = [
-        "/image 4.png",
-        "/image 6.png",
-        "/image 7.png",
-        "/image 8.png",
-    ]
+    if (!products || !products.condition) {
+        // Optionally, you can return a loading state here
+        return <div>Loading...</div>
+    }
+
     return (
         <div>
             <div className="hidden lg:block">
@@ -82,7 +100,7 @@ function ProductDetail() {
                             />
                         ))}
                     </div>
-                    <div className="hidden lg:block lg:w-1/2">
+                    <div className="ml-2 hidden lg:block lg:w-1/2">
                         <div className="flex items-center justify-center">
                             <Image
                                 src={mainImage}
@@ -128,26 +146,26 @@ function ProductDetail() {
                     </div>
                     <div className="p-4 lg:w-1/2 lg:p-8">
                         <h1 className="mb-4 text-2xl font-bold">
-                            Est. 1 Pallet of Luxury Skincare, 1,453 Units, Used
-                            - Good Condition.
+                            {products.name}, {products.total_quantity} Units,{" "}
+                            {products.condition.title}.
                         </h1>
                         <div className="mb-4 flex items-center">
                             <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
                                 ID Palet
                             </div>
                             <div className="w-10/12 text-sm font-bold">
-                                TYT-104150
+                                {products.id_pallet}
                             </div>
                         </div>
                         <div className="mb-4 text-xl font-bold text-[#007185]">
-                            Rp8.126.777
+                            {products.price.formatted}
                         </div>
                         <div className="mb-4 flex items-center">
                             <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
                                 Quantity
                             </div>
                             <div className="w-10/12 text-sm font-bold">
-                                64 pcs
+                                {products.total_quantity} pcs
                             </div>
                         </div>
                         <div className="mb-4 flex items-center">
@@ -217,14 +235,16 @@ function ProductDetail() {
                         <div className="w-2/6 text-sm font-semibold lg:w-1/6">
                             Kondisi :
                         </div>
-                        <div className="w-5/6 text-sm">Baru 90-95%</div>
+                        <div className="w-5/6 text-sm">
+                            {products.condition.title}
+                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-2/6 text-sm font-semibold lg:w-1/6">
                             Brand :
                         </div>
                         <div className="w-5/6 text-sm">
-                            Samsung, Lenovo, Dell
+                            {products.brands.map(brand => brand.name)}
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
@@ -232,7 +252,7 @@ function ProductDetail() {
                             Status Produk :
                         </div>
                         <div className="w-5/6 text-sm">
-                            Failed Delivery Items
+                            {products.status.status}
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
@@ -246,15 +266,16 @@ function ProductDetail() {
                             Kategori :
                         </div>
                         <div className="w-5/6 text-sm font-semibold text-[#007185]">
-                            Books
+                            {products.category.name}
                         </div>
                     </div>
                     <div className="py-10">
-                        <p className="text-sm">
-                            ETAWALIN EXP. 02.26 NUTRI FLAKES EXP 12.25 WEIGHT
-                            HERBA EXP. (04,10,12).25 FRESHMAG EXP. 01.26 ZYMUNO
-                            EXP. 01.26
-                        </p>
+                        <div
+                            className="text-sm"
+                            dangerouslySetInnerHTML={{
+                                __html: products.description,
+                            }}
+                        />
                         <div className="py-8 text-sm font-bold text-[#007185]">
                             Lihat Lebih Sedikit
                         </div>
@@ -266,51 +287,6 @@ function ProductDetail() {
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-2 md:grid-cols-4 lg:grid lg:grid-cols-5">
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <ProductCard
                                     image="/product.png"

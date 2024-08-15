@@ -9,6 +9,8 @@ function ProductCard({
     title,
     price,
     sale = false,
+    beforeDiscount,
+    totalQty,
 }) {
     return (
         <div
@@ -32,7 +34,7 @@ function ProductCard({
                     {sale && (
                         <div className="flex items-center py-1">
                             <div className="text-xs font-bold text-gray-400 line-through">
-                                Rp15.000
+                                {beforeDiscount}
                             </div>
                             <div className="ml-1 text-xs font-bold text-[#007185]">
                                 15%
@@ -40,7 +42,9 @@ function ProductCard({
                         </div>
                     )}
                     <div className="flex items-center py-1">
-                        <div className="text-xs">64 pcs / Baru 90-95% </div>
+                        <div className="text-xs">
+                            {totalQty} pcs / Baru 90-95%{" "}
+                        </div>
                     </div>
                 </Link>
             </div>

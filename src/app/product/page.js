@@ -110,12 +110,19 @@ function Product() {
                                 {products.map(product => (
                                     <ProductCard
                                         key={product.id}
-                                        image={product.thumbnail}
+                                        image={product.images[0]}
                                         location={"Jakarta"}
-                                        title={product.title}
-                                        price={`Rp${product.price}`}
-                                        url={`/product/${product.id}`}
-                                        sale={product.discountPercentage > 0}
+                                        title={product.name}
+                                        price={product.price.formatted}
+                                        url={`/product/${product.slug}`}
+                                        sale={
+                                            product.show_price_before_discount
+                                        }
+                                        beforeDiscount={
+                                            product.price_before_discount
+                                                .formatted
+                                        }
+                                        totalQty={product.total_quantity}
                                     />
                                 ))}
                             </div>
