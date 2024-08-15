@@ -1,38 +1,40 @@
 "use client"
 
-import { fetchCSRFToken, login } from "@/store/slices/authSlice"
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
+import { useAuth } from "@/hooks/auth"
+import InputError from "@/components/InputError"
+import AuthSessionStatus from "@/components/AuthSessionStatus"
 
 function Login() {
-    const [showPassword, setShowPassword] = useState(false)
+    const { login } = useAuth({
+        middleware: 'guest',
+        redirectIfAuthenticated: '/dashboard',
+    })
 
+    const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const dispatch = useDispatch()
-    const { csrfToken, isLoading, error } = useSelector(state => state.auth)
-
-    useEffect(() => {
-        dispatch(fetchCSRFToken())
-    }, [dispatch])
-
-    const handleSubmit = async event => {
-        event.preventDefault()
-        if (csrfToken) {
-            console.log("====================================")
-            console.log("CSRF token:", csrfToken)
-            console.log("====================================")
-            dispatch(login({ email, password, csrfToken }))
-        } else {
-            console.error("CSRF token is not available")
-        }
-    }
+    const [shouldRemember, setShouldRemember] = useState(false)
+    const [errors, setErrors] = useState([])
+    const [status, setStatus] = useState(null)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
+    }
+
+    const submitForm = async event => {
+        event.preventDefault()
+
+        await login({
+            email,
+            password,
+            remember: shouldRemember,
+            setErrors,
+            setStatus
+        })
     }
 
     return (
@@ -51,7 +53,9 @@ function Login() {
                 </div>
                 <div className="flex flex-col items-center justify-center py-5">
                     <div className="h-fit w-full max-w-md rounded-xl border-[#BFC9D9] bg-white p-8 lg:border">
-                        <form onSubmit={handleSubmit}>
+                        <AuthSessionStatus className="mb-4" status={status} />
+
+                        <form onSubmit={submitForm}>
                             <div className="py-6 text-2xl font-bold">Masuk</div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
@@ -59,9 +63,14 @@ function Login() {
                                 </div>
                                 <input
                                     type="email"
+                                    value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                     placeholder="Email"
+                                />
+                                <InputError
+                                    messages={errors.email}
+                                    className={'mt-2'}
                                 />
                             </div>
                             <div className="py-2">
@@ -84,6 +93,10 @@ function Login() {
                                         <EyeIcon className="h-5 w-5 text-gray-500" />
                                     )}
                                 </div>
+                                <InputError
+                                    messages={errors.password}
+                                    className={'mt-2'}
+                                />
                             </div>
                             <div className="flex justify-between py-5">
                                 <div className="flex">
@@ -93,7 +106,11 @@ function Login() {
                                             aria-describedby="comments-description"
                                             name="comments"
                                             type="checkbox"
+                                            value={shouldRemember}
                                             className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                            onChange={event =>
+                                                setShouldRemember(event.target.checked)
+                                            }
                                         />
                                     </div>
                                     <div className="ml-2 text-sm leading-6">

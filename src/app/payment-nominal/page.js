@@ -4,34 +4,34 @@ import Navbar from "@/components/Navbar"
 import { ShieldCheckIcon } from "@heroicons/react/24/outline"
 import {
     ArrowLeftIcon,
-    CheckIcon,
-    ChevronDownIcon,
-    MinusCircleIcon,
-    PlusCircleIcon,
+    // CheckIcon,
+    // ChevronDownIcon,
+    // MinusCircleIcon,
+    // PlusCircleIcon,
 } from "@heroicons/react/24/solid"
-import Image from "next/image"
+// import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+// import { useState } from "react"
 
 function PaymentNominal() {
-    const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
-    const [selectedIcon, setSelectedIcon] = useState(null)
-    const [isOpen, setIsOpen] = useState(false)
-    const [isOpenAddFriend, setIsOpenAddFriend] = useState(false)
-    const [isOpenListFriend, setIsOpenListFriend] = useState(false)
-    const [isSplitPayment, setIsSplitPayment] = useState(false)
-
-    const handleOptionClick = (icon, option) => {
-        setSelectedOption(option)
-        setSelectedIcon(icon)
-        setIsOpen(false)
-
-        if (option === "Bayar Patungan dengan Teman") {
-            setIsSplitPayment(true)
-        } else {
-            setIsSplitPayment(false)
-        }
-    }
+    // const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
+    // const [selectedIcon, setSelectedIcon] = useState(null)
+    // const [isOpen, setIsOpen] = useState(false)
+    // const [isOpenAddFriend, setIsOpenAddFriend] = useState(false)
+    // const [isOpenListFriend, setIsOpenListFriend] = useState(false)
+    // const [isSplitPayment, setIsSplitPayment] = useState(false)
+    //
+    // const handleOptionClick = (icon, option) => {
+    //     setSelectedOption(option)
+    //     setSelectedIcon(icon)
+    //     setIsOpen(false)
+    //
+    //     if (option === "Bayar Patungan dengan Teman") {
+    //         setIsSplitPayment(true)
+    //     } else {
+    //         setIsSplitPayment(false)
+    //     }
+    // }
 
     return (
         <div>

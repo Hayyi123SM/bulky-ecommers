@@ -15,7 +15,7 @@
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/line-clamp": "^0.4.4",
-    "axios": "^0.21.4",
+    "axios": "^1.7.3",
     "cookie-parser": "^1.4.6",
     "csrf": "^3.1.0",
     "csurf": "^1.10.0",
