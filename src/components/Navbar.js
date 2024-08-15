@@ -14,13 +14,15 @@ function Navbar({ togglePopupMenu }) {
         <div>
             <nav className="sticky top-0 z-50 block h-[134px] bg-primary px-4 py-3 lg:hidden">
                 <div className="flex items-center justify-between">
-                    <Image
-                        src="/bulky.svg"
-                        width={100}
-                        height={30}
-                        alt="Logo"
-                        className="cursor-pointer"
-                    />
+                    <Link href="/">
+                        <Image
+                            src="/bulky.svg"
+                            width={100}
+                            height={30}
+                            alt="Logo"
+                            className="cursor-pointer"
+                        />
+                    </Link>
                     <Bars3BottomRightIcon
                         className="h-8 w-8 font-bold text-white"
                         onClick={togglePopupMenu}
@@ -46,13 +48,15 @@ function Navbar({ togglePopupMenu }) {
             <nav className="sticky top-0 z-50 hidden h-[120px] bg-primary px-10 py-3 md:hidden lg:block">
                 <div className="item-center flex">
                     <div className="item-center flex w-1/12">
-                        <Image
-                            src="/bulky.svg"
-                            width={100}
-                            height={30}
-                            alt="Logo"
-                            className="cursor-pointer"
-                        />
+                        <Link href="/">
+                            <Image
+                                src="/bulky.svg"
+                                width={100}
+                                height={30}
+                                alt="Logo"
+                                className="cursor-pointer"
+                            />
+                        </Link>
                     </div>
                     <div className="item-center flex pl-10 lg:w-7/12 xl:w-8/12 2xl:w-9/12">
                         <input

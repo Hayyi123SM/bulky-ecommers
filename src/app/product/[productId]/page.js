@@ -265,13 +265,14 @@ function ProductDetail() {
                         Produk Lainnya
                     </div>
                     <div className="overflow-x-auto">
-                        <div className="flex gap-4 md:grid-cols-4 lg:grid lg:grid-cols-6">
+                        <div className="flex gap-2 md:grid-cols-4 lg:grid lg:grid-cols-5">
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <ProductCard
                                     image="/product.png"
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -280,6 +281,7 @@ function ProductDetail() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -288,6 +290,7 @@ function ProductDetail() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -296,6 +299,7 @@ function ProductDetail() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -304,6 +308,7 @@ function ProductDetail() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -312,6 +317,7 @@ function ProductDetail() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                         </div>

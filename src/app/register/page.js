@@ -150,7 +150,7 @@ function Register() {
                             </div>
                             <input
                                 type={showPassword ? "text" : "password"}
-                                value={password}
+                                defaultValue={password}
                                 onChange={e => setPassword(e.target.value)}
                                 className="h-10 w-full rounded-lg border border-gray-300 p-2 pl-10 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                 placeholder="Password"
@@ -171,7 +171,7 @@ function Register() {
                             </div>
                             <input
                                 type={showPassword ? "text" : "password"}
-                                value={password}
+                                defaultValue={password}
                                 onChange={e => setPassword(e.target.value)}
                                 className="h-10 w-full rounded-lg border border-gray-300 p-2 pl-10 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                 placeholder="Password"

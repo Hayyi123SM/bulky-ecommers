@@ -13,7 +13,6 @@ import {
     TruckIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
-import Link from "next/link"
 import { useEffect, useState } from "react"
 
 function Home() {
@@ -89,21 +88,12 @@ function Home() {
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-6">
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <Link href="/product">
-                                    <ProductCard
-                                        image="/product.png"
-                                        location="Jakarta"
-                                        title="McGard Lug Nuts 64074"
-                                        price="Rp437.031"
-                                    />
-                                </Link>
-                            </div>
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <ProductCard
                                     image="/product.png"
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -112,6 +102,7 @@ function Home() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -120,6 +111,7 @@ function Home() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -128,6 +120,7 @@ function Home() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
@@ -136,6 +129,16 @@ function Home() {
                                     location="Jakarta"
                                     title="McGard Lug Nuts 64074"
                                     price="Rp437.031"
+                                    url="/product/1"
+                                />
+                            </div>
+                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                <ProductCard
+                                    image="/product.png"
+                                    location="Jakarta"
+                                    title="McGard Lug Nuts 64074"
+                                    price="Rp437.031"
+                                    url="/product/1"
                                 />
                             </div>
                         </div>
