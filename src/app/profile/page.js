@@ -1,11 +1,24 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { useAuth } from "@/hooks/auth"
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useSelector } from "react-redux"
 
 function Profile() {
+    const { logout } = useAuth({ middleware: "guest" })
+    const user = useSelector(state => state.auth.user)
+
+    const handleLogout = async () => {
+        await logout({ redirect: "/" })
+    }
+
+    if (!user) return handleLogout()
+
     return (
         <div>
             <div className="hidden lg:block">
@@ -56,7 +69,9 @@ function Profile() {
                             <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
                                 Ubah Kata Sandi
                             </div>
-                            <div className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                            <div
+                                className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]"
+                                onClick={handleLogout}>
                                 <ArrowRightStartOnRectangleIcon className="mr-3 h-6 w-6" />
                                 Keluar Akun
                             </div>
@@ -83,7 +98,7 @@ function Profile() {
                                         Nama
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        Agung Nugroho
+                                        {user.name}
                                     </div>
                                 </div>
                                 <div className="flex py-4">
@@ -112,7 +127,7 @@ function Profile() {
                                         Email
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        Agung Nugroho
+                                        {user.email}
                                     </div>
                                 </div>
                                 <div className="flex py-4">
@@ -120,7 +135,7 @@ function Profile() {
                                         Nomor HP
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        Agung Nugroho
+                                        {user.phone_number}
                                     </div>
                                 </div>
                             </div>

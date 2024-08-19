@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/auth"
 import {
     ArrowRightStartOnRectangleIcon,
     BanknotesIcon,
@@ -16,9 +17,18 @@ import { XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const [showPopupMenuProfile, setShowPopupMenuProfile] = useState(false)
+    const { logout } = useAuth({ middleware: "guest" })
+    const user = useSelector(state => state.auth.user)
+
+    if (!user) return null
+
+    const handleLogout = async () => {
+        await logout({ redirect: "/" })
+    }
 
     const setTogglePopupMenuProfile = () => {
         setShowPopupMenuProfile(!showPopupMenuProfile)
@@ -57,12 +67,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 />
                                 <div className="ml-3">
                                     <div className="pb-1 text-base font-bold">
-                                        Agung Nugroho
+                                        {user.name}
                                     </div>
                                     <div className="text-xs">
                                         <Link href="/profile">
                                             <div className="cursor-pointer">
-                                                email@mail.com
+                                                {user.email}
                                             </div>
                                         </Link>
                                     </div>
@@ -171,12 +181,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     />
                                     <div className="ml-3">
                                         <div className="pb-1 text-base font-bold">
-                                            Agung Nugroho
+                                            {user.name}
                                         </div>
                                         <div className="text-xs">
                                             <Link href="/profile">
                                                 <div className="cursor-pointer">
-                                                    email@mail.com
+                                                    {user.email}
                                                 </div>
                                             </Link>
                                         </div>
@@ -224,7 +234,9 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                             </Link>
                         </div>
                         <div className="mt-2 bg-white p-4">
-                            <div className="flex items-center py-3">
+                            <div
+                                className="flex items-center py-3"
+                                onClick={handleLogout}>
                                 <ArrowRightStartOnRectangleIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm font-bold">
                                     Keluar Akun

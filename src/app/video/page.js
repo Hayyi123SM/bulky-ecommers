@@ -3,9 +3,25 @@
 // import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import VideoThumbnail from "@/components/VideoThumbnail"
+import { fetchVideos } from "@/store/slices/videoSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Video() {
+    const searchParams = useSearchParams()
+    const currentPage = parseInt(searchParams.get("page")) || 1
+
+    const dispatch = useDispatch()
+    const videos = useSelector(state => state.videos.items)
+    console.log("videos from Redux state:", videos)
+
+    useEffect(() => {
+        dispatch(fetchVideos(currentPage))
+    }, [dispatch])
+
     // const [showFilterGroup, setShowFilterGroup] = useState(true)
 
     // const toggleShowGroup = () => {
@@ -210,34 +226,18 @@ function Video() {
                             <div className="flex-1 overflow-y-auto">
                                 <div className="pb-4">
                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                        <VideoThumbnail
-                                            thumbnail="/Rectangle 1.png"
-                                            title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                            user="/Rectangle 1-1.png"
-                                            bgColor="bg-[#0F0F0F]"
-                                            bgHover="bg-[#5a5a5a]"
-                                        />
-                                        <VideoThumbnail
-                                            thumbnail="/Rectangle 1.png"
-                                            title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                            user="/Rectangle 1-1.png"
-                                            bgColor="bg-[#0F0F0F]"
-                                            bgHover="bg-[#5a5a5a]"
-                                        />
-                                        <VideoThumbnail
-                                            thumbnail="/Rectangle 1.png"
-                                            title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                            user="/Rectangle 1-1.png"
-                                            bgColor="bg-[#0F0F0F]"
-                                            bgHover="bg-[#5a5a5a]"
-                                        />
-                                        <VideoThumbnail
-                                            thumbnail="/Rectangle 1.png"
-                                            title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                            user="/Rectangle 1-1.png"
-                                            bgColor="bg-[#0F0F0F]"
-                                            bgHover="bg-[#5a5a5a]"
-                                        />
+                                        {videos.map((video, index) => (
+                                            <Link
+                                                href={`/video/${video.id}`}
+                                                key={index}>
+                                                <VideoThumbnail
+                                                    thumbnail={video.thumbnail}
+                                                    title={video.title}
+                                                    bgColor="bg-[#0F0F0F]"
+                                                    bgHover="bg-[#5a5a5a]"
+                                                />
+                                            </Link>
+                                        ))}
                                     </div>
                                 </div>
                             </div>

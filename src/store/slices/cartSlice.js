@@ -7,46 +7,44 @@ const initialState = {
     isLoading: false,
 }
 
-export const fetchBanners = createAsyncThunk(
-    "banners/fetchBanners",
+export const fetchCarts = createAsyncThunk(
+    "carts/fetchCarts",
     async currentPage => {
         try {
             const itemsPerPage = 10
-            const response = await axios.get("/api/banners", {
+            const response = await axios.get("/api/carts", {
                 params: { page: currentPage, limit: itemsPerPage },
             })
             console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
-            console.error("Error fetching banners:", error) // Log errors
+            console.error("Error fetching carts:", error) // Log errors
             throw error
         }
     },
 )
 
-const bannerSlice = createSlice({
+const cartSlice = createSlice({
     name: "products",
     initialState,
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(fetchBanners.pending, state => {
+            .addCase(fetchCarts.pending, state => {
                 state.isLoading = true
                 state.error = null
             })
-            .addCase(fetchBanners.fulfilled, (state, action) => {
+            .addCase(fetchCarts.fulfilled, (state, action) => {
                 console.log("Action in fulfilled:", action)
                 console.log("Current state:", state)
                 state.items = action.payload.data
                 state.isLoading = false
             })
-            .addCase(fetchBanners.rejected, (state, action) => {
+            .addCase(fetchCarts.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })
     },
 })
 
-export const { setStateProduct, setProductName, initializeProduct } =
-    bannerSlice.actions
-export default bannerSlice.reducer
+export default cartSlice.reducer

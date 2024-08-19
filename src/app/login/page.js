@@ -7,13 +7,15 @@ import { useState } from "react"
 import { useAuth } from "@/hooks/auth"
 import InputError from "@/components/InputError"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
+import { useDispatch } from "react-redux"
 
 function Login() {
     const { login } = useAuth({
-        middleware: 'guest',
-        redirectIfAuthenticated: '/dashboard',
+        middleware: "guest",
+        redirectIfAuthenticated: "/profile",
     })
 
+    const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -28,13 +30,16 @@ function Login() {
     const submitForm = async event => {
         event.preventDefault()
 
-        await login({
-            email,
-            password,
-            remember: shouldRemember,
-            setErrors,
-            setStatus
-        })
+        await login(
+            {
+                email,
+                password,
+                remember: shouldRemember,
+                setErrors,
+                setStatus,
+            },
+            dispatch,
+        )
     }
 
     return (
@@ -70,7 +75,7 @@ function Login() {
                                 />
                                 <InputError
                                     messages={errors.email}
-                                    className={'mt-2'}
+                                    className={"mt-2"}
                                 />
                             </div>
                             <div className="py-2">
@@ -95,7 +100,7 @@ function Login() {
                                 </div>
                                 <InputError
                                     messages={errors.password}
-                                    className={'mt-2'}
+                                    className={"mt-2"}
                                 />
                             </div>
                             <div className="flex justify-between py-5">
@@ -109,7 +114,9 @@ function Login() {
                                             value={shouldRemember}
                                             className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                             onChange={event =>
-                                                setShouldRemember(event.target.checked)
+                                                setShouldRemember(
+                                                    event.target.checked,
+                                                )
                                             }
                                         />
                                     </div>

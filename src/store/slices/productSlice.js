@@ -1,10 +1,10 @@
+import axios from "@/lib/axios"
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios"
-import { BASE_API_URL } from "../../lib/apiConfig"
 
 const initialState = {
     items: [],
     productDetails: {},
+    relatedProducts: [],
     totalPages: 0,
     error: null,
     isLoading: false,
@@ -15,7 +15,7 @@ export const fetchProducts = createAsyncThunk(
     async currentPage => {
         try {
             const itemsPerPage = 15
-            const response = await axios.get(`${BASE_API_URL}/products`, {
+            const response = await axios.get(`/api/products`, {
                 params: { page: currentPage, limit: itemsPerPage },
             })
             console.log("API response:", response.data) // Log the API response
@@ -31,13 +31,25 @@ export const fetchProductDetail = createAsyncThunk(
     "products/fetchProductDetail",
     async slug => {
         try {
-            const response = await axios.get(
-                `${BASE_API_URL}/products/detail/${slug}`,
-            )
+            const response = await axios.get(`/api/products/detail/${slug}`)
             console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching product details:", error) // Log errors
+            throw error
+        }
+    },
+)
+
+export const fetchProductRelated = createAsyncThunk(
+    "products/fetchProductRelated",
+    async slug => {
+        try {
+            const response = await axios.get(`/api/products/related/${slug}`)
+            console.log("API response:", response.data) // Log the API response
+            return response.data
+        } catch (error) {
+            console.error("Error fetching products:", error) // Log errors
             throw error
         }
     },
@@ -75,6 +87,20 @@ const productSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(fetchProductDetail.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(fetchProductRelated.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchProductRelated.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.relatedProducts = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(fetchProductRelated.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

@@ -16,13 +16,15 @@ function ProductCard({
         <div
             className={`flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}>
             <Link href={url}>
-                <Image
-                    src={image}
-                    width={300}
-                    height={300}
-                    alt="Logo"
-                    className="cursor-pointer"
-                />
+                <div className="aspect-square w-full">
+                    <Image
+                        src={image}
+                        width={300}
+                        height={300}
+                        alt="Logo"
+                        className="cursor-pointer"
+                    />
+                </div>
             </Link>
             <div className="min-h-[140px] flex-grow px-1 py-4">
                 <Link href={url}>

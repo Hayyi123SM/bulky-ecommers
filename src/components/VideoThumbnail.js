@@ -3,7 +3,7 @@ import Image from "next/image"
 function VideoThumbnail({
     thumbnail,
     title,
-    user,
+    // user,
     bgColor = "bg-white",
     bgHover = "bg-[#F5F5F5]",
 }) {
@@ -18,7 +18,7 @@ function VideoThumbnail({
                 className="rounded-t-xl"
             />
             <div className="flex p-4">
-                <div className="w-3/12">
+                {/* <div className="w-3/12">
                     <Image
                         src={user}
                         alt="Product"
@@ -26,8 +26,8 @@ function VideoThumbnail({
                         height={38}
                         className="rounded-full"
                     />
-                </div>
-                <div className="pb-3 pl-3 text-sm font-bold">{title}</div>
+                </div> */}
+                <div className="text-sm font-bold">{title}</div>
             </div>
         </div>
     )

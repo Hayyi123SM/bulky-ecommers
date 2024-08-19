@@ -1,3 +1,5 @@
+"use client"
+
 import {
     ArchiveBoxIcon,
     Bars3BottomRightIcon,
@@ -6,9 +8,11 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useSelector } from "react-redux"
 
 function Navbar({ togglePopupMenu }) {
-    const isLogin = true
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+    const user = useSelector(state => state.auth.user)
 
     return (
         <div>
@@ -66,7 +70,9 @@ function Navbar({ togglePopupMenu }) {
                     </div>
                     <div className="flex lg:w-4/12 xl:w-3/12 2xl:w-2/12">
                         <div className="flex w-full items-center justify-between">
-                            <BellIcon className="mr-2 h-9 w-9 font-bold text-white" />
+                            <div className="flex items-center">
+                                <BellIcon className="mr-2 h-9 w-9 font-bold text-white" />
+                            </div>
                             <div className="flex items-center">
                                 <ArchiveBoxIcon className="h-9 w-9 font-bold text-white" />
                                 <div className="ml-3 text-center text-white">
@@ -76,7 +82,7 @@ function Navbar({ togglePopupMenu }) {
                                     </div>
                                 </div>
                             </div>
-                            {!isLogin ? (
+                            {!isAuthenticated ? (
                                 <Link
                                     href="/login"
                                     className="ml-5 cursor-pointer rounded-lg bg-secondary px-14 py-3 text-center text-lg font-bold hover:bg-[#e8bc00]">
@@ -88,7 +94,7 @@ function Navbar({ togglePopupMenu }) {
                                         <div className="text-sm">Welcome</div>
                                         <div className="flex cursor-pointer items-center">
                                             <div className="mr-2 text-sm font-bold">
-                                                Agung Nugroho
+                                                {user.name}
                                             </div>
                                             <ChevronDownIcon className="h-5 w-5 font-bold text-white" />
                                         </div>

@@ -18,7 +18,10 @@ import { Pagination, Navigation } from "swiper/modules"
 import Link from "next/link"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchProductDetail } from "@/store/slices/productSlice"
+import {
+    fetchProductDetail,
+    fetchProductRelated,
+} from "@/store/slices/productSlice"
 
 function ProductDetail({ params }) {
     const productId = params.slug // Access the dynamic parameter
@@ -27,10 +30,12 @@ function ProductDetail({ params }) {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.productDetails)
+    const relatedProducts = useSelector(state => state.products.relatedProducts)
 
     useEffect(() => {
         if (productId) {
             dispatch(fetchProductDetail(productId))
+            dispatch(fetchProductRelated(productId))
         }
     }, [dispatch, productId])
 
@@ -287,15 +292,27 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-2 md:grid-cols-4 lg:grid lg:grid-cols-5">
-                            <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <ProductCard
-                                    image="/product.png"
-                                    location="Jakarta"
-                                    title="McGard Lug Nuts 64074"
-                                    price="Rp437.031"
-                                    url="/product/1"
-                                />
-                            </div>
+                            {relatedProducts.map(product => (
+                                <div
+                                    className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                    key={product.id}>
+                                    <ProductCard
+                                        image={product.images[0]}
+                                        location={"Jakarta"}
+                                        title={product.name}
+                                        price={product.price.formatted}
+                                        url={`/product/${product.slug}`}
+                                        sale={
+                                            product.show_price_before_discount
+                                        }
+                                        beforeDiscount={
+                                            product.price_before_discount
+                                                .formatted
+                                        }
+                                        totalQty={product.total_quantity}
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
 

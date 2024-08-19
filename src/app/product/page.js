@@ -104,7 +104,7 @@ function Product() {
                         <>
                             <div className="pb-5 text-sm text-[#212121]">
                                 Menampilkan 1 - {products.length} barang dari{" "}
-                                {totalPages * 10} barang
+                                {totalPages} barang
                             </div>
                             <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
                                 {products.map(product => (

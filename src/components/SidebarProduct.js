@@ -1,8 +1,27 @@
+import {
+    fetchCategories,
+    fetchConditions,
+    fetchStatuses,
+    fetchWarehouses,
+} from "../store/slices/filterSlice"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function SidebarProduct() {
     const [showFilterGroup, setShowFilterGroup] = useState(true)
+    const dispatch = useDispatch()
+    const categories = useSelector(state => state.filters.categories)
+    const warehouses = useSelector(state => state.filters.warehouses)
+    const conditions = useSelector(state => state.filters.conditions)
+    const statuses = useSelector(state => state.filters.statuses)
+
+    useEffect(() => {
+        dispatch(fetchCategories())
+        dispatch(fetchWarehouses())
+        dispatch(fetchConditions())
+        dispatch(fetchStatuses())
+    }, [dispatch])
 
     const toggleShowGroup = () => {
         setShowFilterGroup(!showFilterGroup)
@@ -24,76 +43,25 @@ function SidebarProduct() {
                 {/* {showFilterGroup && ( */}
                 <div
                     className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
+                    {categories.map(category => (
+                        <div className="flex px-4 py-1" key={category.id}>
+                            <div className="flex items-center">
+                                <input
+                                    id="comments"
+                                    aria-describedby="comments-description"
+                                    name="comments"
+                                    type="checkbox"
+                                    defaultValue={category.id}
+                                    className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                />
+                            </div>
+                            <div className="ml-2 text-sm leading-6">
+                                <label className="font-xs">
+                                    {category.name}
+                                </label>
+                            </div>
                         </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Elektronik</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Fashion</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Rumah Tangga</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Olahraga</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Kecantikan</label>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 {/* )} */}
             </div>
@@ -111,76 +79,24 @@ function SidebarProduct() {
                 {/* {showFilterGroup && ( */}
                 <div
                     className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
+                    {warehouses.map(warehouse => (
+                        <div className="flex px-4 py-1" key={warehouse.id}>
+                            <div className="flex items-center">
+                                <input
+                                    id="comments"
+                                    aria-describedby="comments-description"
+                                    name="comments"
+                                    type="checkbox"
+                                    className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                />
+                            </div>
+                            <div className="ml-2 text-sm leading-6">
+                                <label className="font-xs">
+                                    {warehouse.name}
+                                </label>
+                            </div>
                         </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">DKI Jakarta</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Jabodetabek</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Bandung</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Medan</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Surabaya</label>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 {/* )} */}
             </div>
@@ -237,48 +153,24 @@ function SidebarProduct() {
                 {/* {showFilterGroup && ( */}
                 <div
                     className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
+                    {conditions.map(condition => (
+                        <div className="flex px-4 py-1" key={condition.id}>
+                            <div className="flex items-center">
+                                <input
+                                    id="comments"
+                                    aria-describedby="comments-description"
+                                    name="comments"
+                                    type="checkbox"
+                                    className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                />
+                            </div>
+                            <div className="ml-2 text-sm leading-6">
+                                <label className="font-xs">
+                                    {condition.title}
+                                </label>
+                            </div>
                         </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Baru</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Bekas 90-95%</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Bekas 80-90%</label>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 {/* )} */}
             </div>
@@ -296,34 +188,24 @@ function SidebarProduct() {
                 {/* {showFilterGroup && ( */}
                 <div
                     className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
+                    {statuses.map(status => (
+                        <div className="flex px-4 py-1" key={status.id}>
+                            <div className="flex items-center">
+                                <input
+                                    id="comments"
+                                    aria-describedby="comments-description"
+                                    name="comments"
+                                    type="checkbox"
+                                    className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                />
+                            </div>
+                            <div className="ml-2 text-sm leading-6">
+                                <label className="font-xs">
+                                    {status.status}
+                                </label>
+                            </div>
                         </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Brand Name</label>
-                        </div>
-                    </div>
-                    <div className="flex px-4 py-1">
-                        <div className="flex items-center">
-                            <input
-                                id="comments"
-                                aria-describedby="comments-description"
-                                name="comments"
-                                type="checkbox"
-                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                            />
-                        </div>
-                        <div className="ml-2 text-sm leading-6">
-                            <label className="font-xs">Brand Name</label>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 {/* )} */}
             </div>

@@ -8,6 +8,7 @@ import TestimoniCard from "@/components/TestimoniCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
 import { fetchBanners } from "@/store/slices/bannerSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
+import { fetchVideos } from "@/store/slices/videoSlice"
 import {
     ClockIcon,
     CreditCardIcon,
@@ -15,22 +16,29 @@ import {
     TruckIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Home() {
     const [current, setCurrent] = useState(0)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const searchParams = useSearchParams()
+    const currentPage = parseInt(searchParams.get("page")) || 1
 
     const dispatch = useDispatch()
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
+    const videos = useSelector(state => state.videos.items)
     console.log("banners from Redux state:", banners)
     console.log("products from Redux state:", products)
+    console.log("videos from Redux state:", videos)
 
     useEffect(() => {
         dispatch(fetchBanners())
         dispatch(fetchProducts())
+        dispatch(fetchVideos(currentPage))
     }, [dispatch])
 
     const togglePopupMenu = () => {
@@ -54,7 +62,7 @@ function Home() {
             setCurrent(prev => (prev === banners.length - 1 ? 0 : prev + 1))
         }, 3000)
         return () => clearInterval(interval)
-    }, [])
+    }, [banners.length])
 
     return (
         <div>
@@ -93,9 +101,11 @@ function Home() {
                 <div className="mx-auto max-w-7xl p-5">
                     <div className="mt-2 flex justify-between py-5">
                         <div className="text-xl font-bold">New Pallets</div>
-                        <div className="text-base font-semibold text-[#007185]">
-                            Lihat Semua
-                        </div>
+                        <Link href="/product">
+                            <div className="text-base font-semibold text-[#007185]">
+                                Lihat Semua
+                            </div>
+                        </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-6">
@@ -194,67 +204,23 @@ function Home() {
                         </div>
                         <div className="overflow-x-auto">
                             <div className="flex gap-4 lg:grid lg:grid-cols-4">
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
-                                <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                    <VideoThumbnail
-                                        thumbnail="/Rectangle 1.png"
-                                        title="CARA PIKIR KONGLOMERAT YANG KAYA.. MINDSET APA AJA.."
-                                        user="/Rectangle 1-1.png"
-                                    />
-                                </div>
+                                {videos.map(video => (
+                                    <div
+                                        className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                        key={video.id}>
+                                        <VideoThumbnail
+                                            // thumbnail={video.thumbnail}
+                                            title={video.title}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">
-                            View All Comunity Video
-                        </div>
+                        <Link href="/video">
+                            <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">
+                                View All Comunity Video
+                            </div>
+                        </Link>
                     </div>
                 </div>
                 <div className="mx-auto max-w-7xl px-4 py-10">

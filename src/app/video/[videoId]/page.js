@@ -1,10 +1,23 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import { fetchVideoDetail } from "@/store/slices/videoSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import { useEffect } from "react"
 import ReactPlayer from "react-player"
+import { useDispatch, useSelector } from "react-redux"
 
-function Video() {
+function Video({ params }) {
+    const videoId = params.videoId // Access the dynamic parameter
+
+    const dispatch = useDispatch()
+    const videos = useSelector(state => state.videos.items)
+    console.log("videos from Redux state:", videos)
+
+    useEffect(() => {
+        dispatch(fetchVideoDetail(videoId))
+    }, [dispatch])
+
     return (
         <div>
             <div className="hidden lg:block">
@@ -19,7 +32,7 @@ function Video() {
                     {/* <Sidebar /> */}
                     <div className="flex w-full items-center justify-center pt-10">
                         <ReactPlayer
-                            url={`/1.mp4`} // Assuming video files are stored in a /public/videos directory
+                            url={videos.path}
                             playing={false}
                             controls
                             loop

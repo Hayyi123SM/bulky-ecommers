@@ -1,12 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit"
-import authReducer from "./slices/authSlice"
 import productReducer from "./slices/productSlice"
 import bannerReducer from "./slices/bannerSlice"
+import videoReducer from "./slices/videoSlice"
+import cartSlice from "./slices/cartSlice"
+import authSlice from "./slices/authSlice"
+import filterSlice from "./slices/filterSlice"
 
 export const store = configureStore({
     reducer: {
-        auth: authReducer,
+        auth: authSlice,
         products: productReducer,
         banners: bannerReducer,
+        videos: videoReducer,
+        carts: cartSlice,
+        filters: filterSlice,
     },
 })
