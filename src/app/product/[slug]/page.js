@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar"
 import ProductCard from "@/components/ProductCard"
 import {
     ArrowUpOnSquareIcon,
-    QuestionMarkCircleIcon,
+    // QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -22,12 +22,16 @@ import {
     fetchProductDetail,
     fetchProductRelated,
 } from "@/store/slices/productSlice"
+import { addToCart } from "@/store/slices/cartSlice"
+import { useRouter } from "next/navigation"
 
 function ProductDetail({ params }) {
     const productId = params.slug // Access the dynamic parameter
     const [mainImage, setMainImage] = useState("")
     const [productImages, setProductImages] = useState([])
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+
+    const router = useRouter()
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.productDetails)
     const relatedProducts = useSelector(state => state.products.relatedProducts)
@@ -46,6 +50,14 @@ function ProductDetail({ params }) {
         }
     }, [products])
 
+    useEffect(() => {
+        if (showPopupMenu) {
+            document.body.classList.add("modal-open")
+        } else {
+            document.body.classList.remove("modal-open")
+        }
+    }, [showPopupMenu])
+
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
     }
@@ -54,13 +66,10 @@ function ProductDetail({ params }) {
         setShowPopupMenu(false)
     }
 
-    useEffect(() => {
-        if (showPopupMenu) {
-            document.body.classList.add("modal-open")
-        } else {
-            document.body.classList.remove("modal-open")
-        }
-    }, [showPopupMenu])
+    const handleAddToCart = product => {
+        dispatch(addToCart(product))
+        router.push("/cart")
+    }
 
     if (!products || !products.condition) {
         // Optionally, you can return a loading state here
@@ -193,7 +202,7 @@ function ProductDetail({ params }) {
                                 </span>
                             </div>
                         </div>
-                        <div className="hidden items-center py-3 lg:flex">
+                        {/* <div className="hidden items-center py-3 lg:flex">
                             <Image
                                 src="/package.svg"
                                 alt="package"
@@ -214,11 +223,13 @@ function ProductDetail({ params }) {
                         </div>
                         <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">
                             Masukkan Keranjang
-                        </div>
-                        <div className="hidden cursor-pointer rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:block">
+                        </div> */}
+                        <div
+                            onClick={() => handleAddToCart(products.id)}
+                            className="hidden cursor-pointer rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:block">
                             Masukkan Keranjang
                         </div>
-                        <div className="hidden py-3 lg:flex">
+                        {/* <div className="hidden py-3 lg:flex">
                             <Image
                                 src="/mandiri.svg"
                                 alt="mandiri"
@@ -231,7 +242,7 @@ function ProductDetail({ params }) {
                                 width={50}
                                 height={50}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="p-4 lg:mt-20">

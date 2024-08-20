@@ -8,11 +8,15 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 
 function Navbar({ togglePopupMenu }) {
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    const user = useSelector(state => state.auth.user)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const user = JSON.parse(localStorage.getItem("user"))
+
+    useEffect(() => {
+        setIsAuthenticated(user !== null)
+    }, [user])
 
     return (
         <div>

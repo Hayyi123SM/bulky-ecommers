@@ -29,14 +29,15 @@ function Product() {
 
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.items)
-    console.log("Products from Redux state:", products)
     const totalPages = useSelector(state => state.products.totalPages)
-    console.log("Total from Redux state:", totalPages)
+    const filters = useSelector(state => state.filters.selectedFilters)
 
+    console.log("====================================")
+    console.log("filters:", filters)
+    console.log("====================================")
     useEffect(() => {
-        console.log("Dispatching fetchProducts with page:", currentPage)
-        dispatch(fetchProducts(currentPage))
-    }, [currentPage, dispatch])
+        dispatch(fetchProducts({ page: currentPage, filters }))
+    }, [currentPage, filters, dispatch])
 
     const handlePageChange = page => {
         router.push(`?page=${page}`)
@@ -54,10 +55,6 @@ function Product() {
             document.body.classList.remove("modal-open")
         }
     }, [showPopup, showPopupMenu])
-
-    useEffect(() => {
-        console.log("Fetched products in component:", products)
-    }, [products])
 
     return (
         <div>
@@ -128,7 +125,7 @@ function Product() {
                             </div>
                         </>
                     ) : (
-                        <p>No products available</p>
+                        <p>Loading products...</p>
                     )}
                     <Pagination
                         currentPage={currentPage}

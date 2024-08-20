@@ -3,6 +3,11 @@ import Link from "next/link"
 import React from "react"
 
 function SidebarProfile() {
+    const user = JSON.parse(localStorage.getItem("user"))
+
+    if (!user) {
+        return <div>Loading...</div>
+    }
     return (
         <div>
             <div className="flex items-center">
@@ -14,7 +19,7 @@ function SidebarProfile() {
                     className="cursor-pointer"
                 />
                 <div className="ml-3">
-                    <div className="pb-1 text-sm font-bold">Agung Nugroho</div>
+                    <div className="pb-1 text-sm font-bold">{user.name}</div>
                     <div className="text-xs">
                         <Link href="/profile">
                             <div className="cursor-pointer text-[#007185]">

@@ -56,6 +56,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 // Dispatch setUser to store user data in Redux
                 dispatch(setUser(userData))
 
+                localStorage.setItem("user", JSON.stringify(userData))
+
                 // Optionally trigger any additional side effects like navigation or refetching data
                 mutate() // Call mutate or any other functions as needed
             })
@@ -109,6 +111,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const logout = async () => {
         if (!error) {
             await axios.post("/api/auth/web/logout").then(() => mutate())
+
+            localStorage.removeItem("user")
         }
 
         window.location.pathname = "/login"

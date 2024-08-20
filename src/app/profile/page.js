@@ -3,21 +3,41 @@
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
+import { clearUser, setUser } from "@/store/slices/authSlice"
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useSelector } from "react-redux"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Profile() {
     const { logout } = useAuth({ middleware: "guest" })
     const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
+    const savedUser = localStorage.getItem("user")
 
+    // Define handleLogout function before using it
     const handleLogout = async () => {
         await logout({ redirect: "/" })
+        dispatch(clearUser())
     }
 
-    if (!user) return handleLogout()
+    useEffect(() => {
+        if (savedUser) {
+            dispatch(setUser(JSON.parse(savedUser)))
+        }
+    }, [dispatch, savedUser])
+
+    // Check if user is available and handle loading or redirecting
+    if (!user) {
+        if (savedUser) {
+            return <h1>Loading user...</h1>
+        } else {
+            handleLogout()
+            return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
+        }
+    }
 
     return (
         <div>

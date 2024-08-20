@@ -6,6 +6,12 @@ const initialState = {
     warehouses: [],
     conditions: [],
     statuses: [],
+    selectedFilters: {
+        categories: [],
+        warehouses: [],
+        conditions: [],
+        statuses: [],
+    },
     error: null,
     isLoading: false,
 }
@@ -69,7 +75,15 @@ export const fetchStatuses = createAsyncThunk(
 const filterSlice = createSlice({
     name: "filters",
     initialState,
-    reducers: {},
+    reducers: {
+        setFilters(state, action) {
+            console.log("Action in setFilters:", action)
+            state.selectedFilters = {
+                ...state.selectedFilters,
+                ...action.payload,
+            }
+        },
+    },
     extraReducers: builder => {
         builder
             // Fetch categories
@@ -138,6 +152,5 @@ const filterSlice = createSlice({
     },
 })
 
-export const { setStateProduct, setProductName, initializeProduct } =
-    filterSlice.actions
+export const { setFilters } = filterSlice.actions
 export default filterSlice.reducer

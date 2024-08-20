@@ -31,9 +31,9 @@ function Home() {
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
     const videos = useSelector(state => state.videos.items)
-    console.log("banners from Redux state:", banners)
-    console.log("products from Redux state:", products)
-    console.log("videos from Redux state:", videos)
+    // console.log("banners from Redux state:", banners)
+    // console.log("products from Redux state:", products)
+    // console.log("videos from Redux state:", videos)
 
     useEffect(() => {
         dispatch(fetchBanners())

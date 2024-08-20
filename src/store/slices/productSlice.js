@@ -12,13 +12,19 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
-    async currentPage => {
+    async ({ currentPage, filters }) => {
         try {
-            const itemsPerPage = 15
+            console.log("Filters:", filters)
             const response = await axios.get(`/api/products`, {
-                params: { page: currentPage, limit: itemsPerPage },
+                params: {
+                    page: currentPage,
+                    category: filters.categories.join(","),
+                    warehouse: filters.warehouses.join(","),
+                    condition: filters.conditions.join(","),
+                    status: filters.statuses.join(","),
+                },
             })
-            console.log("API response:", response.data) // Log the API response
+            console.log("API response Product:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching products:", error) // Log errors

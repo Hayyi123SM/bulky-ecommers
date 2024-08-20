@@ -3,12 +3,20 @@ import {
     fetchConditions,
     fetchStatuses,
     fetchWarehouses,
+    setFilters,
 } from "../store/slices/filterSlice"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function SidebarProduct() {
+    const [selectedCategories, setSelectedCategories] = useState([])
+    const [selectedWarehouses, setSelectedWarehouses] = useState([])
+    const [selectedConditions, setSelectedConditions] = useState([])
+    const [selectedStatuses, setSelectedStatuses] = useState([])
+    const [minPrice, setMinPrice] = useState(0)
+    const [maxPrice, setMaxPrice] = useState(0)
+
     const [showFilterGroup, setShowFilterGroup] = useState(true)
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
@@ -26,6 +34,47 @@ function SidebarProduct() {
     const toggleShowGroup = () => {
         setShowFilterGroup(!showFilterGroup)
     }
+
+    const handleCategoryChange = (e, category) => {
+        const updatedCategories = e.target.checked
+            ? [...selectedCategories, category.slug]
+            : selectedCategories.filter(slug => slug !== category.slug)
+        setSelectedCategories(updatedCategories)
+        dispatch(setFilters({ categories: updatedCategories }))
+    }
+
+    const handleWarehouseChange = (e, warehouse) => {
+        const updatedWarehouses = e.target.checked
+            ? [...selectedWarehouses, warehouse.id]
+            : selectedWarehouses.filter(id => id !== warehouse.id)
+        setSelectedWarehouses(updatedWarehouses)
+        dispatch(setFilters({ warehouses: updatedWarehouses }))
+    }
+
+    const handleConditionChange = (e, condition) => {
+        const updatedConditions = e.target.checked
+            ? [...selectedConditions, condition.slug]
+            : selectedConditions.filter(slug => slug !== condition.slug)
+        setSelectedConditions(updatedConditions)
+        dispatch(setFilters({ conditions: updatedConditions }))
+    }
+
+    const handleStatusChange = (e, status) => {
+        const updatedStatuses = e.target.checked
+            ? [...selectedStatuses, status.id]
+            : selectedStatuses.filter(id => id !== status.id)
+        setSelectedStatuses(updatedStatuses)
+        dispatch(setFilters({ statuses: updatedStatuses }))
+    }
+
+    const handleMinPriceChange = e => {
+        setMinPrice(e.target.value)
+    }
+
+    const handleMaxPriceChange = e => {
+        setMaxPrice(e.target.value)
+    }
+
     return (
         <div className="hidden w-1/5 lg:block">
             <div className="mb-2 p-4 font-bold">Filter</div>
@@ -44,14 +93,19 @@ function SidebarProduct() {
                 <div
                     className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                     {categories.map(category => (
-                        <div className="flex px-4 py-1" key={category.id}>
+                        <div className="flex px-4 py-1" key={category.slug}>
                             <div className="flex items-center">
                                 <input
                                     id="comments"
                                     aria-describedby="comments-description"
                                     name="comments"
                                     type="checkbox"
-                                    defaultValue={category.id}
+                                    checked={selectedCategories.includes(
+                                        category.slug,
+                                    )}
+                                    onChange={e =>
+                                        handleCategoryChange(e, category)
+                                    }
                                     className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                 />
                             </div>
@@ -87,6 +141,12 @@ function SidebarProduct() {
                                     aria-describedby="comments-description"
                                     name="comments"
                                     type="checkbox"
+                                    checked={selectedWarehouses.includes(
+                                        warehouse.id,
+                                    )}
+                                    onChange={e =>
+                                        handleWarehouseChange(e, warehouse)
+                                    }
                                     className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                 />
                             </div>
@@ -118,6 +178,8 @@ function SidebarProduct() {
                         <input
                             type="number"
                             defaultValue="0"
+                            value={minPrice}
+                            onChange={handleMinPriceChange}
                             className="ml-1 h-10 w-full rounded-lg border border-gray-300 p-2 pl-10 focus:ring-0"
                             placeholder="Harga Minimum"
                         />
@@ -129,6 +191,8 @@ function SidebarProduct() {
                         <input
                             type="number"
                             defaultValue="0"
+                            value={maxPrice}
+                            onChange={handleMaxPriceChange}
                             className="ml-1 h-10 w-full rounded-lg border border-gray-300 p-2 pl-10 focus:ring-0"
                             placeholder="Harga Maksimum"
                         />
@@ -154,13 +218,19 @@ function SidebarProduct() {
                 <div
                     className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                     {conditions.map(condition => (
-                        <div className="flex px-4 py-1" key={condition.id}>
+                        <div className="flex px-4 py-1" key={condition.slug}>
                             <div className="flex items-center">
                                 <input
                                     id="comments"
                                     aria-describedby="comments-description"
                                     name="comments"
                                     type="checkbox"
+                                    checked={selectedConditions.includes(
+                                        condition.slug,
+                                    )}
+                                    onChange={e =>
+                                        handleConditionChange(e, condition)
+                                    }
                                     className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                 />
                             </div>
@@ -196,6 +266,12 @@ function SidebarProduct() {
                                     aria-describedby="comments-description"
                                     name="comments"
                                     type="checkbox"
+                                    checked={selectedStatuses.includes(
+                                        status.id,
+                                    )}
+                                    onChange={e =>
+                                        handleStatusChange(e, status)
+                                    }
                                     className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
                                 />
                             </div>
