@@ -22,7 +22,7 @@ function Footer() {
                             width={94}
                             height={32}
                             alt="Logo"
-                            className="cursor-pointer"
+                            className="h-auto w-auto cursor-pointer"
                         />
                     </Link>
                     <div className="mt-3 text-sm">

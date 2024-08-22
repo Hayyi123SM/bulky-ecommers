@@ -1,6 +1,7 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import { fetchCarts, placeOrders } from "@/store/slices/cartSlice"
 import {
     ArrowLeftIcon,
     CheckIcon,
@@ -9,8 +10,8 @@ import {
     PlusCircleIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function PaymentMethod() {
     const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
@@ -19,6 +20,8 @@ function PaymentMethod() {
     const [isOpenAddFriend, setIsOpenAddFriend] = useState(false)
     const [isOpenListFriend, setIsOpenListFriend] = useState(false)
     const [isSplitPayment, setIsSplitPayment] = useState(false)
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.carts.cart)
 
     const handleOptionClick = (icon, option) => {
         setSelectedOption(option)
@@ -30,6 +33,26 @@ function PaymentMethod() {
         } else {
             setIsSplitPayment(false)
         }
+    }
+
+    useEffect(() => {
+        dispatch(fetchCarts())
+    }, [dispatch])
+    // "single_payment/split_payment"
+    const handlePlaceOrder = () => {
+        if (isSplitPayment) {
+            const payment_type = "split_payment"
+            const friend_ids = []
+            dispatch(placeOrders({ payment_type, friend_ids }))
+        } else {
+            const payment_type = "single_payment"
+            const friend_ids = []
+            dispatch(placeOrders({ payment_type, friend_ids }))
+        }
+    }
+
+    if (!cart) {
+        return <div>Loading...</div>
     }
 
     return (
@@ -349,7 +372,7 @@ function PaymentMethod() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-md font-light">
-                                        Rp428.260
+                                        {cart.total_price.formatted}
                                     </label>
                                 </div>
                             </div>
@@ -362,26 +385,30 @@ function PaymentMethod() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-lg font-bold">
-                                        Rp429.260
+                                        {cart.total_price.formatted}
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-0.5 hidden h-fit w-full rounded-b-xl bg-white p-8 lg:block lg:max-w-xl">
-                            <Link href="/payment">
-                                <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
-                                    Lanjutkan
-                                </div>
-                            </Link>
+                            {/* <Link href="/payment"> */}
+                            <div
+                                className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]"
+                                onClick={handlePlaceOrder}>
+                                {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
+                                Buat Pesanan
+                            </div>
+                            {/* </Link> */}
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
-                            <Link href="/payment">
-                                <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
-                                    Lanjutkan
-                                </div>
-                            </Link>
+                            {/* <Link href="/payment"> */}
+                            <div
+                                className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]"
+                                onClick={handlePlaceOrder}>
+                                {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
+                                Buat Pesanan
+                            </div>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>

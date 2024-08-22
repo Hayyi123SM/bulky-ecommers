@@ -2,14 +2,30 @@
 
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
-import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
+import {
+    fetchCarts,
+    toggleSelectItem,
+    toggleSelectAllItems,
+    updateSelectedItems,
+    removeItems,
+} from "@/store/slices/cartSlice"
+import { Bars3BottomRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Cart() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.carts.cart)
+    // const updateStatus = useSelector(state => state.carts.updateStatus)
+    // const updateError = useSelector(state => state.carts.updateError)
+
+    useEffect(() => {
+        dispatch(fetchCarts())
+    }, [dispatch])
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
@@ -26,6 +42,26 @@ function Cart() {
             document.body.classList.remove("modal-open")
         }
     }, [showPopupMenu])
+
+    const handleSelectItem = (itemId, isSelected) => {
+        dispatch(toggleSelectItem({ itemId, isSelected }))
+        dispatch(updateSelectedItems([{ id: itemId, selected: isSelected }]))
+    }
+
+    const handleSelectAllItems = isSelected => {
+        dispatch(toggleSelectAllItems(isSelected))
+        const cartItems = cart.items.map(item => ({
+            id: item.id,
+            selected: isSelected,
+        }))
+        dispatch(updateSelectedItems(cartItems))
+    }
+
+    if (!cart) {
+        return <div>Loading cart...</div>
+    }
+
+    console.log(cart.items)
 
     return (
         <div>
@@ -60,11 +96,20 @@ function Cart() {
                             <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
                                 <div className="flex items-center">
                                     <input
-                                        id="comments"
-                                        aria-describedby="comments-description"
-                                        name="comments"
+                                        id="selectAll"
                                         type="checkbox"
                                         className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                        checked={
+                                            cart.items.length > 0 &&
+                                            cart.items.every(
+                                                item => item.is_selected,
+                                            )
+                                        }
+                                        onChange={e =>
+                                            handleSelectAllItems(
+                                                e.target.checked,
+                                            )
+                                        }
                                     />
                                 </div>
                                 <div className="ml-2 text-sm leading-6">
@@ -73,67 +118,57 @@ function Cart() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4">
-                                <div className="flex w-1/5 items-center">
-                                    <div className="mr-3">
-                                        <input
-                                            id="comments1"
-                                            aria-describedby="comments1-description"
-                                            name="comments1"
-                                            type="checkbox"
-                                            className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                                        />
+                            {cart.items.length > 0 ? (
+                                cart.items.map(item => (
+                                    <div
+                                        className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4"
+                                        key={item.id}>
+                                        <div className="flex w-1/5 items-center">
+                                            <input
+                                                id={`selectItem-${item.id}`}
+                                                type="checkbox"
+                                                className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                                checked={item.is_selected}
+                                                onChange={e =>
+                                                    handleSelectItem(
+                                                        item.id,
+                                                        e.target.checked,
+                                                    )
+                                                }
+                                            />
+                                            <Image
+                                                src={item.product.images[0]}
+                                                width={100}
+                                                height={100}
+                                                alt="cart-product"
+                                                className="ml-3 w-2/3"
+                                            />
+                                        </div>
+                                        <div className="ml-5 w-2/5 text-sm leading-6">
+                                            <label className="text-md">
+                                                {item.product.name}
+                                            </label>
+                                        </div>
+                                        <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">
+                                            <label className="text-md font-bold">
+                                                {item.price.formatted}
+                                            </label>
+                                            <TrashIcon
+                                                className="ml-2 h-5 w-5 cursor-pointer text-[#9FA6B0] hover:text-red-700"
+                                                onClick={() =>
+                                                    dispatch(
+                                                        removeItems(
+                                                            item.product.id,
+                                                        ),
+                                                    )
+                                                }
+                                            />
+                                        </div>
                                     </div>
-                                    <Image
-                                        src="/product.png"
-                                        width={100}
-                                        height={100}
-                                        alt="cart-product"
-                                        className="w-2/3"
-                                    />
-                                </div>
-                                <div className="ml-5 w-3/5 text-sm leading-6">
-                                    <label className="text-md">
-                                        Toyo Proxes R888R Tires 104150
-                                    </label>
-                                </div>
-                                <div className="ml-5 w-1/5 text-right text-sm leading-6">
-                                    <label className="text-md font-bold">
-                                        Rp8.126.777
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4">
-                                <div className="flex w-1/5 items-center">
-                                    <div className="mr-3">
-                                        <input
-                                            id="comments2"
-                                            aria-describedby="comments2-description"
-                                            name="comments2"
-                                            type="checkbox"
-                                            className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                                        />
-                                    </div>
-                                    <Image
-                                        src="/product.png"
-                                        width={100}
-                                        height={100}
-                                        alt="cart-product"
-                                        className="w-2/3"
-                                    />
-                                </div>
-                                <div className="ml-5 w-3/5 text-sm leading-6">
-                                    <label className="text-md">
-                                        Royal Purple Extended Life Oil Filters
-                                        10-2867
-                                    </label>
-                                </div>
-                                <div className="ml-5 w-1/5 text-right text-sm leading-6">
-                                    <label className="text-md font-bold">
-                                        Rp210.339
-                                    </label>
-                                </div>
-                            </div>
+                                ))
+                            ) : (
+                                <p>No items in cart.</p>
+                            )}
                         </div>
                         <div className="hidden w-full lg:block">
                             <div className="mb-0.5 rounded-t-lg bg-white px-5 py-4">
@@ -146,7 +181,7 @@ function Cart() {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-md font-bold">
-                                            Rp8.126.777
+                                            {cart.total_price.formatted}
                                         </label>
                                     </div>
                                 </div>
@@ -164,7 +199,7 @@ function Cart() {
                                 <div className="w-1/2 text-sm leading-6">
                                     <label className="text-sm">Total</label>
                                     <div className="text-base font-bold">
-                                        Rp197.061
+                                        {cart.total_price.formatted}
                                     </div>
                                 </div>
                                 <div className="w-1/2">
@@ -179,7 +214,6 @@ function Cart() {
                     </div>
                 </div>
             </div>
-            {/* <Footer /> */}
         </div>
     )
 }

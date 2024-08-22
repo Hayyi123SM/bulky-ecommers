@@ -22,8 +22,8 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Home() {
-    const [current, setCurrent] = useState(0)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const [current, setCurrent] = useState(0)
     const searchParams = useSearchParams()
     const currentPage = parseInt(searchParams.get("page")) || 1
 
@@ -31,23 +31,15 @@ function Home() {
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
     const videos = useSelector(state => state.videos.items)
-    // console.log("banners from Redux state:", banners)
-    // console.log("products from Redux state:", products)
-    // console.log("videos from Redux state:", videos)
 
     useEffect(() => {
         dispatch(fetchBanners())
-        dispatch(fetchProducts())
+        dispatch(fetchProducts({ page: currentPage, filters: [] }))
         dispatch(fetchVideos(currentPage))
     }, [dispatch])
 
-    const togglePopupMenu = () => {
-        setShowPopupMenu(!showPopupMenu)
-    }
-
-    const closePopupMenu = () => {
-        setShowPopupMenu(false)
-    }
+    const togglePopupMenu = () => setShowPopupMenu(!showPopupMenu)
+    const closePopupMenu = () => setShowPopupMenu(false)
 
     useEffect(() => {
         if (showPopupMenu) {
@@ -66,14 +58,20 @@ function Home() {
 
     return (
         <div>
-            <Navbar togglePopupMenu={togglePopupMenu} />
+            {/* Search results displayed outside the Navbar */}
+            {/* Rest of your page content */}
+            <Navbar
+                togglePopupMenu={togglePopupMenu}
+                // searchQuery={searchQuery}
+                // onSearchInputChange={handleSearchInputChange}
+            />
+            {showPopupMenu && (
+                <PopupMenuMobile
+                    showPopupMenu={showPopupMenu}
+                    closePopupMenu={closePopupMenu}
+                />
+            )}
             <div className="">
-                {showPopupMenu && (
-                    <PopupMenuMobile
-                        showPopupMenu={showPopupMenu}
-                        closePopupMenu={closePopupMenu}
-                    />
-                )}
                 <div className="mx-auto max-w-7xl p-0 lg:p-5">
                     <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
                         {banners.map((banner, index) => (

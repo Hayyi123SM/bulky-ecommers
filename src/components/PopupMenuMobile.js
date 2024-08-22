@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/auth"
+import { clearUser, setUser } from "@/store/slices/authSlice"
 import {
     ArrowRightStartOnRectangleIcon,
     BanknotesIcon,
@@ -17,22 +18,29 @@ import { XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const [showPopupMenuProfile, setShowPopupMenuProfile] = useState(false)
     const { logout } = useAuth({ middleware: "guest" })
+    const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
-
-    if (!user) return null
+    const savedUser = localStorage.getItem("user")
 
     const handleLogout = async () => {
         await logout({ redirect: "/" })
+        dispatch(clearUser())
     }
 
     const setTogglePopupMenuProfile = () => {
         setShowPopupMenuProfile(!showPopupMenuProfile)
     }
+
+    useEffect(() => {
+        if (savedUser) {
+            dispatch(setUser(JSON.parse(savedUser)))
+        }
+    }, [dispatch, savedUser])
 
     useEffect(() => {
         if (showPopupMenuProfile) {
@@ -41,6 +49,17 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
             document.body.classList.remove("modal-open")
         }
     }, [showPopupMenuProfile])
+
+    // Check if user is available and handle loading or redirecting
+    if (!user) {
+        if (savedUser) {
+            return <h1>Loading user...</h1>
+        } else {
+            handleLogout()
+            return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
+        }
+    }
+
     return (
         <div
             className={`transition-all duration-500 ease-in-out ${showPopupMenu ? "opacity-100" : "opacity-0"}`}>

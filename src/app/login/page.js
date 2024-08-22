@@ -22,6 +22,7 @@ function Login() {
     const [shouldRemember, setShouldRemember] = useState(false)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
@@ -29,6 +30,8 @@ function Login() {
 
     const submitForm = async event => {
         event.preventDefault()
+
+        setIsLoading(true)
 
         await login(
             {
@@ -40,6 +43,8 @@ function Login() {
             },
             dispatch,
         )
+
+        setIsLoading(false)
     }
 
     return (
@@ -52,13 +57,15 @@ function Login() {
                             width={180}
                             height={60}
                             alt="Logo"
-                            className="cursor-pointer"
+                            className="h-auto w-auto cursor-pointer"
                         />
                     </Link>
                 </div>
                 <div className="flex flex-col items-center justify-center py-5">
                     <div className="h-fit w-full max-w-md rounded-xl border-[#BFC9D9] bg-white p-8 lg:border">
                         <AuthSessionStatus className="mb-4" status={status} />
+
+                        {isLoading && <div>Loading...</div>}
 
                         <form onSubmit={submitForm}>
                             <div className="py-6 text-2xl font-bold">Masuk</div>

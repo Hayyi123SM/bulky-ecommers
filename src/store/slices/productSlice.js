@@ -5,6 +5,7 @@ const initialState = {
     items: [],
     productDetails: {},
     relatedProducts: [],
+    searchResults: [],
     totalPages: 0,
     error: null,
     isLoading: false,
@@ -14,17 +15,67 @@ export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async ({ currentPage, filters }) => {
         try {
-            console.log("Filters:", filters)
+            // Build the params object dynamically
+            const params = {
+                page: currentPage,
+                ...(filters.perPage && { per_page: filters.perPage }),
+                ...(filters.search && { search: filters.search }),
+                ...(filters.categories &&
+                    filters.categories.length && {
+                        category: filters.categories.join(","),
+                    }),
+                ...(filters.conditions &&
+                    filters.conditions.length && {
+                        condition: filters.conditions.join(","),
+                    }),
+                ...(filters.statuses &&
+                    filters.statuses.length && {
+                        status: filters.statuses.join(","),
+                    }),
+                ...(filters.warehouses &&
+                    filters.warehouses.length && {
+                        warehouse: filters.warehouses.join(","),
+                    }),
+                ...(filters.priceMin && { price_min: filters.priceMin }),
+                ...(filters.priceMax && { price_max: filters.priceMax }),
+                ...(filters.brands &&
+                    filters.brands.length && { brands: filters.brands }),
+            }
+
             const response = await axios.get(`/api/products`, {
-                params: {
-                    page: currentPage,
-                    category: filters.categories.join(","),
-                    warehouse: filters.warehouses.join(","),
-                    condition: filters.conditions.join(","),
-                    status: filters.statuses.join(","),
+                params,
+                paramsSerializer: params => {
+                    return new URLSearchParams(params).toString()
                 },
             })
+
             console.log("API response Product:", response.data) // Log the API response
+            return response.data
+        } catch (error) {
+            console.error("Error fetching products:", error) // Log errors
+            throw error
+        }
+    },
+)
+
+export const fetchSearchProducts = createAsyncThunk(
+    "products/fetchSearchProducts",
+    async ({ currentPage, filters }) => {
+        try {
+            // Build the params object dynamically
+            const params = {
+                page: currentPage,
+                ...(filters.search && { search: filters.search }),
+            }
+
+            const response = await axios.get(`/api/products`, {
+                params,
+                paramsSerializer: params => {
+                    return new URLSearchParams(params).toString()
+                },
+            })
+
+            console.log("API response Search Product:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching products:", error) // Log errors
@@ -79,6 +130,20 @@ const productSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(fetchProducts.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(fetchSearchProducts.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchSearchProducts.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.searchResults = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(fetchSearchProducts.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

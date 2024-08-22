@@ -30,6 +30,7 @@ function ProductDetail({ params }) {
     const [mainImage, setMainImage] = useState("")
     const [productImages, setProductImages] = useState([])
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const savedUser = localStorage.getItem("user")
 
     const router = useRouter()
     const dispatch = useDispatch()
@@ -67,8 +68,12 @@ function ProductDetail({ params }) {
     }
 
     const handleAddToCart = product => {
-        dispatch(addToCart(product))
-        router.push("/cart")
+        if (savedUser) {
+            dispatch(addToCart(product))
+            router.push("/cart")
+        } else {
+            router.push("/login")
+        }
     }
 
     if (!products || !products.condition) {

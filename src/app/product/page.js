@@ -32,9 +32,6 @@ function Product() {
     const totalPages = useSelector(state => state.products.totalPages)
     const filters = useSelector(state => state.filters.selectedFilters)
 
-    console.log("====================================")
-    console.log("filters:", filters)
-    console.log("====================================")
     useEffect(() => {
         dispatch(fetchProducts({ page: currentPage, filters }))
     }, [currentPage, filters, dispatch])
