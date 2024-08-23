@@ -126,7 +126,7 @@ function Profile() {
                                         Tanggal Lahir
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        Agung Nugroho
+                                        28 September 1996
                                     </div>
                                 </div>
                                 <div className="flex py-4">
@@ -134,7 +134,7 @@ function Profile() {
                                         Jenis Kelamin
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        Agung Nugroho
+                                        Laki-laki
                                     </div>
                                 </div>
                             </div>

@@ -1,31 +1,45 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import { createPayment, fetchPaymentMethod } from "@/store/slices/orderSlice"
 import { ShieldCheckIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-function Payment() {
+function Payment({ params }) {
+    const invoiceId = params.invoiceId // Access the dynamic parameter
     const [selectedOption, setSelectedOption] = useState("Pilihan Pembayaran")
     const [selectedOptionCredit, setSelectedOptionCredit] =
         useState("Pilihan Pembayaran")
     const [selectedIcon, setSelectedIcon] = useState(null)
+    const [selectedId, setSelectedId] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenCredit, setIsOpenCredit] = useState(false)
     const [isCreditCard, setIsCreditCard] = useState(false)
+    const dispatch = useDispatch()
+    const paymentMethod = useSelector(state => state.orders.paymentMethod)
+    const afterCreatePayment = useSelector(
+        state => state.orders.afterCreatePayment,
+    )
+    const order = JSON.parse(localStorage.getItem("order"))
 
-    const handleOptionClick = (icon, option) => {
+    console.log("====================================")
+    console.log("order:", order)
+    console.log("invoiceId:", invoiceId)
+    console.log("====================================")
+    const handleOptionClick = (icon, option, id) => {
         setSelectedOption(option)
         setSelectedIcon(icon)
+        setSelectedId(id)
         setIsOpen(false)
 
-        if (option === "Kartu Kredit / Debit / Cicilan") {
-            setIsCreditCard(true)
-        } else {
-            setIsCreditCard(false)
-        }
+        // if (option === "Kartu Kredit") {
+        //     setIsCreditCard(true)
+        // } else {
+        setIsCreditCard(false)
+        // }
     }
 
     const handleOptionClickCredit = (icon, option) => {
@@ -33,6 +47,30 @@ function Payment() {
         setIsOpenCredit(false)
     }
 
+    useEffect(() => {
+        dispatch(fetchPaymentMethod())
+    }, [dispatch])
+
+    const handleCreatePayment = () => {
+        dispatch(
+            createPayment({
+                invoice_id: invoiceId,
+                payment_method: selectedId,
+            }),
+        )
+    }
+
+    useEffect(() => {
+        if (afterCreatePayment?.payment_url) {
+            window.location.href = afterCreatePayment.payment_url
+        }
+    }, [afterCreatePayment])
+
+    console.log("====================================")
+    console.log("afterCreatePayment:", afterCreatePayment)
+    console.log("====================================")
+    console.log("paymentMethod:", paymentMethod)
+    console.log("selectedId:", selectedId)
     return (
         <div>
             <div className="hidden lg:block">
@@ -80,137 +118,36 @@ function Payment() {
                                                 ? "max-h-screen opacity-100"
                                                 : "max-h-0 overflow-hidden opacity-0"
                                         }`}>
-                                        <div className="p-2 text-sm font-bold">
-                                            E-Wallet
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/gopay.svg",
-                                                    "Gopay",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/gopay.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="Gopay"
-                                                className="mr-2"
-                                            />
-                                            Gopay
-                                        </div>
-                                        <div className="p-2 text-sm font-bold">
-                                            Kartu Kredit / Debit / Cicilan
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/credit.svg",
-                                                    "Kartu Kredit / Debit / Cicilan",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/credit.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="Kartu Kredit / Debit / Cicilan"
-                                                className="mr-2"
-                                            />
-                                            Kartu Kredit / Debit / Cicilan
-                                        </div>
-                                        <div className="p-2 text-sm font-bold">
-                                            Virtual Account
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/mandiri.svg",
-                                                    "Mandiri Virtual Account",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/mandiri.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="Mandiri Virtual Account"
-                                                className="mr-2"
-                                            />
-                                            Mandiri Virtual Account
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/bca.svg",
-                                                    "BCA Virtual Account",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/bca.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="BCA Virtual Account"
-                                                className="mr-2"
-                                            />
-                                            BCA Virtual Account
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/bri.svg",
-                                                    "BRIVA",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/bri.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="BRIVA"
-                                                className="mr-2"
-                                            />
-                                            BRIVA
-                                        </div>
-                                        <div className="p-2 text-sm font-bold">
-                                            Pembayaran Instan
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/klik-bca.svg",
-                                                    "Klik BCA",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/klik-bca.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="Klik BCA"
-                                                className="mr-2"
-                                            />
-                                            Klik BCA
-                                        </div>
-                                        <div
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(
-                                                    "/qris.svg",
-                                                    "QRIS",
-                                                )
-                                            }>
-                                            <Image
-                                                src="/qris.svg"
-                                                width={24}
-                                                height={24}
-                                                alt="QRIS"
-                                                className="mr-2"
-                                            />
-                                            QRIS
-                                        </div>
+                                        {paymentMethod.map(groups => (
+                                            <div key={groups.id}>
+                                                <div className="p-2 text-sm font-bold">
+                                                    {groups.group}
+                                                </div>
+                                                {groups.methods.map(method => (
+                                                    <div
+                                                        key={method.id}
+                                                        className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
+                                                        onClick={() =>
+                                                            handleOptionClick(
+                                                                "/" +
+                                                                    method.name +
+                                                                    ".svg",
+                                                                method.name,
+                                                                method.id,
+                                                            )
+                                                        }>
+                                                        <Image
+                                                            src={`/${method.name}.svg`}
+                                                            width={24}
+                                                            height={24}
+                                                            alt={method.name}
+                                                            className="mr-2"
+                                                        />
+                                                        {method.name}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -347,24 +284,12 @@ function Payment() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Harga (2 Barang)
+                                        Total Harga
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-md font-light">
-                                        Rp428.260
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="flex justify-between">
-                                <div className="text-sm leading-6">
-                                    <label className="text-sm font-light">
-                                        Biaya Layanan
-                                    </label>
-                                </div>
-                                <div className="ml-5 text-right text-sm leading-6">
-                                    <label className="text-md font-light text-[#007185]">
-                                        Rp1.000
+                                        {order && order.total_price?.formatted}
                                     </label>
                                 </div>
                             </div>
@@ -377,26 +302,30 @@ function Payment() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-lg font-bold">
-                                        Rp429.260
+                                        {order && order.total_price?.formatted}
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-0.5 hidden h-fit w-full rounded-b-xl bg-white p-8 lg:block lg:max-w-xl">
-                            <Link href="/payment">
-                                <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                    Bayar
-                                </div>
-                            </Link>
+                            {/* <Link href="/payment"> */}
+                            <div
+                                onClick={() => handleCreatePayment()}
+                                className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
+                                Bayar
+                            </div>
+                            {/* </Link> */}
                         </div>
-                        <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
-                            <Link href="/payment">
-                                <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                    Bayar
-                                </div>
-                            </Link>
+                        <div
+                            onClick={() => handleCreatePayment()}
+                            className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
+                            {/* <Link href="/payment"> */}
+                            <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
+                                Bayar
+                            </div>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>

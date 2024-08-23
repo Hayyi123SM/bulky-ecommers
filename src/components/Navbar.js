@@ -82,7 +82,7 @@ function Navbar({ togglePopupMenu }) {
                         />
                         {showSearchResults && (
                             <>
-                                <div className="fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
+                                <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
                                     {" "}
                                 </div>
                                 <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
@@ -90,14 +90,13 @@ function Navbar({ togglePopupMenu }) {
                                         {searchResults &&
                                         searchResults.length > 0 ? (
                                             searchResults.map(product => (
-                                                <li
-                                                    key={product.id}
-                                                    className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
-                                                    <Link
-                                                        href={`/product/${product.slug}`}>
+                                                <Link
+                                                    href={`/product/${product.slug}`}
+                                                    key={product.id}>
+                                                    <li className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
                                                         {product.name}
-                                                    </Link>
-                                                </li>
+                                                    </li>
+                                                </Link>
                                             ))
                                         ) : (
                                             <li className="flex items-center justify-between px-4 py-2">
@@ -135,7 +134,7 @@ function Navbar({ togglePopupMenu }) {
                                 />
                             </Link>
                         </div>
-                        <div className="item-center flex pl-10 lg:w-6/12 xl:w-7/12 2xl:w-9/12">
+                        <div className="item-center flex pl-10 lg:w-6/12 xl:w-7/12 2xl:w-8/12">
                             <div className="relative w-full">
                                 <input
                                     ref={inputRef}
@@ -146,7 +145,7 @@ function Navbar({ togglePopupMenu }) {
                                 />
                                 {showSearchResults && (
                                     <>
-                                        <div className="fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
+                                        <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
                                             {" "}
                                         </div>
                                         <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
@@ -155,16 +154,21 @@ function Navbar({ togglePopupMenu }) {
                                                 searchResults.length > 0 ? (
                                                     searchResults.map(
                                                         product => (
-                                                            <li
-                                                                key={product.id}
-                                                                className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
-                                                                <Link
-                                                                    href={`/product/${product.slug}`}>
+                                                            <Link
+                                                                href={`/product/${product.slug}`}
+                                                                key={
+                                                                    product.id
+                                                                }>
+                                                                <li
+                                                                    className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]"
+                                                                    onMouseDown={e =>
+                                                                        e.preventDefault()
+                                                                    }>
                                                                     {
                                                                         product.name
                                                                     }
-                                                                </Link>
-                                                            </li>
+                                                                </li>
+                                                            </Link>
                                                         ),
                                                     )
                                                 ) : (
@@ -181,7 +185,7 @@ function Navbar({ togglePopupMenu }) {
                                 )}
                             </div>
                         </div>
-                        <div className="flex lg:w-5/12 xl:w-4/12 2xl:w-2/12">
+                        <div className="flex lg:w-5/12 xl:w-4/12 2xl:w-3/12">
                             <div className="flex w-full items-center justify-end">
                                 <div className="flex items-center">
                                     <BellIcon className="mr-2 h-9 w-9 font-bold text-white" />
@@ -191,7 +195,7 @@ function Navbar({ togglePopupMenu }) {
                                         <ArchiveBoxIcon className="h-9 w-9 font-bold text-white" />
                                         <div className="ml-3 text-center text-white">
                                             <div className="text-sm">
-                                                Pesanan
+                                                Keranjang
                                             </div>
                                             <div className="text-sm font-bold">
                                                 0 Items
@@ -199,26 +203,28 @@ function Navbar({ togglePopupMenu }) {
                                         </div>
                                     </div>
                                 </Link>
-                                {isAuthenticated ? (
+                                {!isAuthenticated ? (
                                     <Link
                                         href="/login"
                                         className="ml-5 cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                         Masuk
                                     </Link>
                                 ) : (
-                                    <div className="flex items-center px-7 py-2">
-                                        <div className="ml-3 text-white">
-                                            <div className="text-sm">
-                                                Welcome
-                                            </div>
-                                            <div className="flex cursor-pointer items-center">
-                                                <div className="mr-2 text-sm font-bold">
-                                                    {user.name}
+                                    <Link href="/profile">
+                                        <div className="flex items-center px-7 py-2">
+                                            <div className="ml-3 text-white">
+                                                <div className="text-sm">
+                                                    Welcome
                                                 </div>
-                                                <ChevronDownIcon className="h-5 w-5 font-bold text-white" />
+                                                <div className="flex cursor-pointer items-center">
+                                                    <div className="mr-2 text-sm font-bold">
+                                                        {user.name}
+                                                    </div>
+                                                    <ChevronDownIcon className="h-5 w-5 font-bold text-white" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 )}
                             </div>
                         </div>

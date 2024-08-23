@@ -5,6 +5,7 @@ module.exports = {
             "cdn.dummyjson.com",
             "octagon.test",
             "back-office.bulky.id",
+            "localhost",
         ],
     },
     output: "standalone",

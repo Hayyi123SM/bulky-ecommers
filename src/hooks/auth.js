@@ -35,9 +35,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .post("/api/auth/web/register", props)
             .then(() => mutate())
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                if (error.response.status === 422) {
+                    // Set the validation errors to the state
+                    setErrors(error.response.data.errors)
+                } else {
+                    console.error("An unexpected error occurred:", error)
+                }
             })
     }
 

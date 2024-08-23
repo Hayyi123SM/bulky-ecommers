@@ -1,9 +1,12 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
 function SidebarProfile() {
-    const user = JSON.parse(localStorage.getItem("user"))
+    const savedUser = localStorage.getItem("user")
+    const user = JSON.parse(savedUser)
 
     if (!user) {
         return <div>Loading...</div>
@@ -47,7 +50,7 @@ function SidebarProfile() {
             </Link>
             <Link href="/order-split">
                 <div className="rounded-lg py-3 pl-5 text-xs font-light hover:bg-[#F5F5F5]">
-                    Split Payment
+                    Pembayaran Patungan
                 </div>
             </Link>
         </div>

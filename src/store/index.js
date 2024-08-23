@@ -5,6 +5,7 @@ import videoReducer from "./slices/videoSlice"
 import cartSlice from "./slices/cartSlice"
 import authSlice from "./slices/authSlice"
 import filterSlice from "./slices/filterSlice"
+import orderSlice from "./slices/orderSlice"
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
         videos: videoReducer,
         carts: cartSlice,
         filters: filterSlice,
+        orders: orderSlice,
     },
 })

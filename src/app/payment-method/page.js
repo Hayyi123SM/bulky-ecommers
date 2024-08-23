@@ -10,10 +10,12 @@ import {
     PlusCircleIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function PaymentMethod() {
+    const router = useRouter()
     const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
     const [selectedIcon, setSelectedIcon] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -22,6 +24,7 @@ function PaymentMethod() {
     const [isSplitPayment, setIsSplitPayment] = useState(false)
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
+    const order = useSelector(state => state.carts.order)
 
     const handleOptionClick = (icon, option) => {
         setSelectedOption(option)
@@ -50,6 +53,20 @@ function PaymentMethod() {
             dispatch(placeOrders({ payment_type, friend_ids }))
         }
     }
+
+    useEffect(() => {
+        console.log("====================================")
+        console.log("order:", order)
+        console.log("====================================")
+        if (order && order.invoices.length > 0) {
+            router.push("/payment-method/" + order.invoices[0]?.id)
+            console.log("====================================")
+            console.log("order:", order.invoices[0]?.id)
+            console.log("====================================")
+        }
+
+        localStorage.setItem("order", JSON.stringify(order))
+    }, [order, router])
 
     if (!cart) {
         return <div>Loading...</div>

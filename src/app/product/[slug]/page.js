@@ -126,6 +126,7 @@ function ProductDetail({ params }) {
                                 alt="main product"
                                 width={500}
                                 height={400}
+                                priority={true}
                             />
                         </div>
                     </div>

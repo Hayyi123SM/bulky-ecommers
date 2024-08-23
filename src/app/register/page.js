@@ -63,6 +63,8 @@ function Register() {
                 setStatus,
             },
             dispatch,
+            setErrors,
+            setStatus,
         )
     }
 
@@ -123,7 +125,7 @@ function Register() {
                                     className={"mt-2"}
                                 />
                             </div>
-                            <div className="py-2">
+                            {/* <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                     Provinsi
                                 </div>
@@ -174,7 +176,7 @@ function Register() {
                                         className={"mt-2"}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                     Email

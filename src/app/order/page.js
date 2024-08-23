@@ -1,13 +1,48 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { useAuth } from "@/hooks/auth"
+import { fetchOrders } from "@/store/slices/orderSlice"
 import {
     ArrowLeftIcon,
     ChevronDownIcon,
     XMarkIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Order() {
+    const searchParams = useSearchParams()
+    const currentPage = parseInt(searchParams.get("page")) || 1
+    const { user } = useAuth()
+    const dispatch = useDispatch()
+    const orders = useSelector(state => state.orders.orders)
+
+    useEffect(() => {
+        if (user) {
+            console.log("user:", user)
+            dispatch(
+                fetchOrders({
+                    page: currentPage,
+                    type: "waiting_payment",
+                    perPage: "",
+                    search: "",
+                    date: "2024-08-22",
+                    status: "",
+                }),
+            )
+        }
+    }, [dispatch, user])
+
+    if (!orders) return <div>Loading ... </div>
+
+    console.log("====================================")
+    console.log("orders:", orders)
+    console.log("====================================")
+
     return (
         <div>
             <div className="hidden lg:block">
@@ -85,10 +120,58 @@ function Order() {
                         </div>
                     </div>
                     {/* Start : View Website */}
-                    <div className="hidden items-center border-b border-[#F0F3F7] bg-white px-5 py-4 lg:flex">
-                        <div className="w-1/2 border-r">
+                    {orders.map((order, index) => (
+                        <div
+                            key={index}
+                            className="hidden items-center border-b border-[#F0F3F7] bg-white px-5 py-4 lg:flex">
+                            <div className="w-1/2 border-r">
+                                <div className="flex items-center">
+                                    <div>
+                                        <Image
+                                            src="/product.png"
+                                            width={100}
+                                            height={100}
+                                            alt="cart-product"
+                                        />
+                                    </div>
+                                    <div className="ml-5 text-sm leading-6">
+                                        <div className="text-md pb-1">
+                                            Motul ATF VI Automatic Transmission
+                                            Fluid 105774
+                                        </div>
+                                        <div className="text-md font-bold">
+                                            {order.total_price.formatted}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="w-1/2">
+                                <div className="flex items-center justify-between">
+                                    <div className="ml-5 text-sm leading-6">
+                                        <div className="text-md pb-1">
+                                            Status Pesanan:
+                                        </div>
+                                        <div
+                                            className={`w-fit rounded-lg bg-[${order.order_status.color}] px-2 py-1 text-xs font-semibold text-[#007185]`}>
+                                            {order.order_status.label}
+                                        </div>
+                                    </div>
+                                    <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                        Lacak Pesanan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    {/* End : View Website */}
+
+                    {/* Start : View Mobile */}
+                    {orders.map((order, index) => (
+                        <div
+                            key={index}
+                            className="m-4 flex flex-col items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
                             <div className="flex items-center">
-                                <div>
+                                <div className="w-1/3">
                                     <Image
                                         src="/product.png"
                                         width={100}
@@ -96,60 +179,22 @@ function Order() {
                                         alt="cart-product"
                                     />
                                 </div>
-                                <div className="ml-5 text-sm leading-6">
+                                <div className="ml-5 w-2/3 text-sm leading-6">
                                     <div className="text-md pb-1">
                                         Motul ATF VI Automatic Transmission
                                         Fluid 105774
                                     </div>
                                     <div className="text-md font-bold">
-                                        Rp8.126.777
+                                        {order.total_price.formatted}
+                                    </div>
+                                    <div
+                                        className={`mt-2 w-fit rounded-xl bg-[${order.order_status.color}] px-2 py-1 text-xs font-semibold text-[#007185]`}>
+                                        {order.order_status.label}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="w-1/2">
-                            <div className="flex items-center justify-between">
-                                <div className="ml-5 text-sm leading-6">
-                                    <div className="text-md pb-1">
-                                        Status Pesanan:
-                                    </div>
-                                    <div className="w-fit rounded-lg bg-[#F4FDFF] px-2 py-1 text-xs font-semibold text-[#007185]">
-                                        Dikirim
-                                    </div>
-                                </div>
-                                <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Lacak Pesanan
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* End : View Website */}
-
-                    {/* Start : View Mobile */}
-                    <div className="m-4 flex flex-col items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
-                        <div className="flex items-center">
-                            <div className="w-1/3">
-                                <Image
-                                    src="/product.png"
-                                    width={100}
-                                    height={100}
-                                    alt="cart-product"
-                                />
-                            </div>
-                            <div className="ml-5 w-2/3 text-sm leading-6">
-                                <div className="text-md pb-1">
-                                    Motul ATF VI Automatic Transmission Fluid
-                                    105774
-                                </div>
-                                <div className="text-md font-bold">
-                                    Rp8.126.777
-                                </div>
-                                <div className="mt-2 w-fit rounded-xl bg-[#F4FDFF] px-2 py-1 text-xs font-semibold text-[#007185]">
-                                    Dikirim
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                     {/* End : View Mobile */}
                 </div>
             </div>
