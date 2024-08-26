@@ -30,12 +30,16 @@ function ProductDetail({ params }) {
     const [mainImage, setMainImage] = useState("")
     const [productImages, setProductImages] = useState([])
     const [showPopupMenu, setShowPopupMenu] = useState(false)
-    const savedUser = localStorage.getItem("user")
-
     const router = useRouter()
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.productDetails)
     const relatedProducts = useSelector(state => state.products.relatedProducts)
+    const [savedUser, setSavedUser] = useState(null)
+
+    useEffect(() => {
+        const getUser = localStorage.getItem("user")
+        setSavedUser(getUser)
+    }, [])
 
     useEffect(() => {
         if (productId) {

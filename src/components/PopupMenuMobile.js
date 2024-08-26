@@ -25,7 +25,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const { logout } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
-    const savedUser = localStorage.getItem("user")
+    const [savedUser, setSavedUser] = useState(null)
 
     const handleLogout = async () => {
         await logout({ redirect: "/" })
@@ -35,6 +35,11 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const setTogglePopupMenuProfile = () => {
         setShowPopupMenuProfile(!showPopupMenuProfile)
     }
+
+    useEffect(() => {
+        const getUser = localStorage.getItem("user")
+        setSavedUser(getUser)
+    }, [])
 
     useEffect(() => {
         if (savedUser) {

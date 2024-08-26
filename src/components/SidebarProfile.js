@@ -2,11 +2,15 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 function SidebarProfile() {
-    const savedUser = localStorage.getItem("user")
-    const user = JSON.parse(savedUser)
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        const getUser = JSON.parse(localStorage.getItem("user"))
+        setUser(getUser)
+    }, [])
 
     if (!user) {
         return <div>Loading...</div>

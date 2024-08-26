@@ -23,7 +23,12 @@ function Payment({ params }) {
     const afterCreatePayment = useSelector(
         state => state.orders.afterCreatePayment,
     )
-    const order = JSON.parse(localStorage.getItem("order"))
+    const [order, setOrder] = useState(null)
+
+    useEffect(() => {
+        const getOrder = JSON.parse(localStorage.getItem("order"))
+        setOrder(getOrder)
+    }, [])
 
     console.log("====================================")
     console.log("order:", order)

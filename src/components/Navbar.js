@@ -10,20 +10,24 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Navbar({ togglePopupMenu }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const user = JSON.parse(localStorage.getItem("user"))
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
     const inputRef = useRef(null)
     const searchResults = useSelector(state => state.products.searchResults)
     const searchParams = useSearchParams()
     const currentPage = parseInt(searchParams.get("page")) || 1
-
+    const [user, setUser] = useState(null)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        const getUser = JSON.parse(localStorage.getItem("user"))
+        setUser(getUser)
+    }, [])
 
     useEffect(() => {
         setIsAuthenticated(user !== null)
@@ -54,7 +58,7 @@ function Navbar({ togglePopupMenu }) {
     }, [setShowSearchResults])
 
     return (
-        <>
+        <Suspense fallback={<div>Loading ... </div>}>
             <div className="sticky top-0 z-40">
                 <nav className="block h-[134px] bg-primary px-4 py-3 lg:hidden">
                     <div className="flex items-center justify-between">
@@ -247,7 +251,7 @@ function Navbar({ togglePopupMenu }) {
                     </div>
                 </nav>
             </div>
-        </>
+        </Suspense>
     )
 }
 

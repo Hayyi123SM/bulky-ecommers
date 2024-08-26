@@ -8,33 +8,67 @@ import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Profile() {
     const { logout } = useAuth({ middleware: "guest" })
     const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
-    const savedUser = localStorage.getItem("user")
+    const [savedUser, setSavedUser] = useState(null)
+    const [isLoading, setIsLoading] = useState(true) // Add a loading state
 
     // Define handleLogout function before using it
     const handleLogout = async () => {
+        console.log("Handling logout...")
         await logout({ redirect: "/" })
         dispatch(clearUser())
     }
 
+    // Load user from local storage and update state
+    useEffect(() => {
+        const getUser = localStorage.getItem("user")
+        if (getUser) {
+            const parsedUser = JSON.parse(getUser)
+            console.log("Parsed user from local storage:", parsedUser)
+            setSavedUser(parsedUser)
+        }
+        // Set isLoading to false after checking local storage
+        setIsLoading(false)
+    }, [])
+
+    // Update Redux store with the loaded user data
     useEffect(() => {
         if (savedUser) {
-            dispatch(setUser(JSON.parse(savedUser)))
+            console.log("Dispatching setUser with:", savedUser)
+            dispatch(setUser(savedUser))
+        } else {
+            // If savedUser is null, handle user clearing
+            dispatch(clearUser())
         }
     }, [dispatch, savedUser])
 
-    // Check if user is available and handle loading or redirecting
+    // Monitor the `user` state and handle loading or redirecting
+    useEffect(() => {
+        if (!isLoading) {
+            if (!user && !savedUser) {
+                console.log("Logging out as user and savedUser are null")
+                handleLogout() // Trigger logout when data is not available
+            }
+        }
+    }, [user, savedUser, isLoading])
+
+    if (isLoading) {
+        return <h1>Loading...</h1> // Show a loading state until data is processed
+    }
+
     if (!user) {
+        console.log("user is null")
         if (savedUser) {
+            console.log("savedUser exists:", savedUser)
             return <h1>Loading user...</h1>
         } else {
-            handleLogout()
+            console.log("Redirecting...")
             return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
         }
     }
