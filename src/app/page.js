@@ -34,7 +34,7 @@ function Home() {
 
     useEffect(() => {
         dispatch(fetchBanners())
-        dispatch(fetchProducts({ page: currentPage, filters: [] }))
+        dispatch(fetchProducts({ filters: { perPage: 6 } }))
         dispatch(fetchVideos(currentPage))
     }, [dispatch])
 

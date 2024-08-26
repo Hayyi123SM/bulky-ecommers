@@ -1,18 +1,25 @@
 "use client"
 
 import AuthSessionStatus from "@/components/AuthSessionStatus"
+import AreaSelect from "@/components/AreaSelect"
 import InputError from "@/components/InputError"
 import { useAuth } from "@/hooks/auth"
+import {
+    fetchCities,
+    fetchDistricts,
+    fetchProvinces,
+    fetchSubDistricts,
+} from "@/store/slices/areaSlice"
 import { ArrowLeftIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Register() {
     const { register } = useAuth({
         middleware: "guest",
-        redirectIfAuthenticated: "/profile",
+        redirectIfAuthenticated: "/",
     })
 
     const dispatch = useDispatch()
@@ -20,6 +27,7 @@ function Register() {
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [name, setName] = useState("")
+    const [username, setUsername] = useState("")
     const [provinceId, setProvinceId] = useState("")
     const [cityId, setCityId] = useState("")
     const [districtId, setDistrictId] = useState("")
@@ -30,16 +38,40 @@ function Register() {
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
 
+    useEffect(() => {
+        dispatch(fetchProvinces())
+    }, [dispatch])
+
+    const provinces = useSelector(state => state.area.provinces)
+    const cities = useSelector(state => state.area.cities)
+    const districts = useSelector(state => state.area.districts)
+    const subDistricts = useSelector(state => state.area.subDistricts)
+
+    console.log("Provinces:", provinces)
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
     }
 
-    const submitForm = async event => {
-        setProvinceId("9a171c42-956d-4cbf-898e-2a3a78536768")
-        setCityId("9a171c4b-aaf0-452b-a00b-8d60261982dd")
-        setDistrictId("9a1920a9-b01f-4e14-9967-8192c6ca6611")
-        setSubDistrictId("9a171c4d-5918-4af4-b98d-b1ec3d41a42b")
+    const handleSelectProvince = option => {
+        setProvinceId(option.id)
+        dispatch(fetchCities(option.id))
+    }
 
+    const handleSelectCity = option => {
+        setCityId(option.id)
+        dispatch(fetchDistricts(option.id))
+    }
+
+    const handleSelectDistrict = option => {
+        setDistrictId(option.id)
+        dispatch(fetchSubDistricts(option.id))
+    }
+
+    const handleSelectSubDistrict = option => {
+        setSubDistrictId(option.id)
+    }
+
+    const submitForm = async event => {
         if (password !== passwordConfirmation) {
             setErrors({ password: "The password confirmation does not match." })
             return
@@ -111,6 +143,22 @@ function Register() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                    Username
+                                </div>
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={e => setUsername(e.target.value)}
+                                    className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    placeholder="cth: jhondoe123"
+                                />
+                                <InputError
+                                    messages={errors.name}
+                                    className={"mt-2"}
+                                />
+                            </div>
+                            <div className="py-2">
+                                <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                     Alamat
                                 </div>
                                 <input
@@ -125,40 +173,45 @@ function Register() {
                                     className={"mt-2"}
                                 />
                             </div>
-                            {/* <div className="py-2">
-                                <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Provinsi
+                            <div className="flex py-2">
+                                <div className="mr-5 w-1/2">
+                                    <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                        Provinsi
+                                    </div>
+                                    <AreaSelect
+                                        options={provinces}
+                                        onSelect={handleSelectProvince}
+                                    />
+                                    <InputError
+                                        messages={errors.provinceId}
+                                        className={"mt-2"}
+                                    />
                                 </div>
-                                <input
-                                    type="text"
-                                    value={provinceId}
-                                    onChange={e =>
-                                        setProvinceId(e.target.value)
-                                    }
-                                    className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="Provinsi"
-                                />
-                                <InputError
-                                    messages={errors.provinceId}
-                                    className={"mt-2"}
-                                />
+                                <div className="w-1/2">
+                                    <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                        Kota / Kabupaten
+                                    </div>
+                                    <AreaSelect
+                                        options={cities}
+                                        onSelect={handleSelectCity}
+                                    />
+                                    <InputError
+                                        messages={errors.cityId}
+                                        className={"mt-2"}
+                                    />
+                                </div>
                             </div>
                             <div className="flex py-2">
                                 <div className="mr-5 w-1/2">
                                     <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                        Kota / Kabupaten
+                                        Kecamatan
                                     </div>
-                                    <input
-                                        type="text"
-                                        value={cityId}
-                                        onChange={e =>
-                                            setCityId(e.target.value)
-                                        }
-                                        className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                        placeholder="Kota / Kabupaten"
+                                    <AreaSelect
+                                        options={districts}
+                                        onSelect={handleSelectDistrict}
                                     />
                                     <InputError
-                                        messages={errors.cityId}
+                                        messages={errors.districtId}
                                         className={"mt-2"}
                                     />
                                 </div>
@@ -166,17 +219,16 @@ function Register() {
                                     <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                         Kode Pos
                                     </div>
-                                    <input
-                                        type="text"
-                                        className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                        placeholder="Kode Pos"
+                                    <AreaSelect
+                                        options={subDistricts}
+                                        onSelect={handleSelectSubDistrict}
                                     />
                                     <InputError
-                                        messages={errors.email}
+                                        messages={errors.subDistrictId}
                                         className={"mt-2"}
                                     />
                                 </div>
-                            </div> */}
+                            </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                     Email
