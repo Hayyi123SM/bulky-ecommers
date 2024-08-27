@@ -136,14 +136,14 @@ function Payment({ params }) {
                                                         onClick={() =>
                                                             handleOptionClick(
                                                                 "/" +
-                                                                    method.name +
+                                                                    method.code +
                                                                     ".svg",
                                                                 method.name,
                                                                 method.id,
                                                             )
                                                         }>
                                                         <Image
-                                                            src={`/${method.name}.svg`}
+                                                            src={`/${method.code}.svg`}
                                                             width={24}
                                                             height={24}
                                                             alt={method.name}

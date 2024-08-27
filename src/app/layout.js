@@ -1,4 +1,4 @@
-import ClientProvider from "@/components/ClientProvider"
+import dynamic from "next/dynamic"
 import "../../styles/globals.css"
 
 export const metadata = {
@@ -6,14 +6,18 @@ export const metadata = {
     description: "Liquidity",
 }
 
+const ClientProvider = dynamic(() => import("@/components/ClientProvider"), {
+    ssr: false,
+})
+
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <link rel="icon" href="/logobulky.png" sizes="any" />
+            <head>
+                <link rel="icon" href="/logobulky.png" sizes="any" />
+            </head>
             <body>
-                <div>
-                    <ClientProvider>{children}</ClientProvider>
-                </div>
+                <ClientProvider>{children}</ClientProvider>
             </body>
         </html>
     )
