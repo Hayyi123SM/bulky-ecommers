@@ -24,6 +24,7 @@ function SidebarProfile() {
                     height={56}
                     alt="Profile"
                     className="cursor-pointer"
+                    priority={false}
                 />
                 <div className="ml-3">
                     <div className="pb-1 text-sm font-bold">{user.name}</div>

@@ -68,7 +68,8 @@ function Navbar({ togglePopupMenu }) {
                                 width={100}
                                 height={30}
                                 alt="Logo"
-                                className="cursor-pointer"
+                                className="h-auto w-full cursor-pointer"
+                                priority={false}
                             />
                         </Link>
                         <Bars3BottomRightIcon
@@ -134,7 +135,8 @@ function Navbar({ togglePopupMenu }) {
                                     width={100}
                                     height={30}
                                     alt="Logo"
-                                    className="cursor-pointer"
+                                    className="h-auto w-full cursor-pointer"
+                                    priority={false}
                                 />
                             </Link>
                         </div>

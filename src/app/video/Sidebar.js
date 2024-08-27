@@ -41,6 +41,7 @@ function Sidebar() {
                                     width={28}
                                     height={28}
                                     className="rounded-full"
+                                    priority={false}
                                 />
                             </div>
                             <div className="ml-2 text-sm leading-6">
@@ -57,6 +58,7 @@ function Sidebar() {
                                     width={28}
                                     height={28}
                                     className="rounded-full"
+                                    priority={false}
                                 />
                             </div>
                             <div className="ml-2 text-sm leading-6">
@@ -73,6 +75,7 @@ function Sidebar() {
                                     width={28}
                                     height={28}
                                     className="rounded-full"
+                                    priority={false}
                                 />
                             </div>
                             <div className="ml-2 text-sm leading-6">

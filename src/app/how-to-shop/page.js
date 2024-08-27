@@ -40,6 +40,7 @@ function HowToShop() {
                                             width={120}
                                             height={120}
                                             alt="Logo"
+                                            priority={false}
                                         />
                                     </div>
                                     <div className="lg:w-4/5">
@@ -71,6 +72,7 @@ function HowToShop() {
                                             width={120}
                                             height={120}
                                             alt="Logo"
+                                            priority={false}
                                         />
                                     </div>
                                     <div className="lg:w-4/5">

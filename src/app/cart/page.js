@@ -142,6 +142,7 @@ function Cart() {
                                                 height={100}
                                                 alt="cart-product"
                                                 className="ml-3 w-2/3"
+                                                priority={false}
                                             />
                                         </div>
                                         <div className="ml-5 w-2/5 text-sm leading-6">

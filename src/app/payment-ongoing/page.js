@@ -55,6 +55,7 @@ function PaymentOnGoing() {
                                         width={50}
                                         height={50}
                                         alt="BCA"
+                                        priority={false}
                                     />
                                 </div>
                             </div>

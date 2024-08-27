@@ -89,6 +89,7 @@ function AboutPayment() {
                                                     width={100}
                                                     height={100}
                                                     alt="Logo"
+                                                    priority={false}
                                                 />
                                             ))}
                                         </div>

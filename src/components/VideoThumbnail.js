@@ -16,6 +16,7 @@ function VideoThumbnail({
                 width={500}
                 height={500}
                 className="rounded-t-xl"
+                priority={false}
             />
             <div className="flex p-4">
                 {/* <div className="w-3/12">

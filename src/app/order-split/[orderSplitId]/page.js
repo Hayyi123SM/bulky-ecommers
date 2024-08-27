@@ -37,6 +37,7 @@ function OrderDetail() {
                                         width={100}
                                         height={100}
                                         alt="cart-product"
+                                        priority={false}
                                     />
                                 </div>
                                 <div className="ml-5 text-sm leading-6">
@@ -153,6 +154,7 @@ function OrderDetail() {
                                                 height={40}
                                                 alt="single"
                                                 className="mr-4"
+                                                priority={false}
                                             />
                                             <div>
                                                 <div className="text-sm font-medium">
@@ -180,6 +182,7 @@ function OrderDetail() {
                                                 height={40}
                                                 alt="single"
                                                 className="mr-4"
+                                                priority={false}
                                             />
                                             <div>
                                                 <div className="text-sm font-medium">
@@ -207,6 +210,7 @@ function OrderDetail() {
                                                 height={40}
                                                 alt="single"
                                                 className="mr-4"
+                                                priority={false}
                                             />
                                             <div>
                                                 <div className="text-sm font-medium">

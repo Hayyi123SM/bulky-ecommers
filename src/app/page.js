@@ -83,6 +83,8 @@ function Home() {
                                         src={banner.full_url}
                                         alt={`Banner ${index}`}
                                         fill
+                                        priority={false}
+                                        className="h-full w-full object-cover"
                                     />
                                 </div>
                             ))}

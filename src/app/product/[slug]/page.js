@@ -120,6 +120,7 @@ function ProductDetail({ params }) {
                                 height={80}
                                 className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${mainImage === image ? "border-[#007185]" : "border-[#BFC9D9]"}`}
                                 onClick={() => setMainImage(image)}
+                                priority={false}
                             />
                         ))}
                     </div>
@@ -148,6 +149,7 @@ function ProductDetail({ params }) {
                                         alt={`product-${index}`}
                                         width={1000}
                                         height={1000}
+                                        priority={false}
                                     />
                                 </SwiperSlide>
                             ))}
@@ -218,6 +220,7 @@ function ProductDetail({ params }) {
                                 alt="package"
                                 width={56}
                                 height={56}
+                                                    priority={false}
                             />
                             <div className="ml-2 text-xs">
                                 Saat ini barang sedang dalam proses pembayaran
@@ -245,12 +248,14 @@ function ProductDetail({ params }) {
                                 alt="mandiri"
                                 width={50}
                                 height={50}
+                                                    priority={false}
                             />
                             <Image
                                 src="/mandiri.svg"
                                 alt="mandiri"
                                 width={50}
                                 height={50}
+                                                    priority={false}
                             />
                         </div> */}
                     </div>

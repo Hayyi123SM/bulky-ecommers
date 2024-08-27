@@ -15,6 +15,7 @@ function TestimoniCard({ review, name, image, title }) {
                         width={70}
                         height={70}
                         className="rounded-full"
+                        priority={false}
                     />
                 </div>
                 <div className="bg-[#F5F5F5] py-5 text-center">

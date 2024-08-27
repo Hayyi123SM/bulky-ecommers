@@ -107,6 +107,7 @@ function PaymentMethod() {
                                                     height={24}
                                                     alt="Gopay"
                                                     className="mr-2"
+                                                    priority={false}
                                                 />
                                             )}
                                             {selectedOption}
@@ -133,6 +134,7 @@ function PaymentMethod() {
                                                 height={24}
                                                 alt="single"
                                                 className="mr-2"
+                                                priority={false}
                                             />
                                             Bayar Langsung
                                         </div>
@@ -150,6 +152,7 @@ function PaymentMethod() {
                                                 height={24}
                                                 alt="split"
                                                 className="mr-2"
+                                                priority={false}
                                             />
                                             Bayar Patungan dengan Teman
                                         </div>
@@ -174,6 +177,7 @@ function PaymentMethod() {
                                                         width={40}
                                                         height={40}
                                                         className="rounded-full"
+                                                        priority={false}
                                                     />
                                                 </div>
                                                 <div className="ml-4 text-sm leading-4">
@@ -195,6 +199,7 @@ function PaymentMethod() {
                                                         width={40}
                                                         height={40}
                                                         className="rounded-full"
+                                                        priority={false}
                                                     />
                                                 </div>
                                                 <div className="ml-4 text-sm leading-4">
@@ -267,6 +272,7 @@ function PaymentMethod() {
                                                         height={32}
                                                         alt="single"
                                                         className="mr-4"
+                                                        priority={false}
                                                     />
                                                     Brooklyn Simmons
                                                 </div>
@@ -287,6 +293,7 @@ function PaymentMethod() {
                                                         height={32}
                                                         alt="single"
                                                         className="mr-4"
+                                                        priority={false}
                                                     />
                                                     Brooklyn Simmons
                                                 </div>
@@ -306,26 +313,7 @@ function PaymentMethod() {
                                                         height={32}
                                                         alt="single"
                                                         className="mr-4"
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
-                                            </div>
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
+                                                        priority={false}
                                                     />
                                                     Brooklyn Simmons
                                                 </div>
@@ -346,6 +334,7 @@ function PaymentMethod() {
                                                         height={32}
                                                         alt="single"
                                                         className="mr-4"
+                                                        priority={false}
                                                     />
                                                     Brooklyn Simmons
                                                 </div>
@@ -366,6 +355,28 @@ function PaymentMethod() {
                                                         height={32}
                                                         alt="single"
                                                         className="mr-4"
+                                                        priority={false}
+                                                    />
+                                                    Brooklyn Simmons
+                                                </div>
+                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
+                                            </div>
+                                            <div
+                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
+                                                onClick={() =>
+                                                    handleOptionClick(
+                                                        "/single.svg",
+                                                        "Bayar Langsung",
+                                                    )
+                                                }>
+                                                <div className="flex items-center">
+                                                    <Image
+                                                        src="/Rectangle 1-2.png"
+                                                        width={32}
+                                                        height={32}
+                                                        alt="single"
+                                                        className="mr-4"
+                                                        priority={false}
                                                     />
                                                     Brooklyn Simmons
                                                 </div>

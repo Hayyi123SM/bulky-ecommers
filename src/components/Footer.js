@@ -23,6 +23,7 @@ function Footer() {
                             height={32}
                             alt="Logo"
                             className="h-auto w-auto cursor-pointer"
+                            priority={false}
                         />
                     </Link>
                     <div className="mt-3 text-sm">
@@ -106,6 +107,7 @@ function Footer() {
                             height={20}
                             alt="Logo"
                             className="mr-2 cursor-pointer"
+                            priority={false}
                         />
                         <Image
                             src="/facebook.svg"
@@ -113,6 +115,7 @@ function Footer() {
                             height={20}
                             alt="Logo"
                             className="mr-2 cursor-pointer"
+                            priority={false}
                         />
                         <Image
                             src="/tiktok.svg"
@@ -120,6 +123,7 @@ function Footer() {
                             height={20}
                             alt="Logo"
                             className="mr-2 cursor-pointer"
+                            priority={false}
                         />
                     </div>
                 </div>
@@ -133,6 +137,7 @@ function Footer() {
                                 width={100}
                                 height={100}
                                 alt="Logo"
+                                priority={false}
                             />
                         ))}
                     </div>
@@ -146,12 +151,14 @@ function Footer() {
                             width={100}
                             height={100}
                             alt="Logo"
+                            priority={false}
                         />
                         <Image
                             src={`/payment_method/gplay.svg`}
                             width={120}
                             height={100}
                             alt="Logo"
+                            priority={false}
                         />
                     </div>
                 </div>

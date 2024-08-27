@@ -23,6 +23,7 @@ function ProductCard({
                         height={300}
                         alt="Logo"
                         className="cursor-pointer"
+                        priority={false}
                     />
                 </div>
             </Link>

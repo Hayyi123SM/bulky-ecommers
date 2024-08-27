@@ -88,6 +88,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     height={56}
                                     alt="Profile"
                                     className="cursor-pointer"
+                                    priority={false}
                                 />
                                 <div className="ml-3">
                                     <div className="pb-1 text-base font-bold">
@@ -202,6 +203,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                         height={56}
                                         alt="Profile"
                                         className="cursor-pointer"
+                                        priority={false}
                                     />
                                     <div className="ml-3">
                                         <div className="pb-1 text-base font-bold">

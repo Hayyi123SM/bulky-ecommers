@@ -16,6 +16,7 @@ function RegisterMethod() {
                             height={60}
                             alt="Logo"
                             className="h-auto w-auto cursor-pointer"
+                            priority={false}
                         />
                     </Link>
                 </div>
@@ -54,6 +55,7 @@ function RegisterMethod() {
                                 height={20}
                                 alt="Logo"
                                 className="mr-2"
+                                priority={false}
                             />
                             Masuk dengan Google
                         </div>

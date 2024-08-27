@@ -23,6 +23,7 @@ function PaymentSuccess() {
                                     height={60}
                                     alt="Logo"
                                     className="h-auto w-auto cursor-pointer"
+                                    priority={false}
                                 />
                             </Link>
                         </div>
@@ -48,6 +49,7 @@ function PaymentSuccess() {
                                         width={50}
                                         height={50}
                                         alt="BCA"
+                                        priority={false}
                                     />
                                 </div>
                             </div>

@@ -16,6 +16,7 @@ function ForgotPassword() {
                             height={60}
                             alt="Logo"
                             className="h-auto w-auto cursor-pointer"
+                            priority={false}
                         />
                     </Link>
                 </div>

@@ -41,6 +41,7 @@ function Review() {
                                             width={100}
                                             height={100}
                                             alt="cart-product"
+                                            priority={false}
                                         />
                                     </div>
                                     <div className="ml-5 text-sm leading-6">
@@ -64,6 +65,7 @@ function Review() {
                                                 height={15}
                                                 alt="Logo"
                                                 className="mr-1"
+                                                priority={false}
                                             />
                                             <Image
                                                 src="/star.svg"
@@ -71,6 +73,7 @@ function Review() {
                                                 height={15}
                                                 alt="Logo"
                                                 className="mr-1"
+                                                priority={false}
                                             />
                                             <Image
                                                 src="/star.svg"
@@ -78,6 +81,7 @@ function Review() {
                                                 height={15}
                                                 alt="Logo"
                                                 className="mr-1"
+                                                priority={false}
                                             />
                                             <Image
                                                 src="/star.svg"
@@ -85,6 +89,7 @@ function Review() {
                                                 height={15}
                                                 alt="Logo"
                                                 className="mr-1"
+                                                priority={false}
                                             />
                                             <Image
                                                 src="/star.svg"
@@ -92,6 +97,7 @@ function Review() {
                                                 height={15}
                                                 alt="Logo"
                                                 className="mr-1"
+                                                priority={false}
                                             />
                                         </div>
                                         <div className="text-md py-1 font-light opacity-50">
@@ -128,6 +134,7 @@ function Review() {
                                         width={100}
                                         height={100}
                                         alt="cart-product"
+                                        priority={false}
                                     />
                                 </div>
                                 <div className="ml-5 w-2/3 text-sm leading-6">
@@ -149,6 +156,7 @@ function Review() {
                                             height={15}
                                             alt="Logo"
                                             className="mr-1"
+                                            priority={false}
                                         />
                                         <Image
                                             src="/star.svg"
@@ -156,6 +164,7 @@ function Review() {
                                             height={15}
                                             alt="Logo"
                                             className="mr-1"
+                                            priority={false}
                                         />
                                         <Image
                                             src="/star.svg"
@@ -163,6 +172,7 @@ function Review() {
                                             height={15}
                                             alt="Logo"
                                             className="mr-1"
+                                            priority={false}
                                         />
                                         <Image
                                             src="/star.svg"
@@ -170,6 +180,7 @@ function Review() {
                                             height={15}
                                             alt="Logo"
                                             className="mr-1"
+                                            priority={false}
                                         />
                                         <Image
                                             src="/star.svg"
@@ -177,6 +188,7 @@ function Review() {
                                             height={15}
                                             alt="Logo"
                                             className="mr-1"
+                                            priority={false}
                                         />
                                         <div className="text-md ml-2 py-1 font-light opacity-50">
                                             1 Hari lalu

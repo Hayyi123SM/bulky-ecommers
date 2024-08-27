@@ -110,8 +110,9 @@ function Profile() {
                                     width={300}
                                     height={300}
                                     alt="biodata"
+                                    priority={false}
                                 />
-                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
                                     Pilih Foto
                                 </div>
                                 <div className="text-sm font-light text-[#6D7588]">
@@ -120,11 +121,11 @@ function Profile() {
                                     diperbolehkan: .JPG .JPEG .PNG
                                 </div>
                             </div>
-                            <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                            <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
                                 Ubah Kata Sandi
                             </div>
                             <div
-                                className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]"
+                                className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]"
                                 onClick={handleLogout}>
                                 <ArrowRightStartOnRectangleIcon className="mr-3 h-6 w-6" />
                                 Keluar Akun
@@ -137,6 +138,7 @@ function Profile() {
                                 height={56}
                                 alt="Profile"
                                 className="cursor-pointer rounded-full"
+                                priority={false}
                             />
                             <div className="my-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#007185]">
                                 Ubah Kata Sandi

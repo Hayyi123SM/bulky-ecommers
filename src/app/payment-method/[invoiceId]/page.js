@@ -111,6 +111,7 @@ function Payment({ params }) {
                                                     height={24}
                                                     alt="Gopay"
                                                     className="mr-2"
+                                                    priority={false}
                                                 />
                                             )}
                                             {selectedOption}
@@ -147,6 +148,7 @@ function Payment({ params }) {
                                                             height={24}
                                                             alt={method.name}
                                                             className="mr-2"
+                                                            priority={false}
                                                         />
                                                         {method.name}
                                                     </div>
@@ -202,24 +204,28 @@ function Payment({ params }) {
                                     width={30}
                                     height={20}
                                     alt="mastercard"
+                                    priority={false}
                                 />
                                 <Image
                                     src="/visa.svg"
                                     width={30}
                                     height={20}
                                     alt="visa"
+                                    priority={false}
                                 />
                                 <Image
                                     src="/jcb.svg"
                                     width={30}
                                     height={20}
                                     alt="jcb"
+                                    priority={false}
                                 />
                                 <Image
                                     src="/american.svg"
                                     width={30}
                                     height={20}
                                     alt="american"
+                                    priority={false}
                                 />
                             </div>
                             <div className="py-2">

@@ -48,6 +48,7 @@ function ReviewCreate() {
                                     alt="Product"
                                     width={80}
                                     height={80}
+                                    priority={false}
                                 />
                                 <Image
                                     className="rounded-lg"
@@ -55,6 +56,7 @@ function ReviewCreate() {
                                     alt="Product"
                                     width={80}
                                     height={80}
+                                    priority={false}
                                 />
                                 <Image
                                     className="rounded-lg"
@@ -62,6 +64,7 @@ function ReviewCreate() {
                                     alt="Product"
                                     width={80}
                                     height={80}
+                                    priority={false}
                                 />
                             </div>
                             <div className="item-center mt-5 w-full text-sm font-semibold text-[#6D7588]">
