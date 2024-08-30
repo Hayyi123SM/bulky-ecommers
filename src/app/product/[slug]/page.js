@@ -76,7 +76,9 @@ function ProductDetail({ params }) {
     const handleAddToCart = product => {
         if (user) {
             dispatch(addToCart(product))
-            router.push("/cart")
+            setTimeout(() => {
+                router.push("/cart")
+            }, 3000)
         } else {
             router.push("/login")
         }
