@@ -174,7 +174,7 @@ function OrderSplit() {
                                         Metode Pembayaran
                                     </div>
                                     <div className="text-md font-bold">
-                                        {order.invoices_count > 0
+                                        {order > 0
                                             ? order.invoices[0]
                                                   .payment_method === null
                                                 ? "-"

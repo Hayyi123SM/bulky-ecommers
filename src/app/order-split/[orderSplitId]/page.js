@@ -140,10 +140,13 @@ function OrderSplitDetail({ params }) {
                                             Metode Pembayaran
                                         </div>
                                         <div className="w-1/2">
-                                            {order &&
-                                                order.invoices &&
-                                                order.invoices[0]
-                                                    ?.payment_method}
+                                            {order > 0
+                                                ? order.invoices[0]
+                                                      .payment_method === null
+                                                    ? "-"
+                                                    : order.invoices[0]
+                                                          .payment_method
+                                                : "-"}
                                         </div>
                                     </div>
                                     <div className="flex items-center p-1">
