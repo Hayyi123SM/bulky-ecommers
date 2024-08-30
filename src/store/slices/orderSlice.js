@@ -9,6 +9,8 @@ const initialState = {
     paymentMethod: [],
     invoiceOrders: [],
     afterCreatePayment: {},
+    afterSetInvoiceAmount: {},
+    myInvoice: {},
     error: null,
     isLoading: false,
 }
@@ -47,6 +49,9 @@ export const fetchOrderDetail = createAsyncThunk(
     "orders/fetchOrderDetail",
     async (orderId, { rejectWithValue }) => {
         try {
+            console.log("====================================")
+            console.log("Order ID:", orderId)
+            console.log("====================================")
             const response = await axios.get(
                 `/api/orders/get-detail/${orderId}`,
             )
@@ -91,6 +96,35 @@ export const createPayment = createAsyncThunk(
             return response.data
         } catch (error) {
             return rejectWithValue(error.response.data)
+        }
+    },
+)
+
+export const setInvoiceAmount = createAsyncThunk(
+    "orders/setInvoiceAmount",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.patch(
+                "/api/orders/invoice/set-invoice-amount",
+                data,
+            )
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
+export const getMyInvoice = createAsyncThunk(
+    "orders/getMyInvoice",
+    async orderId => {
+        try {
+            const response = await axios.get(
+                `/api/orders/invoice/get-my-invoice-by-order/${orderId}`,
+            )
+            return response.data
+        } catch (error) {
+            return error.response.data
         }
     },
 )
@@ -168,6 +202,34 @@ const orderSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(createPayment.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(setInvoiceAmount.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(setInvoiceAmount.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.afterSetInvoiceAmount = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(setInvoiceAmount.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(getMyInvoice.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(getMyInvoice.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.myInvoice = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(getMyInvoice.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

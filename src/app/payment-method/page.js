@@ -1,7 +1,13 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
-import { fetchCarts, placeOrders } from "@/store/slices/cartSlice"
+import {
+    fetchCarts,
+    placeOrders,
+    searchFriends,
+} from "@/store/slices/cartSlice"
+import { getMyInvoice } from "@/store/slices/orderSlice"
+import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import {
     ArrowLeftIcon,
     CheckIcon,
@@ -22,9 +28,13 @@ function PaymentMethod() {
     const [isOpenAddFriend, setIsOpenAddFriend] = useState(false)
     const [isOpenListFriend, setIsOpenListFriend] = useState(false)
     const [isSplitPayment, setIsSplitPayment] = useState(false)
+    const [paymentMethod, setPaymentMethod] = useState(null)
+    const [selectedFriend, setSelectedFriend] = useState([])
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
     const order = useSelector(state => state.carts.order)
+    const friendList = useSelector(state => state.carts.friends)
+    const myInvoice = useSelector(state => state.orders.myInvoice)
 
     const handleOptionClick = (icon, option) => {
         setSelectedOption(option)
@@ -32,8 +42,10 @@ function PaymentMethod() {
         setIsOpen(false)
 
         if (option === "Bayar Patungan dengan Teman") {
+            setPaymentMethod("split_payment")
             setIsSplitPayment(true)
         } else {
+            setPaymentMethod("single_payment")
             setIsSplitPayment(false)
         }
     }
@@ -43,15 +55,33 @@ function PaymentMethod() {
     }, [dispatch])
     // "single_payment/split_payment"
     const handlePlaceOrder = () => {
-        if (isSplitPayment) {
+        if (paymentMethod === "split_payment") {
             const payment_type = "split_payment"
             const friend_ids = []
+            for (let i = 0; i < selectedFriend.length; i++) {
+                friend_ids.push(selectedFriend[i].id)
+            }
             dispatch(placeOrders({ payment_type, friend_ids }))
-        } else {
+        } else if (paymentMethod === "single_payment") {
             const payment_type = "single_payment"
             const friend_ids = []
             dispatch(placeOrders({ payment_type, friend_ids }))
+        } else {
+            setPaymentMethod("none")
         }
+    }
+
+    const handleSearchFriend = username => {
+        dispatch(searchFriends(username))
+        console.log("friendList:", friendList)
+    }
+
+    const handleSelectedFriend = friend => {
+        setSelectedFriend([...selectedFriend, friend])
+    }
+
+    const handleRemoveFriend = friend => {
+        setSelectedFriend(selectedFriend.filter(f => f.id !== friend.id))
     }
 
     useEffect(() => {
@@ -59,14 +89,23 @@ function PaymentMethod() {
         console.log("order:", order)
         console.log("====================================")
         if (order && order.invoices.length > 0) {
-            router.push("/payment-method/" + order.invoices[0]?.id)
-            console.log("====================================")
-            console.log("order:", order.invoices[0]?.id)
-            console.log("====================================")
+            dispatch(getMyInvoice(order.id))
+            localStorage.setItem("order", JSON.stringify(order))
         }
+    }, [dispatch, order])
 
-        localStorage.setItem("order", JSON.stringify(order))
-    }, [order, router])
+    useEffect(() => {
+        console.log("====================================")
+        console.log("order:", order)
+        console.log("myInvoice:", myInvoice)
+        console.log("====================================")
+        if (order && myInvoice.need_input_amount === true) {
+            router.push("/payment-nominal/")
+        }
+        if (order && myInvoice.need_input_amount === false) {
+            router.push("/payment-method/" + myInvoice.id)
+        }
+    }, [myInvoice, router])
 
     if (!cart) {
         return <div>Loading...</div>
@@ -96,7 +135,7 @@ function PaymentMethod() {
                                 </div>
                                 <div className="relative w-full lg:max-w-xl">
                                     <div
-                                        className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                        className={`flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33] ${paymentMethod === "none" && "border-red-500"}`}
                                         onClick={() => setIsOpen(!isOpen)}>
                                         <div className="flex items-center">
                                             {selectedOption !==
@@ -112,7 +151,12 @@ function PaymentMethod() {
                                             )}
                                             {selectedOption}
                                         </div>
-                                        <ChevronDownIcon className="inline-block h-5 w-5" />
+                                        <div className="flex items-center">
+                                            <ChevronDownIcon className="inline-block h-5 w-5" />
+                                            {paymentMethod === "none" && (
+                                                <InformationCircleIcon className="inline-block h-5 w-5 text-red-500" />
+                                            )}
+                                        </div>
                                     </div>
                                     <div
                                         className={`mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${
@@ -168,50 +212,39 @@ function PaymentMethod() {
                                         ADD YOUR FRIEND
                                     </div>
                                     <div className="relative w-full lg:max-w-xl">
-                                        <div className="mb-1 flex items-center justify-between">
-                                            <div className="flex items-center py-1">
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-1.png"
-                                                        alt="Product"
-                                                        width={40}
-                                                        height={40}
-                                                        className="rounded-full"
-                                                        priority={false}
+                                        {selectedFriend.map(friend => (
+                                            <div
+                                                key={friend.id}
+                                                className="mb-1 flex items-center justify-between">
+                                                <div className="flex items-center py-1">
+                                                    <div className="flex items-center">
+                                                        <Image
+                                                            src="https://dummyimage.com/400x400/b8b8b8/000105.png"
+                                                            alt="Product"
+                                                            width={40}
+                                                            height={40}
+                                                            className="rounded-full"
+                                                            priority={false}
+                                                        />
+                                                    </div>
+                                                    <div className="ml-4 text-sm leading-4">
+                                                        <label className="text-sm">
+                                                            {friend.name}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div className="p-3">
+                                                    <MinusCircleIcon
+                                                        className="h-6 w-6 cursor-pointer text-[#FF3838] hover:text-[#c84b4b]"
+                                                        onClick={() =>
+                                                            handleRemoveFriend(
+                                                                friend,
+                                                            )
+                                                        }
                                                     />
                                                 </div>
-                                                <div className="ml-4 text-sm leading-4">
-                                                    <label className="text-sm">
-                                                        Brooklyn Simmons
-                                                    </label>
-                                                </div>
                                             </div>
-                                            <div className="p-3">
-                                                <MinusCircleIcon className="h-6 w-6 cursor-pointer text-[#FF3838] hover:text-[#c84b4b]" />
-                                            </div>
-                                        </div>
-                                        <div className="mb-1 flex items-center justify-between">
-                                            <div className="flex items-center py-1">
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-3.png"
-                                                        alt="Product"
-                                                        width={40}
-                                                        height={40}
-                                                        className="rounded-full"
-                                                        priority={false}
-                                                    />
-                                                </div>
-                                                <div className="ml-4 text-sm leading-4">
-                                                    <label className="text-sm">
-                                                        Brooklyn Simmons
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className="p-3">
-                                                <MinusCircleIcon className="h-6 w-6 cursor-pointer text-[#FF3838] hover:text-[#c84b4b]" />
-                                            </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -254,133 +287,45 @@ function PaymentMethod() {
                                             <input
                                                 className="w-full rounded-lg border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
                                                 placeholder="Cari temanmu disini..."
+                                                type="text"
+                                                onChange={e =>
+                                                    handleSearchFriend(
+                                                        e.target.value,
+                                                    )
+                                                }
                                             />
                                         </div>
                                         <div className="max-h-60 overflow-auto">
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                        priority={false}
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                        priority={false}
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                            </div>
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                        priority={false}
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
-                                            </div>
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                        priority={false}
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
-                                            </div>
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                        priority={false}
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                                <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
-                                            </div>
-                                            <div
-                                                className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                                onClick={() =>
-                                                    handleOptionClick(
-                                                        "/single.svg",
-                                                        "Bayar Langsung",
-                                                    )
-                                                }>
-                                                <div className="flex items-center">
-                                                    <Image
-                                                        src="/Rectangle 1-2.png"
-                                                        width={32}
-                                                        height={32}
-                                                        alt="single"
-                                                        className="mr-4"
-                                                        priority={false}
-                                                    />
-                                                    Brooklyn Simmons
-                                                </div>
-                                            </div>
+                                            {friendList &&
+                                                friendList.map(item => (
+                                                    <div
+                                                        key={item.id}
+                                                        className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
+                                                        onClick={() =>
+                                                            handleSelectedFriend(
+                                                                item,
+                                                            )
+                                                        }>
+                                                        <div className="flex items-center">
+                                                            <Image
+                                                                src="https://dummyimage.com/400x400/b8b8b8/000105.png"
+                                                                width={32}
+                                                                height={32}
+                                                                alt="single"
+                                                                className="mr-4 rounded-full"
+                                                                priority={false}
+                                                            />
+                                                            {item.name}
+                                                        </div>
+                                                        {selectedFriend.some(
+                                                            friend =>
+                                                                friend.id ===
+                                                                item.id,
+                                                        ) && (
+                                                            <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />
+                                                        )}
+                                                    </div>
+                                                ))}
                                         </div>
                                     </div>
                                 </div>

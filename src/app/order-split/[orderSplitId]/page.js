@@ -1,11 +1,62 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { formatCurrency } from "@/lib/helper"
+import { fetchOrderDetail, getMyInvoice } from "@/store/slices/orderSlice"
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-function OrderDetail() {
+function OrderSplitDetail({ params }) {
+    const orderSplitId = params.orderSplitId
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const order = useSelector(state => state.orders.orderDetail)
+    const myInvoice = useSelector(state => state.orders.myInvoice)
+
+    // const calculateTotalPaidAmount = (invoices = []) => {
+    //     return invoices
+    //         .filter(invoice => invoice.status.value === "pending")
+    //         .reduce((acc, invoice) => acc + invoice.amount.numeric, 0)
+    // }
+
+    // const totalPaidAmount = calculateTotalPaidAmount(order.invoices)
+
+    useEffect(() => {
+        dispatch(fetchOrderDetail(orderSplitId))
+        dispatch(getMyInvoice(orderSplitId))
+    }, [dispatch, orderSplitId])
+
+    const totalPaidAmount = order.paid_amount?.numeric
+    const remainingAmount = order.total_price?.numeric - totalPaidAmount
+
+    const handleToPayment = () => {
+        if (myInvoice.payment_url) {
+            console.log("====================================")
+            console.log("myInvoice.payment_url:", myInvoice.payment_url)
+            console.log("====================================")
+            window.location.href = myInvoice.payment_url
+        } else {
+            console.log("====================================")
+            console.log("myInvoice:", myInvoice)
+            console.log("====================================")
+            localStorage.setItem("order", JSON.stringify(order))
+            router.push("/payment-nominal/")
+        }
+    }
+
+    console.log("order:", order)
+    console.log("orderSplitId:", orderSplitId)
+    console.log("myInvoice:", myInvoice)
+    console.log("totalPaidAmount:", totalPaidAmount)
+
+    if (order === null || myInvoice === null) return <div>Loading...</div>
+
     return (
         <div>
             <div className="hidden lg:block">
@@ -13,7 +64,9 @@ function OrderDetail() {
             </div>
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <ArrowLeftIcon className="h-6 w-6" />
-                <div className="ml-2 font-semibold">Detail Pesanan</div>
+                <div className="ml-2 font-semibold">
+                    Detail Pembayaran Patungan
+                </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -25,85 +78,108 @@ function OrderDetail() {
                             <ArrowLeftIcon className="mr-3 h-7 w-7 cursor-pointer" />
                         </Link>
                         <div className="pb-1 text-2xl font-bold">
-                            Detail Pesanan
+                            Detail Pembayaran Patungan
                         </div>
                     </div>
-                    <div className="flex flex-col lg:my-7 lg:flex-row lg:gap-8">
-                        <div className="rounded-xl bg-white px-5 lg:w-1/2 lg:py-4 lg:shadow">
-                            <div className="flex items-center border-b">
-                                <div>
-                                    <Image
-                                        src="/product.png"
-                                        width={100}
-                                        height={100}
-                                        alt="cart-product"
-                                        priority={false}
-                                    />
+                    <div className="flex flex-col lg:my-7 lg:flex-row lg:gap-4">
+                        <div className="lg:w-1/2">
+                            <div className="mb-4 rounded-xl bg-white px-5 py-4 lg:shadow">
+                                <div className="mb-4 text-sm font-extrabold">
+                                    Produk yang dibeli
                                 </div>
-                                <div className="ml-5 text-sm leading-6">
-                                    <div className="text-md pb-1">
-                                        Motul ATF VI Automatic Transmission
-                                        Fluid 105774
-                                    </div>
-                                    <div className="text-md font-bold">
-                                        Rp8.126.777
-                                    </div>
-                                </div>
+                                {order &&
+                                    order.items &&
+                                    order.items.length > 0 &&
+                                    order.items.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-center py-2">
+                                            <div>
+                                                <Image
+                                                    src={item.product.images[0]}
+                                                    width={100}
+                                                    height={100}
+                                                    alt="cart-product"
+                                                    priority={false}
+                                                />
+                                            </div>
+                                            <div className="ml-5 text-sm leading-6">
+                                                <div className="text-md pb-1">
+                                                    {item.product.name}
+                                                </div>
+                                                <div className="text-md font-bold">
+                                                    {item.price.formatted}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
-                            <div className="border-b py-2 text-sm">
-                                <div className="flex items-center p-1">
+                            <div className="rounded-xl bg-white px-5 py-4 text-sm lg:shadow">
+                                <div className="mb-4 text-sm font-extrabold">
+                                    Metode Bayar & Alamat
+                                </div>
+                                <div className="border-b py-2 text-sm">
+                                    <div className="flex items-center p-1">
+                                        <div className="w-1/2 text-[#6D7588]">
+                                            Waktu Transaksi
+                                        </div>
+                                        <div className="w-1/2">
+                                            {order && order.order_date}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center p-1">
+                                        <div className="w-1/2 text-[#6D7588]">
+                                            Nomor Pesanan
+                                        </div>
+                                        <div className="w-1/2">
+                                            {order && order.order_number}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center p-1">
+                                        <div className="w-1/2 text-[#6D7588]">
+                                            Metode Pembayaran
+                                        </div>
+                                        <div className="w-1/2">
+                                            {order &&
+                                                order.invoices &&
+                                                order.invoices[0]
+                                                    ?.payment_method}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center p-1">
+                                        <div className="w-1/2 text-[#6D7588]">
+                                            Metode Pengiriman
+                                        </div>
+                                        <div className="w-1/2">Deliveree</div>
+                                    </div>
+                                    <div className="my-2 mb-4 flex items-center justify-between p-1 text-sm">
+                                        <div>
+                                            <div className="text-[#6D7588] lg:w-1/2">
+                                                Split Link
+                                            </div>
+                                            <div className="text-[#007185] lg:w-1/2">
+                                                https://g.co/gemini/share/44ff9809b4ed
+                                            </div>
+                                        </div>
+                                        <div className="ml-5 flex items-center text-right text-sm">
+                                            <div className="mr-1 text-sm font-bold text-[#007185]">
+                                                Salin
+                                            </div>
+                                            <ClipboardDocumentIcon className="h-5 w-5 font-bold text-[#007185]" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="my-2 mb-4 border-b p-1 text-sm">
                                     <div className="w-1/2 text-[#6D7588]">
-                                        Order ID
+                                        Alamat
                                     </div>
-                                    <div className="w-1/2">AB123456890GDED</div>
+                                    <div className="w-1/2">Alamat</div>
                                 </div>
-                                <div className="flex items-center p-1">
-                                    <div className="w-1/2 text-[#6D7588]">
-                                        Nomor Transaksi
-                                    </div>
-                                    <div className="w-1/2">AB123456GGWPFDD</div>
+                                <div
+                                    onClick={() => handleToPayment()}
+                                    className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    Bayar Sekarang
                                 </div>
-                                <div className="flex items-center p-1">
-                                    <div className="w-1/2 text-[#6D7588]">
-                                        Metode Pembayaran
-                                    </div>
-                                    <div className="w-1/2">
-                                        BCA Virtual Account
-                                    </div>
-                                </div>
-                                <div className="flex items-center p-1">
-                                    <div className="w-1/2 text-[#6D7588]">
-                                        Waktu Transaksi
-                                    </div>
-                                    <div className="w-1/2">
-                                        11 Juni 2024 06.09
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="my-2 mb-4 flex items-center justify-between border-b p-1 text-sm">
-                                <div>
-                                    <div className="text-[#6D7588] lg:w-1/2">
-                                        Split Link
-                                    </div>
-                                    <div className="text-[#007185] lg:w-1/2">
-                                        https://g.co/gemini/share/44ff9809b4ed
-                                    </div>
-                                </div>
-                                <div className="ml-5 flex items-center text-right text-sm">
-                                    <div className="mr-1 text-sm font-bold text-[#007185]">
-                                        Salin
-                                    </div>
-                                    <ClipboardDocumentIcon className="h-5 w-5 font-bold text-[#007185]" />
-                                </div>
-                            </div>
-                            <div className="my-2 mb-4 border-b p-1 text-sm">
-                                <div className="w-1/2 text-[#6D7588]">
-                                    Nomor Resi
-                                </div>
-                                <div className="w-1/2">000123456789</div>
-                            </div>
-                            <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                Bayar
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">
@@ -118,12 +194,26 @@ function OrderDetail() {
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-light">
-                                            Total Harga
+                                            Total Harga Barang
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-md font-light">
-                                            Rp428.260
+                                            {order &&
+                                                order.total_price?.formatted}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="text-sm leading-6">
+                                        <label className="text-sm font-light">
+                                            Total Ongkos Kirim
+                                        </label>
+                                    </div>
+                                    <div className="ml-5 text-right text-sm leading-6">
+                                        <label className="text-md font-light">
+                                            {order &&
+                                                order.total_price?.formatted}
                                         </label>
                                     </div>
                                 </div>
@@ -136,7 +226,8 @@ function OrderDetail() {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-lg font-bold">
-                                            Rp429.260
+                                            {order &&
+                                                order.total_price?.formatted}
                                         </label>
                                     </div>
                                 </div>
@@ -145,98 +236,52 @@ function OrderDetail() {
                                 <div className="mb-2 font-extrabold">
                                     Status Pembayaran
                                 </div>
-                                <div className="my-1">
-                                    <div className="flex items-center justify-between p-2 text-sm">
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/Rectangle 1-2.png"
-                                                width={40}
-                                                height={40}
-                                                alt="single"
-                                                className="mr-4"
-                                                priority={false}
-                                            />
-                                            <div>
-                                                <div className="text-sm font-medium">
-                                                    Darrell Steward
+                                {order &&
+                                    order.invoices &&
+                                    order.invoices.map(invoice => (
+                                        <div key={invoice.id} className="my-1">
+                                            <div className="flex items-center justify-between p-2 text-sm">
+                                                <div className="flex items-center">
+                                                    <Image
+                                                        src="https://dummyimage.com/400x400/b8b8b8/000105.png"
+                                                        width={40}
+                                                        height={40}
+                                                        alt="single"
+                                                        className="mr-4 rounded-full"
+                                                        priority={false}
+                                                    />
+                                                    <div>
+                                                        <div className="text-sm font-medium">
+                                                            {invoice.user.name}
+                                                        </div>
+                                                        <div
+                                                            className={`w-fit rounded-lg bg-[${invoice.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice.status?.color}] lg:hidden`}>
+                                                            {
+                                                                invoice.status
+                                                                    ?.label
+                                                            }
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="w-fit rounded-lg bg-[#0071850D] px-4 py-1 text-[9px] font-semibold text-[#007185] lg:hidden">
-                                                    Paid
+                                                <div
+                                                    className={`ml-14 hidden w-fit rounded-lg bg-[${invoice.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice.status?.color}] lg:block`}>
+                                                    {invoice.status?.label}
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="ml-14 hidden w-fit rounded-lg bg-[#0071850D] px-4 py-1 text-[9px] font-semibold text-[#007185] lg:block">
-                                            Paid
-                                        </div>
-                                        <div className="text-xs font-bold">
-                                            Rp2.126.260
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="my-1">
-                                    <div className="flex items-center justify-between p-2 text-sm">
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/Rectangle 1-2.png"
-                                                width={40}
-                                                height={40}
-                                                alt="single"
-                                                className="mr-4"
-                                                priority={false}
-                                            />
-                                            <div>
-                                                <div className="text-sm font-medium">
-                                                    Darrell Steward
-                                                </div>
-                                                <div className="w-fit rounded-lg bg-[#FFCF020D] px-4 py-1 text-[9px] font-semibold text-[#FFCF02] lg:hidden">
-                                                    Waiting for payment
+                                                <div className="text-xs font-bold">
+                                                    {invoice.amount?.formatted}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="ml-14 hidden w-fit rounded-lg bg-[#FFCF020D] px-4 py-1 text-[9px] font-semibold text-[#FFCF02] lg:block">
-                                            Waiting for payment
-                                        </div>
-                                        <div className="text-xs font-bold">
-                                            Rp2.126.260
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="my-1">
-                                    <div className="flex items-center justify-between p-2 text-sm">
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/Rectangle 1-2.png"
-                                                width={40}
-                                                height={40}
-                                                alt="single"
-                                                className="mr-4"
-                                                priority={false}
-                                            />
-                                            <div>
-                                                <div className="text-sm font-medium">
-                                                    Darrell Steward
-                                                </div>
-                                                <div className="w-fit rounded-lg bg-[#C400000D] px-4 py-1 text-[9px] font-semibold text-[#C40000] lg:hidden">
-                                                    Unpaid
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="ml-14 hidden w-fit rounded-lg bg-[#C400000D] px-4 py-1 text-[9px] font-semibold text-[#C40000] lg:block">
-                                            Unpaid
-                                        </div>
-                                        <div className="text-xs font-bold">
-                                            -
-                                        </div>
-                                    </div>
-                                </div>
+                                    ))}
                             </div>
                             <div className="rounded-xl bg-white px-5 py-4 shadow">
                                 <div className="flex items-center justify-between">
                                     <div className="text-sm">
-                                        Total Pembayaran
+                                        Sisa Total Tagihan
                                     </div>
                                     <div className="font-extrabold">
-                                        Rp8.126.777
+                                        {/* {order && order.total_price?.formatted} */}
+                                        {formatCurrency(remainingAmount)}
                                     </div>
                                 </div>
                             </div>
@@ -249,4 +294,4 @@ function OrderDetail() {
     )
 }
 
-export default OrderDetail
+export default OrderSplitDetail

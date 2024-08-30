@@ -3,74 +3,56 @@
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
-import { clearUser, setUser } from "@/store/slices/authSlice"
+import { clearUser } from "@/store/slices/authSlice"
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 function Profile() {
     const { logout } = useAuth({ middleware: "guest" })
-    const user = useSelector(state => state.auth.user)
+    const { user } = useAuth()
     const dispatch = useDispatch()
-    const [savedUser, setSavedUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(true) // Add a loading state
+    const [isLoading, setIsLoading] = useState(true)
 
-    // Define handleLogout function before using it
     const handleLogout = async () => {
         console.log("Handling logout...")
         await logout({ redirect: "/" })
         dispatch(clearUser())
     }
 
-    // Load user from local storage and update state
     useEffect(() => {
-        const getUser = localStorage.getItem("user")
-        if (getUser) {
-            const parsedUser = JSON.parse(getUser)
-            console.log("Parsed user from local storage:", parsedUser)
-            setSavedUser(parsedUser)
+        if (user !== undefined) {
+            console.log("Parsed user from local storage:", user)
+            setIsLoading(false)
         }
-        // Set isLoading to false after checking local storage
-        setIsLoading(false)
-    }, [])
+    }, [user])
 
-    // Update Redux store with the loaded user data
-    useEffect(() => {
-        if (savedUser) {
-            console.log("Dispatching setUser with:", savedUser)
-            dispatch(setUser(savedUser))
-        } else {
-            // If savedUser is null, handle user clearing
-            dispatch(clearUser())
-        }
-    }, [dispatch, savedUser])
+    // useEffect(() => {
+    //     if (savedUser) {
+    //         console.log("Dispatching setUser with:", savedUser)
+    //         dispatch(setUser(savedUser))
+    //     } else {
+    //         dispatch(clearUser())
+    //     }
+    // }, [dispatch, savedUser])
 
-    // Monitor the `user` state and handle loading or redirecting
     useEffect(() => {
+        console.log("loading:", isLoading)
+
+        console.log("user:", user)
         if (!isLoading) {
-            if (!user && !savedUser) {
+            if (!user) {
                 console.log("Logging out as user and savedUser are null")
-                handleLogout() // Trigger logout when data is not available
+                handleLogout()
             }
         }
-    }, [user, savedUser, isLoading])
+    }, [user, isLoading])
 
     if (isLoading) {
-        return <h1>Loading...</h1> // Show a loading state until data is processed
-    }
-
-    if (!user) {
-        console.log("user is null")
-        if (savedUser) {
-            console.log("savedUser exists:", savedUser)
-            return <h1>Loading user...</h1>
-        } else {
-            console.log("Redirecting...")
-            return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
-        }
+        return <h1>Loading...</h1>
     }
 
     return (
@@ -121,9 +103,11 @@ function Profile() {
                                     diperbolehkan: .JPG .JPEG .PNG
                                 </div>
                             </div>
-                            <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                Ubah Kata Sandi
-                            </div>
+                            <Link href="/change-password">
+                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
+                                    Ubah Kata Sandi
+                                </div>
+                            </Link>
                             <div
                                 className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]"
                                 onClick={handleLogout}>
@@ -138,11 +122,13 @@ function Profile() {
                                 height={56}
                                 alt="Profile"
                                 className="cursor-pointer rounded-full"
-                                priority={false}
+                                priority={true}
                             />
-                            <div className="my-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#007185]">
-                                Ubah Kata Sandi
-                            </div>
+                            <Link href="/change-password">
+                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#007185]">
+                                    Ubah Kata Sandi
+                                </div>
+                            </Link>
                         </div>
                         <div className="flex-grow">
                             <div className="flex-grow border-t px-5 py-4 lg:border-none">
@@ -154,7 +140,15 @@ function Profile() {
                                         Nama
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        {user.name}
+                                        {user.data.name}
+                                    </div>
+                                </div>
+                                <div className="flex py-4">
+                                    <div className="w-1/3 text-sm font-light">
+                                        Username
+                                    </div>
+                                    <div className="w-2/3 text-sm font-light">
+                                        {user.data.username}
                                     </div>
                                 </div>
                                 <div className="flex py-4">
@@ -183,7 +177,7 @@ function Profile() {
                                         Email
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        {user.email}
+                                        {user.data.email}
                                     </div>
                                 </div>
                                 <div className="flex py-4">
@@ -191,7 +185,7 @@ function Profile() {
                                         Nomor HP
                                     </div>
                                     <div className="w-2/3 text-sm font-light">
-                                        {user.phone_number}
+                                        {user.data.phone_number}
                                     </div>
                                 </div>
                             </div>

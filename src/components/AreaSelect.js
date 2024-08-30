@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react"
 
-const AreaSelect = ({ options, onSelect }) => {
+const AreaSelect = ({ options, onSelect, selectedId }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedOption, setSelectedOption] = useState(null)
+    const [selectedOption, setSelectedOption] = useState(
+        options.find(option => option.id === selectedId) || null,
+    )
     const dropdownRef = useRef(null)
 
     // Handle outside click
@@ -29,6 +31,15 @@ const AreaSelect = ({ options, onSelect }) => {
             onSelect(option)
         }
     }
+
+    useEffect(() => {
+        if (selectedId) {
+            const preselectedOption = options.find(
+                option => option.id === selectedId,
+            )
+            setSelectedOption(preselectedOption || null)
+        }
+    }, [selectedId, options])
 
     return (
         <div className="relative" ref={dropdownRef}>

@@ -1,10 +1,26 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { fetchAddresses } from "@/store/slices/addressSlice"
 import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Address() {
+    const dispatch = useDispatch()
+    const addresses = useSelector(state => state.address.addresses)
+
+    useEffect(() => {
+        dispatch(fetchAddresses())
+    }, [dispatch])
+
+    console.log("====================================")
+    console.log("addresses:", addresses)
+    console.log("====================================")
+
+    if (!addresses) return <div>Loading ... </div>
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <div>
@@ -52,40 +68,51 @@ function Address() {
                             </div>
                         </div>
                         {/* Start : View Website */}
-                        <div className="my-7 hidden items-center rounded-xl border border-[#007185] bg-white px-5 py-4 shadow lg:flex">
-                            <div className="w-2/5 border-r">
-                                <div className="flex items-center">
-                                    <div className="ml-5 text-sm leading-6">
-                                        <div className="text-md font-bold">
-                                            Rumah
+                        {addresses &&
+                            addresses.map(address => (
+                                <div
+                                    key={address.id}
+                                    className="my-7 hidden items-center rounded-xl border border-[#007185] bg-white px-5 py-4 shadow lg:flex">
+                                    <div className="w-2/5 border-r">
+                                        <div className="flex items-center">
+                                            <div className="ml-5 text-sm leading-6">
+                                                <div className="text-md font-bold">
+                                                    {address.label}
+                                                </div>
+                                                <div className="text-md font-bold">
+                                                    {address.name}
+                                                </div>
+                                                <div className="pb-1 text-xs font-normal">
+                                                    {address.phone_number}
+                                                </div>
+                                                <div className="text-md">
+                                                    {address.address},{" "}
+                                                    {address.formatted_area}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="text-md pb-1 font-bold">
-                                            Agung Nugroho
-                                        </div>
-                                        <div className="text-md">
-                                            Jl. Sagan, No.14, D.I Yogyakarta,
-                                            Kota Yogyakarta
+                                    </div>
+                                    <div className="w-3/5">
+                                        <div className="flex items-center justify-between">
+                                            <div className="ml-5 text-sm leading-6">
+                                                <div className="text-md pb-1">
+                                                    Status :
+                                                </div>
+                                                <div className="text-md flex items-center font-bold">
+                                                    Digunakan
+                                                    <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
+                                                </div>
+                                            </div>
+                                            <Link
+                                                href={`/address/${address.id}`}>
+                                                <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                                    Ubah Alamat
+                                                </div>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="w-3/5">
-                                <div className="flex items-center justify-between">
-                                    <div className="ml-5 text-sm leading-6">
-                                        <div className="text-md pb-1">
-                                            Status :
-                                        </div>
-                                        <div className="text-md flex items-center font-bold">
-                                            Digunakan
-                                            <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
-                                        </div>
-                                    </div>
-                                    <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                        Ubah Alamat
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            ))}
                         <div className="my-7 hidden items-center rounded-xl bg-white px-5 py-4 shadow lg:flex">
                             <div className="w-2/5 border-r">
                                 <div className="flex items-center">
@@ -127,38 +154,48 @@ function Address() {
                         {/* End : View Website */}
 
                         {/* Start : View Mobile */}
-                        <div className="my-7 rounded-xl border border-[#007185] bg-white px-5 py-4 shadow lg:hidden">
-                            <div className="flex items-center border-b pb-4">
-                                <div className="text-sm leading-6">
-                                    <div className="text-md font-bold">
-                                        Rumah
+                        {addresses &&
+                            addresses.map(address => (
+                                <div
+                                    key={address.id}
+                                    className="my-7 rounded-xl border border-[#007185] bg-white px-5 py-4 shadow lg:hidden">
+                                    <div className="flex items-center border-b pb-4">
+                                        <div className="text-sm leading-6">
+                                            <div className="text-md font-bold">
+                                                {address.label}
+                                            </div>
+                                            <div className="text-md font-bold">
+                                                {address.name}
+                                            </div>
+                                            <div className="pb-1 text-xs font-normal">
+                                                {address.phone_number}
+                                            </div>
+                                            <div className="text-md">
+                                                {address.address},{" "}
+                                                {address.formatted_area}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="text-md pb-1 font-bold">
-                                        Agung Nugroho
+                                    <div className="mb-4 mt-4">
+                                        <div className="flex items-center justify-between text-sm font-bold">
+                                            <div className="w-1/2 font-light">
+                                                Status :
+                                            </div>
+                                            <div className="flex w-1/2 items-center justify-end">
+                                                Digunakan
+                                                <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="text-md">
-                                        Jl. Sagan, No.14, D.I Yogyakarta, Kota
-                                        Yogyakarta
+                                    <div className="items-center justify-end">
+                                        <Link href={`/address/${address.id}`}>
+                                            <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                                Ubah Alamat
+                                            </div>
+                                        </Link>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="mb-4 mt-4">
-                                <div className="flex items-center justify-between text-sm font-bold">
-                                    <div className="w-1/2 font-light">
-                                        Status :
-                                    </div>
-                                    <div className="flex w-1/2 items-center justify-end">
-                                        Digunakan
-                                        <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="items-center justify-end">
-                                <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Ubah Alamat
-                                </div>
-                            </div>
-                        </div>
+                            ))}
                         <div className="my-7 rounded-xl border bg-white px-5 py-4 shadow lg:hidden">
                             <div className="flex items-center border-b pb-4">
                                 <div className="text-sm leading-6">

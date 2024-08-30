@@ -5,6 +5,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 const initialState = {
     cart: null,
     selectedItems: [],
+    friends: [],
     totalPrice: 0,
     error: null,
     isLoading: false,
@@ -69,6 +70,30 @@ export const placeOrders = createAsyncThunk(
         try {
             const response = await axios.post("/api/carts/place-order", data)
             return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
+export const searchFriends = createAsyncThunk(
+    "carts/searchFriends",
+    async (data, { rejectWithValue }) => {
+        try {
+            const params = {
+                search: data,
+            }
+            console.log("====================================")
+            console.log("Params:", params.search)
+            console.log("====================================")
+            if (data === "") {
+                return initialState
+            } else {
+                const response = await axios.get("/api/carts/search-friend", {
+                    params,
+                })
+                return response.data
+            }
         } catch (error) {
             return rejectWithValue(error.response.data)
         }
@@ -175,6 +200,18 @@ const cartSlice = createSlice({
             .addCase(placeOrders.rejected, (state, action) => {
                 state.updateStatus = "failed"
                 state.updateError = action.payload.data || action.error.message
+            })
+            .addCase(searchFriends.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(searchFriends.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.friends = action.payload.data
+            })
+            .addCase(searchFriends.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error.message
             })
     },
 })

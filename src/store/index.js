@@ -7,6 +7,7 @@ import authSlice from "./slices/authSlice"
 import filterSlice from "./slices/filterSlice"
 import orderSlice from "./slices/orderSlice"
 import areaSlice from "./slices/areaSlice"
+import addressSlice from "./slices/addressSlice"
 
 export const store = configureStore({
     reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
         filters: filterSlice,
         orders: orderSlice,
         area: areaSlice,
+        address: addressSlice,
     },
 })

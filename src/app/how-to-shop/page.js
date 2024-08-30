@@ -34,16 +34,7 @@ function HowToShop() {
                         <div className="p-7">
                             <div className="rounded-xl bg-white px-12 shadow">
                                 <div className="border-b border-[#F0F3F7] py-12 lg:flex">
-                                    <div className="lg:w-1/5">
-                                        <Image
-                                            src="/image 43.png"
-                                            width={120}
-                                            height={120}
-                                            alt="Logo"
-                                            priority={false}
-                                        />
-                                    </div>
-                                    <div className="lg:w-4/5">
+                                    <div className="">
                                         <div className="text-2xl font-bold">
                                             Buat Akun
                                         </div>
@@ -63,19 +54,18 @@ function HowToShop() {
                                             culpa qui officia deserunt mollit
                                             anim id est laborum.
                                         </div>
+                                        <div className="mt-4 flex justify-center">
+                                            <Image
+                                                src="/page/login.png"
+                                                alt=""
+                                                width={1000}
+                                                height={1000}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="py-12 lg:flex">
-                                    <div className="lg:w-1/5">
-                                        <Image
-                                            src="/image 43-1.png"
-                                            width={120}
-                                            height={120}
-                                            alt="Logo"
-                                            priority={false}
-                                        />
-                                    </div>
-                                    <div className="lg:w-4/5">
+                                    <div className="">
                                         <div className="text-2xl font-bold">
                                             Masuk ke halaman produk
                                         </div>

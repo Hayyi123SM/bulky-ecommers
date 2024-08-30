@@ -4,7 +4,7 @@ import AreaSelect from "@/components/AreaSelect"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
-import { addAddress } from "@/store/slices/addressSlice"
+import { fetchAddressDetail, updateAddress } from "@/store/slices/addressSlice"
 import {
     fetchCities,
     fetchDistricts,
@@ -16,7 +16,8 @@ import Link from "next/link"
 import { Suspense, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-function AddressCreate() {
+function AddressUpdate({ params }) {
+    const addressId = params.addressId
     const dispatch = useDispatch()
     const [label, setlabel] = useState("")
     const [name, setName] = useState("")
@@ -27,9 +28,31 @@ function AddressCreate() {
     const [districtId, setDistrictId] = useState("")
     const [subDistrictId, setSubDistrictId] = useState("")
 
+    const addressDetail = useSelector(state => state.address.detailAddress)
+
+    useEffect(() => {
+        dispatch(fetchAddressDetail(addressId))
+    }, [dispatch, addressId])
+
+    useEffect(() => {
+        if (addressDetail) {
+            setlabel(addressDetail.label)
+            setName(addressDetail.name)
+            setPhoneNumber(addressDetail.phone_number)
+            setAddress(addressDetail.address)
+            setProvinceId(addressDetail.province_id)
+            setCityId(addressDetail.city_id)
+            setDistrictId(addressDetail.district_id)
+            setSubDistrictId(addressDetail.sub_district_id)
+        }
+    }, [addressDetail])
+
     useEffect(() => {
         dispatch(fetchProvinces())
-    }, [dispatch])
+        if (cityId) dispatch(fetchCities(provinceId))
+        if (districtId) dispatch(fetchDistricts(cityId))
+        if (subDistrictId) dispatch(fetchSubDistricts(districtId))
+    }, [dispatch, provinceId, cityId, districtId, subDistrictId])
 
     const provinces = useSelector(state => state.area.provinces)
     const cities = useSelector(state => state.area.cities)
@@ -58,6 +81,7 @@ function AddressCreate() {
     const submitForm = e => {
         e.preventDefault()
         const data = {
+            addressId,
             label,
             name,
             phoneNumber,
@@ -67,13 +91,26 @@ function AddressCreate() {
             districtId,
             subDistrictId,
         }
-        dispatch(addAddress(data))
+        dispatch(updateAddress(data))
 
         // Redirect to profile page
         setTimeout(() => {
             window.location.href = "/address"
         }, 1000)
     }
+
+    console.log("====================================")
+    console.log("addressDetail:", addressDetail)
+    console.log("provinceId:", provinceId)
+    console.log("cityId:", cityId)
+    console.log("districtId:", districtId)
+    console.log("subDistrictId:", subDistrictId)
+    console.log("------------------------------------")
+    console.log("provinces:", provinces)
+    console.log("cities:", cities)
+    console.log("districts:", districts)
+    console.log("subDistricts:", subDistricts)
+    console.log("====================================")
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
@@ -83,7 +120,7 @@ function AddressCreate() {
                 </div>
                 <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                     <ArrowLeftIcon className="h-6 w-6" />
-                    <div className="ml-2 font-semibold">Tambah Alamat</div>
+                    <div className="ml-2 font-semibold">Update Alamat</div>
                 </div>
                 <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                     <div className="hidden w-1/5 p-7 lg:block">
@@ -93,7 +130,7 @@ function AddressCreate() {
                         <div className="hidden items-center border-[#F0F3F7] lg:flex">
                             <ArrowLeftIcon className="h-6 w-6" />
                             <div className="ml-2 font-semibold">
-                                Tambah Alamat
+                                Update Alamat
                             </div>
                         </div>
                         <AuthSessionStatus className="mb-4" status={status} />
@@ -109,7 +146,7 @@ function AddressCreate() {
                                         className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                         placeholder="Cth: Perusahaan"
                                         onChange={e => setlabel(e.target.value)}
-                                        value={label}
+                                        defaultValue={label}
                                     />
                                     {/* <InputError
                                         messages={errors.label}
@@ -127,7 +164,7 @@ function AddressCreate() {
                                         className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                         placeholder="Nama"
                                         onChange={e => setName(e.target.value)}
-                                        value={name}
+                                        defaultValue={name}
                                     />
                                     {/* <InputError
                                         messages={errors.name}
@@ -147,7 +184,7 @@ function AddressCreate() {
                                         onChange={e =>
                                             setPhoneNumber(e.target.value)
                                         }
-                                        value={phoneNumber}
+                                        defaultValue={phoneNumber}
                                     />
                                     {/* <InputError
                                         messages={errors.phoneNumber}
@@ -167,7 +204,7 @@ function AddressCreate() {
                                         onChange={e =>
                                             setAddress(e.target.value)
                                         }
-                                        value={address}
+                                        defaultValue={address}
                                     />
                                     {/* <InputError
                                         messages={errors.address}
@@ -184,6 +221,7 @@ function AddressCreate() {
                                         <AreaSelect
                                             options={provinces}
                                             onSelect={handleSelectProvince}
+                                            selectedId={provinceId}
                                         />
                                         {/* <InputError
                                             messages={errors.provinceId}
@@ -197,6 +235,7 @@ function AddressCreate() {
                                         <AreaSelect
                                             options={cities}
                                             onSelect={handleSelectCity}
+                                            selectedId={cityId}
                                         />
                                         {/* <InputError
                                             messages={errors.cityId}
@@ -214,6 +253,7 @@ function AddressCreate() {
                                         <AreaSelect
                                             options={districts}
                                             onSelect={handleSelectDistrict}
+                                            selectedId={districtId}
                                         />
                                         {/* <InputError
                                             messages={errors.districtId}
@@ -227,6 +267,7 @@ function AddressCreate() {
                                         <AreaSelect
                                             options={subDistricts}
                                             onSelect={handleSelectSubDistrict}
+                                            selectedId={subDistrictId}
                                         />
                                         {/* <InputError
                                             messages={errors.subDistrictId}
@@ -274,4 +315,4 @@ function AddressCreate() {
     )
 }
 
-export default AddressCreate
+export default AddressUpdate

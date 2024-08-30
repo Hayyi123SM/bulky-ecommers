@@ -5,7 +5,11 @@ import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
 import SearchParamsHandler from "@/lib/searchParams"
-import { fetchInvoiceOrder, fetchOrders } from "@/store/slices/orderSlice"
+import {
+    fetchInvoiceOrder,
+    fetchOrders,
+    getMyInvoice,
+} from "@/store/slices/orderSlice"
 import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
@@ -20,8 +24,8 @@ function WaitingPayment() {
     const router = useRouter()
     const dispatch = useDispatch()
     const orders = useSelector(state => state.orders.orders)
-    const invoiceOrders = useSelector(state => state.orders.invoiceOrders)
-    const [invoiceId, setInvoiceId] = useState("")
+    const myInvoice = useSelector(state => state.orders.myInvoice)
+    const [isRedirectTo, setIsRedirectTo] = useState(false)
 
     // useEffect(() => {
     //     if (user) {
@@ -56,18 +60,29 @@ function WaitingPayment() {
 
     const handleGetInvoice = orderId => {
         dispatch(fetchInvoiceOrder(orderId))
+        dispatch(getMyInvoice(orderId))
+        setIsRedirectTo(true)
     }
 
-    useEffect(() => {
-        if (invoiceOrders.length > 0) {
-            setInvoiceId(invoiceOrders[0]?.id)
-            router.push(`/payment-method/${invoiceOrders[0]?.id}`)
-        }
-    }, [invoiceOrders])
+    console.log("====================================")
+    console.log("myInvoice:", myInvoice)
+    console.log("====================================")
 
-    console.log("====================================")
-    console.log("invoiceId:", invoiceId)
-    console.log("====================================")
+    useEffect(() => {
+        if (myInvoice && isRedirectTo) {
+            if (myInvoice.payment_url) {
+                console.log("====================================")
+                console.log("myInvoice.payment_url:", myInvoice.payment_url)
+                console.log("====================================")
+                window.location.href = myInvoice.payment_url
+            } else {
+                console.log("====================================")
+                console.log("myInvoice:", myInvoice)
+                console.log("====================================")
+                router.push("/payment-method/" + myInvoice.id)
+            }
+        }
+    }, [myInvoice])
 
     if (!orders) return <div>Loading ... </div>
 
@@ -101,13 +116,13 @@ function WaitingPayment() {
                     <div className="mt-4 flex items-center px-4 lg:mt-10 lg:px-0">
                         <div className="item-center mr-2 w-full lg:mb-0 lg:flex lg:w-8/12">
                             <input
-                                className="mr-4 w-full rounded-lg border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
+                                className="mr-4 w-full border-b py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
                                 placeholder="Cari pesananmu"
                             />
                         </div>
                         <div className="item-center hidden w-full lg:flex lg:w-4/12">
                             <input
-                                className="w-full rounded-lg border py-2 pl-14 text-black bg-calendar focus:border-secondary focus:ring-0"
+                                className="w-full border-b py-2 pl-14 text-black bg-calendar focus:border-secondary focus:ring-0"
                                 placeholder="Pilih Tanggal Transaksi"
                             />
                         </div>
@@ -122,48 +137,76 @@ function WaitingPayment() {
                     {orders.map((order, index) => (
                         <div
                             key={index}
-                            className="hidden items-center border-b border-[#F0F3F7] bg-white px-5 py-4 lg:flex">
-                            <div className="w-1/2">
-                                <div className="flex items-center">
-                                    <div>
-                                        <Image
-                                            src={
-                                                order.items_count > 0 &&
-                                                order.items[0].product.images[0]
-                                            }
-                                            width={100}
-                                            height={100}
-                                            alt="cart-product"
-                                            priority={false}
-                                        />
-                                    </div>
-                                    <div className="ml-5 text-sm leading-6">
-                                        <div className="text-md pb-1">
-                                            {order.items_count > 0 &&
-                                                order.items[0].product.name}
+                            className="hidden border-b border-[#F0F3F7] px-5 py-4 lg:block">
+                            <div className="flex items-center">
+                                <div className="mr-4 text-sm font-bold">
+                                    Tanggal Transaksi
+                                </div>
+                                <div className="text-sm">
+                                    {order.order_date}
+                                </div>
+                            </div>
+                            <div className="hidden items-center bg-white lg:flex">
+                                <div className="w-4/12">
+                                    <div className="flex items-center">
+                                        <div>
+                                            <Image
+                                                src="/order.svg"
+                                                width={100}
+                                                height={100}
+                                                alt="cart-product"
+                                                priority={false}
+                                            />
                                         </div>
-                                        <div className="text-md font-bold">
-                                            {order.total_price.formatted}
+                                        <div className="ml-5 text-sm leading-6">
+                                            <div className="text-md pb-1">
+                                                {order.items_count > 0 &&
+                                                    order.items[0].product.name}
+                                            </div>
+                                            <div className="text-md font-bold">
+                                                {order.total_price.formatted}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="w-1/2">
-                                <div className="flex items-center justify-end">
-                                    <Link href={`/order/${order.id}`}>
-                                        <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
-                                            Detail Pesanan
-                                        </div>
-                                    </Link>
-                                    {/* <Link href={`/payment-method/${order.id}`}> */}
-                                    <div
-                                        onClick={() =>
-                                            handleGetInvoice(order.id)
-                                        }
-                                        className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                        Bayar Sekarang
+                                <div className="w-2/12 text-sm leading-6">
+                                    <div className="text-md pb-1">
+                                        Metode Pembayaran
                                     </div>
-                                    {/* </Link> */}
+                                    <div className="text-md font-bold">
+                                        {order.invoices_count > 0
+                                            ? order.invoices[0]
+                                                  .payment_method === null
+                                                ? "-"
+                                                : order.invoices[0]
+                                                      .payment_method
+                                            : "-"}
+                                    </div>
+                                </div>
+                                <div className="w-2/12 text-sm leading-6">
+                                    <div className="text-md pb-1">
+                                        Total Tagihan
+                                    </div>
+                                    <div className="text-md font-bold">
+                                        {order.total_price.formatted}
+                                    </div>
+                                </div>
+                                <div className="w-4/12">
+                                    <div className="flex items-center justify-end">
+                                        <Link
+                                            href={`/waiting-payment/${order.id}`}>
+                                            <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                                                Detail Pesanan
+                                            </div>
+                                        </Link>
+                                        <div
+                                            onClick={() =>
+                                                handleGetInvoice(order.id)
+                                            }
+                                            className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                            Bayar Sekarang
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,11 +217,11 @@ function WaitingPayment() {
                     {orders.map((order, index) => (
                         <div
                             key={index}
-                            className="m-4 flex flex-col items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
+                            className="m-4 flex items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
                             <div className="flex items-center">
                                 <div className="w-1/3">
                                     <Image
-                                        src="/product.png"
+                                        src="/order.svg"
                                         width={100}
                                         height={100}
                                         alt="cart-product"
@@ -187,13 +230,17 @@ function WaitingPayment() {
                                 </div>
                                 <div className="ml-5 w-2/3 text-sm leading-6">
                                     <div className="text-md pb-1">
-                                        Motul ATF VI Automatic Transmission
-                                        Fluid 105774
+                                        {order.items_count > 0 &&
+                                            order.items[0].product.name}
                                     </div>
                                     <div className="text-md font-bold">
                                         {order.total_price.formatted}
                                     </div>
-                                    <div className="mt-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    <div
+                                        onClick={() =>
+                                            handleGetInvoice(order.id)
+                                        }
+                                        className="mt-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                         Bayar Sekarang
                                     </div>
                                 </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import Footer from "@/components/Footer"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
@@ -54,6 +55,10 @@ function Home() {
         }, 3000)
         return () => clearInterval(interval)
     }, [banners.length])
+
+    if (!banners || !products || !videos) {
+        return <LoadingSpinner />
+    }
 
     return (
         <div>
@@ -262,6 +267,8 @@ function Home() {
                 </div>
             </div>
             <Footer />
+
+            {/* <LoadingSpinner /> */}
         </div>
     )
 }

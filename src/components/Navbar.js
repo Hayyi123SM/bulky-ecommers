@@ -1,10 +1,11 @@
 "use client"
 
+import { useAuth } from "@/hooks/auth"
+import { fetchCarts } from "@/store/slices/cartSlice"
 import { fetchSearchProducts } from "@/store/slices/productSlice"
 import {
     ArchiveBoxIcon,
     Bars3BottomRightIcon,
-    BellIcon,
 } from "@heroicons/react/24/outline"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -14,24 +15,22 @@ import { Suspense, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Navbar({ togglePopupMenu }) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
     const inputRef = useRef(null)
+    const popupRef = useRef(null)
     const searchResults = useSelector(state => state.products.searchResults)
     const searchParams = useSearchParams()
     const currentPage = parseInt(searchParams.get("page")) || 1
-    const [user, setUser] = useState(null)
+    const { user } = useAuth()
     const dispatch = useDispatch()
+    const carts = useSelector(state => state.carts.cart)
 
     useEffect(() => {
-        const getUser = JSON.parse(localStorage.getItem("user"))
-        setUser(getUser)
+        // const getUser = JSON.parse(localStorage.getItem("user"))
+        // setUser(isUserLogin)
+        dispatch(fetchCarts())
     }, [])
-
-    useEffect(() => {
-        setIsAuthenticated(user !== null)
-    }, [user])
 
     const handleSearchInputChange = e => {
         setSearchQuery(e.target.value)
@@ -46,8 +45,15 @@ function Navbar({ togglePopupMenu }) {
 
     useEffect(() => {
         const handleClickOutside = event => {
-            if (inputRef.current && !inputRef.current.contains(event.target)) {
-                setShowSearchResults(false)
+            if (
+                inputRef.current &&
+                !inputRef.current.contains(event.target) &&
+                popupRef.current &&
+                !popupRef.current.contains(event.target)
+            ) {
+                setTimeout(() => {
+                    setShowSearchResults(false)
+                }, 200)
             }
         }
 
@@ -97,8 +103,13 @@ function Navbar({ togglePopupMenu }) {
                                             searchResults.map(product => (
                                                 <Link
                                                     href={`/product/${product.slug}`}
-                                                    key={product.id}>
-                                                    <li className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
+                                                    key={product.id}
+                                                    onMouseDown={e =>
+                                                        e.preventDefault()
+                                                    }>
+                                                    <li
+                                                        ref={popupRef}
+                                                        className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
                                                         {product.name}
                                                     </li>
                                                 </Link>
@@ -106,7 +117,7 @@ function Navbar({ togglePopupMenu }) {
                                         ) : (
                                             <li className="flex items-center justify-between px-4 py-2">
                                                 <p className="px-4 py-2">
-                                                    Tidak ada hasilan yang cocok
+                                                    Tidak ada hasil yang cocok
                                                 </p>
                                             </li>
                                         )}
@@ -193,23 +204,24 @@ function Navbar({ togglePopupMenu }) {
                         </div>
                         <div className="flex lg:w-5/12 xl:w-4/12 2xl:w-3/12">
                             <div className="flex w-full items-center justify-end">
-                                <div className="flex items-center">
-                                    <BellIcon className="mr-2 h-9 w-9 font-bold text-white" />
+                                <div className="flex cursor-pointer items-center">
+                                    {/* <BellIcon className="mr-2 h-9 w-9 font-bold text-white hover:text-secondary" /> */}
                                 </div>
                                 <Link href="/cart">
-                                    <div className="flex items-center lg:mx-7 xl:mx-10">
-                                        <ArchiveBoxIcon className="h-9 w-9 font-bold text-white" />
-                                        <div className="ml-3 text-center text-white">
+                                    <div className="flex items-center text-white hover:text-secondary lg:mx-7 xl:mx-10">
+                                        <ArchiveBoxIcon className="h-9 w-9 font-bold hover:text-secondary" />
+                                        <div className="ml-3 text-center hover:text-secondary">
                                             <div className="text-sm">
                                                 Keranjang
                                             </div>
                                             <div className="text-sm font-bold">
-                                                0 Items
+                                                {carts ? carts.items_count : 0}{" "}
+                                                Items
                                             </div>
                                         </div>
                                     </div>
                                 </Link>
-                                {!isAuthenticated ? (
+                                {!user ? (
                                     <Link
                                         href="/login"
                                         className="ml-5 cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
@@ -218,15 +230,15 @@ function Navbar({ togglePopupMenu }) {
                                 ) : (
                                     <Link href="/profile">
                                         <div className="flex items-center px-7 py-2">
-                                            <div className="ml-3 text-white">
+                                            <div className="ml-3 text-white hover:text-secondary">
                                                 <div className="text-sm">
                                                     Welcome
                                                 </div>
                                                 <div className="flex cursor-pointer items-center">
                                                     <div className="mr-2 text-sm font-bold">
-                                                        {user.name}
+                                                        {user && user.data.name}
                                                     </div>
-                                                    <ChevronDownIcon className="h-5 w-5 font-bold text-white" />
+                                                    <ChevronDownIcon className="h-5 w-5 font-bold" />
                                                 </div>
                                             </div>
                                         </div>

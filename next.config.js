@@ -3,9 +3,11 @@ module.exports = {
         domains: [
             "via.placeholder.com",
             "cdn.dummyjson.com",
+            "dummyimage.com",
             "octagon.test",
             "back-office.bulky.id",
             "localhost",
+            "192.168.1.11",
         ],
         remotePatterns: [
             {

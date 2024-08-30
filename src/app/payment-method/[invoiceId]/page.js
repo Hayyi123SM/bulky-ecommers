@@ -1,7 +1,11 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
-import { createPayment, fetchPaymentMethod } from "@/store/slices/orderSlice"
+import {
+    createPayment,
+    fetchPaymentMethod,
+    getMyInvoice,
+} from "@/store/slices/orderSlice"
 import { ShieldCheckIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -24,13 +28,16 @@ function Payment({ params }) {
         state => state.orders.afterCreatePayment,
     )
     const [order, setOrder] = useState(null)
+    const myInvoice = useSelector(state => state.orders.myInvoice)
 
     useEffect(() => {
         const getOrder = JSON.parse(localStorage.getItem("order"))
         setOrder(getOrder)
+        dispatch(getMyInvoice(getOrder.id))
     }, [])
 
     console.log("====================================")
+    console.log("myInvoice:", myInvoice)
     console.log("order:", order)
     console.log("invoiceId:", invoiceId)
     console.log("====================================")
@@ -300,7 +307,9 @@ function Payment({ params }) {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-md font-light">
-                                        {order && order.total_price?.formatted}
+                                        {/* {order && order.total_price?.formatted} */}
+                                        {myInvoice &&
+                                            myInvoice.amount?.formatted}
                                     </label>
                                 </div>
                             </div>
@@ -313,7 +322,9 @@ function Payment({ params }) {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-lg font-bold">
-                                        {order && order.total_price?.formatted}
+                                        {/* {order && order.total_price?.formatted} */}
+                                        {myInvoice &&
+                                            myInvoice.amount?.formatted}
                                     </label>
                                 </div>
                             </div>

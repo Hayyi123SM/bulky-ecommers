@@ -78,7 +78,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post("/forgot-password", { email })
+            .post("/api/auth/forgot-password", { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -94,7 +94,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         setStatus(null)
 
         axios
-            .post("/reset-password", { token: params.token, ...props })
+            .post("/api/auth/reset-password", { token: params.token, ...props })
             .then(response =>
                 router.push("/login?reset=" + btoa(response.data.status)),
             )

@@ -6,7 +6,7 @@ import Link from "next/link"
 
 function Otp() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-cover bg-center lg:bg-[url('/bg-login.png')]">
+        <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5]">
             <div className="flex-1">
                 <div className="flex items-center justify-center">
                     <Link href="/">

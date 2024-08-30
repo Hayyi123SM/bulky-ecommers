@@ -1,16 +1,11 @@
 "use client"
 
+import { useAuth } from "@/hooks/auth"
 import Image from "next/image"
 import Link from "next/link"
-import React, { useEffect, useState } from "react"
 
 function SidebarProfile() {
-    const [user, setUser] = useState(null)
-
-    useEffect(() => {
-        const getUser = JSON.parse(localStorage.getItem("user"))
-        setUser(getUser)
-    }, [])
+    const { user } = useAuth()
 
     if (!user) {
         return <div>Loading...</div>
@@ -27,7 +22,9 @@ function SidebarProfile() {
                     priority={false}
                 />
                 <div className="ml-3">
-                    <div className="pb-1 text-sm font-bold">{user.name}</div>
+                    <div className="pb-1 text-sm font-bold">
+                        {user.data.name}
+                    </div>
                     <div className="text-xs">
                         <Link href="/profile">
                             <div className="cursor-pointer text-[#007185]">

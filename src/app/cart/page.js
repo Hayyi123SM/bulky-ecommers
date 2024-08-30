@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
+import { useAuth } from "@/hooks/auth"
 import {
     fetchCarts,
     toggleSelectItem,
@@ -17,12 +18,16 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Cart() {
+    const { user } = useAuth({ middleware: "auth" })
+
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
     // const updateStatus = useSelector(state => state.carts.updateStatus)
     // const updateError = useSelector(state => state.carts.updateError)
-
+    console.log("====================================")
+    console.log("user", user)
+    console.log("====================================")
     useEffect(() => {
         dispatch(fetchCarts())
     }, [dispatch])

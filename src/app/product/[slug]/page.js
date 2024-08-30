@@ -24,6 +24,7 @@ import {
 } from "@/store/slices/productSlice"
 import { addToCart } from "@/store/slices/cartSlice"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/auth"
 
 function ProductDetail({ params }) {
     const productId = params.slug // Access the dynamic parameter
@@ -34,12 +35,13 @@ function ProductDetail({ params }) {
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.productDetails)
     const relatedProducts = useSelector(state => state.products.relatedProducts)
-    const [savedUser, setSavedUser] = useState(null)
+    // const [savedUser, setSavedUser] = useState(null)
+    const { user } = useAuth()
 
-    useEffect(() => {
-        const getUser = localStorage.getItem("user")
-        setSavedUser(getUser)
-    }, [])
+    // useEffect(() => {
+    // const getUser = localStorage.getItem("user")
+    //     setSavedUser(getUser)
+    // }, [])
 
     useEffect(() => {
         if (productId) {
@@ -72,7 +74,7 @@ function ProductDetail({ params }) {
     }
 
     const handleAddToCart = product => {
-        if (savedUser) {
+        if (user) {
             dispatch(addToCart(product))
             router.push("/cart")
         } else {
@@ -175,6 +177,9 @@ function ProductDetail({ params }) {
                             {products.name}, {products.total_quantity} Units,{" "}
                             {products.condition.title}.
                         </h1>
+                        <div className="mb-4 text-xl font-bold text-[#007185]">
+                            {products.price.formatted}
+                        </div>
                         <div className="mb-4 flex items-center">
                             <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
                                 ID Palet
@@ -182,9 +187,6 @@ function ProductDetail({ params }) {
                             <div className="w-10/12 text-sm font-bold">
                                 {products.id_pallet}
                             </div>
-                        </div>
-                        <div className="mb-4 text-xl font-bold text-[#007185]">
-                            {products.price.formatted}
                         </div>
                         <div className="mb-4 flex items-center">
                             <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
