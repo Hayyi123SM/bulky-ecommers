@@ -13,6 +13,7 @@ function ResetPassword() {
     const { resetPassword } = useAuth()
 
     const dispatch = useDispatch()
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [errors, setErrors] = useState([])
@@ -37,6 +38,7 @@ function ResetPassword() {
 
         await resetPassword(
             {
+                email: email,
                 password: password,
                 password_confirmation: passwordConfirmation,
                 setErrors,
@@ -72,6 +74,22 @@ function ResetPassword() {
                         <form onSubmit={submitForm}>
                             <div className="py-4 text-2xl font-bold">
                                 Reset Password
+                            </div>
+                            <div className="py-2">
+                                <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                    Masukan Email
+                                </div>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    placeholder="Email"
+                                />
+                                <InputError
+                                    messages={errors.email}
+                                    className={"mt-2"}
+                                />
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
