@@ -78,7 +78,7 @@ function ProductDetail({ params }) {
             dispatch(addToCart(product))
             setTimeout(() => {
                 router.push("/cart")
-            }, 3000)
+            }, 1000)
         } else {
             router.push("/login")
         }
