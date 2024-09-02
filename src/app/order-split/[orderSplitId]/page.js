@@ -37,23 +37,23 @@ function OrderSplitDetail({ params }) {
 
     const handleToPayment = () => {
         if (myInvoice.payment_url) {
-            console.log("====================================")
-            console.log("myInvoice.payment_url:", myInvoice.payment_url)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("myInvoice.payment_url:", myInvoice.payment_url)
+            // console.log("====================================")
             window.location.href = myInvoice.payment_url
         } else {
-            console.log("====================================")
-            console.log("myInvoice:", myInvoice)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("myInvoice:", myInvoice)
+            // console.log("====================================")
             localStorage.setItem("order", JSON.stringify(order))
             router.push("/payment-nominal/")
         }
     }
 
-    console.log("order:", order)
-    console.log("orderSplitId:", orderSplitId)
-    console.log("myInvoice:", myInvoice)
-    console.log("totalPaidAmount:", totalPaidAmount)
+    // console.log("order:", order)
+    // console.log("orderSplitId:", orderSplitId)
+    // console.log("myInvoice:", myInvoice)
+    // console.log("totalPaidAmount:", totalPaidAmount)
 
     if (order === null || myInvoice === null) return <div>Loading...</div>
 

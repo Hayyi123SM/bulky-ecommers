@@ -99,18 +99,18 @@ function AddressUpdate({ params }) {
         }, 1000)
     }
 
-    console.log("====================================")
-    console.log("addressDetail:", addressDetail)
-    console.log("provinceId:", provinceId)
-    console.log("cityId:", cityId)
-    console.log("districtId:", districtId)
-    console.log("subDistrictId:", subDistrictId)
-    console.log("------------------------------------")
-    console.log("provinces:", provinces)
-    console.log("cities:", cities)
-    console.log("districts:", districts)
-    console.log("subDistricts:", subDistricts)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("addressDetail:", addressDetail)
+    // console.log("provinceId:", provinceId)
+    // console.log("cityId:", cityId)
+    // console.log("districtId:", districtId)
+    // console.log("subDistrictId:", subDistrictId)
+    // console.log("------------------------------------")
+    // console.log("provinces:", provinces)
+    // console.log("cities:", cities)
+    // console.log("districts:", districts)
+    // console.log("subDistricts:", subDistricts)
+    // console.log("====================================")
 
     return (
         <Suspense fallback={<div>Loading...</div>}>

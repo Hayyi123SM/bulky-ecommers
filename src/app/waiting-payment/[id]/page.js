@@ -20,7 +20,7 @@ function OrderDetail({ params }) {
         dispatch(getMyInvoice(id))
     }, [dispatch, id])
 
-    console.log("order:", order)
+    // console.log("order:", order)
     if (!order) return <div>Loading...</div>
 
     return (

@@ -8,11 +8,12 @@ import { useAuth } from "@/hooks/auth"
 import InputError from "@/components/InputError"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import { useDispatch } from "react-redux"
+import LoadingSpinner from "@/components/LoadingSpinner"
 
 function Login() {
     const { login } = useAuth({
         middleware: "guest",
-        redirectIfAuthenticated: "/profile",
+        redirectIfAuthenticated: "/",
     })
 
     const dispatch = useDispatch()
@@ -65,8 +66,6 @@ function Login() {
                 <div className="flex flex-col items-center justify-center py-5">
                     <div className="h-fit w-full max-w-md rounded-xl border-[#BFC9D9] bg-white p-8 lg:border">
                         <AuthSessionStatus className="mb-4" status={status} />
-
-                        {isLoading && <div>Loading...</div>}
 
                         <form onSubmit={submitForm}>
                             <div className="py-6 text-2xl font-bold">Masuk</div>
@@ -176,6 +175,7 @@ function Login() {
                     </div>
                 </div>
             </div>
+            {isLoading && <LoadingSpinner />}
         </div>
     )
 }

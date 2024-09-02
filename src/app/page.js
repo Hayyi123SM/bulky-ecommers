@@ -1,15 +1,14 @@
 "use client"
 
 import Footer from "@/components/Footer"
-import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import TestimoniCard from "@/components/TestimoniCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
-import SearchParamsHandler from "@/lib/searchParams"
 import { fetchBanners } from "@/store/slices/bannerSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
+import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
 import {
     ClockIcon,
@@ -19,7 +18,8 @@ import {
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { Suspense, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
+import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 
 function Home() {
@@ -30,13 +30,21 @@ function Home() {
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
     const videos = useSelector(state => state.videos.items)
+    const testimonys = useSelector(state => state.testimony.items)
+    const loadingBanners = useSelector(state => state.banners.isLoading)
+    const loadingProducts = useSelector(state => state.products.isLoading)
+    const loadingVideos = useSelector(state => state.videos.isLoading)
+    const loadingTestimonies = useSelector(state => state.testimony.isLoading)
 
     useEffect(() => {
         dispatch(fetchBanners())
         dispatch(fetchProducts({ filters: { perPage: 6 } }))
+        dispatch(fetchTestimonies({ take: 3 }))
+        dispatch(fetchVideos({ perPage: 8, paginate: 1 }))
     }, [dispatch])
-
-    const memoizedActions = useMemo(() => [page => fetchVideos({ page })], [])
+    // console.log("====================================")
+    // console.log("loadingBanners:", loadingBanners)
+    // console.log("====================================")
 
     const togglePopupMenu = () => setShowPopupMenu(!showPopupMenu)
     const closePopupMenu = () => setShowPopupMenu(false)
@@ -56,16 +64,12 @@ function Home() {
         return () => clearInterval(interval)
     }, [banners.length])
 
-    if (!banners || !products || !videos) {
-        return <LoadingSpinner />
-    }
+    // if (!banners || !products || !videos) {
+    //     return <LoadingSpinner />
+    // }
 
     return (
         <div>
-            <Suspense fallback={<div>Loading...</div>}>
-                <SearchParamsHandler actions={memoizedActions} />
-            </Suspense>
-
             {/* Search results displayed outside the Navbar */}
             {/* Rest of your page content */}
             <Navbar togglePopupMenu={togglePopupMenu} />
@@ -78,27 +82,35 @@ function Home() {
             <div className="">
                 <div className="mx-auto max-w-7xl p-0 lg:p-5">
                     <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
-                        {banners.map((banner, index) => (
-                            <div
-                                key={index}
-                                className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
-                                <Image
-                                    src={banner.full_url}
-                                    alt={`Banner ${index}`}
-                                    fill
-                                    priority={false}
-                                    className="h-full w-full object-cover"
-                                />
-                            </div>
-                        ))}
-                        <div className="absolute bottom-5 left-5 flex space-x-2">
-                            {banners.map((_, index) => (
+                        {loadingBanners ? (
+                            <Skeleton height={324} />
+                        ) : (
+                            banners.map((banner, index) => (
                                 <div
                                     key={index}
-                                    className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`}
-                                    onClick={() => setCurrent(index)}
-                                />
-                            ))}
+                                    className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
+                                    <Image
+                                        src={banner.full_url}
+                                        alt={`Banner ${index}`}
+                                        fill
+                                        priority={false}
+                                        className="h-full w-full object-cover"
+                                    />
+                                </div>
+                            ))
+                        )}
+                        <div className="absolute bottom-5 left-5 flex space-x-2">
+                            {loadingBanners ? (
+                                <Skeleton height={324} />
+                            ) : (
+                                banners.map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`}
+                                        onClick={() => setCurrent(index)}
+                                    />
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -113,27 +125,36 @@ function Home() {
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-6">
-                            {products.map(product => (
-                                <div
-                                    className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
-                                    key={product.id}>
-                                    <ProductCard
-                                        image={product.images[0]}
-                                        location={"Jakarta"}
-                                        title={product.name}
-                                        price={product.price.formatted}
-                                        url={`/product/${product.slug}`}
-                                        sale={
-                                            product.show_price_before_discount
-                                        }
-                                        beforeDiscount={
-                                            product.price_before_discount
-                                                .formatted
-                                        }
-                                        totalQty={product.total_quantity}
-                                    />
-                                </div>
-                            ))}
+                            {loadingProducts
+                                ? Array.from({ length: 6 }).map((_, index) => (
+                                      <div
+                                          key={index}
+                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                          <Skeleton height={200} />
+                                          <Skeleton count={5} />
+                                      </div>
+                                  ))
+                                : products.map(product => (
+                                      <div
+                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                          key={product.id}>
+                                          <ProductCard
+                                              image={product.images[0]}
+                                              location={"Jakarta"}
+                                              title={product.name}
+                                              price={product.price.formatted}
+                                              url={`/product/${product.slug}`}
+                                              sale={
+                                                  product.show_price_before_discount
+                                              }
+                                              beforeDiscount={
+                                                  product.price_before_discount
+                                                      .formatted
+                                              }
+                                              totalQty={product.total_quantity}
+                                          />
+                                      </div>
+                                  ))}
                         </div>
                     </div>
                     <div className="my-10 flex justify-center p-5 text-center text-3xl font-semibold leading-9">
@@ -208,16 +229,28 @@ function Home() {
                         </div>
                         <div className="overflow-x-auto">
                             <div className="flex gap-4 lg:grid lg:grid-cols-4">
-                                {videos.map(video => (
-                                    <div
-                                        className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
-                                        key={video.id}>
-                                        <VideoThumbnail
-                                            // thumbnail={video.thumbnail}
-                                            title={video.title}
-                                        />
-                                    </div>
-                                ))}
+                                {loadingVideos
+                                    ? Array.from({ length: 4 }).map(
+                                          (_, index) => (
+                                              <div
+                                                  key={index}
+                                                  className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                                  <Skeleton height={150} />
+                                                  <Skeleton width="60%" />
+                                              </div>
+                                          ),
+                                      )
+                                    : videos &&
+                                      videos.map(video => (
+                                          <div
+                                              className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                              key={video.id}>
+                                              <VideoThumbnail
+                                                  thumbnail={video.thumbnail}
+                                                  title={video.title}
+                                              />
+                                          </div>
+                                      ))}
                             </div>
                         </div>
                         <Link href="/video">
@@ -238,30 +271,28 @@ function Home() {
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-3">
-                            <div className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
-                                <TestimoniCard
-                                    name="Budi"
-                                    image="/Rectangle 1-1.png"
-                                    title="CEO Toko Elektronik Garazi"
-                                    review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor."
-                                />
-                            </div>
-                            <div className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
-                                <TestimoniCard
-                                    name="Budi"
-                                    image="/Rectangle 1-2.png"
-                                    title="CEO Toko Elektronik Garazi"
-                                    review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor."
-                                />
-                            </div>
-                            <div className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
-                                <TestimoniCard
-                                    name="Budi"
-                                    image="/Rectangle 1-3.png"
-                                    title="CEO Toko Elektronik Garazi"
-                                    review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor."
-                                />
-                            </div>
+                            {loadingTestimonies
+                                ? Array.from({ length: 3 }).map((_, index) => (
+                                      <div
+                                          key={index}
+                                          className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
+                                          <Skeleton height={150} />
+                                          <Skeleton width="60%" />
+                                      </div>
+                                  ))
+                                : testimonys &&
+                                  testimonys.map(testimoni => (
+                                      <div
+                                          key={testimoni.id}
+                                          className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
+                                          <TestimoniCard
+                                              name={testimoni.name}
+                                              image={testimoni.image}
+                                              title={testimoni.label}
+                                              review={testimoni.content}
+                                          />
+                                      </div>
+                                  ))}
                         </div>
                     </div>
                 </div>

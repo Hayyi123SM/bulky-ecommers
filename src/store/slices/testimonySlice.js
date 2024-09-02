@@ -7,40 +7,37 @@ const initialState = {
     isLoading: true,
 }
 
-export const fetchBanners = createAsyncThunk(
-    "banners/fetchBanners",
-    async currentPage => {
+export const fetchTestimonies = createAsyncThunk(
+    "testimony/fetchTestimonies",
+    async params => {
         try {
-            const itemsPerPage = 10
-            const response = await axios.get("/api/banners", {
-                params: { page: currentPage, limit: itemsPerPage },
-            })
+            const response = await axios.get("/api/testimony", { params })
             console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
-            console.error("Error fetching banners:", error) // Log errors
+            console.error("Error fetching testimony:", error) // Log errors
             throw error
         }
     },
 )
 
-const bannerSlice = createSlice({
+const testimonySlice = createSlice({
     name: "products",
     initialState,
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(fetchBanners.pending, state => {
+            .addCase(fetchTestimonies.pending, state => {
                 state.isLoading = true
                 state.error = null
             })
-            .addCase(fetchBanners.fulfilled, (state, action) => {
+            .addCase(fetchTestimonies.fulfilled, (state, action) => {
                 console.log("Action in fulfilled:", action)
                 console.log("Current state:", state)
                 state.items = action.payload.data
                 state.isLoading = false
             })
-            .addCase(fetchBanners.rejected, (state, action) => {
+            .addCase(fetchTestimonies.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })
@@ -48,5 +45,5 @@ const bannerSlice = createSlice({
 })
 
 export const { setStateProduct, setProductName, initializeProduct } =
-    bannerSlice.actions
-export default bannerSlice.reducer
+    testimonySlice.actions
+export default testimonySlice.reducer

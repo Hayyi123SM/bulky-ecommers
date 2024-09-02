@@ -11,7 +11,7 @@ export async function GET() {
         setCSRFCookie(res, csrfToken)
         return res
     } catch (error) {
-        console.error("Error generating CSRF token:", error)
+        // console.error("Error generating CSRF token:", error)
         return new Response(
             JSON.stringify({ error: "Internal Server Error" }),
             { status: 500 },

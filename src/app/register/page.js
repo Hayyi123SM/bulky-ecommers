@@ -47,7 +47,7 @@ function Register() {
     const districts = useSelector(state => state.area.districts)
     const subDistricts = useSelector(state => state.area.subDistricts)
 
-    console.log("Provinces:", provinces)
+    // console.log("Provinces:", provinces)
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
     }

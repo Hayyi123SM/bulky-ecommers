@@ -36,10 +36,10 @@ function Order() {
 
     if (!orders) return <div>Loading ... </div>
 
-    console.log("====================================")
-    console.log("user:", user)
-    console.log("orders:", orders)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("user:", user)
+    // console.log("orders:", orders)
+    // console.log("====================================")
 
     return (
         <div>

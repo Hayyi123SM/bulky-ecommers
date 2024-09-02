@@ -8,7 +8,7 @@ const initialState = {
     searchResults: [],
     totalPages: 0,
     error: null,
-    isLoading: false,
+    isLoading: true,
 }
 
 export const fetchProducts = createAsyncThunk(

@@ -66,7 +66,7 @@ function Cart() {
         return <div>Loading cart...</div>
     }
 
-    console.log(cart.items)
+    // console.log(cart.items)
 
     return (
         <div>

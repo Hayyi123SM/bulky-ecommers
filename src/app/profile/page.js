@@ -40,9 +40,9 @@ function Profile() {
     // }, [dispatch, savedUser])
 
     useEffect(() => {
-        console.log("loading:", isLoading)
+        // console.log("loading:", isLoading)
 
-        console.log("user:", user)
+        // console.log("user:", user)
         if (!isLoading) {
             if (!user) {
                 console.log("Logging out as user and savedUser are null")

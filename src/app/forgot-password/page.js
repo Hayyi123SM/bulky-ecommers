@@ -23,9 +23,9 @@ function ForgotPassword() {
 
     useEffect(() => {
         if (email && errors.length === 0) {
-            console.log("====================================")
-            console.log("No Error")
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("No Error")
+            // console.log("====================================")
 
             setTimeout(() => {
                 setShowScreen(true)

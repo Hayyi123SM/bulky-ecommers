@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation"
 import { Suspense, useEffect, useMemo, useState } from "react"
 import { useSelector } from "react-redux"
 import { fetchProducts } from "../../store/slices/productSlice"
+import Skeleton from "react-loading-skeleton"
 
 function Product() {
     const [currentPage, setCurrentPage] = useState(1)
@@ -33,6 +34,7 @@ function Product() {
     const products = useSelector(state => state.products.items)
     const totalPages = useSelector(state => state.products.totalPages)
     const filters = useSelector(state => state.filters.selectedFilters)
+    const loadingProducts = useSelector(state => state.products.isLoading)
 
     // useEffect(() => {
     //     dispatch(fetchProducts({ page: currentPage, filters }))
@@ -108,41 +110,48 @@ function Product() {
             <div className="mx-auto flex min-h-screen max-w-7xl">
                 <SidebarProduct />
                 <div className="w-full p-4 lg:w-4/5">
-                    {products && products.length > 0 ? (
-                        <>
-                            <div className="pb-5 text-sm text-[#212121]">
-                                Menampilkan 1 - {products.length} barang dari{" "}
-                                {totalPages} barang
-                            </div>
-                            <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
-                                {products.map(product => (
-                                    <ProductCard
-                                        key={product.id}
-                                        image={product.images[0]}
-                                        location={"Jakarta"}
-                                        title={product.name}
-                                        price={product.price.formatted}
-                                        url={`/product/${product.slug}`}
-                                        sale={
-                                            product.show_price_before_discount
-                                        }
-                                        beforeDiscount={
-                                            product.price_before_discount
-                                                .formatted
-                                        }
-                                        totalQty={product.total_quantity}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    ) : (
-                        <p>Loading products...</p>
+                    {/* {products && products.length > 0 && (
+                        <> */}
+                    <div className="pb-5 text-sm text-[#212121]">
+                        Menampilkan 1 - {loadingProducts ? 0 : products.length}{" "}
+                        barang dari {loadingProducts ? 0 : totalPages} barang
+                    </div>
+                    <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
+                        {loadingProducts
+                            ? Array.from({
+                                  length: products.length,
+                              }).map((_, index) => (
+                                  <div key={index}>
+                                      <Skeleton height={200} />
+                                      <Skeleton count={5} />
+                                  </div>
+                              ))
+                            : products.map(product => (
+                                  <ProductCard
+                                      key={product.id}
+                                      image={product.images[0]}
+                                      location={"Jakarta"}
+                                      title={product.name}
+                                      price={product.price.formatted}
+                                      url={`/product/${product.slug}`}
+                                      sale={product.show_price_before_discount}
+                                      beforeDiscount={
+                                          product.price_before_discount
+                                              .formatted
+                                      }
+                                      totalQty={product.total_quantity}
+                                  />
+                              ))}
+                    </div>
+                    {/* </>
+                    )} */}
+                    {products && products.length > 15 && (
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                        />
                     )}
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                    />
                 </div>
             </div>
             <div className="hidden lg:block">

@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic"
 import "../../styles/globals.css"
+import "react-loading-skeleton/dist/skeleton.css"
 
 export const metadata = {
     title: "Octagon",

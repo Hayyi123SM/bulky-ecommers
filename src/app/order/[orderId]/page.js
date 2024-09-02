@@ -35,9 +35,9 @@ function OrderDetail({ params }) {
         dispatch(fetchOrderDetail(orderId))
     }, [dispatch, orderId])
 
-    console.log("order:", order)
-    console.log("orderId:", orderId)
-    console.log("params:", params)
+    // console.log("order:", order)
+    // console.log("orderId:", orderId)
+    // console.log("params:", params)
     if (order === null) return <div>Loading...</div>
 
     return (

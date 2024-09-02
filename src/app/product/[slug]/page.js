@@ -25,6 +25,8 @@ import {
 import { addToCart } from "@/store/slices/cartSlice"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/auth"
+import Skeleton from "react-loading-skeleton"
+import LoadingSpinner from "@/components/LoadingSpinner"
 
 function ProductDetail({ params }) {
     const productId = params.slug // Access the dynamic parameter
@@ -35,6 +37,8 @@ function ProductDetail({ params }) {
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.productDetails)
     const relatedProducts = useSelector(state => state.products.relatedProducts)
+    const loadingProducts = useSelector(state => state.products.isLoading)
+    const [isLoading, setIsloading] = useState(false)
     // const [savedUser, setSavedUser] = useState(null)
     const { user } = useAuth()
 
@@ -74,6 +78,7 @@ function ProductDetail({ params }) {
     }
 
     const handleAddToCart = product => {
+        setIsloading(true)
         if (user) {
             dispatch(addToCart(product))
             setTimeout(() => {
@@ -86,7 +91,7 @@ function ProductDetail({ params }) {
 
     if (!products || !products.condition) {
         // Optionally, you can return a loading state here
-        return <div>Loading...</div>
+        return <LoadingSpinner />
     }
 
     return (
@@ -115,29 +120,37 @@ function ProductDetail({ params }) {
             <div className="mx-auto max-w-7xl lg:p-8 lg:px-44">
                 <div className="flex flex-col lg:flex-row">
                     <div className="hidden flex-col lg:flex">
-                        {productImages.map((image, index) => (
-                            <Image
-                                key={index}
-                                src={image}
-                                alt={`product-${index}`}
-                                width={80}
-                                height={80}
-                                className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${mainImage === image ? "border-[#007185]" : "border-[#BFC9D9]"}`}
-                                onClick={() => setMainImage(image)}
-                                priority={false}
-                            />
-                        ))}
+                        {productImages.length === 0 ? (
+                            <Skeleton height={80} width={80} />
+                        ) : (
+                            productImages.map((image, index) => (
+                                <Image
+                                    key={index}
+                                    src={image}
+                                    alt={`product-${index}`}
+                                    width={80}
+                                    height={80}
+                                    className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${mainImage === image ? "border-[#007185]" : "border-[#BFC9D9]"}`}
+                                    onClick={() => setMainImage(image)}
+                                    priority={false}
+                                />
+                            ))
+                        )}
                     </div>
                     <div className="ml-2 hidden lg:block lg:w-1/2">
-                        <div className="flex items-center justify-center">
-                            <Image
-                                src={mainImage}
-                                alt="main product"
-                                width={500}
-                                height={400}
-                                priority={true}
-                            />
-                        </div>
+                        {!mainImage ? (
+                            <Skeleton height={400} />
+                        ) : (
+                            <div className="flex items-center justify-center">
+                                <Image
+                                    src={mainImage}
+                                    alt="main product"
+                                    width={500}
+                                    height={400}
+                                    priority={true}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className="lg:hidden">
                         <Swiper
@@ -146,17 +159,21 @@ function ProductDetail({ params }) {
                                 type: "fraction",
                             }}
                             modules={[Pagination, Navigation]}>
-                            {productImages.map((image, index) => (
-                                <SwiperSlide key={index}>
-                                    <Image
-                                        src={image}
-                                        alt={`product-${index}`}
-                                        width={1000}
-                                        height={1000}
-                                        priority={false}
-                                    />
-                                </SwiperSlide>
-                            ))}
+                            {loadingProducts ? (
+                                <Skeleton height={1000} />
+                            ) : (
+                                productImages.map((image, index) => (
+                                    <SwiperSlide key={index}>
+                                        <Image
+                                            src={image}
+                                            alt={`product-${index}`}
+                                            width={1000}
+                                            height={1000}
+                                            priority={false}
+                                        />
+                                    </SwiperSlide>
+                                ))
+                            )}
                         </Swiper>
 
                         <style>{`
@@ -176,18 +193,25 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="p-4 lg:w-1/2 lg:p-8">
                         <h1 className="mb-4 text-2xl font-bold">
-                            {products.name}, {products.total_quantity} Units,{" "}
-                            {products.condition.title}.
+                            {loadingProducts ? <Skeleton /> : products.name}
                         </h1>
                         <div className="mb-4 text-xl font-bold text-[#007185]">
-                            {products.price.formatted}
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : (
+                                products.price?.formatted
+                            )}
                         </div>
                         <div className="mb-4 flex items-center">
                             <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
                                 ID Palet
                             </div>
                             <div className="w-10/12 text-sm font-bold">
-                                {products.id_pallet}
+                                {loadingProducts ? (
+                                    <Skeleton />
+                                ) : (
+                                    products.id_pallet
+                                )}
                             </div>
                         </div>
                         <div className="mb-4 flex items-center">
@@ -195,7 +219,12 @@ function ProductDetail({ params }) {
                                 Quantity
                             </div>
                             <div className="w-10/12 text-sm font-bold">
-                                {products.total_quantity} pcs
+                                {loadingProducts ? (
+                                    <Skeleton />
+                                ) : (
+                                    products.total_quantity
+                                )}{" "}
+                                pcs
                             </div>
                         </div>
                         <div className="mb-4 flex items-center">
@@ -208,11 +237,11 @@ function ProductDetail({ params }) {
                         </div>
                         <div className="mb-4 flex items-center">
                             <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
-                                Total Berat
+                                Detail Pallet
                             </div>
                             <div className="w-10/12 text-sm font-bold">
-                                5.00 lbs per lot / 0.77 pounds per lot
-                                dimensional weight
+                                {/* 5.00 lbs per lot / 0.77 pounds per lot
+                                dimensional weight */}
                                 <span className="ml-1 text-[#007185] underline">
                                     (Package Details)
                                 </span>
@@ -243,25 +272,20 @@ function ProductDetail({ params }) {
                         </div> */}
                         <div
                             onClick={() => handleAddToCart(products.id)}
-                            className="hidden cursor-pointer rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:block">
-                            Masukkan Keranjang
+                            className="hidden cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:flex">
+                            {isLoading ? (
+                                <>
+                                    Tunggu Sebentar...
+                                    <LoadingSpinner
+                                        text={false}
+                                        color="#000"
+                                        size={22}
+                                    />
+                                </>
+                            ) : (
+                                "Masukkan Keranjang"
+                            )}
                         </div>
-                        {/* <div className="hidden py-3 lg:flex">
-                            <Image
-                                src="/mandiri.svg"
-                                alt="mandiri"
-                                width={50}
-                                height={50}
-                                                    priority={false}
-                            />
-                            <Image
-                                src="/mandiri.svg"
-                                alt="mandiri"
-                                width={50}
-                                height={50}
-                                                    priority={false}
-                            />
-                        </div> */}
                     </div>
                 </div>
                 <div className="p-4 lg:mt-20">
@@ -271,7 +295,11 @@ function ProductDetail({ params }) {
                             Kondisi :
                         </div>
                         <div className="w-5/6 text-sm">
-                            {products.condition.title}
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : (
+                                products.condition?.title
+                            )}
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
@@ -279,7 +307,11 @@ function ProductDetail({ params }) {
                             Brand :
                         </div>
                         <div className="w-5/6 text-sm">
-                            {products.brands.map(brand => brand.name)}
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : (
+                                products.brands.map(brand => brand.name)
+                            )}
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
@@ -287,7 +319,11 @@ function ProductDetail({ params }) {
                             Status Produk :
                         </div>
                         <div className="w-5/6 text-sm">
-                            {products.status.status}
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : (
+                                products.status.status
+                            )}
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
@@ -301,7 +337,11 @@ function ProductDetail({ params }) {
                             Kategori :
                         </div>
                         <div className="w-5/6 text-sm font-semibold text-[#007185]">
-                            {products.category.name}
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : (
+                                products.category.name
+                            )}
                         </div>
                     </div>
                     <div className="py-10">
@@ -322,36 +362,56 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-2 md:grid-cols-4 lg:grid lg:grid-cols-5">
-                            {relatedProducts.map(product => (
-                                <div
-                                    className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
-                                    key={product.id}>
-                                    <ProductCard
-                                        image={product.images[0]}
-                                        location={"Jakarta"}
-                                        title={product.name}
-                                        price={product.price.formatted}
-                                        url={`/product/${product.slug}`}
-                                        sale={
-                                            product.show_price_before_discount
-                                        }
-                                        beforeDiscount={
-                                            product.price_before_discount
-                                                .formatted
-                                        }
-                                        totalQty={product.total_quantity}
-                                    />
-                                </div>
-                            ))}
+                            {loadingProducts
+                                ? Array.from({
+                                      length: relatedProducts.length,
+                                  }).map((_, index) => (
+                                      <div
+                                          key={index}
+                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                          <Skeleton height={200} />
+                                          <Skeleton count={5} />
+                                      </div>
+                                  ))
+                                : relatedProducts.map(product => (
+                                      <div
+                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                          key={product.id}>
+                                          <ProductCard
+                                              image={product.images[0]}
+                                              location={"Jakarta"}
+                                              title={product.name}
+                                              price={product.price.formatted}
+                                              url={`/product/${product.slug}`}
+                                              sale={
+                                                  product.show_price_before_discount
+                                              }
+                                              beforeDiscount={
+                                                  product.price_before_discount
+                                                      .formatted
+                                              }
+                                              totalQty={product.total_quantity}
+                                          />
+                                      </div>
+                                  ))}
                         </div>
                     </div>
 
                     <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
-                        <Link href="/cart">
-                            <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                Masukan Keranjang
-                            </div>
-                        </Link>
+                        <div
+                            onClick={() => handleAddToCart(products.id)}
+                            className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                            {isLoading
+                                ? "Tunggu Sebentar... " +
+                                  (
+                                      <LoadingSpinner
+                                          text={false}
+                                          color="#000"
+                                          size={22}
+                                      />
+                                  )
+                                : "Masukkan Keranjang"}
+                        </div>
                     </div>
                 </div>
             </div>

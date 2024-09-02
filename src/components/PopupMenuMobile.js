@@ -26,9 +26,9 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
     const [savedUser, setSavedUser] = useState(null)
-    console.log("====================================")
-    console.log("user", user)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("user", user)
+    // console.log("====================================")
     const handleLogout = async () => {
         await logout({ redirect: "/" })
         dispatch(clearUser())

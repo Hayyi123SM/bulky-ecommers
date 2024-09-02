@@ -73,7 +73,7 @@ function PaymentMethod() {
 
     const handleSearchFriend = username => {
         dispatch(searchFriends(username))
-        console.log("friendList:", friendList)
+        // console.log("friendList:", friendList)
     }
 
     const handleSelectedFriend = friend => {
@@ -85,9 +85,9 @@ function PaymentMethod() {
     }
 
     useEffect(() => {
-        console.log("====================================")
-        console.log("order:", order)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("order:", order)
+        // console.log("====================================")
         if (order && order.invoices.length > 0) {
             dispatch(getMyInvoice(order.id))
             localStorage.setItem("order", JSON.stringify(order))
@@ -95,10 +95,10 @@ function PaymentMethod() {
     }, [dispatch, order])
 
     useEffect(() => {
-        console.log("====================================")
-        console.log("order:", order)
-        console.log("myInvoice:", myInvoice)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("order:", order)
+        // console.log("myInvoice:", myInvoice)
+        // console.log("====================================")
         if (order && myInvoice.need_input_amount === true) {
             router.push("/payment-nominal/")
         }

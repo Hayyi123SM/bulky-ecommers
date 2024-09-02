@@ -13,7 +13,7 @@ const initialState = {
         statuses: [],
     },
     error: null,
-    isLoading: false,
+    isLoading: true,
 }
 
 export const fetchCategories = createAsyncThunk(

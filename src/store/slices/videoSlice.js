@@ -11,9 +11,15 @@ export const fetchVideos = createAsyncThunk(
     "videos/fetchVideos",
     async currentPage => {
         try {
-            const response = await axios.get(`/api/videos`, {
-                params: { paginate: currentPage },
-            })
+            const data = {
+                paginate: currentPage.paginate,
+                per_page: currentPage.perPage,
+                take: currentPage.take,
+            }
+            console.log("====================================")
+            console.log("Data:", data)
+            console.log("====================================")
+            const response = await axios.get(`/api/videos`, { params: data })
             console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {

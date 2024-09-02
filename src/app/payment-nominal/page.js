@@ -33,9 +33,9 @@ function PaymentNominal() {
     const totalPaidAmount = order.paid_amount?.numeric
     const remainingAmount = order.total_price?.numeric - totalPaidAmount
 
-    console.log("====================================")
-    console.log("myInvoice", myInvoice)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("myInvoice", myInvoice)
+    // console.log("====================================")
 
     const handleCreatePayment = () => {
         if (amount <= 0) {

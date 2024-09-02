@@ -16,9 +16,9 @@ function Address() {
         dispatch(fetchAddresses())
     }, [dispatch])
 
-    console.log("====================================")
-    console.log("addresses:", addresses)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("addresses:", addresses)
+    // console.log("====================================")
 
     if (!addresses) return <div>Loading ... </div>
     return (

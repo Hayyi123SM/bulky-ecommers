@@ -64,21 +64,21 @@ function OrderSplit() {
         setIsRedirectTo(true)
     }
 
-    console.log("====================================")
-    console.log("myInvoice:", myInvoice)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("myInvoice:", myInvoice)
+    // console.log("====================================")
 
     useEffect(() => {
         if (myInvoice && isRedirectTo) {
             if (myInvoice.payment_url) {
-                console.log("====================================")
-                console.log("myInvoice.payment_url:", myInvoice.payment_url)
-                console.log("====================================")
+                // console.log("====================================")
+                // console.log("myInvoice.payment_url:", myInvoice.payment_url)
+                // console.log("====================================")
                 window.location.href = myInvoice.payment_url
             } else {
-                console.log("====================================")
-                console.log("myInvoice:", myInvoice)
-                console.log("====================================")
+                // console.log("====================================")
+                // console.log("myInvoice:", myInvoice)
+                // console.log("====================================")
                 router.push("/payment-nominal/")
             }
         }
@@ -86,9 +86,9 @@ function OrderSplit() {
 
     if (!orders) return <div>Loading ... </div>
 
-    console.log("====================================")
-    console.log("orders:", orders)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("orders:", orders)
+    // console.log("====================================")
 
     return (
         <div>

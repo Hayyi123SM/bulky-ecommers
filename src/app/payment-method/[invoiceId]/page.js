@@ -36,11 +36,11 @@ function Payment({ params }) {
         dispatch(getMyInvoice(getOrder.id))
     }, [])
 
-    console.log("====================================")
-    console.log("myInvoice:", myInvoice)
+    // console.log("====================================")
+    // console.log("myInvoice:", myInvoice)
     console.log("order:", order)
-    console.log("invoiceId:", invoiceId)
-    console.log("====================================")
+    // console.log("invoiceId:", invoiceId)
+    // console.log("====================================")
     const handleOptionClick = (icon, option, id) => {
         setSelectedOption(option)
         setSelectedIcon(icon)
@@ -78,11 +78,11 @@ function Payment({ params }) {
         }
     }, [afterCreatePayment])
 
-    console.log("====================================")
-    console.log("afterCreatePayment:", afterCreatePayment)
-    console.log("====================================")
-    console.log("paymentMethod:", paymentMethod)
-    console.log("selectedId:", selectedId)
+    // console.log("====================================")
+    // console.log("afterCreatePayment:", afterCreatePayment)
+    // console.log("====================================")
+    // console.log("paymentMethod:", paymentMethod)
+    // console.log("selectedId:", selectedId)
     return (
         <div>
             <div className="hidden lg:block">
