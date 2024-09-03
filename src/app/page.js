@@ -35,6 +35,8 @@ function Home() {
     const loadingProducts = useSelector(state => state.products.isLoading)
     const loadingVideos = useSelector(state => state.videos.isLoading)
     const loadingTestimonies = useSelector(state => state.testimony.isLoading)
+    const [isOpenPdf, setIsOpenPdf] = useState(false)
+    const [isPdf, setIsPdf] = useState(null)
 
     useEffect(() => {
         dispatch(fetchBanners())
@@ -48,6 +50,10 @@ function Home() {
 
     const togglePopupMenu = () => setShowPopupMenu(!showPopupMenu)
     const closePopupMenu = () => setShowPopupMenu(false)
+    const handlePackageDetail = pdf => {
+        setIsOpenPdf(true)
+        setIsPdf(pdf)
+    }
 
     useEffect(() => {
         if (showPopupMenu) {
@@ -72,7 +78,7 @@ function Home() {
         <div>
             {/* Search results displayed outside the Navbar */}
             {/* Rest of your page content */}
-            <Navbar togglePopupMenu={togglePopupMenu} />
+            <Navbar togglePopupMenu={togglePopupMenu} visibleOn="both" />
             {showPopupMenu && (
                 <PopupMenuMobile
                     showPopupMenu={showPopupMenu}
@@ -152,6 +158,11 @@ function Home() {
                                                       .formatted
                                               }
                                               totalQty={product.total_quantity}
+                                              isOpenPdf={() =>
+                                                  handlePackageDetail(
+                                                      product.pdf_file,
+                                                  )
+                                              }
                                           />
                                       </div>
                                   ))}
@@ -297,6 +308,22 @@ function Home() {
                     </div>
                 </div>
             </div>
+            {isOpenPdf && (
+                <div onClick={() => setIsOpenPdf(false)}>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]">
+                        {" "}
+                    </div>
+                    <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
+                        <iframe
+                            className="h-[400px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
+                            src={isPdf}
+                            title="PDF File"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                </div>
+            )}
             <Footer />
 
             {/* <LoadingSpinner /> */}

@@ -25,6 +25,8 @@ function Product() {
     const [currentPage, setCurrentPage] = useState(1)
     const [showPopup, setShowPopup] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const [isOpenPdf, setIsOpenPdf] = useState(false)
+    const [isPdf, setIsPdf] = useState(null)
 
     // const searchParams = useSearchParams()
     const router = useRouter()
@@ -53,6 +55,10 @@ function Product() {
     const closePopup = () => setShowPopup(false)
     const togglePopupMenu = () => setShowPopupMenu(!showPopupMenu)
     const closePopupMenu = () => setShowPopupMenu(false)
+    const handlePackageDetail = pdf => {
+        setIsOpenPdf(true)
+        setIsPdf(pdf)
+    }
 
     useEffect(() => {
         if (showPopup || showPopupMenu) {
@@ -71,9 +77,7 @@ function Product() {
                 />
             </Suspense>
 
-            <div className="hidden lg:block">
-                <Navbar />
-            </div>
+            <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-b border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <ArrowLeftIcon className="h-6 w-6" />
                 <div className="w-2/3">
@@ -140,6 +144,9 @@ function Product() {
                                               .formatted
                                       }
                                       totalQty={product.total_quantity}
+                                      isOpenPdf={() =>
+                                          handlePackageDetail(product.pdf_file)
+                                      }
                                   />
                               ))}
                     </div>
@@ -154,6 +161,23 @@ function Product() {
                     )}
                 </div>
             </div>
+
+            {isOpenPdf && (
+                <div onClick={() => setIsOpenPdf(false)}>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]">
+                        {" "}
+                    </div>
+                    <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
+                        <iframe
+                            className="h-[400px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
+                            src={isPdf}
+                            title="PDF File"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                </div>
+            )}
             <div className="hidden lg:block">
                 <Footer />
             </div>

@@ -53,19 +53,19 @@ function Footer() {
                 <div className="w-full p-5">
                     <div className="text-base font-bold">Lokasi Gudang</div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Jakarta</Link>
+                        <Link href="/">Jakarta</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Bandung</Link>
+                        <Link href="/">Bandung</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Surabaya</Link>
+                        <Link href="/">Surabaya</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Medan</Link>
+                        <Link href="/">Medan</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Solo</Link>
+                        <Link href="/">Solo</Link>
                     </div>
                 </div>
                 <div className="w-full p-5">
@@ -77,16 +77,18 @@ function Footer() {
                         <Link href="/about-us">Wholesaler</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Kontak</Link>
+                        <Link href="/contact-us">Kontak</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">FAQ</Link>
+                        <Link href="/faq">FAQ</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Syarat & Ketentuan</Link>
+                        <Link href="/terms-and-conditions">
+                            Syarat & Ketentuan
+                        </Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Kebijakan Privasi</Link>
+                        <Link href="/privacy-policy">Kebijakan Privasi</Link>
                     </div>
                 </div>
                 <div className="w-full p-5">

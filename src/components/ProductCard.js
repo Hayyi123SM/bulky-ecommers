@@ -11,6 +11,7 @@ function ProductCard({
     sale = false,
     beforeDiscount,
     totalQty,
+    isOpenPdf,
 }) {
     return (
         <div
@@ -51,12 +52,12 @@ function ProductCard({
                     </div>
                 </Link>
             </div>
-            <Link href={url}>
-                <div className="flex cursor-pointer items-center justify-between rounded-b-lg border-t border-[#F0F3F7] px-4 py-4 hover:bg-[#f5f5f5]">
-                    <div className="text-xs font-bold">View PDF Detail</div>
-                    <Square2StackIcon className="h-5 w-5 text-[#007185]" />
-                </div>
-            </Link>
+            <div
+                onClick={isOpenPdf}
+                className="flex cursor-pointer items-center justify-between rounded-b-lg border-t border-[#F0F3F7] px-4 py-4 hover:bg-[#f5f5f5]">
+                <div className="text-xs font-bold">View PDF Detail</div>
+                <Square2StackIcon className="h-5 w-5 text-[#007185]" />
+            </div>
         </div>
     )
 }

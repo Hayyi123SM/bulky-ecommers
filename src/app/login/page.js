@@ -143,8 +143,19 @@ function Login() {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                Masuk
+                                className="flex w-full cursor-pointer items-center justify-center rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                {isLoading ? (
+                                    <>
+                                        Tunggu Sebentar...
+                                        <LoadingSpinner
+                                            text={false}
+                                            color="#000"
+                                            size={16}
+                                        />
+                                    </>
+                                ) : (
+                                    "Masuk"
+                                )}
                             </button>
                             <div className="mt-4 flex w-full max-w-md cursor-pointer items-center justify-center rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
                                 <Image

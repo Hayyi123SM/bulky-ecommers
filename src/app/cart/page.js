@@ -70,9 +70,7 @@ function Cart() {
 
     return (
         <div>
-            <div className="hidden lg:block">
-                <Navbar />
-            </div>
+            <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <div className="flex items-center">
                     <Link href="/product">

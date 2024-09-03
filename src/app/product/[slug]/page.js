@@ -1,32 +1,29 @@
 "use client"
 
+import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
-import ProductCard from "@/components/ProductCard"
-import {
-    ArrowUpOnSquareIcon,
-    // QuestionMarkCircleIcon,
-} from "@heroicons/react/24/outline"
-import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import "swiper/css"
-import "swiper/css/pagination"
-import "swiper/css/navigation"
-import "swiper/swiper-bundle.css"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Pagination, Navigation } from "swiper/modules"
-import Link from "next/link"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
-import { useDispatch, useSelector } from "react-redux"
+import ProductCard from "@/components/ProductCard"
+import { useAuth } from "@/hooks/auth"
+import { addToCart } from "@/store/slices/cartSlice"
 import {
     fetchProductDetail,
     fetchProductRelated,
 } from "@/store/slices/productSlice"
-import { addToCart } from "@/store/slices/cartSlice"
+import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline"
+import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
+import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/hooks/auth"
+import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
-import LoadingSpinner from "@/components/LoadingSpinner"
+import { useDispatch, useSelector } from "react-redux"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import { Navigation, Pagination } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/swiper-bundle.css"
 
 function ProductDetail({ params }) {
     const productId = params.slug // Access the dynamic parameter
@@ -39,6 +36,7 @@ function ProductDetail({ params }) {
     const relatedProducts = useSelector(state => state.products.relatedProducts)
     const loadingProducts = useSelector(state => state.products.isLoading)
     const [isLoading, setIsloading] = useState(false)
+    const [isOpenPdf, setIsOpenPdf] = useState(false)
     // const [savedUser, setSavedUser] = useState(null)
     const { user } = useAuth()
 
@@ -89,6 +87,10 @@ function ProductDetail({ params }) {
         }
     }
 
+    const handlePackageDetail = () => {
+        setIsOpenPdf(true)
+    }
+
     if (!products || !products.condition) {
         // Optionally, you can return a loading state here
         return <LoadingSpinner />
@@ -96,9 +98,7 @@ function ProductDetail({ params }) {
 
     return (
         <div>
-            <div className="hidden lg:block">
-                <Navbar />
-            </div>
+            <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <Link href="/product">
                     <ArrowLeftIcon className="h-6 w-6" />
@@ -242,50 +242,57 @@ function ProductDetail({ params }) {
                             <div className="w-10/12 text-sm font-bold">
                                 {/* 5.00 lbs per lot / 0.77 pounds per lot
                                 dimensional weight */}
-                                <span className="ml-1 text-[#007185] underline">
+                                <span
+                                    className="ml-1 cursor-pointer text-[#007185] underline"
+                                    onClick={handlePackageDetail}>
                                     (Package Details)
                                 </span>
                             </div>
                         </div>
-                        {/* <div className="hidden items-center py-3 lg:flex">
-                            <Image
-                                src="/package.svg"
-                                alt="package"
-                                width={56}
-                                height={56}
-                                                    priority={false}
-                            />
-                            <div className="ml-2 text-xs">
-                                Saat ini barang sedang dalam proses pembayaran
-                                salah satu pengguna Bulky{" "}
-                                <span className="inline-flex items-center text-xs font-bold text-[#F20B0B]">
+                        {products && products.sold_out ? (
+                            <>
+                                <div className="hidden items-center py-3 lg:flex">
+                                    <Image
+                                        src="/package.svg"
+                                        alt="package"
+                                        width={56}
+                                        height={56}
+                                        priority={false}
+                                    />
+                                    <div className="ml-2 text-xs">
+                                        Saat ini barang sedang dalam proses
+                                        pembayaran salah satu pengguna Bulky{" "}
+                                        {/* <span className="inline-flex items-center text-xs font-bold text-[#F20B0B]">
                                     01:30:59
                                     <QuestionMarkCircleIcon
                                         className="ml-1 h-4 w-4 text-[#007185]"
                                         style={{ strokeWidth: "2.5" }}
                                     />
-                                </span>
+                                </span> */}
+                                    </div>
+                                </div>
+                                <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">
+                                    Masukkan Keranjang
+                                </div>
+                            </>
+                        ) : (
+                            <div
+                                onClick={() => handleAddToCart(products.id)}
+                                className="hidden cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:flex">
+                                {isLoading ? (
+                                    <>
+                                        Tunggu Sebentar...
+                                        <LoadingSpinner
+                                            text={false}
+                                            color="#000"
+                                            size={22}
+                                        />
+                                    </>
+                                ) : (
+                                    "Masukkan Keranjang"
+                                )}
                             </div>
-                        </div>
-                        <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">
-                            Masukkan Keranjang
-                        </div> */}
-                        <div
-                            onClick={() => handleAddToCart(products.id)}
-                            className="hidden cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:flex">
-                            {isLoading ? (
-                                <>
-                                    Tunggu Sebentar...
-                                    <LoadingSpinner
-                                        text={false}
-                                        color="#000"
-                                        size={22}
-                                    />
-                                </>
-                            ) : (
-                                "Masukkan Keranjang"
-                            )}
-                        </div>
+                        )}
                     </div>
                 </div>
                 <div className="p-4 lg:mt-20">
@@ -391,6 +398,7 @@ function ProductDetail({ params }) {
                                                       .formatted
                                               }
                                               totalQty={product.total_quantity}
+                                              isOpenPdf={handlePackageDetail}
                                           />
                                       </div>
                                   ))}
@@ -415,6 +423,22 @@ function ProductDetail({ params }) {
                     </div>
                 </div>
             </div>
+            {isOpenPdf && (
+                <div onClick={() => setIsOpenPdf(false)}>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]">
+                        {" "}
+                    </div>
+                    <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
+                        <iframe
+                            className="h-[400px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
+                            src={products.pdf_file}
+                            title="PDF File"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                </div>
+            )}
             {/* <Footer /> */}
         </div>
     )

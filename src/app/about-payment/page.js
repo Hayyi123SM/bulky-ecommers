@@ -1,62 +1,69 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
-import {
-    ArrowLeftIcon,
-    ChevronDownIcon,
-    ChevronUpIcon,
-} from "@heroicons/react/24/solid"
-import Image from "next/image"
+import { fetchPages } from "@/store/slices/pageSlice"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { Suspense, useState } from "react"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function AboutPayment() {
-    const [showFaq, setShowFaq] = useState(true)
-    const [showFaq2, setShowFaq2] = useState(false)
-    const [showFaq3, setShowFaq3] = useState(false)
+    const dispatch = useDispatch()
+    const aboutPayment = useSelector(state => state.pages.item)
 
-    const toggleShowFaq = () => {
-        setShowFaq(!showFaq)
-    }
-    const toggleShowFaq2 = () => {
-        setShowFaq2(!showFaq2)
-    }
-    const toggleShowFaq3 = () => {
-        setShowFaq3(!showFaq3)
-    }
+    // const [showFaq, setShowFaq] = useState(true)
+    // const [showFaq2, setShowFaq2] = useState(false)
+    // const [showFaq3, setShowFaq3] = useState(false)
 
-    const payments = []
+    // const toggleShowFaq = () => {
+    //     setShowFaq(!showFaq)
+    // }
+    // const toggleShowFaq2 = () => {
+    //     setShowFaq2(!showFaq2)
+    // }
+    // const toggleShowFaq3 = () => {
+    //     setShowFaq3(!showFaq3)
+    // }
 
-    for (let i = 1; i < 20; i++) {
-        payments.push(i)
-    }
+    // const payments = []
+
+    // for (let i = 1; i < 20; i++) {
+    //     payments.push(i)
+    // }
+    useEffect(() => {
+        dispatch(fetchPages("cara-pembayaran"))
+    }, [dispatch])
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div>
-                <div className="hidden lg:block">
-                    <Navbar />
-                </div>
-                <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                    <ArrowLeftIcon className="h-6 w-6" />
-                    <div className="ml-2 font-semibold">Tentang Pembayaran</div>
-                </div>
-                <div className="min-h-screen">
-                    <div className="mx-auto hidden max-w-7xl lg:block">
-                        <div className="px-7 pb-1 pt-12 text-2xl font-bold">
-                            Tentang Pembayaran
-                        </div>
-                        <div className="px-7 text-[#007185]">
-                            <Link href="/profile" className="cursor-pointer">
-                                Home
-                            </Link>{" "}
-                            / Tentang Pembayaran
-                        </div>
+        <div>
+            <Navbar visibleOn="desktop" />
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">Tentang Pembayaran</div>
+            </div>
+            <div className="min-h-screen">
+                <div className="mx-auto hidden max-w-7xl lg:block">
+                    <div className="px-7 pb-1 pt-12 text-2xl font-bold">
+                        Tentang Pembayaran
                     </div>
-                    <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
-                    <div className="mx-auto flex max-w-7xl lg:px-[176px]">
-                        <div className="p-7">
-                            <div className="mb-4 rounded-xl bg-white shadow">
+                    <div className="px-7 text-[#007185]">
+                        <Link href="/profile" className="cursor-pointer">
+                            Home
+                        </Link>{" "}
+                        / Tentang Pembayaran
+                    </div>
+                </div>
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto flex max-w-7xl lg:px-[176px]">
+                    <div className="p-7">
+                        <div className="items-center rounded-xl bg-white px-12 py-10 shadow">
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: aboutPayment.content,
+                                }}
+                            />
+                        </div>
+                        {/* <div className="mb-4 rounded-xl bg-white shadow">
                                 <div
                                     className="flex items-center justify-between px-10 pb-4 pt-6 hover:rounded-xl hover:bg-[#F5F5F5]"
                                     onClick={toggleShowFaq}>
@@ -199,13 +206,12 @@ function AboutPayment() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> */}
                     </div>
                 </div>
-                {/* <Footer /> */}
             </div>
-        </Suspense>
+            {/* <Footer /> */}
+        </div>
     )
 }
 

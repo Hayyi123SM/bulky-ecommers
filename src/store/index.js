@@ -9,6 +9,7 @@ import orderSlice from "./slices/orderSlice"
 import areaSlice from "./slices/areaSlice"
 import addressSlice from "./slices/addressSlice"
 import testimonySlice from "./slices/testimonySlice"
+import pageSlice from "./slices/pageSlice"
 
 export const store = configureStore({
     reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
         area: areaSlice,
         address: addressSlice,
         testimony: testimonySlice,
+        pages: pageSlice,
     },
 })

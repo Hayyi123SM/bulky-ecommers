@@ -16,9 +16,7 @@ function PaymentOnGoing() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <div>
-                <div className="hidden lg:block">
-                    <Navbar />
-                </div>
+                <Navbar visibleOn="desktop" />
                 <div className="mx-auto min-h-screen max-w-7xl bg-white pb-10">
                     <div className="flex justify-center py-5">
                         <div className="mt-5 text-center lg:mt-20">

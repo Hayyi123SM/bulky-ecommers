@@ -14,7 +14,7 @@ import { useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-function Navbar({ togglePopupMenu }) {
+function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
     const inputRef = useRef(null)
@@ -63,9 +63,16 @@ function Navbar({ togglePopupMenu }) {
         }
     }, [setShowSearchResults])
 
+    const visibilityClasses =
+        visibleOn === "mobile"
+            ? "lg:hidden"
+            : visibleOn === "desktop"
+              ? "hidden lg:block"
+              : ""
+
     return (
         <Suspense fallback={<div>Loading ... </div>}>
-            <div className="sticky top-0 z-40">
+            <div className={`sticky top-0 z-40 ${visibilityClasses}`}>
                 <nav className="block h-[134px] bg-primary px-4 py-3 lg:hidden">
                     <div className="flex items-center justify-between">
                         <Link href="/">

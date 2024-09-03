@@ -348,7 +348,7 @@ function Register() {
                             <div className="mb-2 py-2 text-sm text-[#6D7588]">
                                 Dengan mendaftar, kamu menyetujui
                                 <Link
-                                    href="/terms-and-condition"
+                                    href="/terms-and-conditions"
                                     className="ml-1 cursor-pointer font-bold text-[#007185]">
                                     Syarat & Ketentuan
                                 </Link>

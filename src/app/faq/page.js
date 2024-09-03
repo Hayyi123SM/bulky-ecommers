@@ -1,54 +1,65 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
-import { ChevronUpIcon } from "@heroicons/react/24/outline"
-import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
+import { fetchPages } from "@/store/slices/pageSlice"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { Suspense, useState } from "react"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Faq() {
-    const [showFaq, setShowFaq] = useState(true)
-    const [showFaq2, setShowFaq2] = useState(true)
-    const [showFaq3, setShowFaq3] = useState(true)
+    const dispatch = useDispatch()
+    const faq = useSelector(state => state.pages.item)
+    // const [showFaq, setShowFaq] = useState(true)
+    // const [showFaq2, setShowFaq2] = useState(true)
+    // const [showFaq3, setShowFaq3] = useState(true)
 
-    const toggleShowFaq = () => {
-        setShowFaq(!showFaq)
-    }
-    const toggleShowFaq2 = () => {
-        setShowFaq2(!showFaq2)
-    }
-    const toggleShowFaq3 = () => {
-        setShowFaq3(!showFaq3)
-    }
+    // const toggleShowFaq = () => {
+    //     setShowFaq(!showFaq)
+    // }
+    // const toggleShowFaq2 = () => {
+    //     setShowFaq2(!showFaq2)
+    // }
+    // const toggleShowFaq3 = () => {
+    //     setShowFaq3(!showFaq3)
+    // }
+
+    useEffect(() => {
+        dispatch(fetchPages("faq"))
+    }, [dispatch])
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div>
-                <div className="hidden lg:block">
-                    <Navbar />
+        <div>
+            <Navbar visibleOn="desktop" />
+            <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
+                <ArrowLeftIcon className="h-6 w-6" />
+                <div className="ml-2 font-semibold">
+                    Frequently Asked Questions
                 </div>
-                <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                    <ArrowLeftIcon className="h-6 w-6" />
-                    <div className="ml-2 font-semibold">
+            </div>
+            <div className="min-h-screen">
+                <div className="mx-auto hidden max-w-7xl lg:block">
+                    <div className="px-7 pb-1 pt-12 text-2xl font-bold">
                         Frequently Asked Questions
                     </div>
-                </div>
-                <div className="min-h-screen">
-                    <div className="mx-auto hidden max-w-7xl lg:block">
-                        <div className="px-7 pb-1 pt-12 text-2xl font-bold">
-                            Frequently Asked Questions
-                        </div>
-                        <div className="px-7 text-[#007185]">
-                            <Link href="/profile" className="cursor-pointer">
-                                Home
-                            </Link>{" "}
-                            / Frequently Asked Questions
-                        </div>
+                    <div className="px-7 text-[#007185]">
+                        <Link href="/profile" className="cursor-pointer">
+                            Home
+                        </Link>{" "}
+                        / Frequently Asked Questions
                     </div>
-                    <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
-                    <div className="mx-auto flex max-w-7xl lg:px-[176px]">
-                        <div className="p-7">
-                            <div className="mb-4 rounded-xl bg-white shadow">
+                </div>
+                <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
+                <div className="mx-auto flex max-w-7xl lg:px-[176px]">
+                    <div className="p-7">
+                        <div className="items-center rounded-xl bg-white px-12 py-10 shadow">
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: faq.content,
+                                }}
+                            />
+                        </div>
+                        {/* <div className="mb-4 rounded-xl bg-white shadow">
                                 <div
                                     className="flex items-center justify-between px-10 pb-4 pt-6 hover:rounded-xl hover:bg-[#F5F5F5]"
                                     onClick={toggleShowFaq}>
@@ -208,13 +219,12 @@ function Faq() {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> */}
                     </div>
                 </div>
-                {/* <Footer /> */}
             </div>
-        </Suspense>
+            {/* <Footer /> */}
+        </div>
     )
 }
 

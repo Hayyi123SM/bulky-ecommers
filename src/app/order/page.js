@@ -49,9 +49,7 @@ function Order() {
                     // onPageChange={setCurrentPage}
                 />
             </Suspense>
-            <div className="hidden lg:block">
-                <Navbar />
-            </div>
+            <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <ArrowLeftIcon className="h-6 w-6" />
                 <div className="ml-2 font-semibold">Status Pesanan</div>
