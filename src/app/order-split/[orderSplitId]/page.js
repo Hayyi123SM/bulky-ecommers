@@ -140,10 +140,11 @@ function OrderSplitDetail({ params }) {
                                         <div className="w-1/2">
                                             {order > 0
                                                 ? order.invoices[0]
-                                                      .payment_method === null
+                                                      ?.payment_method?.name ===
+                                                  null
                                                     ? "-"
                                                     : order.invoices[0]
-                                                          .payment_method
+                                                          ?.payment_method?.name
                                                 : "-"}
                                         </div>
                                     </div>

@@ -1,9 +1,23 @@
 "use client"
 
-import React from "react"
+import { useAuth } from "@/hooks/auth"
+import { useSearchParams } from "next/navigation"
+import { useEffect } from "react"
 import { MoonLoader } from "react-spinners"
 
 function VerifyEmail() {
+    const { verifyEmail } = useAuth()
+    const searchParams = useSearchParams()
+
+    const id = searchParams.get("id")
+    const hash = searchParams.get("hash")
+
+    useEffect(() => {
+        if (id && hash) {
+            verifyEmail(id, hash)
+        }
+    }, [id, hash])
+
     return (
         <>
             <div className="flex min-h-screen items-center justify-center bg-white">

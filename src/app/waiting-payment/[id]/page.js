@@ -107,9 +107,9 @@ function OrderDetail({ params }) {
                                             </div>
                                             <div className="w-1/2">
                                                 {order &&
-                                                    order.invoice &&
+                                                    order.invoices &&
                                                     order.invoices[0]
-                                                        .payment_method}
+                                                        ?.payment_method.name}
                                             </div>
                                         </div>
                                         <div className="flex items-center p-1">

@@ -8,12 +8,14 @@ import { useAuth } from "@/hooks/auth"
 import InputError from "@/components/InputError"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import { useDispatch } from "react-redux"
+import { useSearchParams } from "next/navigation"
+import LoadingSpinner from "@/components/LoadingSpinner"
 
 function ResetPassword() {
     const { resetPassword } = useAuth()
 
     const dispatch = useDispatch()
-    const [email, setEmail] = useState("")
+    const searchParams = useSearchParams()
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [errors, setErrors] = useState([])
@@ -22,6 +24,9 @@ function ResetPassword() {
     const [showPassword, setShowPassword] = useState(false)
     const [showPasswordConfirmation, setShowPasswordConfirmation] =
         useState(false)
+
+    const token = searchParams.get("token")
+    const email = searchParams.get("email")
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
@@ -38,6 +43,7 @@ function ResetPassword() {
 
         await resetPassword(
             {
+                token: token,
                 email: email,
                 password: password,
                 password_confirmation: passwordConfirmation,
@@ -82,9 +88,9 @@ function ResetPassword() {
                                 <input
                                     type="email"
                                     value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    className="h-10 w-full rounded-lg border border-gray-300 bg-[#f5f5f5] p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                     placeholder="Email"
+                                    readOnly
                                 />
                                 <InputError
                                     messages={errors.email}
@@ -151,8 +157,19 @@ function ResetPassword() {
                             </div>
                             <button
                                 type="submit"
-                                className="mt-2 w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                Kirim
+                                className="mt-2 flex w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                {isLoading ? (
+                                    <>
+                                        Tunggu Sebentar...
+                                        <LoadingSpinner
+                                            text={false}
+                                            color="#000"
+                                            size={16}
+                                        />
+                                    </>
+                                ) : (
+                                    "Kirim"
+                                )}
                             </button>
                         </form>
                     </div>

@@ -15,6 +15,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import LoadingSpinner from "@/components/LoadingSpinner"
 
 function Register() {
     const { register } = useAuth({
@@ -37,6 +38,7 @@ function Register() {
     const [showPassword, setShowPassword] = useState(false)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         dispatch(fetchProvinces())
@@ -72,8 +74,10 @@ function Register() {
     }
 
     const submitForm = async event => {
+        setIsLoading(true)
         if (password !== passwordConfirmation) {
             setErrors({ password: "The password confirmation does not match." })
+            setIsLoading(false)
             return
         }
 
@@ -98,6 +102,8 @@ function Register() {
             setErrors,
             setStatus,
         )
+
+        setIsLoading(false)
     }
 
     return (
@@ -362,8 +368,19 @@ function Register() {
                             </div>
                             <button
                                 type="submit"
-                                className="mt-3 w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00]">
-                                Daftar
+                                className="mt-3 flex w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00]">
+                                {isLoading ? (
+                                    <>
+                                        Tunggu Sebentar...
+                                        <LoadingSpinner
+                                            text={false}
+                                            color="#000"
+                                            size={16}
+                                        />
+                                    </>
+                                ) : (
+                                    "Daftar"
+                                )}
                             </button>
                         </form>
                     </div>

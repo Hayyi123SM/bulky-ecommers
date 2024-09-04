@@ -172,12 +172,11 @@ function WaitingPayment() {
                                         Metode Pembayaran
                                     </div>
                                     <div className="text-md font-bold">
-                                        {order.invoices_count > 0
-                                            ? order.invoices[0]
-                                                  .payment_method === null
-                                                ? "-"
-                                                : order.invoices[0]
-                                                      .payment_method
+                                        {order.invoices_count > 0 &&
+                                        order.invoices &&
+                                        order.invoices[0]?.payment_method
+                                            ? order.invoices[0]?.payment_method
+                                                  .name || "-"
                                             : "-"}
                                     </div>
                                 </div>

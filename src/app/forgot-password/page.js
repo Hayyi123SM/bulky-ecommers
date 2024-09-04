@@ -2,6 +2,7 @@
 
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import InputError from "@/components/InputError"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import { useAuth } from "@/hooks/auth"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -14,11 +15,15 @@ function ForgotPassword() {
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const [showScreen, setShowScreen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async e => {
+        setIsLoading(true)
         e.preventDefault()
 
         await forgotPassword({ setErrors, setStatus, email })
+
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -91,7 +96,18 @@ function ForgotPassword() {
                                     <button
                                         type="submit"
                                         className="w-full cursor-pointer rounded-xl bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
-                                        Kirim
+                                        {isLoading ? (
+                                            <>
+                                                Tunggu Sebentar...
+                                                <LoadingSpinner
+                                                    text={false}
+                                                    color="#000"
+                                                    size={16}
+                                                />
+                                            </>
+                                        ) : (
+                                            "Kirim"
+                                        )}
                                     </button>
                                 </form>
                             </div>
@@ -116,8 +132,19 @@ function ForgotPassword() {
 
                             <div
                                 onClick={handleSubmit}
-                                className="w-fit cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-3 py-2 text-sm font-bold hover:bg-[#f5f5f5]">
-                                Kirim ulang verifikasi
+                                className="flex w-fit cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-3 py-2 text-sm font-bold hover:bg-[#f5f5f5]">
+                                {isLoading ? (
+                                    <>
+                                        Tunggu Sebentar...
+                                        <LoadingSpinner
+                                            text={false}
+                                            color="#000"
+                                            size={16}
+                                        />
+                                    </>
+                                ) : (
+                                    "Kirim ulang verifikasi"
+                                )}
                             </div>
                         </div>
                     </div>

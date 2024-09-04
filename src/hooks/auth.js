@@ -121,6 +121,27 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         window.location.pathname = "/login"
     }
 
+    const verifyEmail = async (id, hash) => {
+        await csrf()
+
+        await axios
+            .get(`/api/auth/email-verification/${id}/${hash}`)
+            .then(response => {
+                // Handle success response, e.g., redirect user or show a success message
+                console.log("Email verification successful:", response.data)
+                if (response.data.status === "success") {
+                    router.push("/profile")
+                } else {
+                    router.push("/login")
+                }
+            })
+            .catch(error => {
+                // Handle error response
+                console.error("Email verification failed:", error)
+                router.push("/login")
+            })
+    }
+
     useEffect(() => {
         if (middleware === "guest" && redirectIfAuthenticated && user)
             router.push(redirectIfAuthenticated)
@@ -140,5 +161,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         resetPassword,
         resendEmailVerification,
         logout,
+        verifyEmail,
     }
 }
