@@ -127,7 +127,9 @@ function Register() {
 
                         <form onSubmit={submitForm}>
                             <div className="flex items-center py-6">
-                                <ArrowLeftIcon className="h-5 w-5" />
+                                <Link href="/register-method">
+                                    <ArrowLeftIcon className="h-5 w-5" />
+                                </Link>
                                 <div className="ml-3 text-2xl font-bold">
                                     Buat Akun
                                 </div>
@@ -368,7 +370,7 @@ function Register() {
                             </div>
                             <button
                                 type="submit"
-                                className="mt-3 flex w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00]">
+                                className="mt-3 flex w-full cursor-pointer justify-center rounded-xl bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                 {isLoading ? (
                                     <>
                                         Tunggu Sebentar...

@@ -57,11 +57,13 @@ function AboutPayment() {
                 <div className="mx-auto flex max-w-7xl lg:px-[176px]">
                     <div className="p-7">
                         <div className="items-center rounded-xl bg-white px-12 py-10 shadow">
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: aboutPayment.content,
-                                }}
-                            />
+                            <div className="staticStyle">
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: aboutPayment.content,
+                                    }}
+                                />
+                            </div>
                         </div>
                         {/* <div className="mb-4 rounded-xl bg-white shadow">
                                 <div

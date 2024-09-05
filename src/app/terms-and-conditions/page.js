@@ -14,6 +14,7 @@ function TermsAndConditions() {
     useEffect(() => {
         dispatch(fetchPages("syarat-ketentuan"))
     }, [dispatch])
+
     return (
         <div>
             <Navbar visibleOn="desktop" />
@@ -37,11 +38,13 @@ function TermsAndConditions() {
                 <div className="mx-auto flex max-w-7xl lg:px-[176px]">
                     <div className="lg:p-7">
                         <div className="items-center rounded-xl bg-white px-12 py-10 shadow">
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: termsAndConditions.content,
-                                }}
-                            />
+                            <div className="staticStyle">
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: termsAndConditions.content,
+                                    }}
+                                />
+                            </div>
                             {/* <div className="text-2xl font-bold">
                                 Ketentuan Umum
                             </div>

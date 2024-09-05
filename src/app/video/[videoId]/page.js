@@ -7,8 +7,8 @@ import { useEffect } from "react"
 import ReactPlayer from "react-player"
 import { useDispatch, useSelector } from "react-redux"
 
-function Video({ params }) {
-    const videoId = params.videoId // Access the dynamic parameter
+function VideoDetail({ params }) {
+    const videoId = params.videoId
 
     const dispatch = useDispatch()
     const videos = useSelector(state => state.videos.items)
@@ -28,15 +28,16 @@ function Video({ params }) {
             <div className="flex min-h-screen flex-col bg-[#0F0F0F] text-white">
                 <div className="mx-auto flex max-w-7xl">
                     {/* <Sidebar /> */}
-                    <div className="flex w-full items-center justify-center pt-10">
+                    <div className="flex w-full items-center justify-center pt-5">
                         <ReactPlayer
                             url={videos.path}
                             playing={false}
+                            fullscreen
                             controls
                             loop
-                            muted
-                            width="80%"
-                            height="auto"
+                            width="100%" // Set width to 100% of the container
+                            height="80vh" // Set height to fill the viewport height
+                            style={{ maxWidth: "100%", maxHeight: "80vh" }} // Ensure video scales properly
                         />
                     </div>
                 </div>
@@ -45,4 +46,4 @@ function Video({ params }) {
     )
 }
 
-export default Video
+export default VideoDetail

@@ -12,6 +12,7 @@ function ProductCard({
     beforeDiscount,
     totalQty,
     isOpenPdf,
+    percent = 0,
 }) {
     return (
         <div
@@ -41,14 +42,12 @@ function ProductCard({
                                 {beforeDiscount}
                             </div>
                             <div className="ml-1 text-xs font-bold text-[#007185]">
-                                15%
+                                {percent}%
                             </div>
                         </div>
                     )}
                     <div className="flex items-center py-1">
-                        <div className="text-xs">
-                            {totalQty} pcs / Baru 90-95%{" "}
-                        </div>
+                        <div className="text-xs">{totalQty} pcs</div>
                     </div>
                 </Link>
             </div>

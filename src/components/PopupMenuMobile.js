@@ -124,7 +124,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                             <div className="flex items-center py-3">
                                 <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm">
-                                    Daftar Transaksi
+                                    Status Pesanan
                                 </div>
                             </div>
                         </Link>
@@ -132,7 +132,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                             <div className="flex items-center py-3">
                                 <BanknotesIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm">
-                                    Split Payment
+                                    Pembayaran Patungan
                                 </div>
                             </div>
                         </Link>

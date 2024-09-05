@@ -10,13 +10,13 @@ import React, { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 
-function SidebarProduct() {
+function SidebarProduct({ category }) {
     const [selectedCategories, setSelectedCategories] = useState([])
     const [selectedWarehouses, setSelectedWarehouses] = useState([])
     const [selectedConditions, setSelectedConditions] = useState([])
     const [selectedStatuses, setSelectedStatuses] = useState([])
-    const [minPrice, setMinPrice] = useState(0)
-    const [maxPrice, setMaxPrice] = useState(0)
+    const [minPrice, setMinPrice] = useState(null)
+    const [maxPrice, setMaxPrice] = useState(null)
 
     const [showFilterGroup, setShowFilterGroup] = useState(true)
     const dispatch = useDispatch()
@@ -32,6 +32,13 @@ function SidebarProduct() {
         dispatch(fetchConditions())
         dispatch(fetchStatuses())
     }, [dispatch])
+
+    useEffect(() => {
+        if (category) {
+            setSelectedCategories([category])
+            dispatch(setFilters({ categories: [category] }))
+        }
+    }, [category])
 
     const toggleShowGroup = () => {
         setShowFilterGroup(!showFilterGroup)
@@ -190,11 +197,10 @@ function SidebarProduct() {
                         <div className="flex px-4 py-1">
                             <input
                                 type="number"
-                                defaultValue="0"
                                 value={minPrice}
                                 onChange={handleMinPriceChange}
                                 className="ml-1 h-10 w-full rounded-lg border border-gray-300 p-2 pl-10 focus:ring-0"
-                                placeholder="Harga Minimum"
+                                placeholder="Terendah"
                             />
                             <div className="absolute h-10 cursor-pointer place-content-center rounded-l-lg bg-[#F3F4F5] px-2 text-sm font-extrabold text-[#31353BAD] hover:bg-[#F5F5F5]">
                                 Rp
@@ -207,11 +213,10 @@ function SidebarProduct() {
                         <div className="flex px-4 py-1">
                             <input
                                 type="number"
-                                defaultValue="0"
                                 value={maxPrice}
                                 onChange={handleMaxPriceChange}
                                 className="ml-1 h-10 w-full rounded-lg border border-gray-300 p-2 pl-10 focus:ring-0"
-                                placeholder="Harga Maksimum"
+                                placeholder="Tertinggi"
                             />
                             <div className="absolute h-10 cursor-pointer place-content-center rounded-l-lg bg-[#F3F4F5] px-2 text-sm font-extrabold text-[#31353BAD] hover:bg-[#F5F5F5]">
                                 Rp

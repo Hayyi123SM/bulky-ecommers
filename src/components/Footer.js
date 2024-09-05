@@ -74,7 +74,10 @@ function Footer() {
                         <Link href="/about-us">Tentang Kami</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Wholesaler</Link>
+                        <Link href="/how-to-shop">Cara Pembelian</Link>
+                    </div>
+                    <div className="mt-3 text-sm">
+                        <Link href="/about-payment">Pembayaran</Link>
                     </div>
                     <div className="mt-3 text-sm">
                         <Link href="/contact-us">Kontak</Link>

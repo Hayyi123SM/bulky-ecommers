@@ -37,11 +37,13 @@ function HowToShop() {
                 <div className="mx-auto flex max-w-7xl lg:px-[176px]">
                     <div className="p-7">
                         <div className="items-center rounded-xl bg-white px-12 py-10 shadow">
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: howToShop.content,
-                                }}
-                            />
+                            <div className="staticStyle">
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: howToShop.content,
+                                    }}
+                                />
+                            </div>
                         </div>
                         {/* <div className="rounded-xl bg-white px-12 shadow">
                                 <div className="border-b border-[#F0F3F7] py-12 lg:flex">

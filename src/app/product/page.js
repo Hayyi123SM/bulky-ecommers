@@ -15,13 +15,18 @@ import {
 } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Suspense, useEffect, useMemo, useState } from "react"
-import { useSelector } from "react-redux"
-import { fetchProducts } from "../../store/slices/productSlice"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useEffect, useMemo, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {
+    fetchProducts,
+    fetchSearchProducts,
+} from "../../store/slices/productSlice"
 import Skeleton from "react-loading-skeleton"
 
 function Product() {
+    const category = useSearchParams().get("category")
+
     const [currentPage, setCurrentPage] = useState(1)
     const [showPopup, setShowPopup] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -30,13 +35,18 @@ function Product() {
 
     // const searchParams = useSearchParams()
     const router = useRouter()
+    const inputRef = useRef(null)
+    const popupRef = useRef(null)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [showSearchResults, setShowSearchResults] = useState(false)
     // const currentPage = parseInt(searchParams.get("page")) || 1
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const products = useSelector(state => state.products.items)
     const totalPages = useSelector(state => state.products.totalPages)
     const filters = useSelector(state => state.filters.selectedFilters)
     const loadingProducts = useSelector(state => state.products.isLoading)
+    const searchResults = useSelector(state => state.products.searchResults)
 
     // useEffect(() => {
     //     dispatch(fetchProducts({ page: currentPage, filters }))
@@ -46,6 +56,17 @@ function Product() {
         () => [page => fetchProducts({ page, filters })],
         [filters],
     )
+
+    const handleSearchInputChange = e => {
+        setSearchQuery(e.target.value)
+        setShowSearchResults(e.target.value.length > 0)
+        dispatch(
+            fetchSearchProducts({
+                currentPage,
+                filters: { search: e.target.value },
+            }),
+        )
+    }
 
     const handlePageChange = page => {
         router.push(`?page=${page}`)
@@ -79,12 +100,51 @@ function Product() {
 
             <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-b border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <Link href="history.back()">
+                    <ArrowLeftIcon className="h-6 w-6" />
+                </Link>
                 <div className="w-2/3">
                     <input
+                        ref={inputRef}
                         className="w-full rounded-3xl border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
                         placeholder="Cari barang"
+                        value={searchQuery}
+                        onChange={handleSearchInputChange}
                     />
+                    {showSearchResults && (
+                        <>
+                            <div className="pointer-events-none fixed inset-0 top-[67px] z-40 bg-black bg-opacity-50">
+                                {" "}
+                            </div>
+                            <div className="absolute left-0 z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
+                                <ul className="py-2">
+                                    {searchResults &&
+                                    searchResults.length > 0 ? (
+                                        searchResults.map(product => (
+                                            <Link
+                                                href={`/product/${product.slug}`}
+                                                key={product.id}
+                                                onMouseDown={e =>
+                                                    e.preventDefault()
+                                                }>
+                                                <li
+                                                    ref={popupRef}
+                                                    className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
+                                                    {product.name}
+                                                </li>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <li className="flex items-center justify-between px-4 py-2">
+                                            <p className="px-4 py-2">
+                                                Tidak ada hasil yang cocok
+                                            </p>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                        </>
+                    )}
                 </div>
                 <Link href="/cart">
                     <ArchiveBoxIcon className="h-6 w-6" />
@@ -96,7 +156,18 @@ function Product() {
             </div>
             <div className="flex items-center p-4 lg:hidden">
                 <div className="flex items-center overflow-x-auto">
-                    {/* Categories rendering code */}
+                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                        Kategori
+                    </div>
+                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                        Kategori
+                    </div>
+                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                        Kategori
+                    </div>
+                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                        Kategori
+                    </div>
                 </div>
                 <div
                     className="ml-4 mr-1 flex-shrink-0 rounded-full border border-[#BFC9D9] px-2 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]"
@@ -112,7 +183,7 @@ function Product() {
                 />
             )}
             <div className="mx-auto flex min-h-screen max-w-7xl">
-                <SidebarProduct />
+                <SidebarProduct category={category} />
                 <div className="w-full p-4 lg:w-4/5">
                     {/* {products && products.length > 0 && (
                         <> */}
@@ -143,6 +214,14 @@ function Product() {
                                           product.price_before_discount
                                               .formatted
                                       }
+                                      percent={Math.round(
+                                          ((product.price_before_discount
+                                              .numeric -
+                                              product.price.numeric) /
+                                              product.price_before_discount
+                                                  .numeric) *
+                                              100,
+                                      )}
                                       totalQty={product.total_quantity}
                                       isOpenPdf={() =>
                                           handlePackageDetail(product.pdf_file)

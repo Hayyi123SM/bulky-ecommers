@@ -3,12 +3,17 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "@/hooks/auth"
 import InputError from "@/components/InputError"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import LoadingSpinner from "@/components/LoadingSpinner"
+import {
+    getCallbackGoogle,
+    getRedrectUrlGoogle,
+} from "@/store/slices/authSlice"
+import { useSearchParams } from "next/navigation"
 
 function Login() {
     const { login } = useAuth({
@@ -16,6 +21,7 @@ function Login() {
         redirectIfAuthenticated: "/",
     })
 
+    const code = useSearchParams().get("code")
     const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
@@ -24,6 +30,8 @@ function Login() {
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
+    const redirectUrl = useSelector(state => state.auth.item)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
@@ -47,6 +55,27 @@ function Login() {
 
         setIsLoading(false)
     }
+
+    const handleLoginWithGoogle = async () => {
+        setIsLoadingGoogle(true)
+        dispatch(getRedrectUrlGoogle())
+    }
+
+    useEffect(() => {
+        if (redirectUrl !== null) {
+            console.log("====================================")
+            console.log(redirectUrl)
+            console.log("====================================")
+            window.location.href = redirectUrl
+        }
+
+        if (code !== null) {
+            console.log("====================================")
+            console.log("code:", code)
+            console.log("====================================")
+            dispatch(getCallbackGoogle(code))
+        }
+    }, [redirectUrl])
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5]">
@@ -157,16 +186,33 @@ function Login() {
                                     "Masuk"
                                 )}
                             </button>
-                            <div className="mt-4 flex w-full max-w-md cursor-pointer items-center justify-center rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
-                                <Image
-                                    src="/google.svg"
-                                    width={20}
-                                    height={20}
-                                    alt="Logo"
-                                    className="mr-2"
-                                    priority={false}
-                                />
-                                Masuk dengan Google
+                            <div
+                                onClick={() => {
+                                    handleLoginWithGoogle()
+                                }}
+                                className="mt-4 flex w-full max-w-md cursor-pointer items-center justify-center rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
+                                {isLoadingGoogle ? (
+                                    <>
+                                        Tunggu Sebentar...
+                                        <LoadingSpinner
+                                            text={false}
+                                            color="#000"
+                                            size={16}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <Image
+                                            src="/google.svg"
+                                            width={20}
+                                            height={20}
+                                            alt="Logo"
+                                            className="mr-2"
+                                            priority={false}
+                                        />
+                                        Masuk dengan Google
+                                    </>
+                                )}
                             </div>
                         </form>
                     </div>

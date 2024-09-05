@@ -73,9 +73,9 @@ function ContactUs() {
                                     defaultCenter={defaultProps.center}
                                     defaultZoom={defaultProps.zoom}>
                                     <AnyReactComponent
-                                        lat={59.955413}
-                                        lng={30.337844}
-                                        text="My Marker"
+                                        lat={40.7477283}
+                                        lng={-73.9890454}
+                                        text="Bulky"
                                     />
                                 </GoogleMapReact>
                             </div>

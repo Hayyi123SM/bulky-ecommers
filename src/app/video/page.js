@@ -14,7 +14,10 @@ function Video() {
     const videos = useSelector(state => state.videos.items)
     console.log("videos from Redux state:", videos)
 
-    const memoizedActions = useMemo(() => [page => fetchVideos({ page })], [])
+    const memoizedActions = useMemo(
+        () => [() => fetchVideos({ paginate: 1 })],
+        [],
+    )
 
     return (
         <div>

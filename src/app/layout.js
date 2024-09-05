@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic"
 import "../../styles/globals.css"
+import "../../styles/static.css"
 import "react-loading-skeleton/dist/skeleton.css"
+import { Suspense } from "react"
 
 export const metadata = {
     title: "Octagon",
@@ -18,7 +20,9 @@ export default function RootLayout({ children }) {
                 <link rel="icon" href="/logobulky.png" sizes="any" />
             </head>
             <body>
-                <ClientProvider>{children}</ClientProvider>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <ClientProvider>{children}</ClientProvider>
+                </Suspense>
             </body>
         </html>
     )

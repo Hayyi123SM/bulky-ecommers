@@ -157,6 +157,16 @@ function Home() {
                                                   product.price_before_discount
                                                       .formatted
                                               }
+                                              percent={Math.round(
+                                                  ((product
+                                                      .price_before_discount
+                                                      .numeric -
+                                                      product.price.numeric) /
+                                                      product
+                                                          .price_before_discount
+                                                          .numeric) *
+                                                      100,
+                                              )}
                                               totalQty={product.total_quantity}
                                               isOpenPdf={() =>
                                                   handlePackageDetail(
@@ -252,14 +262,19 @@ function Home() {
                                           ),
                                       )
                                     : videos &&
+                                      videos.length > 0 &&
                                       videos.map(video => (
                                           <div
                                               className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
                                               key={video.id}>
-                                              <VideoThumbnail
-                                                  thumbnail={video.thumbnail}
-                                                  title={video.title}
-                                              />
+                                              <Link href={`/video/${video.id}`}>
+                                                  <VideoThumbnail
+                                                      thumbnail={
+                                                          video.thumbnail
+                                                      }
+                                                      title={video.title}
+                                                  />
+                                              </Link>
                                           </div>
                                       ))}
                             </div>

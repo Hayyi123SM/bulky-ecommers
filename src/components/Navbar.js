@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
+import { fetchCategories } from "@/store/slices/filterSlice"
 import { fetchSearchProducts } from "@/store/slices/productSlice"
 import {
     ArchiveBoxIcon,
@@ -25,11 +26,13 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const { user } = useAuth()
     const dispatch = useDispatch()
     const carts = useSelector(state => state.carts.cart)
+    const categories = useSelector(state => state.filters.categories)
 
     useEffect(() => {
         // const getUser = JSON.parse(localStorage.getItem("user"))
         // setUser(isUserLogin)
         dispatch(fetchCarts())
+        dispatch(fetchCategories())
     }, [])
 
     const handleSearchInputChange = e => {
@@ -135,11 +138,18 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                     </div>
                     <div className="mt-2 w-full overflow-x-auto text-sm">
                         <ul className="inline-flex items-center space-x-4 whitespace-nowrap">
-                            <li className="text-white">Elektronik</li>
-                            <li className="text-white">Fashion</li>
-                            <li className="text-white">Rumah Tangga</li>
-                            <li className="text-white">Olahraga</li>
-                            <li className="text-white">Kecantikan</li>
+                            {categories &&
+                                categories.length > 0 &&
+                                categories.map(category => (
+                                    <li
+                                        key={category.id}
+                                        className="text-white">
+                                        <Link
+                                            href={`/product?category=${category.slug}`}>
+                                            {category.name}
+                                        </Link>
+                                    </li>
+                                ))}
                         </ul>
                     </div>
                 </nav>
@@ -254,19 +264,21 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-3 flex justify-between text-sm">
-                        <div className="w-2/3">
-                            <ul className="inline-flex items-center">
-                                {/* <li className="mr-5 text-white">
-                                <Bars3BottomRightIcon className="h-8 w-8 font-bold text-white" />
-                            </li> */}
-                                <li className="mr-5 text-white">Elektronik</li>
-                                <li className="mr-5 text-white">Fashion</li>
-                                <li className="mr-5 text-white">
-                                    Rumah Tangga
-                                </li>
-                                <li className="mr-5 text-white">Olahraga</li>
-                                <li className="mr-5 text-white">Kecantikan</li>
+                    <div className="mt-5 flex justify-between text-sm">
+                        <div className="scrollbar-hide w-full overflow-x-scroll whitespace-nowrap">
+                            <ul className="inline-flex items-center whitespace-nowrap">
+                                {categories &&
+                                    categories.length > 0 &&
+                                    categories.map(category => (
+                                        <li
+                                            key={category.id}
+                                            className="mr-5 text-white">
+                                            <Link
+                                                href={`/product?category=${category.slug}`}>
+                                                {category.name} d
+                                            </Link>
+                                        </li>
+                                    ))}
                             </ul>
                         </div>
                     </div>
