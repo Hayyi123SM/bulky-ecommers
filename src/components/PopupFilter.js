@@ -11,12 +11,21 @@ import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 
 function PopupFilter({ closePopup }) {
-    const [selectedCategories, setSelectedCategories] = useState([])
-    const [selectedWarehouses, setSelectedWarehouses] = useState([])
-    const [selectedConditions, setSelectedConditions] = useState([])
-    const [selectedStatuses, setSelectedStatuses] = useState([])
-    const [minPrice, setMinPrice] = useState(null)
-    const [maxPrice, setMaxPrice] = useState(null)
+    const selectedFilters = useSelector(state => state.filters.selectedFilters)
+    const [selectedCategories, setSelectedCategories] = useState(
+        selectedFilters.categories || [],
+    )
+    const [selectedWarehouses, setSelectedWarehouses] = useState(
+        selectedFilters.warehouses || [],
+    )
+    const [selectedConditions, setSelectedConditions] = useState(
+        selectedFilters.conditions || [],
+    )
+    const [selectedStatuses, setSelectedStatuses] = useState(
+        selectedFilters.statuses || [],
+    )
+    const [minPrice, setMinPrice] = useState(selectedFilters.minPrice || null)
+    const [maxPrice, setMaxPrice] = useState(selectedFilters.maxPrice || null)
 
     // State untuk toggle "Lihat Semua"
     const [showAllCategories, setShowAllCategories] = useState(false)
@@ -39,35 +48,53 @@ function PopupFilter({ closePopup }) {
     }, [dispatch])
 
     const handleCategoryChange = (e, category) => {
-        const updatedCategories = e.target.checked
-            ? [...selectedCategories, category.slug]
-            : selectedCategories.filter(slug => slug !== category.slug)
-        setSelectedCategories(updatedCategories)
-        dispatch(setFilters({ categories: updatedCategories }))
+        if (selectedCategories.includes(category.slug)) {
+            // Unselect if already selected
+            setSelectedCategories(
+                selectedCategories.filter(catId => catId !== category.slug),
+            )
+        } else {
+            // Select the category
+            setSelectedCategories([...selectedCategories, category.slug])
+        }
     }
 
     const handleWarehouseChange = (e, warehouse) => {
-        const updatedWarehouses = e.target.checked
-            ? [...selectedWarehouses, warehouse.id]
-            : selectedWarehouses.filter(id => id !== warehouse.id)
-        setSelectedWarehouses(updatedWarehouses)
-        dispatch(setFilters({ warehouses: updatedWarehouses }))
+        if (selectedWarehouses.includes(warehouse.id)) {
+            // Unselect if already selected
+            setSelectedWarehouses(
+                selectedWarehouses.filter(warId => warId !== warehouse.id),
+            )
+        } else {
+            // Select the warehouse
+            setSelectedWarehouses([...selectedWarehouses, warehouse.id])
+        }
     }
 
     const handleConditionChange = (e, condition) => {
-        const updatedConditions = e.target.checked
-            ? [...selectedConditions, condition.slug]
-            : selectedConditions.filter(slug => slug !== condition.slug)
-        setSelectedConditions(updatedConditions)
-        dispatch(setFilters({ conditions: updatedConditions }))
+        if (selectedConditions.includes(condition.slug)) {
+            // Unselect if already selected
+            setSelectedConditions(
+                selectedConditions.filter(
+                    condSlug => condSlug !== condition.slug,
+                ),
+            )
+        } else {
+            // Select the condition
+            setSelectedConditions([...selectedConditions, condition.slug])
+        }
     }
 
     const handleStatusChange = (e, status) => {
-        const updatedStatuses = e.target.checked
-            ? [...selectedStatuses, status.id]
-            : selectedStatuses.filter(id => id !== status.id)
-        setSelectedStatuses(updatedStatuses)
-        dispatch(setFilters({ statuses: updatedStatuses }))
+        if (selectedStatuses.includes(status.id)) {
+            // Unselect if already selected
+            setSelectedStatuses(
+                selectedStatuses.filter(statId => statId !== status.id),
+            )
+        } else {
+            // Select the status
+            setSelectedStatuses([...selectedStatuses, status.id])
+        }
     }
 
     const handleMinPriceChange = e => {
@@ -78,10 +105,24 @@ function PopupFilter({ closePopup }) {
         setMaxPrice(e.target.value)
     }
 
+    const handleFilter = () => {
+        dispatch(
+            setFilters({
+                categories: selectedCategories,
+                warehouses: selectedWarehouses,
+                conditions: selectedConditions,
+                statuses: selectedStatuses,
+                minPrice,
+                maxPrice,
+            }),
+        )
+        closePopup()
+    }
+
     return (
         <div>
-            <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 pt-20">
-                <div className="w-full max-w-md rounded-lg bg-white p-6 pt-5 shadow-lg">
+            <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
+                <div className="max-h-[95vh] w-full max-w-md overflow-y-auto rounded-lg bg-white p-6 pt-5 shadow-lg">
                     <div className="my-4 flex items-center justify-between">
                         <h2 className="text-base font-semibold">Filter</h2>
                         <XMarkIcon
@@ -108,7 +149,7 @@ function PopupFilter({ closePopup }) {
                             className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
                                 showAllCategories
                                     ? "max-h-full"
-                                    : "max-h-32 overflow-y-auto"
+                                    : "max-h-24 overflow-y-auto"
                             }`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
@@ -119,7 +160,13 @@ function PopupFilter({ closePopup }) {
                                         onClick={e =>
                                             handleCategoryChange(e, category)
                                         }
-                                        className="mb-1 mr-1 flex-shrink-0 rounded-3xl border border-[#BFC9D9] px-6 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]">
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
+                                            selectedCategories.includes(
+                                                category.slug,
+                                            )
+                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
+                                                : "border-[#BFC9D9] text-[#6D7588]"
+                                        }`}>
                                         {category.name}
                                     </div>
                                 ))
@@ -145,7 +192,7 @@ function PopupFilter({ closePopup }) {
                             className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
                                 showAllWarehouses
                                     ? "max-h-full"
-                                    : "max-h-32 overflow-y-auto"
+                                    : "max-h-24 overflow-y-auto"
                             }`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
@@ -156,7 +203,13 @@ function PopupFilter({ closePopup }) {
                                         onClick={e =>
                                             handleWarehouseChange(e, warehouse)
                                         }
-                                        className="mb-1 mr-1 flex-shrink-0 rounded-3xl border border-[#BFC9D9] px-6 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]">
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
+                                            selectedWarehouses.includes(
+                                                warehouse.id,
+                                            )
+                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
+                                                : "border-[#BFC9D9] text-[#6D7588]"
+                                        }`}>
                                         {warehouse.name}
                                     </div>
                                 ))
@@ -173,7 +226,10 @@ function PopupFilter({ closePopup }) {
                             {loadingFilters ? (
                                 <Skeleton />
                             ) : (
-                                <div className="flex">
+                                <div className="relative flex">
+                                    <div className="absolute left-3 top-1/2 flex h-10 -translate-y-1/2 items-center px-2 text-sm font-extrabold text-[#31353BAD]">
+                                        Rp
+                                    </div>
                                     <input
                                         type="number"
                                         value={minPrice}
@@ -181,15 +237,15 @@ function PopupFilter({ closePopup }) {
                                         className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0"
                                         placeholder="Terendah"
                                     />
-                                    <div className="absolute ml-2 h-10 cursor-pointer place-content-center rounded-l-lg px-2 text-sm font-extrabold text-[#31353BAD] hover:bg-[#F5F5F5]">
-                                        Rp
-                                    </div>
                                 </div>
                             )}
                             {loadingFilters ? (
                                 <Skeleton />
                             ) : (
-                                <div className="flex">
+                                <div className="relative flex">
+                                    <div className="absolute left-3 top-1/2 flex h-10 -translate-y-1/2 items-center px-2 text-sm font-extrabold text-[#31353BAD]">
+                                        Rp
+                                    </div>
                                     <input
                                         type="number"
                                         value={maxPrice}
@@ -197,9 +253,6 @@ function PopupFilter({ closePopup }) {
                                         className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0"
                                         placeholder="Tertinggi"
                                     />
-                                    <div className="absolute ml-2 h-10 cursor-pointer place-content-center rounded-l-lg px-2 text-sm font-extrabold text-[#31353BAD] hover:bg-[#F5F5F5]">
-                                        Rp
-                                    </div>
                                 </div>
                             )}
                         </div>
@@ -223,7 +276,7 @@ function PopupFilter({ closePopup }) {
                             className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
                                 showAllConditions
                                     ? "max-h-full"
-                                    : "max-h-32 overflow-y-auto"
+                                    : "max-h-24 overflow-y-auto"
                             }`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
@@ -234,7 +287,13 @@ function PopupFilter({ closePopup }) {
                                         onClick={e =>
                                             handleConditionChange(e, condition)
                                         }
-                                        className="mb-1 mr-1 flex-shrink-0 rounded-3xl border border-[#BFC9D9] px-6 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]">
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
+                                            selectedConditions.includes(
+                                                condition.slug,
+                                            )
+                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
+                                                : "border-[#BFC9D9] text-[#6D7588]"
+                                        }`}>
                                         {condition.title}
                                     </div>
                                 ))
@@ -260,7 +319,7 @@ function PopupFilter({ closePopup }) {
                             className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
                                 showAllStatuses
                                     ? "max-h-full"
-                                    : "max-h-32 overflow-y-auto"
+                                    : "max-h-24 overflow-y-auto"
                             }`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
@@ -271,7 +330,11 @@ function PopupFilter({ closePopup }) {
                                         onClick={e =>
                                             handleStatusChange(e, status)
                                         }
-                                        className="mb-1 mr-1 flex-shrink-0 rounded-3xl border border-[#BFC9D9] px-6 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]">
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
+                                            selectedStatuses.includes(status.id)
+                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
+                                                : "border-[#BFC9D9] text-[#6D7588]"
+                                        }`}>
                                         {status.status}
                                     </div>
                                 ))
@@ -279,7 +342,9 @@ function PopupFilter({ closePopup }) {
                         </div>
                     </div>
 
-                    <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                    <div
+                        onClick={handleFilter}
+                        className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                         Gunakan Filter
                     </div>
                 </div>

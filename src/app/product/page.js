@@ -48,6 +48,12 @@ function Product() {
     const loadingProducts = useSelector(state => state.products.isLoading)
     const searchResults = useSelector(state => state.products.searchResults)
 
+    const selectedFilters = useSelector(state => state.filters.selectedFilters)
+    const categories = useSelector(state => state.filters.categories)
+    const warehouses = useSelector(state => state.filters.warehouses)
+    const conditions = useSelector(state => state.filters.conditions)
+    const statuses = useSelector(state => state.filters.statuses)
+
     // useEffect(() => {
     //     dispatch(fetchProducts({ page: currentPage, filters }))
     // }, [currentPage, filters, dispatch])
@@ -80,6 +86,24 @@ function Product() {
         setIsOpenPdf(true)
         setIsPdf(pdf)
     }
+    // Get the names of selected filters
+    const selectedCategoryNames = categories
+        .filter(category => selectedFilters.categories.includes(category.slug))
+        .map(category => category.name)
+
+    const selectedWarehouseNames = warehouses
+        .filter(warehouse => selectedFilters.warehouses.includes(warehouse.id))
+        .map(warehouse => warehouse.name)
+
+    const selectedConditionNames = conditions
+        .filter(condition =>
+            selectedFilters.conditions.includes(condition.slug),
+        )
+        .map(condition => condition.title)
+
+    const selectedStatusNames = statuses
+        .filter(status => selectedFilters.statuses.includes(status.id))
+        .map(status => status.status)
 
     useEffect(() => {
         if (showPopup || showPopupMenu) {
@@ -156,18 +180,40 @@ function Product() {
             </div>
             <div className="flex items-center p-4 lg:hidden">
                 <div className="flex items-center overflow-x-auto">
-                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
-                        Kategori
-                    </div>
-                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
-                        Kategori
-                    </div>
-                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
-                        Kategori
-                    </div>
-                    <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
-                        Kategori
-                    </div>
+                    {selectedCategoryNames.map((name, index) => (
+                        <div
+                            key={`category-${index}`}
+                            className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                            {name}
+                        </div>
+                    ))}
+                    {selectedWarehouseNames.map((name, index) => (
+                        <div
+                            key={`warehouse-${index}`}
+                            className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                            {name}
+                        </div>
+                    ))}
+                    {selectedConditionNames.map((name, index) => (
+                        <div
+                            key={`condition-${index}`}
+                            className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                            {name}
+                        </div>
+                    ))}
+                    {selectedStatusNames.map((name, index) => (
+                        <div
+                            key={`status-${index}`}
+                            className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                            {name}
+                        </div>
+                    ))}
+                    {/* Render price range if available */}
+                    {selectedFilters.minPrice || selectedFilters.maxPrice ? (
+                        <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                            {`Rp ${selectedFilters.minPrice || 0} - Rp ${selectedFilters.maxPrice || "∞"}`}
+                        </div>
+                    ) : null}
                 </div>
                 <div
                     className="ml-4 mr-1 flex-shrink-0 rounded-full border border-[#BFC9D9] px-2 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]"
@@ -248,7 +294,7 @@ function Product() {
                     </div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <iframe
-                            className="h-[400px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
+                            className="h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
                             src={isPdf}
                             title="PDF File"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
