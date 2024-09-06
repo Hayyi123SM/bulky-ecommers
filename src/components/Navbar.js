@@ -275,7 +275,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                             className="mr-5 text-white">
                                             <Link
                                                 href={`/product?category=${category.slug}`}>
-                                                {category.name} d
+                                                {category.name}
                                             </Link>
                                         </li>
                                     ))}
