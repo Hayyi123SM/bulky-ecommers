@@ -8,7 +8,11 @@ import {
     ArchiveBoxIcon,
     Bars3BottomRightIcon,
 } from "@heroicons/react/24/outline"
-import { ChevronDownIcon } from "@heroicons/react/24/solid"
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+} from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -27,6 +31,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const dispatch = useDispatch()
     const carts = useSelector(state => state.carts.cart)
     const categories = useSelector(state => state.filters.categories)
+    const scrollRef = useRef(null) // Reference to the scrollable div
 
     useEffect(() => {
         // const getUser = JSON.parse(localStorage.getItem("user"))
@@ -65,6 +70,22 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
             document.removeEventListener("mousedown", handleClickOutside)
         }
     }, [setShowSearchResults])
+
+    // Function to scroll left
+    const scrollLeft = () => {
+        scrollRef.current.scrollBy({
+            left: -200, // Scroll 200px to the left
+            behavior: "smooth", // Smooth scroll animation
+        })
+    }
+
+    // Function to scroll right
+    const scrollRight = () => {
+        scrollRef.current.scrollBy({
+            left: 200, // Scroll 200px to the right
+            behavior: "smooth",
+        })
+    }
 
     const visibilityClasses =
         visibleOn === "mobile"
@@ -136,21 +157,33 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             </>
                         )}
                     </div>
-                    <div className="mt-2 w-full overflow-x-auto text-sm">
-                        <ul className="inline-flex items-center space-x-4 whitespace-nowrap">
-                            {categories &&
-                                categories.length > 0 &&
-                                categories.map(category => (
-                                    <li
-                                        key={category.id}
-                                        className="text-white">
-                                        <Link
-                                            href={`/product?category=${category.slug}`}>
-                                            {category.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                        </ul>
+                    <div className="mt-2 flex items-center justify-between text-sm">
+                        <ChevronLeftIcon
+                            onClick={scrollLeft}
+                            className="mr-1 h-5 w-5 cursor-pointer text-white hover:text-secondary"
+                        />
+                        <div
+                            ref={scrollRef}
+                            className="scrollbar-hide w-full overflow-x-scroll text-sm">
+                            <ul className="inline-flex items-center space-x-4 whitespace-nowrap">
+                                {categories &&
+                                    categories.length > 0 &&
+                                    categories.map(category => (
+                                        <li
+                                            key={category.id}
+                                            className="text-white">
+                                            <Link
+                                                href={`/product?category=${category.slug}`}>
+                                                {category.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                        <ChevronRightIcon
+                            onClick={scrollRight}
+                            className="ml-1 h-5 w-5 cursor-pointer text-white hover:text-secondary"
+                        />
                     </div>
                 </nav>
 
@@ -264,8 +297,14 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-5 flex justify-between text-sm">
-                        <div className="scrollbar-hide w-full overflow-x-scroll whitespace-nowrap">
+                    <div className="mt-5 flex items-center justify-between text-sm">
+                        <ChevronLeftIcon
+                            onClick={scrollLeft}
+                            className="mr-2 h-5 w-5 cursor-pointer text-white hover:text-secondary"
+                        />
+                        <div
+                            ref={scrollRef}
+                            className="scrollbar-hide w-full overflow-x-scroll whitespace-nowrap">
                             <ul className="inline-flex items-center whitespace-nowrap">
                                 {categories &&
                                     categories.length > 0 &&
@@ -281,6 +320,10 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                     ))}
                             </ul>
                         </div>
+                        <ChevronRightIcon
+                            onClick={scrollRight}
+                            className="ml-2 h-5 w-5 cursor-pointer text-white hover:text-secondary"
+                        />
                     </div>
                 </nav>
             </div>

@@ -18,7 +18,18 @@ function SidebarProduct({ category }) {
     const [minPrice, setMinPrice] = useState(null)
     const [maxPrice, setMaxPrice] = useState(null)
 
-    const [showFilterGroup, setShowFilterGroup] = useState(true)
+    // State untuk toggle "Lihat Semua"
+    const [showAllCategories, setShowAllCategories] = useState(false)
+    const [showAllWarehouses, setShowAllWarehouses] = useState(false)
+    const [showAllConditions, setShowAllConditions] = useState(false)
+    const [showAllStatuses, setShowAllStatuses] = useState(false)
+
+    const [showFilterCategories, setShowFilterCategories] = useState(true)
+    const [showFilterWarehouses, setShowFilterWarehouses] = useState(true)
+    const [showFilterPrices, setShowFilterPrices] = useState(true)
+    const [showFilterConditions, setShowFilterConditions] = useState(true)
+    const [showFilterStatuses, setShowFilterStatuses] = useState(true)
+
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
     const warehouses = useSelector(state => state.filters.warehouses)
@@ -40,8 +51,22 @@ function SidebarProduct({ category }) {
         }
     }, [category])
 
-    const toggleShowGroup = () => {
-        setShowFilterGroup(!showFilterGroup)
+    const toggleShowGroup = filter => {
+        if (filter === "categories") {
+            setShowFilterCategories(!showFilterCategories)
+        }
+        if (filter === "warehouses") {
+            setShowFilterWarehouses(!showFilterWarehouses)
+        }
+        if (filter === "prices") {
+            setShowFilterPrices(!showFilterPrices)
+        }
+        if (filter === "conditions") {
+            setShowFilterConditions(!showFilterConditions)
+        }
+        if (filter === "statuses") {
+            setShowFilterStatuses(!showFilterStatuses)
+        }
     }
 
     const handleCategoryChange = (e, category) => {
@@ -86,21 +111,27 @@ function SidebarProduct({ category }) {
 
     return (
         <div className="hidden w-1/5 lg:block">
-            <div className="mb-2 p-4 font-bold">Filter</div>
-            <div className="pb-4">
+            <div className="p-4 font-bold">Filter</div>
+            <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
-                    onClick={toggleShowGroup}>
+                    onClick={() => toggleShowGroup("categories")}>
                     <div className="font-bold">Kategori</div>
-                    {showFilterGroup ? (
+                    {showFilterCategories ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                         <ChevronDownIcon className="h-5 w-5" />
                     )}
                 </div>
-                {/* {showFilterGroup && ( */}
+                {/* {showFilterCategories && ( */}
                 <div
-                    className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        showFilterCategories && showAllCategories
+                            ? "max-h-full opacity-100"
+                            : showFilterCategories
+                              ? "max-h-32 overflow-y-auto opacity-100"
+                              : "max-h-0 opacity-0"
+                    }`}>
                     {loadingFilters ? (
                         <Skeleton count={3} />
                     ) : (
@@ -130,22 +161,33 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
+                <div
+                    onClick={() => setShowAllCategories(!showAllCategories)}
+                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterCategories ? "visible" : "hidden"}`}>
+                    {showAllCategories ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                </div>
                 {/* )} */}
             </div>
-            <div className="pb-4">
+            <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
-                    onClick={toggleShowGroup}>
+                    onClick={() => toggleShowGroup("warehouses")}>
                     <div className="font-bold">Lokasi</div>
-                    {showFilterGroup ? (
+                    {showFilterWarehouses ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                         <ChevronDownIcon className="h-5 w-5" />
                     )}
                 </div>
-                {/* {showFilterGroup && ( */}
+                {/* {showFilterWarehouses && ( */}
                 <div
-                    className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        showFilterWarehouses && showAllWarehouses
+                            ? "max-h-full opacity-100"
+                            : showFilterWarehouses
+                              ? "max-h-32 overflow-y-auto opacity-100"
+                              : "max-h-0 opacity-0"
+                    }`}>
                     {loadingFilters ? (
                         <Skeleton count={3} />
                     ) : (
@@ -175,22 +217,27 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
+                <div
+                    onClick={() => setShowAllWarehouses(!showAllWarehouses)}
+                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterWarehouses ? "visible" : "hidden"}`}>
+                    {showAllWarehouses ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                </div>
                 {/* )} */}
             </div>
-            <div className="pb-4">
+            <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
-                    onClick={toggleShowGroup}>
+                    onClick={() => toggleShowGroup("prices")}>
                     <div className="font-bold">Harga</div>
-                    {showFilterGroup ? (
+                    {showFilterPrices ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                         <ChevronDownIcon className="h-5 w-5" />
                     )}
                 </div>
-                {/* {showFilterGroup && ( */}
+                {/* {showFilterPrices && ( */}
                 <div
-                    className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                    className={`transition-all duration-500 ease-in-out ${showFilterPrices ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                     {loadingFilters ? (
                         <Skeleton />
                     ) : (
@@ -226,20 +273,26 @@ function SidebarProduct({ category }) {
                 </div>
                 {/* )} */}
             </div>
-            <div className="pb-4">
+            <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
-                    onClick={toggleShowGroup}>
+                    onClick={() => toggleShowGroup("conditions")}>
                     <div className="font-bold">Kondisi</div>
-                    {showFilterGroup ? (
+                    {showFilterConditions ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                         <ChevronDownIcon className="h-5 w-5" />
                     )}
                 </div>
-                {/* {showFilterGroup && ( */}
+                {/* {showFilterConditions && ( */}
                 <div
-                    className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        showFilterConditions && showAllConditions
+                            ? "max-h-full opacity-100"
+                            : showFilterConditions
+                              ? "max-h-32 overflow-y-auto opacity-100"
+                              : "max-h-0 opacity-0"
+                    }`}>
                     {loadingFilters ? (
                         <Skeleton count={3} />
                     ) : (
@@ -271,22 +324,33 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
+                <div
+                    onClick={() => setShowAllConditions(!showAllConditions)}
+                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterConditions ? "visible" : "hidden"}`}>
+                    {showAllConditions ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                </div>
                 {/* )} */}
             </div>
-            <div className="pb-4">
+            <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
-                    onClick={toggleShowGroup}>
+                    onClick={() => toggleShowGroup("statuses")}>
                     <div className="font-bold">Brand</div>
-                    {showFilterGroup ? (
+                    {showFilterStatuses ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
                         <ChevronDownIcon className="h-5 w-5" />
                     )}
                 </div>
-                {/* {showFilterGroup && ( */}
+                {/* {showFilterStatuses && ( */}
                 <div
-                    className={`transition-all duration-500 ease-in-out ${showFilterGroup ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        showFilterStatuses && showAllStatuses
+                            ? "max-h-full opacity-100"
+                            : showFilterStatuses
+                              ? "max-h-32 overflow-y-auto opacity-100"
+                              : "max-h-0 opacity-0"
+                    }`}>
                     {loadingFilters ? (
                         <Skeleton count={3} />
                     ) : (
@@ -316,9 +380,14 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
+                <div
+                    onClick={() => setShowAllStatuses(!showAllStatuses)}
+                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterStatuses ? "visible" : "hidden"}`}>
+                    {showAllStatuses ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                </div>
                 {/* )} */}
             </div>
-            {/* <div className="pb-4">
+            {/*<div className="border-b py-2">
                         <div
                             className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                             onClick={toggleShowGroup}>
