@@ -1,29 +1,28 @@
+/* eslint-disable no-useless-catch */
 import axios from "@/lib/axios"
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 const initialState = {
     items: [],
+    totalPages: 0,
+    currentPage: 1,
     error: null,
     isLoading: false,
 }
 
 export const fetchVideos = createAsyncThunk(
     "videos/fetchVideos",
-    async currentPage => {
+    async params => {
         try {
-            const data = {
-                paginate: currentPage.paginate,
-                per_page: currentPage.perPage,
-                take: currentPage.take,
-            }
-            console.log("====================================")
-            console.log("Data:", data)
-            console.log("====================================")
-            const response = await axios.get(`/api/videos`, { params: data })
-            console.log("API response:", response.data) // Log the API response
+            const response = await axios.get(`/api/videos`, {
+                params: {
+                    page: params.page,
+                    paginate: 1,
+                    per_page: params.perPage || 15, // default to 1 per page
+                },
+            })
             return response.data
         } catch (error) {
-            console.error("Error fetching videos:", error) // Log errors
             throw error
         }
     },
@@ -57,6 +56,8 @@ const videoSlice = createSlice({
                 console.log("Action in fulfilled:", action)
                 console.log("Current state:", state)
                 state.items = action.payload.data
+                state.totalPages = action.payload.meta.last_page
+                state.currentPage = action.payload.meta.current_page
                 state.isLoading = false
             })
             .addCase(fetchVideos.rejected, (state, action) => {

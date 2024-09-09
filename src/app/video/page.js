@@ -2,28 +2,32 @@
 
 // import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import Pagination from "@/components/Pagination"
 import VideoThumbnail from "@/components/VideoThumbnail"
-import SearchParamsHandler from "@/lib/searchParams"
 import { fetchVideos } from "@/store/slices/videoSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { Suspense, useMemo } from "react"
-import { useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Video() {
+    const router = useRouter()
+    const dispatch = useDispatch()
     const videos = useSelector(state => state.videos.items)
-    console.log("videos from Redux state:", videos)
+    const totalPages = useSelector(state => state.videos.totalPages)
+    const currentPage = useSelector(state => state.videos.currentPage)
 
-    const memoizedActions = useMemo(
-        () => [() => fetchVideos({ paginate: 1 })],
-        [],
-    )
+    useEffect(() => {
+        dispatch(fetchVideos({ page: currentPage }))
+    }, [dispatch, currentPage])
 
+    const handlePageChange = page => {
+        router.push(`?page=${page}`)
+        dispatch(fetchVideos({ page }))
+    }
     return (
         <div>
-            <Suspense fallback={<div>Loading...</div>}>
-                <SearchParamsHandler actions={memoizedActions} />
-            </Suspense>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <ArrowLeftIcon className="h-6 w-6" />
@@ -33,7 +37,7 @@ function Video() {
                 <div className="mx-auto flex max-w-7xl flex-1">
                     <div className="flex w-full flex-col">
                         {/* Search bar */}
-                        <div className="w-full bg-[#0F0F0F] pb-4 pt-6">
+                        {/* <div className="w-full bg-[#0F0F0F] pb-4 pt-6">
                             <div className="flex w-full items-center justify-center">
                                 <div className="w-full px-4 lg:w-3/5 lg:px-0">
                                     <input
@@ -42,7 +46,7 @@ function Video() {
                                     />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="px-4 pt-5 lg:pt-10">
                             {/* video list */}
                             <div className="flex-1 overflow-y-auto">
@@ -63,6 +67,13 @@ function Video() {
                                     </div>
                                 </div>
                             </div>
+                            {videos && videos.length > 15 && (
+                                <Pagination
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={handlePageChange}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

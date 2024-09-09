@@ -251,7 +251,7 @@ function ProductDetail({ params }) {
                         </div>
                         {products && products.sold_out ? (
                             <>
-                                <div className="hidden items-center py-3 lg:flex">
+                                {/* <div className="hidden items-center py-3 lg:flex">
                                     <Image
                                         src="/package.svg"
                                         alt="package"
@@ -262,17 +262,23 @@ function ProductDetail({ params }) {
                                     <div className="ml-2 text-xs">
                                         Saat ini barang sedang dalam proses
                                         pembayaran salah satu pengguna Bulky{" "}
-                                        {/* <span className="inline-flex items-center text-xs font-bold text-[#F20B0B]">
+                                        <span className="inline-flex items-center text-xs font-bold text-[#F20B0B]">
                                     01:30:59
                                     <QuestionMarkCircleIcon
                                         className="ml-1 h-4 w-4 text-[#007185]"
                                         style={{ strokeWidth: "2.5" }}
                                     />
-                                </span> */}
+                                </span>
+                                    </div>
+                                </div> */}
+                                <div className="hidden items-center py-3 lg:flex">
+                                    <div className="ml-2 text-xs">
+                                        Barang ini telah dibeli oleh pengguna
+                                        Bulky lainnya
                                     </div>
                                 </div>
                                 <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">
-                                    Masukkan Keranjang
+                                    Produk Tidak Tersedia
                                 </div>
                             </>
                         ) : (

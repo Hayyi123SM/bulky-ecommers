@@ -7,21 +7,23 @@ const initialState = {
     relatedProducts: [],
     searchResults: [],
     totalPages: 0,
+    currentPage: 1,
     error: null,
     isLoading: true,
 }
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
-    async ({ currentPage, filters }) => {
+    async ({ currentPage, filters, perPage }) => {
         try {
             console.log("====================================")
+            console.log("currentPage:", currentPage)
             console.log("Params:", filters)
             console.log("====================================")
             // Build the params object dynamically
             const params = {
                 page: currentPage,
-                ...(filters.perPage && { per_page: filters.perPage }),
+                per_page: perPage || 15,
                 ...(filters.search && { search: filters.search }),
                 ...(filters.categories &&
                     filters.categories.length && {
@@ -128,7 +130,8 @@ const productSlice = createSlice({
                 console.log("Action in fulfilled:", action)
                 console.log("Current state:", state)
                 state.items = action.payload.data
-                state.totalPages = action.payload.meta.total
+                state.totalPages = action.payload.meta.last_page
+                state.currentPage = action.payload.meta.current_page
                 state.isLoading = false
             })
             .addCase(fetchProducts.rejected, (state, action) => {

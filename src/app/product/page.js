@@ -8,7 +8,6 @@ import PopupFilter from "@/components/PopupFilter"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import SidebarProduct from "@/components/SidebarProduct"
-import SearchParamsHandler from "@/lib/searchParams"
 import {
     AdjustmentsHorizontalIcon,
     ArchiveBoxIcon,
@@ -16,18 +15,17 @@ import {
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Suspense, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 import {
     fetchProducts,
     fetchSearchProducts,
 } from "../../store/slices/productSlice"
-import Skeleton from "react-loading-skeleton"
 
 function Product() {
     const category = useSearchParams().get("category")
 
-    const [currentPage, setCurrentPage] = useState(1)
     const [showPopup, setShowPopup] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
@@ -39,7 +37,7 @@ function Product() {
     const popupRef = useRef(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
-    // const currentPage = parseInt(searchParams.get("page")) || 1
+    const currentPage = useSelector(state => state.products.currentPage || 1)
 
     const dispatch = useDispatch()
     const products = useSelector(state => state.products.items)
@@ -54,14 +52,11 @@ function Product() {
     const conditions = useSelector(state => state.filters.conditions)
     const statuses = useSelector(state => state.filters.statuses)
 
-    // useEffect(() => {
-    //     dispatch(fetchProducts({ page: currentPage, filters }))
-    // }, [currentPage, filters, dispatch])
-
-    const memoizedActions = useMemo(
-        () => [page => fetchProducts({ page, filters })],
-        [filters],
-    )
+    useEffect(() => {
+        if (currentPage && filters) {
+            dispatch(fetchProducts({ currentPage, filters })) // pastikan currentPage tidak undefined
+        }
+    }, [currentPage, filters, dispatch])
 
     const handleSearchInputChange = e => {
         setSearchQuery(e.target.value)
@@ -75,7 +70,10 @@ function Product() {
     }
 
     const handlePageChange = page => {
-        router.push(`?page=${page}`)
+        if (page) {
+            router.push(`?page=${page}`)
+            dispatch(fetchProducts({ currentPage: page, filters }))
+        }
     }
 
     const togglePopup = () => setShowPopup(!showPopup)
@@ -115,13 +113,6 @@ function Product() {
 
     return (
         <div>
-            <Suspense fallback={<div>Loading...</div>}>
-                <SearchParamsHandler
-                    actions={memoizedActions}
-                    onPageChange={setCurrentPage}
-                />
-            </Suspense>
-
             <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-b border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <Link href="history.back()">
