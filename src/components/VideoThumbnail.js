@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 function VideoThumbnail({
     thumbnail,
     title,
@@ -10,25 +8,13 @@ function VideoThumbnail({
     return (
         <div
             className={`rounded-xl shadow ${bgColor} cursor-pointer hover:rounded-xl hover:${bgHover}`}>
-            <Image
-                src={thumbnail}
-                alt="Product"
-                width={500}
-                height={500}
-                className="rounded-t-xl"
-                priority={false}
-            />
-            <div className="flex p-4">
-                {/* <div className="w-3/12">
-                    <Image
-                        src={user}
-                        alt="Product"
-                        width={38}
-                        height={38}
-                        className="rounded-full"
-                    />
-                </div> */}
-                <div className="text-sm font-bold">{title}</div>
+            <div
+                className="h-48 w-full rounded-t-xl bg-cover bg-center"
+                style={{ backgroundImage: `url(${thumbnail})` }}>
+                {/* The aspect-square ensures the div stays square */}
+            </div>
+            <div className="flex h-20 p-4">
+                <div className="line-clamp-2 text-base font-bold">{title}</div>
             </div>
         </div>
     )

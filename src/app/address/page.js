@@ -8,7 +8,7 @@ import {
     removeAddress,
     setAddressPrimary,
 } from "@/store/slices/addressSlice"
-import { TrashIcon } from "@heroicons/react/24/outline"
+import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -83,15 +83,15 @@ function Address() {
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
                         Profil
                     </div>
-                    <div className="mt-10 hidden items-center justify-center lg:flex">
+                    <div className="mt-5 hidden items-center justify-center lg:flex">
                         <Link
                             href="/profile"
-                            className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
+                            className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 py-4 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
                             Biodata
                         </Link>
                         <Link
                             href="/address"
-                            className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
+                            className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] py-4 text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
                             Daftar Alamat
                         </Link>
                     </div>
@@ -117,9 +117,9 @@ function Address() {
                             <div
                                 key={address.id}
                                 className={`my-7 hidden items-center rounded-xl bg-white px-5 py-4 shadow lg:flex ${address.is_primary && "border border-[#007185]"}`}>
-                                <div className="w-2/5 border-r">
+                                <div className="ml-5 w-3/5 pr-5">
                                     <div className="flex items-center">
-                                        <div className="ml-5 text-sm leading-6">
+                                        <div className="text-sm leading-6">
                                             <div className="text-md font-bold">
                                                 {address.label}
                                             </div>
@@ -135,13 +135,43 @@ function Address() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="w-3/5">
-                                    <div className="flex items-center justify-between">
-                                        <div className="ml-5 text-sm leading-6">
-                                            <div className="text-md pb-1">
-                                                Status :
+                                    <div className="flex items-center py-1">
+                                        <MapPinIcon className="h-5 w-5 text-[#007185]" />
+                                        <div className="ml-2 text-xs font-bold text-[#007185]">
+                                            Sudah Pin Point
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center py-1">
+                                        <Link href={`/address/${address.id}`}>
+                                            <div className="cursor-pointer text-xs font-bold text-[#007185] hover:text-secondary">
+                                                Ubah Alamat
                                             </div>
+                                        </Link>
+                                        {address.is_primary === false && (
+                                            <>
+                                                <div
+                                                    onClick={() =>
+                                                        openModalPrimary(
+                                                            address.id,
+                                                        )
+                                                    }
+                                                    className="cursor-pointer px-5 text-xs font-bold text-[#007185] hover:text-secondary">
+                                                    Jadikan Alamat Utama
+                                                </div>
+                                                <div
+                                                    onClick={() =>
+                                                        openModal(address.id)
+                                                    }
+                                                    className="cursor-pointer text-xs font-bold text-[#007185] hover:text-secondary">
+                                                    Hapus
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="w-2/5">
+                                    <div className="flex items-center justify-end">
+                                        <div className="ml-5 text-sm leading-6">
                                             <div className="text-md flex items-center font-bold">
                                                 {address.is_primary ? (
                                                     <>
@@ -149,40 +179,19 @@ function Address() {
                                                         <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
                                                     </>
                                                 ) : (
-                                                    "Tidak Digunakan"
+                                                    <div
+                                                        onClick={() =>
+                                                            openModalPrimary(
+                                                                address.id,
+                                                            )
+                                                        }
+                                                        className="mr-2 cursor-pointer rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
+                                                        Alamat Utama
+                                                    </div>
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="flex items-center">
-                                            {address.is_primary === false && (
-                                                <div
-                                                    onClick={() =>
-                                                        openModalPrimary(
-                                                            address.id,
-                                                        )
-                                                    }
-                                                    className="mr-2 cursor-pointer rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                                    Alamat Utama
-                                                </div>
-                                            )}
-                                            <Link
-                                                href={`/address/${address.id}`}>
-                                                <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                                    Ubah Alamat
-                                                </div>
-                                            </Link>
-                                        </div>
                                     </div>
-                                    {address.is_primary === false && (
-                                        <div
-                                            onClick={() =>
-                                                openModal(address.id)
-                                            }
-                                            className="float-right flex w-fit cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#B1B1B1] hover:text-red-500">
-                                            <TrashIcon className="mr-1 h-5 w-5" />
-                                            Hapus
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         ))}
@@ -194,7 +203,7 @@ function Address() {
                             <div
                                 key={address.id}
                                 className={`my-7 rounded-xl bg-white px-5 py-4 shadow lg:hidden ${address.is_primary && "border border-[#007185]"}`}>
-                                <div className="flex items-baseline border-b pb-4">
+                                <div className="flex items-baseline">
                                     <div className="text-sm leading-6">
                                         <div className="text-sm font-bold">
                                             {address.label}
@@ -210,49 +219,59 @@ function Address() {
                                             {address.formatted_area}
                                         </div>
                                     </div>
-                                    {address.is_primary === false && (
-                                        <div
-                                            onClick={() =>
-                                                openModal(address.id)
-                                            }
-                                            className="float-right flex w-fit cursor-pointer items-center justify-center rounded-lg text-center text-sm font-bold text-[#B1B1B1] hover:text-red-500">
-                                            <TrashIcon className="mr-1 h-4 w-4" />
-                                            Hapus
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="mb-4 mt-4">
-                                    <div className="flex items-center justify-between text-sm font-bold">
-                                        <div className="w-1/2 font-light">
-                                            Status :
-                                        </div>
-                                        <div className="flex w-1/2 items-center justify-end">
-                                            {address.is_primary ? (
-                                                <>
-                                                    Digunakan
-                                                    <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
-                                                </>
-                                            ) : (
-                                                "Tidak Digunakan"
-                                            )}
+                                    <div className="w-2/5">
+                                        <div className="flex items-center justify-end">
+                                            <div className="ml-5 text-sm leading-6">
+                                                <div className="text-md flex items-center font-bold">
+                                                    {address.is_primary && (
+                                                        <>
+                                                            Digunakan
+                                                            <CheckBadgeIcon className="ml-2 h-5 w-5 text-green-500" />
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="items-center justify-end">
-                                    {address.is_primary === false && (
-                                        <div
-                                            onClick={() =>
-                                                openModalPrimary(address.id)
-                                            }
-                                            className="mb-2 mr-1 cursor-pointer rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
-                                            Alamat Utama
-                                        </div>
+                                <div className="flex items-center py-4">
+                                    <MapPinIcon className="h-5 w-5 text-[#007185]" />
+                                    <div className="ml-2 text-xs font-bold text-[#007185]">
+                                        Sudah Pin Point
+                                    </div>
+                                </div>
+                                <div className="items-center py-1">
+                                    {address.is_primary === false ? (
+                                        <>
+                                            <div
+                                                onClick={() =>
+                                                    openModalPrimary(address.id)
+                                                }
+                                                className="w-full rounded-lg bg-green-300 py-2 text-center text-xs font-bold">
+                                                Jadikan Alamat Utama
+                                            </div>
+                                            <div className="flex items-center gap-2 py-2">
+                                                <Link
+                                                    href={`/address/${address.id}`}
+                                                    className="w-1/2 rounded-lg border border-[#B2B2B2] bg-white py-2 text-center text-xs font-bold">
+                                                    <div>Ubah Alamat</div>
+                                                </Link>
+                                                <div
+                                                    onClick={() =>
+                                                        openModal(address.id)
+                                                    }
+                                                    className="w-1/2 rounded-lg border border-red-300 bg-white py-2 text-center text-xs font-bold">
+                                                    Hapus
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <Link href={`/address/${address.id}`}>
+                                            <div className="w-full rounded-lg bg-secondary py-2 text-center text-xs font-bold">
+                                                Ubah Alamat
+                                            </div>
+                                        </Link>
                                     )}
-                                    <Link href={`/address/${address.id}`}>
-                                        <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            Ubah Alamat
-                                        </div>
-                                    </Link>
                                 </div>
                             </div>
                         ))}

@@ -14,15 +14,15 @@ function Footer() {
 
     return (
         <div className="bg-[#F5F5F5] lg:p-14">
-            <div className="font-normal text-[#212121] md:grid md:grid-cols-3 lg:grid-cols-5">
-                <div className="w-full p-5">
+            <div className="flex flex-wrap font-normal text-[#212121]">
+                <div className="w-full p-5 md:w-2/5 lg:w-3/12 xl:w-3/12">
                     <Link href="/">
                         <Image
                             src="/bulky-black.svg"
                             width={94}
                             height={32}
                             alt="Logo"
-                            className="h-auto w-auto cursor-pointer"
+                            className="cursor-pointer"
                             priority={false}
                         />
                     </Link>
@@ -31,26 +31,26 @@ function Footer() {
                         Indonesia yang berfokus dalam membantu bisnis Ritel
                     </div>
                     <div className="mt-3 flex text-sm">
-                        <MapPinIcon className="h-7 w-7" />
+                        <MapPinIcon className="h-auto w-6 md:w-9" />
                         <div className="ml-2">
                             Jl. Cilodong Raya No.89, Cilodong, Kec. Cilodong,
                             Kota Depok, Jawa Barat 16414
                         </div>
                     </div>
                     <div className="mt-3 flex text-sm">
-                        <PhoneIcon className="h-6 w-6" />
+                        <PhoneIcon className="h-auto w-4" />
                         <div className="ml-2 font-semibold text-[#007185] underline">
                             0811 803 157
                         </div>
                     </div>
                     <div className="mt-3 flex text-sm">
-                        <EnvelopeIcon className="h-6 w-6" />
+                        <EnvelopeIcon className="h-auto w-4" />
                         <div className="ml-2 font-semibold text-[#007185] underline">
                             admin@bulky.com
                         </div>
                     </div>
                 </div>
-                <div className="w-full p-5">
+                <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
                     <div className="text-base font-bold">Lokasi Gudang</div>
                     <div className="mt-3 text-sm">
                         <Link href="/">Jakarta</Link>
@@ -68,7 +68,7 @@ function Footer() {
                         <Link href="/">Solo</Link>
                     </div>
                 </div>
-                <div className="w-full p-5">
+                <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
                     <div className="text-base font-bold">Perusahaan</div>
                     <div className="mt-3 text-sm">
                         <Link href="/about-us">Tentang Kami</Link>
@@ -94,7 +94,7 @@ function Footer() {
                         <Link href="/privacy-policy">Kebijakan Privasi</Link>
                     </div>
                 </div>
-                <div className="w-full p-5">
+                <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
                     <div className="text-base font-bold">Layanan</div>
                     <div className="mt-3 text-sm">
                         <Link href="/product">Produk Lainnya</Link>
@@ -132,7 +132,7 @@ function Footer() {
                         />
                     </div>
                 </div>
-                <div className="w-full p-5">
+                <div className="w-full p-5 md:w-full lg:w-3/12 xl:w-3/12">
                     <div className="text-base font-bold">Metode Pembayaran</div>
                     <div className="mt-3 grid grid-cols-6 gap-3 text-sm">
                         {payments.map((payment, index) => (

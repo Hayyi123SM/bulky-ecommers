@@ -70,15 +70,15 @@ function Profile() {
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
                         Profil
                     </div>
-                    <div className="mt-10 hidden items-center justify-center lg:flex">
+                    <div className="mt-5 hidden items-center justify-center lg:flex">
                         <Link
                             href="/profile"
-                            className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
+                            className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] py-4 text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
                             Biodata
                         </Link>
                         <Link
                             href="/address"
-                            className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
+                            className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 py-4 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
                             Daftar Alamat
                         </Link>
                     </div>
@@ -102,12 +102,12 @@ function Profile() {
                                 </div>
                             </div>
                             <Link href="/change-password">
-                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
+                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]">
                                     Ubah Kata Sandi
                                 </div>
                             </Link>
                             <div
-                                className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]"
+                                className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]"
                                 onClick={handleLogout}>
                                 <ArrowRightStartOnRectangleIcon className="mr-3 h-6 w-6" />
                                 Keluar Akun
@@ -129,60 +129,60 @@ function Profile() {
                             </Link>
                         </div>
                         <div className="flex-grow">
-                            <div className="flex-grow border-t px-5 py-4 lg:border-none">
-                                <div className="mb-5 text-sm font-bold">
+                            <div className="flex-grow border-t px-10 py-4 lg:border-none">
+                                <div className="mb-5 text-base font-bold">
                                     Info Biodata Diri
                                 </div>
-                                <div className="flex py-4">
-                                    <div className="w-1/3 text-sm font-light">
+                                <div className="flex py-3">
+                                    <div className="w-1/3 text-base font-light">
                                         Nama
                                     </div>
-                                    <div className="w-2/3 text-sm font-light">
+                                    <div className="w-2/3 text-base font-light">
                                         {user.data.name}
                                     </div>
                                 </div>
-                                <div className="flex py-4">
-                                    <div className="w-1/3 text-sm font-light">
+                                <div className="flex py-3">
+                                    <div className="w-1/3 text-base font-light">
                                         Username
                                     </div>
-                                    <div className="w-2/3 text-sm font-light">
+                                    <div className="w-2/3 text-base font-light">
                                         {user.data.username}
                                     </div>
                                 </div>
-                                <div className="flex py-4">
-                                    <div className="w-1/3 text-sm font-light">
+                                <div className="flex py-3">
+                                    <div className="w-1/3 text-base font-light">
                                         Tanggal Lahir
                                     </div>
-                                    <div className="w-2/3 text-sm font-light">
+                                    <div className="w-2/3 text-base font-light">
                                         28 September 1996
                                     </div>
                                 </div>
-                                <div className="flex py-4">
-                                    <div className="w-1/3 text-sm font-light">
+                                <div className="flex py-3">
+                                    <div className="w-1/3 text-base font-light">
                                         Jenis Kelamin
                                     </div>
-                                    <div className="w-2/3 text-sm font-light">
+                                    <div className="w-2/3 text-base font-light">
                                         Laki-laki
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex-grow border-t px-5 py-4 lg:border-none">
-                                <div className="mb-5 text-sm font-bold">
+                            <div className="flex-grow border-t px-10 py-4 lg:border-none">
+                                <div className="mb-5 text-base font-bold">
                                     Ubah Kontak
                                 </div>
-                                <div className="flex py-4">
-                                    <div className="w-1/3 text-sm font-light">
+                                <div className="flex py-3">
+                                    <div className="w-1/3 text-base font-light">
                                         Email
                                     </div>
-                                    <div className="w-2/3 text-sm font-light">
+                                    <div className="w-2/3 text-base font-light">
                                         {user.data.email}
                                     </div>
                                 </div>
-                                <div className="flex py-4">
-                                    <div className="w-1/3 text-sm font-light">
+                                <div className="flex py-3">
+                                    <div className="w-1/3 text-base font-light">
                                         Nomor HP
                                     </div>
-                                    <div className="w-2/3 text-sm font-light">
+                                    <div className="w-2/3 text-base font-light">
                                         {user.data.phone_number}
                                     </div>
                                 </div>

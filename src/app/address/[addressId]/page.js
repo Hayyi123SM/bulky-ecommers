@@ -100,6 +100,7 @@ function AddressUpdate({ params }) {
             subDistrictId,
             latitude,
             longitude,
+            isPrimary: false,
         }
         dispatch(updateAddress(data))
 

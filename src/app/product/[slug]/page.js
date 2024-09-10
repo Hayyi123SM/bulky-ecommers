@@ -118,8 +118,8 @@ function ProductDetail({ params }) {
                 />
             )}
             <div className="mx-auto max-w-7xl lg:p-8 lg:px-44">
-                <div className="flex flex-col lg:flex-row">
-                    <div className="hidden flex-col lg:flex">
+                <div className="flex flex-col gap-2 lg:flex-row">
+                    <div className="scrollbar-hide hidden max-h-80 flex-col overflow-y-auto whitespace-nowrap lg:flex">
                         {productImages.length === 0 ? (
                             <Skeleton height={80} width={80} />
                         ) : (
@@ -202,11 +202,11 @@ function ProductDetail({ params }) {
                                 products.price?.formatted
                             )}
                         </div>
-                        <div className="mb-4 flex items-center">
-                            <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
+                        <div className="mb-1 flex items-center">
+                            <div className="mr-2 w-4/12 text-base text-[#6D7588]">
                                 ID Palet
                             </div>
-                            <div className="w-10/12 text-sm font-bold">
+                            <div className="w-8/12 text-base font-bold">
                                 {loadingProducts ? (
                                     <Skeleton />
                                 ) : (
@@ -214,11 +214,11 @@ function ProductDetail({ params }) {
                                 )}
                             </div>
                         </div>
-                        <div className="mb-4 flex items-center">
-                            <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
+                        <div className="mb-1 flex items-center">
+                            <div className="mr-2 w-4/12 text-base text-[#6D7588]">
                                 Quantity
                             </div>
-                            <div className="w-10/12 text-sm font-bold">
+                            <div className="w-8/12 text-base font-bold">
                                 {loadingProducts ? (
                                     <Skeleton />
                                 ) : (
@@ -227,19 +227,19 @@ function ProductDetail({ params }) {
                                 pcs
                             </div>
                         </div>
-                        <div className="mb-4 flex items-center">
-                            <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
+                        <div className="mb-1 flex items-center">
+                            <div className="mr-2 w-4/12 text-base text-[#6D7588]">
                                 Location
                             </div>
-                            <div className="w-10/12 text-sm font-bold">
+                            <div className="w-8/12 text-base font-bold">
                                 Yogyakarta
                             </div>
                         </div>
-                        <div className="mb-4 flex items-center">
-                            <div className="mr-2 w-3/12 text-sm text-[#6D7588]">
+                        <div className="mb-8 flex items-center">
+                            <div className="mr-2 w-4/12 text-base text-[#6D7588]">
                                 Detail Pallet
                             </div>
-                            <div className="w-10/12 text-sm font-bold">
+                            <div className="w-8/12 text-base font-bold">
                                 {/* 5.00 lbs per lot / 0.77 pounds per lot
                                 dimensional weight */}
                                 <span
@@ -304,10 +304,10 @@ function ProductDetail({ params }) {
                 <div className="p-4 lg:mt-20">
                     <div className="mb-4 text-2xl font-bold">Deskripsi</div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-2/6 text-sm font-semibold lg:w-1/6">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
                             Kondisi :
                         </div>
-                        <div className="w-5/6 text-sm">
+                        <div className="w-5/6 text-base">
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : (
@@ -316,10 +316,10 @@ function ProductDetail({ params }) {
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-2/6 text-sm font-semibold lg:w-1/6">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
                             Brand :
                         </div>
-                        <div className="w-5/6 text-sm">
+                        <div className="w-5/6 text-base">
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : (
@@ -328,10 +328,10 @@ function ProductDetail({ params }) {
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-2/6 text-sm font-semibold lg:w-1/6">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
                             Status Produk :
                         </div>
-                        <div className="w-5/6 text-sm">
+                        <div className="w-5/6 text-base">
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : (
@@ -340,16 +340,16 @@ function ProductDetail({ params }) {
                         </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-2/6 text-sm font-semibold lg:w-1/6">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
                             Min Pesanan :
                         </div>
-                        <div className="w-5/6 text-sm">1 Palet</div>
+                        <div className="w-5/6 text-base">1 Palet</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-2/6 text-sm font-semibold lg:w-1/6">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
                             Kategori :
                         </div>
-                        <div className="w-5/6 text-sm font-semibold text-[#007185]">
+                        <div className="w-5/6 text-base font-semibold text-[#007185]">
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : (
@@ -359,18 +359,18 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="py-10">
                         <div
-                            className="text-sm"
+                            className="text-base"
                             dangerouslySetInnerHTML={{
                                 __html: products.description,
                             }}
                         />
-                        <div className="py-8 text-sm font-bold text-[#007185]">
+                        <div className="py-8 text-base font-bold text-[#007185]">
                             Lihat Lebih Sedikit
                         </div>
                     </div>
                 </div>
                 <div className="mb-20 p-4">
-                    <div className="mb-4 text-2xl font-bold">
+                    <div className="mb-8 text-2xl font-bold">
                         Produk Lainnya
                     </div>
                     <div className="overflow-x-auto">

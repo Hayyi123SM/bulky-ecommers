@@ -74,6 +74,7 @@ function AddressCreate() {
             subDistrictId,
             latitude,
             longitude,
+            isPrimary: false,
         }
         dispatch(addAddress(data))
 

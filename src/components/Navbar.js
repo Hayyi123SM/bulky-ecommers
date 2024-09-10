@@ -8,11 +8,7 @@ import {
     ArchiveBoxIcon,
     Bars3BottomRightIcon,
 } from "@heroicons/react/24/outline"
-import {
-    ChevronDownIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-} from "@heroicons/react/24/solid"
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -97,6 +93,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     return (
         <Suspense fallback={<div>Loading ... </div>}>
             <div className={`sticky top-0 z-40 ${visibilityClasses}`}>
+                {/* Mobile Navbar */}
                 <nav className="block h-[134px] bg-primary px-4 py-3 lg:hidden">
                     <div className="flex items-center justify-between">
                         <Link href="/">
@@ -187,8 +184,9 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                     </div>
                 </nav>
 
+                {/* Desktop Navbar */}
                 <nav className="hidden h-[120px] bg-primary px-10 py-3 md:hidden lg:block">
-                    <div className="item-center flex">
+                    <div className="item-center flex pt-2">
                         <div className="item-center flex w-1/12">
                             <Link href="/">
                                 <Image
@@ -201,8 +199,8 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 />
                             </Link>
                         </div>
-                        <div className="item-center flex pl-10 lg:w-6/12 xl:w-7/12 2xl:w-8/12">
-                            <div className="relative w-full">
+                        <div className="item-center flex pl-10 lg:w-7/12 xl:w-9/12 2xl:w-9/12">
+                            <div className="relative w-full xl:pr-20 2xl:pr-0">
                                 <input
                                     ref={inputRef}
                                     className="w-full rounded-lg py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
@@ -252,15 +250,15 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 )}
                             </div>
                         </div>
-                        <div className="flex lg:w-5/12 xl:w-4/12 2xl:w-3/12">
+                        <div className="flex lg:w-4/12 xl:w-2/12 2xl:w-2/12">
                             <div className="flex w-full items-center justify-end">
-                                <div className="flex cursor-pointer items-center">
-                                    {/* <BellIcon className="mr-2 h-9 w-9 font-bold text-white hover:text-secondary" /> */}
-                                </div>
+                                {/* <div className="flex cursor-pointer items-center"> */}
+                                {/* <BellIcon className="mr-2 h-9 w-9 font-bold text-white hover:text-secondary" /> */}
+                                {/* </div> */}
                                 <Link href="/cart">
-                                    <div className="flex items-center text-white hover:text-secondary lg:mx-7 xl:mx-10">
+                                    <div className="flex items-center text-white hover:text-secondary lg:mx-7">
                                         <ArchiveBoxIcon className="h-9 w-9 font-bold hover:text-secondary" />
-                                        <div className="ml-3 text-center hover:text-secondary">
+                                        <div className="ml-3 hover:text-secondary">
                                             <div className="text-sm">
                                                 Keranjang
                                             </div>
@@ -274,21 +272,20 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 {!user ? (
                                     <Link
                                         href="/login"
-                                        className="ml-5 cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
+                                        className="ml-2 cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                         Masuk
                                     </Link>
                                 ) : (
                                     <Link href="/profile">
-                                        <div className="flex items-center px-7 py-2">
-                                            <div className="ml-3 text-white hover:text-secondary">
+                                        <div className="flex items-center px-2">
+                                            <div className="text-white hover:text-secondary">
                                                 <div className="text-sm">
                                                     Welcome
                                                 </div>
-                                                <div className="flex cursor-pointer items-center">
-                                                    <div className="mr-2 text-sm font-bold">
+                                                <div className="flex w-28 cursor-pointer items-center">
+                                                    <div className="line-clamp-1 text-sm font-bold">
                                                         {user && user.data.name}
                                                     </div>
-                                                    <ChevronDownIcon className="h-5 w-5 font-bold" />
                                                 </div>
                                             </div>
                                         </div>

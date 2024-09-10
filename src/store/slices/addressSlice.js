@@ -37,6 +37,7 @@ export const addAddress = createAsyncThunk(
                 sub_district_id: data.subDistrictId,
                 latitude: data.latitude,
                 longitude: data.longitude,
+                is_primary: data.isPrimary,
             }
             const response = await axios.post("/api/user/address/create", param)
             console.log("API response:", response.data) // Log the API response
@@ -94,6 +95,7 @@ export const updateAddress = createAsyncThunk(
                 sub_district_id: data.subDistrictId,
                 latitude: data.latitude,
                 longitude: data.longitude,
+                is_primary: data.isPrimary,
             }
             const response = await axios.put(`/api/user/address/edit`, param)
             console.log("API response:", response.data) // Log the API response

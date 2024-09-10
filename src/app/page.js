@@ -248,7 +248,7 @@ function Home() {
                         <div className="my-2 flex justify-center text-center text-3xl font-semibold leading-9">
                             Wholesales Academy by Bulky <br /> Build your future
                         </div>
-                        <div className="overflow-x-auto">
+                        <div className="mt-10 overflow-x-auto">
                             <div className="flex gap-4 lg:grid lg:grid-cols-4">
                                 {loadingVideos
                                     ? Array.from({ length: 4 }).map(
@@ -295,7 +295,7 @@ function Home() {
                         <br />
                         around the world
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="mt-10 overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-3">
                             {loadingTestimonies
                                 ? Array.from({ length: 3 }).map((_, index) => (
