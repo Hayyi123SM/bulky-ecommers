@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
+import PopupModal from "@/components/PopupModal"
 import { useAuth } from "@/hooks/auth"
 import {
     fetchCarts,
@@ -23,6 +24,8 @@ function Cart() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [itemId, setItemId] = useState(null)
     // const updateStatus = useSelector(state => state.carts.updateStatus)
     // const updateError = useSelector(state => state.carts.updateError)
     console.log("====================================")
@@ -60,6 +63,21 @@ function Cart() {
             selected: isSelected,
         }))
         dispatch(updateSelectedItems(cartItems))
+    }
+
+    const openModal = itemCart => {
+        setItemId(itemCart)
+        setIsModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
+
+    const handleConfirm = () => {
+        console.log("Confirmed!")
+        dispatch(removeItems(itemId))
+        closeModal()
     }
 
     if (!cart) {
@@ -160,11 +178,7 @@ function Cart() {
                                             <TrashIcon
                                                 className="ml-2 h-5 w-5 cursor-pointer text-[#9FA6B0] hover:text-red-700"
                                                 onClick={() =>
-                                                    dispatch(
-                                                        removeItems(
-                                                            item.product.id,
-                                                        ),
-                                                    )
+                                                    openModal(item.product.id)
                                                 }
                                             />
                                         </div>
@@ -218,6 +232,18 @@ function Cart() {
                     </div>
                 </div>
             </div>
+
+            {/* Popup Modal */}
+            <PopupModal
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                type="confirmation"
+                title="Konfirmasi"
+                message="Apakah anda yakin ingin menghapus item ini?"
+                onConfirm={handleConfirm}
+                confirmText="Ya, Lanjutkan"
+                cancelText="Kembali"
+            />
         </div>
     )
 }

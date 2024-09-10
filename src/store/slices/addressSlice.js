@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 const initialState = {
     addresses: [],
     detailAddress: {},
-    error: null,
+    error: [],
     isLoading: false,
 }
 
@@ -22,26 +22,31 @@ export const fetchAddresses = createAsyncThunk(
     },
 )
 
-export const addAddress = createAsyncThunk("address/addAddress", async data => {
-    try {
-        const param = {
-            label: data.label,
-            name: data.name,
-            phone_number: data.phoneNumber,
-            address: data.address,
-            province_id: data.provinceId,
-            city_id: data.cityId,
-            district_id: data.districtId,
-            sub_district_id: data.subDistrictId,
+export const addAddress = createAsyncThunk(
+    "address/addAddress",
+    async (data, { rejectWithValue }) => {
+        try {
+            const param = {
+                label: data.label,
+                name: data.name,
+                phone_number: data.phoneNumber,
+                address: data.address,
+                province_id: data.provinceId,
+                city_id: data.cityId,
+                district_id: data.districtId,
+                sub_district_id: data.subDistrictId,
+                latitude: data.latitude,
+                longitude: data.longitude,
+            }
+            const response = await axios.post("/api/user/address/create", param)
+            console.log("API response:", response.data) // Log the API response
+            return response.data
+        } catch (error) {
+            console.error("Error adding address:", error) // Log errors
+            return rejectWithValue(error.response.data)
         }
-        const response = await axios.post("/api/user/address/create", param)
-        console.log("API response:", response.data) // Log the API response
-        return response.data
-    } catch (error) {
-        console.error("Error adding address:", error) // Log errors
-        throw error
-    }
-})
+    },
+)
 
 export const fetchAddressDetail = createAsyncThunk(
     "address/fetchAddressDetail",
@@ -57,9 +62,25 @@ export const fetchAddressDetail = createAsyncThunk(
     },
 )
 
+export const removeAddress = createAsyncThunk(
+    "address/removeAddress",
+    async id => {
+        try {
+            const response = await axios.delete(
+                `/api/user/address/delete/${id}`,
+            )
+            console.log("API response:", response.data) // Log the API response
+            return response.data
+        } catch (error) {
+            console.error("Error removing address:", error) // Log errors
+            throw error
+        }
+    },
+)
+
 export const updateAddress = createAsyncThunk(
     "address/updateAddress",
-    async data => {
+    async (data, { rejectWithValue }) => {
         try {
             const param = {
                 address_id: data.addressId,
@@ -71,13 +92,31 @@ export const updateAddress = createAsyncThunk(
                 city_id: data.cityId,
                 district_id: data.districtId,
                 sub_district_id: data.subDistrictId,
+                latitude: data.latitude,
+                longitude: data.longitude,
             }
             const response = await axios.put(`/api/user/address/edit`, param)
             console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error updating address:", error) // Log errors
-            throw error
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
+export const setAddressPrimary = createAsyncThunk(
+    "address/setAddressPrimary",
+    async (id, { rejectWithValue }) => {
+        try {
+            const response = await axios.put(
+                `/api/user/address/set-primary/${id}`,
+            )
+            console.log("API response:", response.data) // Log the API response
+            return response.data
+        } catch (error) {
+            console.error("Error setting address primary:", error) // Log errors
+            return rejectWithValue(error.response.data)
         }
     },
 )
@@ -110,7 +149,7 @@ const addressSlice = createSlice({
             })
             .addCase(addAddress.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.error
+                state.error = action.payload.errors
             })
             .addCase(fetchAddressDetail.pending, state => {
                 state.isLoading = true
@@ -134,7 +173,7 @@ const addressSlice = createSlice({
             })
             .addCase(updateAddress.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.error
+                state.error = action.payload.errors
             })
     },
 })

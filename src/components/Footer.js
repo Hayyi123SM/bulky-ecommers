@@ -97,13 +97,13 @@ function Footer() {
                 <div className="w-full p-5">
                     <div className="text-base font-bold">Layanan</div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Produk Lainnya</Link>
+                        <Link href="/product">Produk Lainnya</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Order & Status Return</Link>
+                        <Link href="/order">Order & Status Return</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-us">Profil Pengguna</Link>
+                        <Link href="/profile">Profil Pengguna</Link>
                     </div>
                     <div className="mt-3 flex text-sm">
                         <Image
