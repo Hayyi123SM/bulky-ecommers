@@ -26,7 +26,7 @@ function SidebarProfile() {
                         {user.data.name}
                     </div>
                     <div className="text-sm">
-                        <Link href="/profile">
+                        <Link href="/update-profile">
                             <div className="cursor-pointer text-[#007185]">
                                 Edit Profile
                             </div>

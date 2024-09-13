@@ -220,7 +220,11 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                         </div>
                                     </div>
                                 </div>
-                                <PencilIcon className="ml-auto h-6 w-6 cursor-pointer" />
+                                <Link
+                                    href="/update-profile"
+                                    className="ml-auto">
+                                    <PencilIcon className="ml-auto h-6 w-6 cursor-pointer" />
+                                </Link>
                             </div>
                         </div>
                         <div className="mt-2 bg-white p-4">

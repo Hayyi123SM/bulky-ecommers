@@ -11,6 +11,8 @@ const initialState = {
     afterCreatePayment: {},
     afterSetInvoiceAmount: {},
     myInvoice: {},
+    totalPages: 0,
+    currentPage: 1,
     error: null,
     isLoading: false,
 }
@@ -31,11 +33,21 @@ export const fetchPaymentMethod = createAsyncThunk(
 
 export const fetchOrders = createAsyncThunk(
     "orders/fetchOrders",
-    async (params, { rejectWithValue }) => {
+    async ({ currentPage, filters }, { rejectWithValue }) => {
         try {
-            // await csrf()
+            const params = {
+                page: currentPage,
+                per_page: filters.perPage || 15,
+                ...(filters.type && { type: filters.type }),
+                ...(filters.search && { search: filters.search }),
+                ...(filters.date && { date: filters.date }),
+                ...(filters.status && { status: filters.status }),
+            }
             const response = await axios.get("/api/orders/get-orders", {
                 params,
+                paramsSerializer: params => {
+                    return new URLSearchParams(params).toString()
+                },
             })
 
             return response.data
@@ -154,9 +166,11 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchOrders.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
+                console.log("Action in fulfilled order:", action)
                 console.log("Current state:", state)
                 state.orders = action.payload.data
+                state.totalPages = action.payload?.meta?.last_page
+                state.currentPage = action.payload?.meta?.current_page
                 state.isLoading = false
             })
             .addCase(fetchOrders.rejected, (state, action) => {

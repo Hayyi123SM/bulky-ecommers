@@ -3,6 +3,7 @@
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
+import PopupModal from "@/components/PopupModal"
 import ProductCard from "@/components/ProductCard"
 import TestimoniCard from "@/components/TestimoniCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
@@ -37,12 +38,26 @@ function Home() {
     const loadingTestimonies = useSelector(state => state.testimony.isLoading)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isPdf, setIsPdf] = useState(null)
+    const [isOpenModal, setIsOpenModal] = useState(false)
+
+    // const dummy = {
+    //     data: {
+    //         id: 1,
+    //         title: "dummy",
+    //         description: "dummy",
+    //         image: "dummy",
+    //         url: "dummy",
+    //     },
+    //     is_new_user: true,
+    // }
 
     useEffect(() => {
         dispatch(fetchBanners())
         dispatch(fetchProducts({ filters: { perPage: 6 } }))
         dispatch(fetchTestimonies({ take: 3 }))
         dispatch(fetchVideos({ perPage: 8, paginate: 1 }))
+
+        // localStorage.setItem("signinWithGoogle", JSON.stringify(dummy))
     }, [dispatch])
     // console.log("====================================")
     // console.log("loadingBanners:", loadingBanners)
@@ -70,9 +85,19 @@ function Home() {
         return () => clearInterval(interval)
     }, [banners.length])
 
-    // if (!banners || !products || !videos) {
-    //     return <LoadingSpinner />
-    // }
+    useEffect(() => {
+        if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
+            if (
+                JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
+            ) {
+                setIsOpenModal(true)
+            }
+        }
+    }, [])
+
+    const closeModal = () => {
+        setIsOpenModal(false)
+    }
 
     return (
         <div>
@@ -135,15 +160,15 @@ function Home() {
                                 ? Array.from({ length: 6 }).map((_, index) => (
                                       <div
                                           key={index}
-                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                          className="min-w-[50%] md:min-w-0">
                                           <Skeleton height={200} />
                                           <Skeleton count={5} />
                                       </div>
                                   ))
                                 : products.map(product => (
                                       <div
-                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
-                                          key={product.id}>
+                                          key={product.id}
+                                          className="min-w-[50%] md:min-w-[30%]">
                                           <ProductCard
                                               image={product.images[0]}
                                               location={"Jakarta"}
@@ -178,6 +203,7 @@ function Home() {
                                   ))}
                         </div>
                     </div>
+
                     <div className="my-10 flex justify-center p-5 text-center text-3xl font-semibold leading-9">
                         The world's leading retailers work <br /> with Bulky
                     </div>
@@ -323,6 +349,16 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <PopupModal
+                isOpen={isOpenModal}
+                closeModal={closeModal}
+                type="updateProfile"
+                title="Pemberitahuan"
+                message="Anda belum melengkapi data diri"
+                confirmText="Lengkapi Sekarang"
+                cancelText="Nanti"
+            />
+
             {isOpenPdf && (
                 <div onClick={() => setIsOpenPdf(false)}>
                     <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]">

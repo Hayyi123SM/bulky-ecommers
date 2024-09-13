@@ -14,16 +14,12 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
-    async ({ currentPage, filters, perPage }) => {
+    async ({ currentPage, filters }) => {
         try {
-            console.log("====================================")
-            console.log("currentPage:", currentPage)
-            console.log("Params:", filters)
-            console.log("====================================")
             // Build the params object dynamically
             const params = {
                 page: currentPage,
-                per_page: perPage || 15,
+                per_page: filters.perPage || 15,
                 ...(filters.search && { search: filters.search }),
                 ...(filters.categories &&
                     filters.categories.length && {
@@ -46,6 +42,7 @@ export const fetchProducts = createAsyncThunk(
                 ...(filters.brands &&
                     filters.brands.length && { brands: filters.brands }),
             }
+
             const response = await axios.get(`/api/products`, {
                 params,
                 paramsSerializer: params => {

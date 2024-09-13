@@ -334,7 +334,7 @@ function AddressUpdate({ params }) {
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
                             <div className="mt-10">
-                                <button type="submit">
+                                <button type="submit" className="w-full">
                                     <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                         Simpan
                                     </div>

@@ -13,6 +13,7 @@ import {
     fetchProvinces,
     fetchSubDistricts,
 } from "@/store/slices/areaSlice"
+import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -111,8 +112,22 @@ function AddressCreate() {
                     </div>
                     <AuthSessionStatus className="mb-4" status={status} />
 
+                    <div className="lg:mt-5 lg:w-5/12">
+                        <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
+                            <div className="flex items-center">
+                                <MapPinIcon className="mr-2 h-6 w-6" />
+                                <div className="text-sm font-light">
+                                    Pilih Alamat
+                                </div>
+                            </div>
+                            <div className="cursor-pointer rounded-lg border border-[#007185] px-3 py-1 font-semibold text-[#007185] hover:bg-[#0071850D]">
+                                Ubah
+                            </div>
+                        </div>
+                    </div>
+
                     <form onSubmit={submitForm}>
-                        <div className="items-center justify-between lg:mt-10 lg:flex">
+                        <div className="items-center justify-between lg:mt-5 lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
                                     Label

@@ -22,6 +22,28 @@ export const changePassword = createAsyncThunk(
     },
 )
 
+export const updateProfile = createAsyncThunk(
+    "auth/updateProfile",
+    async (data, { rejectWithValue }) => {
+        try {
+            const param = {
+                email: data.email,
+                name: data.name,
+                phone_number: data.phoneNumber,
+                address: data.address,
+                province_id: data.provinceId,
+                city_id: data.cityId,
+                district_id: data.districtId,
+                sub_district_id: data.subDistrictId,
+            }
+            const response = await axios.put("/api/user/profile/update", param)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
 export const getRedrectUrlGoogle = createAsyncThunk(
     "auth/getRedrectUrlGoogle",
     async () => {
@@ -114,8 +136,27 @@ const authSlice = createSlice({
                 console.log("====================================")
                 state.isLoading = false
                 state.callback = action.payload
+                localStorage.setItem(
+                    "signinWithGoogle",
+                    JSON.stringify(action.payload),
+                )
             })
             .addCase(getCallbackGoogle.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error
+            })
+            .addCase(updateProfile.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                console.log("====================================")
+                console.log("updateProfile fulfilled", action.payload)
+                console.log("====================================")
+                state.isLoading = false
+                state.user = action.payload
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
                 state.isLoading = false
                 state.error = action.error
             })

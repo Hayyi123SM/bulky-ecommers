@@ -157,7 +157,7 @@ function ResetPassword() {
                             </div>
                             <button
                                 type="submit"
-                                className="mt-2 flex w-full cursor-pointer rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                className="mt-2 flex w-full cursor-pointer items-center justify-center rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 {isLoading ? (
                                     <>
                                         Tunggu Sebentar...

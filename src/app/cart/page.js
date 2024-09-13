@@ -25,6 +25,7 @@ function Cart() {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isOpenModalUser, setIsOpenModalUser] = useState(false)
     const [itemId, setItemId] = useState(null)
     // const updateStatus = useSelector(state => state.carts.updateStatus)
     // const updateError = useSelector(state => state.carts.updateError)
@@ -74,10 +75,28 @@ function Cart() {
         setIsModalOpen(false)
     }
 
+    const closeModalUser = () => {
+        setIsOpenModalUser(false)
+    }
+
     const handleConfirm = () => {
         console.log("Confirmed!")
         dispatch(removeItems(itemId))
         closeModal()
+    }
+
+    const handleCheckout = () => {
+        if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
+            if (
+                JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
+            ) {
+                setIsOpenModalUser(true)
+            } else {
+                window.location.href = "/payment-method"
+            }
+        } else {
+            window.location.href = "/payment-method"
+        }
     }
 
     if (!cart) {
@@ -205,11 +224,11 @@ function Cart() {
                                 </div>
                             </div>
                             <div className="rounded-b-lg bg-white px-5 py-5">
-                                <Link href="/payment-method">
-                                    <div className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
-                                        Beli
-                                    </div>
-                                </Link>
+                                <div
+                                    onClick={() => handleCheckout()}
+                                    className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
+                                    Beli
+                                </div>
                             </div>
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
@@ -221,11 +240,11 @@ function Cart() {
                                     </div>
                                 </div>
                                 <div className="w-1/2">
-                                    <Link href="/payment-method">
-                                        <div className="cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]">
-                                            Beli
-                                        </div>
-                                    </Link>
+                                    <div
+                                        onClick={() => handleCheckout()}
+                                        className="cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]">
+                                        Beli
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -243,6 +262,16 @@ function Cart() {
                 onConfirm={handleConfirm}
                 confirmText="Ya, Lanjutkan"
                 cancelText="Kembali"
+            />
+
+            <PopupModal
+                isOpen={isOpenModalUser}
+                closeModal={closeModalUser}
+                type="updateProfile"
+                title="Pemberitahuan"
+                message="Sebelum melakukan checkout, Anda harus melengkapi data diri"
+                confirmText="Lengkapi Sekarang"
+                cancelText="Nanti"
             />
         </div>
     )

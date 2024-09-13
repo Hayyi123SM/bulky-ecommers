@@ -2,9 +2,9 @@
 
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import Pagination from "@/components/Pagination"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
-import SearchParamsHandler from "@/lib/searchParams"
 import {
     fetchInvoiceOrder,
     fetchOrders,
@@ -14,49 +14,31 @@ import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Suspense, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function OrderSplit() {
     // const searchParams = useSearchParams()
     // const currentPage = parseInt(searchParams.get("page")) || 1
-    const { user } = useAuth()
+    const { user } = useAuth({ middleware: "auth" })
     const router = useRouter()
     const dispatch = useDispatch()
     const orders = useSelector(state => state.orders.orders)
     const myInvoice = useSelector(state => state.orders.myInvoice)
+    const currentPage = useSelector(state => state.orders.currentPage || 1)
+    const totalPages = useSelector(state => state.orders.totalPages)
     const [isRedirectTo, setIsRedirectTo] = useState(false)
 
-    // useEffect(() => {
-    //     if (user) {
-    //         console.log("user:", user)
-    //         dispatch(
-    //             fetchOrders({
-    //                 page: currentPage,
-    //                 type: "waiting_payment",
-    //                 perPage: "",
-    //                 search: "",
-    //                 date: "",
-    //                 status: "",
-    //             }),
-    //         )
-    //     }
-    // }, [dispatch, user])
-
-    const memoizedActions = useMemo(
-        () => [
-            page =>
+    useEffect(() => {
+        if (currentPage) {
+            dispatch(
                 fetchOrders({
-                    page: page,
-                    type: "split_payment",
-                    perPage: "",
-                    search: "",
-                    date: "",
-                    status: "",
+                    currentPage,
+                    filters: { type: "split_payment" },
                 }),
-        ],
-        [user],
-    )
+            ) // pastikan currentPage tidak undefined
+        }
+    }, [currentPage, dispatch])
 
     const handleGetInvoice = orderId => {
         dispatch(fetchInvoiceOrder(orderId))
@@ -84,20 +66,46 @@ function OrderSplit() {
         }
     }, [myInvoice])
 
+    const handlePageChange = page => {
+        if (page) {
+            router.push(`?page=${page}`)
+            dispatch(
+                fetchOrders({
+                    currentPage: page,
+                    filters: { type: "split_payment" },
+                }),
+            )
+        }
+    }
+
+    const handleSearchChange = e => {
+        dispatch(
+            fetchOrders({
+                currentPage: 1,
+                filters: { type: "split_payment", search: e.target.value },
+            }),
+        )
+    }
+
+    const handleDateChange = e => {
+        dispatch(
+            fetchOrders({
+                currentPage: 1,
+                filters: { type: "split_payment", date: e.target.value },
+            }),
+        )
+    }
+
     if (!orders) return <div>Loading ... </div>
 
-    // console.log("====================================")
-    // console.log("orders:", orders)
-    // console.log("====================================")
+    console.log("====================================")
+    console.log("orders:", orders)
+    console.log("user:", user)
+
+    console.log("====================================")
 
     return (
         <div>
-            <Suspense fallback={<div>Loading ... </div>}>
-                <SearchParamsHandler
-                    actions={memoizedActions}
-                    // onPageChange={setCurrentPage}
-                />
-            </Suspense>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <Link href="/">
@@ -116,14 +124,17 @@ function OrderSplit() {
                     <div className="mt-4 flex items-center px-4 lg:mt-10 lg:px-0">
                         <div className="item-center mr-2 w-full lg:mb-0 lg:flex lg:w-8/12">
                             <input
-                                className="mr-4 w-full border-b py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
+                                className="mr-4 w-full rounded-lg border border-[#BFBFBF] py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
                                 placeholder="Cari pesananmu"
+                                onChange={handleSearchChange}
                             />
                         </div>
                         <div className="item-center hidden w-full lg:flex lg:w-4/12">
                             <input
-                                className="w-full border-b py-2 pl-14 text-black bg-calendar focus:border-secondary focus:ring-0"
+                                className="w-full rounded-lg border border-[#BFBFBF] py-2 text-black focus:border-secondary focus:ring-0"
                                 placeholder="Pilih Tanggal Transaksi"
+                                type="date"
+                                onChange={handleDateChange}
                             />
                         </div>
                         <div className="item-center ml-2 w-full lg:hidden lg:w-4/12">
@@ -248,6 +259,13 @@ function OrderSplit() {
                     {/* End : View Mobile */}
                 </div>
             </div>
+            {orders && orders.length > 15 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
             <Footer />
         </div>
     )

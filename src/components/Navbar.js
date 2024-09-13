@@ -23,7 +23,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const searchResults = useSelector(state => state.products.searchResults)
     const searchParams = useSearchParams()
     const currentPage = parseInt(searchParams.get("page")) || 1
-    const { user } = useAuth()
+    const { user } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
     const carts = useSelector(state => state.carts.cart)
     const categories = useSelector(state => state.filters.categories)

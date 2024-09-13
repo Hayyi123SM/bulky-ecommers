@@ -96,14 +96,14 @@ function Address() {
                         </Link>
                     </div>
 
-                    <div className="items-center justify-between lg:mt-10 lg:flex">
-                        <div className="item-center w-12/12 lg:w-5/12">
+                    <div className="items-center justify-end lg:mt-5 lg:flex">
+                        {/* <div className="item-center w-12/12 lg:w-5/12">
                             <input
                                 className="mr-4 w-full rounded-lg border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
                                 placeholder="Cari alamat"
                             />
-                        </div>
-                        <div className="item-center hidden w-8/12 justify-end lg:flex">
+                        </div> */}
+                        <div className="item-center hidden justify-end lg:flex">
                             <Link
                                 href="/address-create"
                                 className="w-fit cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
