@@ -69,7 +69,9 @@ function AddressCreate() {
 
     const handleSaveAddress = (lat, lng, address) => {
         setSelectedLatitude(lat)
+        setLatitude(lat)
         setSelectedLongitude(lng)
+        setLongitude(lng)
         setSelectedAddress(address)
         setIsShowMap(false) // Close the popup after saving
     }

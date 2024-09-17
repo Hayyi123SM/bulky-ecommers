@@ -4,6 +4,7 @@ import AreaSelect from "@/components/AreaSelect"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import InputError from "@/components/InputError"
 import Navbar from "@/components/Navbar"
+import PopupAddress from "@/components/PopupAddress"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
 import { fetchAddressDetail, updateAddress } from "@/store/slices/addressSlice"
@@ -13,10 +14,65 @@ import {
     fetchProvinces,
     fetchSubDistricts,
 } from "@/store/slices/areaSlice"
+import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+
+// Fungsi untuk load Google Maps API
+const loadGoogleMapsAPI = () => {
+    return new Promise((resolve, reject) => {
+        if (
+            typeof window.google === "object" &&
+            typeof window.google.maps === "object"
+        ) {
+            resolve() // Google Maps sudah dimuat
+        } else {
+            const script = document.createElement("script")
+            script.src =
+                "https://maps.googleapis.com/maps/api/js?key=" +
+                process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY +
+                "&libraries=places"
+            script.async = true
+            script.defer = true
+
+            script.onload = () => {
+                resolve() // Script berhasil dimuat
+            }
+
+            script.onerror = () => {
+                reject(new Error("Gagal memuat Google Maps API"))
+            }
+
+            document.head.appendChild(script)
+        }
+    })
+}
+
+// Fungsi untuk mendapatkan nama lokasi berdasarkan lat, lng
+const geocodeLatLng = (lat, lng, setAddressMaps) => {
+    loadGoogleMapsAPI()
+        .then(() => {
+            const geocoder = new window.google.maps.Geocoder()
+            const latlng = { lat: parseFloat(lat), lng: parseFloat(lng) }
+
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        setAddressMaps(results[0].formatted_address) // Update state dengan nama lokasi
+                    } else {
+                        console.error("Tidak ada hasil yang ditemukan")
+                    }
+                } else {
+                    console.error("Geocoder gagal karena: " + status)
+                }
+            })
+        })
+        .catch(error => {
+            console.error("Error loading Google Maps API:", error)
+        })
+}
 
 function AddressUpdate({ params }) {
     const addressId = params.addressId
@@ -33,6 +89,11 @@ function AddressUpdate({ params }) {
     const [longitude, setLongitude] = useState("")
     const errors = useSelector(state => state.address.error)
     const [isShow, setIsShow] = useState(false)
+    const [addressMaps, setAddressMaps] = useState("") // State for the address
+    const [isShowMap, setIsShowMap] = useState(false)
+    const [selectedAddress, setSelectedAddress] = useState("")
+    const [selectedLatitude, setSelectedLatitude] = useState(null)
+    const [selectedLongitude, setSelectedLongitude] = useState(null)
 
     const addressDetail = useSelector(state => state.address.detailAddress)
 
@@ -52,6 +113,14 @@ function AddressUpdate({ params }) {
             setSubDistrictId(addressDetail.sub_district_id)
             setLatitude(addressDetail.latitude)
             setLongitude(addressDetail.longitude)
+            // Jika latitude dan longitude tersedia, lakukan reverse geocoding
+            if (addressDetail.latitude && addressDetail.longitude) {
+                geocodeLatLng(
+                    addressDetail.latitude,
+                    addressDetail.longitude,
+                    setAddressMaps,
+                )
+            }
         }
     }, [addressDetail])
 
@@ -86,6 +155,15 @@ function AddressUpdate({ params }) {
         setSubDistrictId(option.id)
     }
 
+    const handleSaveAddress = (lat, lng, address) => {
+        setSelectedLatitude(lat)
+        setLatitude(lat)
+        setSelectedLongitude(lng)
+        setLongitude(lng)
+        setSelectedAddress(address)
+        setIsShowMap(false) // Close the popup after saving
+    }
+
     const submitForm = e => {
         e.preventDefault()
         const data = {
@@ -98,8 +176,8 @@ function AddressUpdate({ params }) {
             cityId,
             districtId,
             subDistrictId,
-            latitude,
-            longitude,
+            latitude: selectedLatitude ? selectedLatitude : latitude,
+            longitude: selectedLongitude ? selectedLongitude : longitude,
             isPrimary: false,
         }
         dispatch(updateAddress(data))
@@ -132,6 +210,24 @@ function AddressUpdate({ params }) {
                         <div className="ml-2 font-semibold">Update Alamat</div>
                     </div>
                     <AuthSessionStatus className="mb-4" status={status} />
+
+                    <div className="lg:mt-5 lg:w-5/12">
+                        <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
+                            <div className="flex items-center">
+                                <MapPinIcon className="mr-2 h-6 w-6" />
+                                <div className="w-full text-sm font-light">
+                                    {selectedAddress === ""
+                                        ? addressMaps
+                                        : selectedAddress}
+                                </div>
+                            </div>
+                            <div
+                                onClick={() => setIsShowMap(true)}
+                                className="cursor-pointer rounded-lg border border-[#007185] px-3 py-1 font-semibold text-[#007185] hover:bg-[#0071850D]">
+                                Ubah
+                            </div>
+                        </div>
+                    </div>
 
                     <form onSubmit={submitForm}>
                         <div className="items-center justify-between lg:mt-10 lg:flex">
@@ -351,6 +447,13 @@ function AddressUpdate({ params }) {
                     </form>
                 </div>
             </div>
+
+            {isShowMap && (
+                <PopupAddress
+                    closePopup={() => setIsShowMap(false)}
+                    onSave={handleSaveAddress}
+                />
+            )}
 
             <PopupModal
                 isOpen={isShow}

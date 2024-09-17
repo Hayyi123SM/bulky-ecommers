@@ -26,7 +26,7 @@ function ContactUs() {
     // }, [])
 
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBOUImZah_ZZ6q4M6Jg-oihQZL9agtMCbw",
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         libraries,
     })
 
