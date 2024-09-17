@@ -10,6 +10,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.8",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^2.1.4",
     "@react-google-maps/api": "^2.19.3",

@@ -4,6 +4,7 @@ import AreaSelect from "@/components/AreaSelect"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import InputError from "@/components/InputError"
 import Navbar from "@/components/Navbar"
+import PopupAddress from "@/components/PopupAddress"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
 import { addAddress } from "@/store/slices/addressSlice"
@@ -33,6 +34,10 @@ function AddressCreate() {
     const [longitude, setLongitude] = useState("")
     const errors = useSelector(state => state.address.error)
     const [isShow, setIsShow] = useState(false)
+    const [isShowMap, setIsShowMap] = useState(false)
+    const [selectedAddress, setSelectedAddress] = useState("")
+    const [selectedLatitude, setSelectedLatitude] = useState(null)
+    const [selectedLongitude, setSelectedLongitude] = useState(null)
 
     useEffect(() => {
         dispatch(fetchProvinces())
@@ -62,6 +67,13 @@ function AddressCreate() {
         setSubDistrictId(option.id)
     }
 
+    const handleSaveAddress = (lat, lng, address) => {
+        setSelectedLatitude(lat)
+        setSelectedLongitude(lng)
+        setSelectedAddress(address)
+        setIsShowMap(false) // Close the popup after saving
+    }
+
     const submitForm = e => {
         e.preventDefault()
         const data = {
@@ -73,8 +85,8 @@ function AddressCreate() {
             cityId,
             districtId,
             subDistrictId,
-            latitude,
-            longitude,
+            latitude: selectedLatitude,
+            longitude: selectedLongitude,
             isPrimary: false,
         }
         dispatch(addAddress(data))
@@ -116,11 +128,13 @@ function AddressCreate() {
                         <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
                             <div className="flex items-center">
                                 <MapPinIcon className="mr-2 h-6 w-6" />
-                                <div className="text-sm font-light">
-                                    Pilih Alamat
+                                <div className="w-full text-sm font-light">
+                                    {selectedAddress || "Pilih Alamat"}
                                 </div>
                             </div>
-                            <div className="cursor-pointer rounded-lg border border-[#007185] px-3 py-1 font-semibold text-[#007185] hover:bg-[#0071850D]">
+                            <div
+                                onClick={() => setIsShowMap(true)}
+                                className="cursor-pointer rounded-lg border border-[#007185] px-3 py-1 font-semibold text-[#007185] hover:bg-[#0071850D]">
                                 Ubah
                             </div>
                         </div>
@@ -336,6 +350,13 @@ function AddressCreate() {
                     </form>
                 </div>
             </div>
+
+            {isShowMap && (
+                <PopupAddress
+                    closePopup={() => setIsShowMap(false)}
+                    onSave={handleSaveAddress}
+                />
+            )}
 
             <PopupModal
                 isOpen={isShow}
