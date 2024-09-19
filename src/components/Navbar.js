@@ -114,7 +114,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                     <div className="relative mt-2">
                         <input
                             ref={inputRef}
-                            className="w-full rounded-3xl py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
+                            className="w-full rounded-3xl py-2 pl-14 text-black bg-search focus:border-secondary focus:outline-none"
                             placeholder="Cari barang"
                             value={searchQuery}
                             onChange={handleSearchInputChange}
@@ -203,7 +203,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             <div className="relative w-full xl:pr-20 2xl:pr-0">
                                 <input
                                     ref={inputRef}
-                                    className="w-full rounded-lg py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
+                                    className="w-full rounded-lg border-2 py-2 pl-14 text-black bg-search focus:border-secondary focus:outline-none"
                                     placeholder="Cari barang bundlemu di bulky aja..."
                                     value={searchQuery}
                                     onChange={handleSearchInputChange}
