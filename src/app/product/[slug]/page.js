@@ -232,7 +232,7 @@ function ProductDetail({ params }) {
                                 Location
                             </div>
                             <div className="w-8/12 text-base font-bold">
-                                Yogyakarta
+                                {products.warehouse.location.province}
                             </div>
                         </div>
                         <div className="mb-8 flex items-center">
@@ -358,12 +358,13 @@ function ProductDetail({ params }) {
                         </div>
                     </div>
                     <div className="py-10">
-                        <div
-                            className="text-base"
-                            dangerouslySetInnerHTML={{
-                                __html: products.description,
-                            }}
-                        />
+                        <div className="staticStyle">
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: products.description,
+                                }}
+                            />
+                        </div>
                         <div className="py-8 text-base font-bold text-[#007185]">
                             Lihat Lebih Sedikit
                         </div>
@@ -392,7 +393,10 @@ function ProductDetail({ params }) {
                                           key={product.id}>
                                           <ProductCard
                                               image={product.images[0]}
-                                              location={"Jakarta"}
+                                              location={
+                                                  product.warehouse?.location
+                                                      ?.province
+                                              }
                                               title={product.name}
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}

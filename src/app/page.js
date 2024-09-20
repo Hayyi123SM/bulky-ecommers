@@ -171,7 +171,10 @@ function Home() {
                                           className="min-w-[50%] md:min-w-[30%]">
                                           <ProductCard
                                               image={product.images[0]}
-                                              location={"Jakarta"}
+                                              location={
+                                                  product.warehouse.location
+                                                      .province
+                                              }
                                               title={product.name}
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}

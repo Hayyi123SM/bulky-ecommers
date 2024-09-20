@@ -92,10 +92,10 @@ function Cart() {
             ) {
                 setIsOpenModalUser(true)
             } else {
-                window.location.href = "/payment-method"
+                window.location.href = "/shipping"
             }
         } else {
-            window.location.href = "/payment-method"
+            window.location.href = "/shipping"
         }
     }
 
