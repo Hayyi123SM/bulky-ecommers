@@ -7,13 +7,13 @@ import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
 import {
     Bars3BottomRightIcon,
-    ShieldCheckIcon,
+    // ShieldCheckIcon,
 } from "@heroicons/react/24/outline"
 import {
     ArrowLeftIcon,
-    ChevronDownIcon,
-    InformationCircleIcon,
-    MapPinIcon,
+    // ChevronDownIcon,
+    // InformationCircleIcon,
+    // MapPinIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
@@ -27,11 +27,9 @@ function Shipping() {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
     const [isOpenModalUser, setIsOpenModalUser] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedOption, setSelectedOption] = useState("Pilihan Pengiriman")
-    const [paymentMethod, setPaymentMethod] = useState(null)
-    // const updateStatus = useSelector(state => state.carts.updateStatus)
-    // const updateError = useSelector(state => state.carts.updateError)
+    // const [isOpen, setIsOpen] = useState(false)
+    // const [selectedOption, setSelectedOption] = useState("Pilihan Pengiriman")
+    // const [paymentMethod, setPaymentMethod] = useState(null)
     console.log("====================================")
     console.log("user", user)
     console.log("====================================")
@@ -39,16 +37,16 @@ function Shipping() {
         dispatch(fetchCarts())
     }, [dispatch])
 
-    const handleOptionClick = (icon, option) => {
-        setSelectedOption(option)
-        setIsOpen(false)
+    // const handleOptionClick = (icon, option) => {
+    //     setSelectedOption(option)
+    //     setIsOpen(false)
 
-        if (option === "Bayar Patungan dengan Teman") {
-            setPaymentMethod("split_payment")
-        } else {
-            setPaymentMethod("single_payment")
-        }
-    }
+    //     if (option === "Bayar Patungan dengan Teman") {
+    //         setPaymentMethod("split_payment")
+    //     } else {
+    //         setPaymentMethod("single_payment")
+    //     }
+    // }
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
