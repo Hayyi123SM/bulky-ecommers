@@ -1,5 +1,11 @@
 import { Square2StackIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import LoadingSpinner from "./LoadingSpinner"
+import { useAuth } from "@/hooks/auth"
+import { addToCart } from "@/store/slices/cartSlice"
+import { useRouter } from "next/navigation"
 
 function ProductCard({
     url = "#",
@@ -12,7 +18,25 @@ function ProductCard({
     totalQty,
     isOpenPdf,
     percent = 0,
+    productId,
 }) {
+    const { user } = useAuth()
+    const dispatch = useDispatch()
+    const [isLoading, setIsloading] = useState(false)
+    const router = useRouter()
+
+    const handleAddToCart = product => {
+        setIsloading(true)
+        if (user) {
+            dispatch(addToCart(product))
+            setTimeout(() => {
+                router.push("/cart")
+            }, 1000)
+        } else {
+            router.push("/login")
+        }
+    }
+
     return (
         <div
             className={`flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}>
@@ -47,9 +71,21 @@ function ProductCard({
             </div>
             <div
                 onClick={isOpenPdf}
-                className="flex cursor-pointer items-center justify-between rounded-b-lg border-t border-[#F0F3F7] px-1 py-4 hover:bg-[#f5f5f5]">
+                className="mb-2 flex cursor-pointer items-center justify-between border-b border-t border-[#F0F3F7] px-1 py-4 hover:rounded-lg hover:bg-[#f5f5f5]">
                 <div className="text-sm font-bold">View PDF Detail</div>
                 <Square2StackIcon className="h-5 w-5 text-[#007185]" />
+            </div>
+            <div
+                onClick={() => handleAddToCart({ productId })}
+                className="cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                {isLoading ? (
+                    <>
+                        Tunggu Sebentar...
+                        <LoadingSpinner text={false} color="#000" size={22} />
+                    </>
+                ) : (
+                    "Add to Cart"
+                )}
             </div>
         </div>
     )

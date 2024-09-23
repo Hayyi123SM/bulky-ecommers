@@ -170,11 +170,9 @@ function Home() {
                                           key={product.id}
                                           className="min-w-[50%] md:min-w-[30%]">
                                           <ProductCard
+                                              productId={product.id}
                                               image={product.images[0]}
-                                              location={
-                                                  product.warehouse.location
-                                                      .province
-                                              }
+                                              location={product.warehouse.name}
                                               title={product.name}
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}

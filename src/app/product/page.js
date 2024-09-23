@@ -242,9 +242,7 @@ function Product() {
                                   <ProductCard
                                       key={product.id}
                                       image={product.images[0]}
-                                      location={
-                                          product.warehouse.location.province
-                                      }
+                                      location={product.warehouse.name}
                                       title={product.name}
                                       price={product.price.formatted}
                                       url={`/product/${product.slug}`}

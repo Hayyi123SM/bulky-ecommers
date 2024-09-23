@@ -393,10 +393,7 @@ function ProductDetail({ params }) {
                                           key={product.id}>
                                           <ProductCard
                                               image={product.images[0]}
-                                              location={
-                                                  product.warehouse?.location
-                                                      ?.province
-                                              }
+                                              location={product.warehouse?.name}
                                               title={product.name}
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}
@@ -426,20 +423,26 @@ function ProductDetail({ params }) {
                     </div>
 
                     <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
-                        <div
-                            onClick={() => handleAddToCart(products.id)}
-                            className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                            {isLoading
-                                ? "Tunggu Sebentar... " +
-                                  (
-                                      <LoadingSpinner
-                                          text={false}
-                                          color="#000"
-                                          size={22}
-                                      />
-                                  )
-                                : "Masukkan Keranjang"}
-                        </div>
+                        {products && products.sold_out ? (
+                            <div className="w-full cursor-pointer rounded-lg bg-[#F5F5F5] px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                Produk Tidak Tersedia
+                            </div>
+                        ) : (
+                            <div
+                                onClick={() => handleAddToCart(products.id)}
+                                className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                {isLoading
+                                    ? "Tunggu Sebentar... " +
+                                      (
+                                          <LoadingSpinner
+                                              text={false}
+                                              color="#000"
+                                              size={22}
+                                          />
+                                      )
+                                    : "Masukkan Keranjang"}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
