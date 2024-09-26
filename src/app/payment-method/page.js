@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar"
 import {
+    applyCoupon,
     fetchCarts,
     placeOrders,
     searchFriends,
@@ -35,7 +36,7 @@ function PaymentMethod() {
     const order = useSelector(state => state.carts.order)
     const friendList = useSelector(state => state.carts.friends)
     const myInvoice = useSelector(state => state.orders.myInvoice)
-    const [coupon, setCoupon] = useState(null)
+    const coupon = useSelector(state => state.carts.coupon)
 
     console.log("====================================")
     console.log("coupon", coupon)
@@ -90,7 +91,7 @@ function PaymentMethod() {
     }
 
     const handleCoupon = coupon => {
-        setCoupon(coupon)
+        dispatch(applyCoupon({ coupon_code: coupon }))
     }
 
     useEffect(() => {
@@ -372,6 +373,34 @@ function PaymentMethod() {
                                     </label>
                                 </div>
                             </div>
+                            {cart.shipping_method == "courier_pickup" && (
+                                <div className="flex justify-between">
+                                    <div className="text-sm leading-6">
+                                        <label className="text-sm font-light">
+                                            Total Ongkos Kirim
+                                        </label>
+                                    </div>
+                                    <div className="ml-5 text-right text-sm leading-6">
+                                        <label className="text-md font-light">
+                                            {cart.shipping_cost.formatted}
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
+                            {cart.discount_amount.numeric > 0 && (
+                                <div className="flex justify-between">
+                                    <div className="text-sm leading-6">
+                                        <label className="text-sm font-light">
+                                            Diskon
+                                        </label>
+                                    </div>
+                                    <div className="ml-5 text-right text-sm leading-6">
+                                        <label className="text-md font-light text-red-500">
+                                            - {cart.discount_amount.formatted}
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
                             <div className="my-5 border-b p-1"> </div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
@@ -381,7 +410,7 @@ function PaymentMethod() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-lg font-bold">
-                                        {cart.total_price.formatted}
+                                        {cart.total.formatted}
                                     </label>
                                 </div>
                             </div>

@@ -13,6 +13,7 @@ const initialState = {
     shippingMethod: null,
     setAddress: null,
     shippingCost: null,
+    coupon: null,
 }
 
 export const addToCart = createAsyncThunk(
@@ -90,6 +91,18 @@ export const getShippingCost = createAsyncThunk(
             return response.data
         } catch (error) {
             throw error
+        }
+    },
+)
+
+export const applyCoupon = createAsyncThunk(
+    "carts/applyCoupon",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.post("/api/carts/apply-coupon", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
         }
     },
 )
@@ -263,6 +276,18 @@ const cartSlice = createSlice({
             .addCase(getShippingCost.rejected, (state, action) => {
                 state.updateStatus = "failed"
                 state.updateError = action.error.message
+            })
+            .addCase(applyCoupon.pending, state => {
+                state.updateStatus = "loading"
+                state.updateError = null
+            })
+            .addCase(applyCoupon.fulfilled, (state, action) => {
+                state.updateStatus = "succeeded"
+                state.cart = action.payload.data
+            })
+            .addCase(applyCoupon.rejected, (state, action) => {
+                state.updateStatus = "failed"
+                state.updateError = action.payload.data || action.error.message
             })
             .addCase(placeOrders.pending, state => {
                 state.updateStatus = "loading"
