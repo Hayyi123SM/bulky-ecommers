@@ -37,6 +37,10 @@ function PaymentMethod() {
     const myInvoice = useSelector(state => state.orders.myInvoice)
     const [coupon, setCoupon] = useState(null)
 
+    console.log("====================================")
+    console.log("coupon", coupon)
+    console.log("====================================")
+
     const handleOptionClick = (icon, option) => {
         setSelectedOption(option)
         setSelectedIcon(icon)
