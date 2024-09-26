@@ -28,7 +28,7 @@ function ProductCard({
     const handleAddToCart = product => {
         setIsloading(true)
         if (user) {
-            dispatch(addToCart(product))
+            dispatch(addToCart(product.productId))
             setTimeout(() => {
                 router.push("/cart")
             }, 1000)
@@ -77,11 +77,11 @@ function ProductCard({
             </div>
             <div
                 onClick={() => handleAddToCart({ productId })}
-                className="cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                 {isLoading ? (
                     <>
                         Tunggu Sebentar...
-                        <LoadingSpinner text={false} color="#000" size={22} />
+                        <LoadingSpinner text={false} color="#000" size={20} />
                     </>
                 ) : (
                     "Add to Cart"

@@ -35,6 +35,7 @@ function PaymentMethod() {
     const order = useSelector(state => state.carts.order)
     const friendList = useSelector(state => state.carts.friends)
     const myInvoice = useSelector(state => state.orders.myInvoice)
+    const [coupon, setCoupon] = useState(null)
 
     const handleOptionClick = (icon, option) => {
         setSelectedOption(option)
@@ -82,6 +83,10 @@ function PaymentMethod() {
 
     const handleRemoveFriend = friend => {
         setSelectedFriend(selectedFriend.filter(f => f.id !== friend.id))
+    }
+
+    const handleCoupon = coupon => {
+        setCoupon(coupon)
     }
 
     useEffect(() => {
@@ -199,6 +204,22 @@ function PaymentMethod() {
                                             Bayar Patungan dengan Teman
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-5 h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
+                            <div className="py-2">
+                                <div className="py-2 text-sm font-bold text-[#6D7588]">
+                                    KUPON
+                                </div>
+                                <div className="relative w-full lg:max-w-xl">
+                                    <input
+                                        className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none"
+                                        placeholder="Masukan Kode Kupon"
+                                        onChange={e =>
+                                            handleCoupon(e.target.value)
+                                        }
+                                    />
                                 </div>
                             </div>
                         </div>

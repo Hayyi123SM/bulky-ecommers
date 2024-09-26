@@ -1,20 +1,13 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import PopupChangeAddress from "@/components/PopupChangeAddress"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
 import { useAuth } from "@/hooks/auth"
-import { fetchCarts } from "@/store/slices/cartSlice"
-import {
-    Bars3BottomRightIcon,
-    // ShieldCheckIcon,
-} from "@heroicons/react/24/outline"
-import {
-    ArrowLeftIcon,
-    // ChevronDownIcon,
-    // InformationCircleIcon,
-    // MapPinIcon,
-} from "@heroicons/react/24/solid"
+import { fetchCarts, getShippingCost } from "@/store/slices/cartSlice"
+import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
+import { ArrowLeftIcon, MapPinIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -27,26 +20,14 @@ function Shipping() {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
     const [isOpenModalUser, setIsOpenModalUser] = useState(false)
-    // const [isOpen, setIsOpen] = useState(false)
-    // const [selectedOption, setSelectedOption] = useState("Pilihan Pengiriman")
-    // const [paymentMethod, setPaymentMethod] = useState(null)
-    console.log("====================================")
-    console.log("user", user)
-    console.log("====================================")
+    const [openModalAddress, setOpenModalAddress] = useState(false)
+    const shippingCost = useSelector(state => state.carts.shippingCost)
+    const setAddress = useSelector(state => state.carts.setAddress)
+
     useEffect(() => {
         dispatch(fetchCarts())
-    }, [dispatch])
-
-    // const handleOptionClick = (icon, option) => {
-    //     setSelectedOption(option)
-    //     setIsOpen(false)
-
-    //     if (option === "Bayar Patungan dengan Teman") {
-    //         setPaymentMethod("split_payment")
-    //     } else {
-    //         setPaymentMethod("single_payment")
-    //     }
-    // }
+        dispatch(getShippingCost())
+    }, [dispatch, user])
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
@@ -56,19 +37,32 @@ function Shipping() {
         setShowPopupMenu(false)
     }
 
+    const closeModalAddress = () => {
+        setOpenModalAddress(false)
+    }
+
     useEffect(() => {
         if (showPopupMenu) {
             document.body.classList.add("modal-open")
         } else {
             document.body.classList.remove("modal-open")
         }
-    }, [showPopupMenu])
+
+        console.log("====================================")
+        console.log("shippingCost", shippingCost)
+        console.log("setAddress", setAddress)
+        console.log("====================================")
+    }, [showPopupMenu, shippingCost, setAddress])
 
     const closeModalUser = () => {
         setIsOpenModalUser(false)
     }
 
     const handleCheckout = () => {
+        if (cart.address.name == null) {
+            setOpenModalAddress(true) // Cegah lanjut jika belum ada alamat
+            return
+        }
         if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
             if (
                 JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
@@ -96,7 +90,7 @@ function Shipping() {
                     <Link href="/cart">
                         <ArrowLeftIcon className="h-6 w-6" />
                     </Link>
-                    <div className="ml-2 font-semibold">Proses Barang</div>
+                    <div className="ml-2 font-semibold">Pengiriman</div>
                 </div>
                 <Bars3BottomRightIcon
                     className="h-6 w-6"
@@ -112,27 +106,49 @@ function Shipping() {
             <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
                     <div className="hidden text-2xl font-extrabold lg:block">
-                        Proses Barang
+                        Pengiriman
                     </div>
                     <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 lg:py-10">
                         <div className="w-full lg:col-span-2">
-                            {/* <div className="mb-2 flex flex-col bg-white px-5 py-4 lg:mb-4 lg:rounded-lg">
+                            <div className="mb-2 flex flex-col bg-white px-5 py-4 lg:mb-4 lg:rounded-lg">
                                 <div className="text-sm font-extrabold text-[#6D7588]">
                                     Alamat Pengiriman
                                 </div>
-                                <div className="mt-3 flex items-center">
-                                    <MapPinIcon className="mr-2 h-4 w-4 text-[#007185]" />
-                                    <div className="text-sm font-extrabold">
-                                        Artech Office R. Prasetyo Agung Nugroho
-                                    </div>
-                                </div>
-                                <div className="mt-2 text-sm">
-                                    Artech Office R. Prasetyo Agung Nugroho
-                                </div>
-                                <div className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
-                                    Ganti Alamat
-                                </div>
-                            </div> */}
+                                {cart.address !== null ? (
+                                    <>
+                                        <div className="mt-3 flex items-center">
+                                            <MapPinIcon className="mr-2 h-4 w-4 text-[#007185]" />
+                                            <div className="text-sm font-extrabold">
+                                                {cart.address.label} .{" "}
+                                                {cart.address.name}
+                                            </div>
+                                        </div>
+                                        <div className="mt-2 text-sm">
+                                            {cart.address.formatted_area}
+                                        </div>
+                                        <div
+                                            onClick={() =>
+                                                setOpenModalAddress(true)
+                                            }
+                                            className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
+                                            Ganti Alamat
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="mt-4 text-sm">
+                                            Belum Memilih Alamat
+                                        </div>
+                                        <div
+                                            onClick={() =>
+                                                setOpenModalAddress(true)
+                                            }
+                                            className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
+                                            Pilih Alamat
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                             <div className="mb-2 rounded-lg bg-white px-5 py-4 lg:mb-4">
                                 {cart.items.length > 0 ? (
                                     cart.items.map(item => (
@@ -165,7 +181,7 @@ function Shipping() {
                                     <p>No items in cart.</p>
                                 )}
 
-                                <div className="mt-10 text-sm">
+                                {/* <div className="mt-10 text-sm">
                                     Note Shipping : <br />
                                     Untuk saat ini semua pembelian oleh
                                     customer, barang yg sudah dibeli dapat di
@@ -182,7 +198,7 @@ function Shipping() {
                                     <br />
                                     <br />
                                     Terima Kasih sudah berbelanja di Bulky.id
-                                </div>
+                                </div> */}
                                 {/* <div className="relative w-full">
                                     <div
                                         className={`flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33] ${paymentMethod === "none" && "border-red-500"}`}
@@ -316,7 +332,7 @@ function Shipping() {
                                 <div className="text-md mb-3 font-bold">
                                     Ringkasan Belanja
                                 </div>
-                                {/* <div className="flex justify-between pb-0.5">
+                                <div className="flex justify-between pb-0.5">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm text-[#6D7588]">
                                             Total Harga
@@ -324,7 +340,7 @@ function Shipping() {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-sm">
-                                            Rp407.460
+                                            {cart.total_price.formatted}
                                         </label>
                                     </div>
                                 </div>
@@ -336,27 +352,17 @@ function Shipping() {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-sm">
-                                            Rp19.400
+                                            {cart.shipping_cost.formatted}
                                         </label>
                                     </div>
                                 </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm text-[#6D7588]">
-                                            Total Asuransi Pengiriman
-                                        </label>
-                                    </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-sm">Rp400</label>
-                                    </div>
-                                </div> */}
                                 <div className="flex justify-between py-3">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm">Total</label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-base font-bold">
-                                            {cart.total_price.formatted}
+                                            {cart.total?.formatted}
                                         </label>
                                     </div>
                                 </div>
@@ -391,6 +397,11 @@ function Shipping() {
             </div>
 
             {/* Popup Modal */}
+
+            <PopupChangeAddress
+                isOpen={openModalAddress}
+                closeModal={closeModalAddress}
+            />
 
             <PopupModal
                 isOpen={isOpenModalUser}

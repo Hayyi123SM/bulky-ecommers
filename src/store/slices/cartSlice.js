@@ -10,6 +10,9 @@ const initialState = {
     error: null,
     isLoading: false,
     order: null,
+    shippingMethod: null,
+    setAddress: null,
+    shippingCost: null,
 }
 
 export const addToCart = createAsyncThunk(
@@ -64,6 +67,45 @@ export const removeItems = createAsyncThunk(
     },
 )
 
+export const setShippingMethod = createAsyncThunk(
+    "carts/setShippingMethod",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.patch(
+                "/api/carts/set-shipping-method",
+                data,
+            )
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
+export const getShippingCost = createAsyncThunk(
+    "carts/getShippingCost",
+    async () => {
+        try {
+            const response = await axios.get("/api/carts/shipping-cost")
+            return response.data
+        } catch (error) {
+            throw error
+        }
+    },
+)
+
+export const setAddress = createAsyncThunk(
+    "carts/setAddress",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.patch("/api/carts/set-address", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
 export const placeOrders = createAsyncThunk(
     "carts/placeOrders",
     async (data, { rejectWithValue }) => {
@@ -83,9 +125,6 @@ export const searchFriends = createAsyncThunk(
             const params = {
                 search: data,
             }
-            console.log("====================================")
-            console.log("Params:", params.search)
-            console.log("====================================")
             if (data === "") {
                 return initialState
             } else {
@@ -188,6 +227,42 @@ const cartSlice = createSlice({
             .addCase(removeItems.rejected, (state, action) => {
                 state.updateStatus = "failed"
                 state.updateError = action.payload.data || action.error.message
+            })
+            .addCase(setShippingMethod.pending, state => {
+                state.updateStatus = "loading"
+                state.updateError = null
+            })
+            .addCase(setShippingMethod.fulfilled, (state, action) => {
+                state.updateStatus = "succeeded"
+                state.shippingMethod = action.payload.data
+            })
+            .addCase(setShippingMethod.rejected, (state, action) => {
+                state.updateStatus = "failed"
+                state.updateError = action.payload.data || action.error.message
+            })
+            .addCase(setAddress.pending, state => {
+                state.updateStatus = "loading"
+                state.updateError = null
+            })
+            .addCase(setAddress.fulfilled, (state, action) => {
+                state.updateStatus = "succeeded"
+                state.setAddress = action.payload.data
+            })
+            .addCase(setAddress.rejected, (state, action) => {
+                state.updateStatus = "failed"
+                state.updateError = action.payload.data || action.error.message
+            })
+            .addCase(getShippingCost.pending, state => {
+                state.updateStatus = "loading"
+                state.updateError = null
+            })
+            .addCase(getShippingCost.fulfilled, (state, action) => {
+                state.updateStatus = "succeeded"
+                state.shippingCost = action.payload.data
+            })
+            .addCase(getShippingCost.rejected, (state, action) => {
+                state.updateStatus = "failed"
+                state.updateError = action.error.message
             })
             .addCase(placeOrders.pending, state => {
                 state.updateStatus = "loading"

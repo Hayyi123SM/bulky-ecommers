@@ -1,0 +1,122 @@
+"use client"
+
+import { fetchAddresses } from "@/store/slices/addressSlice"
+import { fetchCarts, setAddress } from "@/store/slices/cartSlice"
+import { MapPinIcon, XMarkIcon } from "@heroicons/react/24/solid"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
+const PopupChangeAddress = ({ isOpen, closeModal }) => {
+    const [isVisible, setIsVisible] = useState(false)
+    const dispatch = useDispatch()
+    const addresses = useSelector(state => state.address.addresses)
+
+    useEffect(() => {
+        dispatch(fetchAddresses())
+    }, [dispatch])
+
+    useEffect(() => {
+        if (isOpen) {
+            setIsVisible(true) // Mulai menampilkan modal dengan transisi
+        } else {
+            const timeout = setTimeout(() => setIsVisible(false), 300) // Tunggu sebelum modal menghilang sepenuhnya
+            return () => clearTimeout(timeout)
+        }
+    }, [isOpen])
+
+    const handleSetAddress = addressId => {
+        dispatch(setAddress({ address_id: addressId }))
+        dispatch(fetchCarts())
+        setTimeout(() => {
+            closeModal()
+        }, 800)
+    }
+
+    if (!isOpen && !isVisible) return null
+
+    if (!addresses) return <div>Loading ... </div>
+
+    return (
+        <div>
+            <div
+                className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 ${
+                    isOpen ? "opacity-100" : "opacity-0"
+                }`}>
+                <div
+                    className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out ${
+                        isOpen
+                            ? "translate-y-0 scale-100 opacity-100"
+                            : "translate-y-4 scale-95 opacity-0"
+                    }`}>
+                    <div className="my-4 flex items-center justify-between">
+                        <h2 className="text-base font-semibold">
+                            Daftar Alamat
+                        </h2>
+
+                        <XMarkIcon
+                            className="h-6 w-6 cursor-pointer"
+                            onClick={closeModal}
+                        />
+                    </div>
+                    <div className="mx-auto max-h-[70svh] max-w-7xl overflow-auto">
+                        <div className="px-4">
+                            {/* Start : View Mobile */}
+                            {addresses &&
+                                addresses.map(address => (
+                                    <div
+                                        key={address.id}
+                                        className={`my-7 rounded-xl bg-white px-5 py-4 shadow`}>
+                                        <div className="flex items-baseline">
+                                            <div className="text-sm leading-6">
+                                                <div className="text-sm font-bold">
+                                                    {address.label}
+                                                </div>
+                                                <div className="text-sm font-bold">
+                                                    {address.name}
+                                                </div>
+                                                <div className="pb-1 text-xs font-normal">
+                                                    {address.phone_number}
+                                                </div>
+                                                <div className="text-sm">
+                                                    {address.address},{" "}
+                                                    {address.formatted_area}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center py-4">
+                                            <MapPinIcon className="h-5 w-5 text-[#007185]" />
+                                            <div className="ml-2 text-xs font-bold text-[#007185]">
+                                                Sudah Pin Point
+                                            </div>
+                                        </div>
+                                        <div className="items-center py-1">
+                                            <div
+                                                onClick={() =>
+                                                    handleSetAddress(address.id)
+                                                }
+                                                className="w-full cursor-pointer rounded-lg bg-secondary py-2 text-center text-xs font-bold">
+                                                Pilih Alamat
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            {/* End : View Mobile */}
+                            <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
+                                <div className="mt-10">
+                                    <Link href="/profile">
+                                        <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                            + Tambah Alamat
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default PopupChangeAddress

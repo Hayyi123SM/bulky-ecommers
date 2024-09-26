@@ -10,9 +10,10 @@ import {
     toggleSelectAllItems,
     updateSelectedItems,
     removeItems,
+    setShippingMethod,
 } from "@/store/slices/cartSlice"
 import { Bars3BottomRightIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import { ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -27,6 +28,9 @@ function Cart() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isOpenModalUser, setIsOpenModalUser] = useState(false)
     const [itemId, setItemId] = useState(null)
+    const [isShipping, setIsShipping] = useState(false)
+    const selectedShipping = useSelector(state => state.carts.shippingMethod)
+    const [methodSelected, setMethodSelected] = useState(null)
     // const updateStatus = useSelector(state => state.carts.updateStatus)
     // const updateError = useSelector(state => state.carts.updateError)
     console.log("====================================")
@@ -34,7 +38,7 @@ function Cart() {
     console.log("====================================")
     useEffect(() => {
         dispatch(fetchCarts())
-    }, [dispatch])
+    }, [dispatch, user])
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
@@ -85,19 +89,29 @@ function Cart() {
         closeModal()
     }
 
-    const handleCheckout = () => {
+    const handleCheckout = method => {
+        setMethodSelected(method)
         if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
             if (
                 JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
             ) {
                 setIsOpenModalUser(true)
             } else {
-                window.location.href = "/shipping"
+                dispatch(setShippingMethod({ method }))
             }
         } else {
-            window.location.href = "/shipping"
+            dispatch(setShippingMethod({ method }))
         }
     }
+
+    useEffect(() => {
+        if (methodSelected === "self_pickup") {
+            window.location.href = "/payment-method"
+        }
+        if (methodSelected === "courier_pickup") {
+            window.location.href = "/shipping"
+        }
+    }, [selectedShipping])
 
     if (!cart) {
         return <div>Loading cart...</div>
@@ -225,7 +239,7 @@ function Cart() {
                             </div>
                             <div className="rounded-b-lg bg-white px-5 py-5">
                                 <div
-                                    onClick={() => handleCheckout()}
+                                    onClick={() => setIsShipping(true)}
                                     className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                     Beli
                                 </div>
@@ -241,7 +255,7 @@ function Cart() {
                                 </div>
                                 <div className="w-1/2">
                                     <div
-                                        onClick={() => handleCheckout()}
+                                        onClick={() => setIsShipping(true)}
                                         className="cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]">
                                         Beli
                                     </div>
@@ -251,6 +265,54 @@ function Cart() {
                     </div>
                 </div>
             </div>
+
+            {/* Confirmation Modal */}
+            {isShipping && (
+                <div
+                    className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 ${
+                        isShipping ? "opacity-100" : "opacity-0"
+                    }`}>
+                    <div
+                        className={`relative w-full max-w-lg transform rounded-lg bg-white p-6 transition-all duration-300 ease-out ${
+                            isShipping
+                                ? "translate-y-0 scale-100 opacity-100"
+                                : "translate-y-4 scale-95 opacity-0"
+                        }`}>
+                        <div className="my-4 flex items-center justify-between">
+                            <h2 className="text-base font-semibold">
+                                Pilih Metode Pengiriman
+                            </h2>
+                            <XMarkIcon
+                                className="h-6 w-6 cursor-pointer"
+                                onClick={() => setIsShipping(false)}
+                            />
+                        </div>
+
+                        <p className="mb-6 text-gray-700">
+                            Silahkan pilih metode pengiriman
+                        </p>
+
+                        <div className="flex justify-end space-x-3">
+                            <>
+                                <button
+                                    className="w-1/2 rounded-lg border px-4 py-2 text-sm font-semibold hover:bg-[#f5f5f5]"
+                                    onClick={() =>
+                                        handleCheckout("self_pickup")
+                                    }>
+                                    Ambil Ditempat
+                                </button>
+                                <button
+                                    className="w-1/2 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-[#e8bc00]"
+                                    onClick={() =>
+                                        handleCheckout("courier_pickup")
+                                    }>
+                                    Menggunakan Deliveree
+                                </button>
+                            </>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Popup Modal */}
             <PopupModal
