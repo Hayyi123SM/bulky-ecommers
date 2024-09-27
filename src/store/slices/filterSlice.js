@@ -76,7 +76,7 @@ export const fetchStatuses = createAsyncThunk(
 
 export const fetchBrands = createAsyncThunk("filters/fetchBrands", async () => {
     try {
-        const response = await axios.get("/api/products/filter/warehouse")
+        const response = await axios.get("/api/products/filter/brands")
         console.log("API response:", response.data) // Log the API response
         return response.data
     } catch (error) {

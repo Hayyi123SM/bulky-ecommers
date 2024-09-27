@@ -37,6 +37,10 @@ export const fetchProducts = createAsyncThunk(
                     filters.warehouses.length && {
                         warehouse: filters.warehouses.join(","),
                     }),
+                ...(filters.brands &&
+                    filters.brands.length && {
+                        brand: filters.brands.join(","),
+                    }),
                 ...(filters.priceMin && { price_min: filters.priceMin }),
                 ...(filters.priceMax && { price_max: filters.priceMax }),
                 ...(filters.brands &&
