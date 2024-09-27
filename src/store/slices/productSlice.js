@@ -37,16 +37,14 @@ export const fetchProducts = createAsyncThunk(
                     filters.warehouses.length && {
                         warehouse: filters.warehouses.join(","),
                     }),
-                ...(filters.brands &&
-                    filters.brands.length && {
-                        brand: filters.brands.join(","),
-                    }),
                 ...(filters.priceMin && { price_min: filters.priceMin }),
                 ...(filters.priceMax && { price_max: filters.priceMax }),
                 ...(filters.brands &&
                     filters.brands.length && { brands: filters.brands }),
             }
-
+            console.log("====================================")
+            console.log("params", params)
+            console.log("====================================")
             const response = await axios.get(`/api/products`, {
                 params,
                 paramsSerializer: params => {
