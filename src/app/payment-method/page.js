@@ -221,7 +221,6 @@ function PaymentMethod() {
                                     <input
                                         className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none"
                                         placeholder="Masukan Kode Kupon"
-                                        defaultValue={cart.coupon_code}
                                         onChange={e =>
                                             handleCoupon(e.target.value)
                                         }
@@ -388,7 +387,7 @@ function PaymentMethod() {
                                     </div>
                                 </div>
                             )}
-                            {cart.coupon_code !== null && (
+                            {cart.discount_amount.numeric > 0 && (
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-light">
