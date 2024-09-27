@@ -1,3 +1,7 @@
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
+import { useEffect, useState } from "react"
+import Skeleton from "react-loading-skeleton"
+import { useDispatch, useSelector } from "react-redux"
 import {
     fetchCategories,
     fetchConditions,
@@ -5,16 +9,13 @@ import {
     fetchWarehouses,
     setFilters,
 } from "../store/slices/filterSlice"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
-import React, { useEffect, useState } from "react"
-import Skeleton from "react-loading-skeleton"
-import { useDispatch, useSelector } from "react-redux"
 
 function SidebarProduct({ category }) {
     const [selectedCategories, setSelectedCategories] = useState([])
     const [selectedWarehouses, setSelectedWarehouses] = useState([])
     const [selectedConditions, setSelectedConditions] = useState([])
     const [selectedStatuses, setSelectedStatuses] = useState([])
+    // const [selectedBrands, setSelectedBrands] = useState([])
     const [minPrice, setMinPrice] = useState(null)
     const [maxPrice, setMaxPrice] = useState(null)
 
@@ -23,18 +24,21 @@ function SidebarProduct({ category }) {
     const [showAllWarehouses, setShowAllWarehouses] = useState(false)
     const [showAllConditions, setShowAllConditions] = useState(false)
     const [showAllStatuses, setShowAllStatuses] = useState(false)
+    // const [showAllBrands, setShowAllBrands] = useState(false)
 
     const [showFilterCategories, setShowFilterCategories] = useState(true)
     const [showFilterWarehouses, setShowFilterWarehouses] = useState(true)
     const [showFilterPrices, setShowFilterPrices] = useState(true)
     const [showFilterConditions, setShowFilterConditions] = useState(true)
     const [showFilterStatuses, setShowFilterStatuses] = useState(true)
+    // const [showFilterBrands, setShowFilterBrands] = useState(true)
 
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
     const warehouses = useSelector(state => state.filters.warehouses)
     const conditions = useSelector(state => state.filters.conditions)
     const statuses = useSelector(state => state.filters.statuses)
+    // const brands = useSelector(state => state.filters.brands)
     const loadingFilters = useSelector(state => state.filters.isLoading)
 
     useEffect(() => {
@@ -42,6 +46,7 @@ function SidebarProduct({ category }) {
         dispatch(fetchWarehouses())
         dispatch(fetchConditions())
         dispatch(fetchStatuses())
+        // dispatch(fetchBrands())
     }, [dispatch])
 
     useEffect(() => {
@@ -67,6 +72,9 @@ function SidebarProduct({ category }) {
         if (filter === "statuses") {
             setShowFilterStatuses(!showFilterStatuses)
         }
+        // if (filter === "brands") {
+        //     setShowFilterBrands(!showFilterBrands)
+        // }
     }
 
     const handleCategoryChange = (e, category) => {
@@ -100,6 +108,14 @@ function SidebarProduct({ category }) {
         setSelectedStatuses(updatedStatuses)
         dispatch(setFilters({ statuses: updatedStatuses }))
     }
+
+    // const handleBrandChange = (e, brand) => {
+    //     const updatedBrands = e.target.checked
+    //         ? [...selectedBrands, brand.slug]
+    //         : selectedBrands.filter(slug => slug !== brand.slug)
+    //     setSelectedBrands(updatedBrands)
+    //     dispatch(setFilters({ brands: updatedBrands }))
+    // }
 
     const handleMinPriceChange = e => {
         setMinPrice(e.target.value)
@@ -168,6 +184,60 @@ function SidebarProduct({ category }) {
                 </div>
                 {/* )} */}
             </div>
+            {/* <div className="border-b py-2">
+                <div
+                    className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
+                    onClick={() => toggleShowGroup("brands")}>
+                    <div className="font-bold">Merek</div>
+                    {showFilterBrands ? (
+                        <ChevronUpIcon className="h-5 w-5" />
+                    ) : (
+                        <ChevronDownIcon className="h-5 w-5" />
+                    )}
+                </div>
+                <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                        showFilterBrands && showFilterBrands
+                            ? "max-h-full opacity-100"
+                            : showFilterBrands
+                              ? "max-h-32 overflow-y-auto opacity-100"
+                              : "max-h-0 opacity-0"
+                    }`}>
+                    {loadingFilters ? (
+                        <Skeleton count={3} />
+                    ) : (
+                        brands.map(brand => (
+                            <div className="flex px-4 py-1" key={brand.id}>
+                                <div className="flex items-center">
+                                    <input
+                                        id="comments"
+                                        aria-describedby="comments-description"
+                                        name="comments"
+                                        type="checkbox"
+                                        checked={selectedBrands.includes(
+                                            brand.id,
+                                        )}
+                                        onChange={e =>
+                                            handleBrandChange(e, brand)
+                                        }
+                                        className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                                    />
+                                </div>
+                                <div className="ml-2 text-sm leading-6">
+                                    <label className="font-xs">
+                                        {brand.name}
+                                    </label>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+                <div
+                    onClick={() => setShowAllBrands(!showAllBrands)}
+                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterBrands ? "visible" : "hidden"}`}>
+                    {showAllBrands ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                </div>
+            </div> */}
             <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
@@ -335,7 +405,7 @@ function SidebarProduct({ category }) {
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                     onClick={() => toggleShowGroup("statuses")}>
-                    <div className="font-bold">Brand</div>
+                    <div className="font-bold">Status</div>
                     {showFilterStatuses ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (

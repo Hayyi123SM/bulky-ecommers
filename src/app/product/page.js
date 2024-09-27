@@ -241,6 +241,7 @@ function Product() {
                             : products.map(product => (
                                   <ProductCard
                                       key={product.id}
+                                      productId={product.id}
                                       image={product.images[0]}
                                       location={product.warehouse.name}
                                       title={product.name}

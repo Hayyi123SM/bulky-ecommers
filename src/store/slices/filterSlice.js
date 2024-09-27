@@ -6,11 +6,13 @@ const initialState = {
     warehouses: [],
     conditions: [],
     statuses: [],
+    brands: [],
     selectedFilters: {
         categories: [],
         warehouses: [],
         conditions: [],
         statuses: [],
+        brands: [],
     },
     error: null,
     isLoading: true,
@@ -71,6 +73,17 @@ export const fetchStatuses = createAsyncThunk(
         }
     },
 )
+
+export const fetchBrands = createAsyncThunk("filters/fetchBrands", async () => {
+    try {
+        const response = await axios.get("/api/products/filter/warehouse")
+        console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching filter brands:", error) // Log errors
+        throw error
+    }
+})
 
 const filterSlice = createSlice({
     name: "filters",
@@ -146,6 +159,22 @@ const filterSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(fetchStatuses.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+
+            // Fetch brands
+            .addCase(fetchBrands.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchBrands.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.brands = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(fetchBrands.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

@@ -17,15 +17,16 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useRef, useState } from "react"
+import { useDispatch } from "react-redux"
 
 function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
     const [showPopupMenuProfile, setShowPopupMenuProfile] = useState(false)
     const { logout } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
-    const user = useSelector(state => state.auth.user)
+    const { user } = useAuth({ middleware: "auth" })
     const [savedUser, setSavedUser] = useState(null)
+    const modalRef = useRef(null)
     // console.log("====================================")
     // console.log("user", user)
     // console.log("====================================")
@@ -57,6 +58,27 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
         }
     }, [showPopupMenuProfile])
 
+    const handleOverlayClick = e => {
+        // Check if the click is outside the modal
+        if (modalRef.current && !modalRef.current.contains(e.target)) {
+            closePopupMenu()
+        }
+    }
+
+    useEffect(() => {
+        if (showPopupMenu) {
+            // Add event listener for clicks
+            document.addEventListener("mousedown", handleOverlayClick)
+        } else {
+            // Remove event listener when the modal is closed
+            document.removeEventListener("mousedown", handleOverlayClick)
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleOverlayClick) // Clean up event listener
+        }
+    }, [showPopupMenu])
+
     // Check if user is available and handle loading or redirecting
     if (!user) {
         if (savedUser) {
@@ -71,7 +93,9 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
         <div
             className={`transition-all duration-500 ease-in-out ${showPopupMenu ? "opacity-100" : "opacity-0"}`}>
             <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 pt-20">
-                <div className="min-h-screen w-full rounded-lg bg-[#F5F5F5] shadow-lg md:w-5/6">
+                <div
+                    ref={modalRef}
+                    className="min-h-screen w-full rounded-lg bg-[#F5F5F5] shadow-lg md:w-5/6">
                     <div className="bg-white p-4">
                         <div className="my-4 flex items-center">
                             <XMarkIcon
@@ -94,12 +118,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 />
                                 <div className="ml-3">
                                     <div className="pb-1 text-base font-bold">
-                                        {user.name}
+                                        {user.data.name}
                                     </div>
                                     <div className="text-xs">
                                         <Link href="/profile">
                                             <div className="cursor-pointer">
-                                                {user.email}
+                                                {user.data.email}
                                             </div>
                                         </Link>
                                     </div>
@@ -209,12 +233,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     />
                                     <div className="ml-3">
                                         <div className="pb-1 text-base font-bold">
-                                            {user.name}
+                                            {user.data.name}
                                         </div>
                                         <div className="text-xs">
                                             <Link href="/profile">
                                                 <div className="cursor-pointer">
-                                                    {user.email}
+                                                    {user.data.email}
                                                 </div>
                                             </Link>
                                         </div>

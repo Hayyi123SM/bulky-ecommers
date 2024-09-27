@@ -37,6 +37,7 @@ function ProductDetail({ params }) {
     const loadingProducts = useSelector(state => state.products.isLoading)
     const [isLoading, setIsloading] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
+    const [showFullDescription, setShowFullDescription] = useState(false)
     // const [savedUser, setSavedUser] = useState(null)
     const { user } = useAuth()
 
@@ -69,6 +70,10 @@ function ProductDetail({ params }) {
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
+    }
+
+    const toggleDescription = () => {
+        setShowFullDescription(!showFullDescription)
     }
 
     const closePopupMenu = () => {
@@ -232,7 +237,7 @@ function ProductDetail({ params }) {
                                 Location
                             </div>
                             <div className="w-8/12 text-base font-bold">
-                                {products.warehouse.location.province}
+                                {products.warehouse.name}
                             </div>
                         </div>
                         <div className="mb-8 flex items-center">
@@ -361,12 +366,18 @@ function ProductDetail({ params }) {
                         <div className="staticStyle">
                             <div
                                 dangerouslySetInnerHTML={{
-                                    __html: products.description,
+                                    __html: showFullDescription
+                                        ? products.description // Show full description
+                                        : `${products.description.substring(0, 50)}...`, // Show shortened description
                                 }}
                             />
                         </div>
-                        <div className="py-8 text-base font-bold text-[#007185]">
-                            Lihat Lebih Sedikit
+                        <div
+                            className="cursor-pointer py-8 text-base font-bold text-[#007185]"
+                            onClick={toggleDescription}>
+                            {showFullDescription
+                                ? "Lihat Lebih Sedikit"
+                                : "Lihat Lebih Banyak"}
                         </div>
                     </div>
                 </div>
@@ -393,6 +404,7 @@ function ProductDetail({ params }) {
                                           key={product.id}>
                                           <ProductCard
                                               image={product.images[0]}
+                                              productId={product.id}
                                               location={product.warehouse?.name}
                                               title={product.name}
                                               price={product.price.formatted}

@@ -24,6 +24,9 @@ function PopupFilter({ closePopup }) {
     const [selectedStatuses, setSelectedStatuses] = useState(
         selectedFilters.statuses || [],
     )
+    // const [selectedBrands, setSelectedBrands] = useState(
+    //     selectedFilters.brands || [],
+    // )
     const [minPrice, setMinPrice] = useState(selectedFilters.minPrice || null)
     const [maxPrice, setMaxPrice] = useState(selectedFilters.maxPrice || null)
 
@@ -32,12 +35,14 @@ function PopupFilter({ closePopup }) {
     const [showAllWarehouses, setShowAllWarehouses] = useState(false)
     const [showAllConditions, setShowAllConditions] = useState(false)
     const [showAllStatuses, setShowAllStatuses] = useState(false)
+    // const [showAllBrands, setShowAllBrands] = useState(false)
 
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
     const warehouses = useSelector(state => state.filters.warehouses)
     const conditions = useSelector(state => state.filters.conditions)
     const statuses = useSelector(state => state.filters.statuses)
+    // const brands = useSelector(state => state.filters.brands)
     const loadingFilters = useSelector(state => state.filters.isLoading)
 
     useEffect(() => {
@@ -45,6 +50,7 @@ function PopupFilter({ closePopup }) {
         dispatch(fetchWarehouses())
         dispatch(fetchConditions())
         dispatch(fetchStatuses())
+        // dispatch(fetchBrands())
     }, [dispatch])
 
     const handleCategoryChange = (e, category) => {
@@ -97,6 +103,18 @@ function PopupFilter({ closePopup }) {
         }
     }
 
+    // const handleBrandChange = (e, brand) => {
+    //     if (selectedBrands.includes(brand.id)) {
+    //         // Unselect if already selected
+    //         setSelectedBrands(
+    //             selectedBrands.filter(brandId => brandId !== brand.id),
+    //         )
+    //     } else {
+    //         // Select the brand
+    //         setSelectedBrands([...selectedBrands, brand.id])
+    //     }
+    // }
+
     const handleMinPriceChange = e => {
         setMinPrice(e.target.value)
     }
@@ -112,6 +130,7 @@ function PopupFilter({ closePopup }) {
                 warehouses: selectedWarehouses,
                 conditions: selectedConditions,
                 statuses: selectedStatuses,
+                // brands: selectedBrands,
                 minPrice,
                 maxPrice,
             }),
@@ -173,6 +192,45 @@ function PopupFilter({ closePopup }) {
                             )}
                         </div>
                     </div>
+
+                    {/* Brand */}
+                    {/* <div className="mb-4">
+                        <div className="mt-2 flex justify-between py-5">
+                            <div className="text-sm font-bold">Brand</div>
+                            <div
+                                onClick={() => setShowAllBrands(!showAllBrands)}
+                                className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                {showAllBrands
+                                    ? "Lihat Lebih Sedikit"
+                                    : "Lihat Semua"}
+                            </div>
+                        </div>
+                        <div
+                            className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
+                                showAllBrands
+                                    ? "max-h-full"
+                                    : "max-h-24 overflow-y-auto"
+                            }`}>
+                            {loadingFilters ? (
+                                <Skeleton count={3} />
+                            ) : (
+                                brands.map(brand => (
+                                    <div
+                                        key={brand.id}
+                                        onClick={e =>
+                                            handleBrandChange(e, brand)
+                                        }
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
+                                            selectedBrands.includes(brand.slug)
+                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
+                                                : "border-[#BFC9D9] text-[#6D7588]"
+                                        }`}>
+                                        {brand.name}
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div> */}
 
                     {/* Lokasi */}
                     <div className="mb-4">

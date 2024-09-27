@@ -126,7 +126,7 @@ function AddressCreate() {
                     </div>
                     <AuthSessionStatus className="mb-4" status={status} />
 
-                    <div className="lg:mt-5 lg:w-5/12">
+                    <div className="mb-3 lg:mt-5 lg:w-5/12">
                         <div className="flex items-center justify-between rounded-lg border px-5 py-3 shadow">
                             <div className="flex items-center">
                                 <MapPinIcon className="mr-2 h-6 w-6" />
@@ -333,12 +333,12 @@ function AddressCreate() {
                                 </Link>
                             </div>
                         </div>
-                        <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
-                            <div className="mt-10">
-                                <button type="submit">
-                                    <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                        Simpan
-                                    </div>
+                        <div className="bottom-0 left-0 right-0 block w-full py-5 lg:hidden">
+                            <div className="mt-5">
+                                <button
+                                    type="submit"
+                                    className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    Simpan
                                 </button>
                             </div>
                             <div className="mt-3">

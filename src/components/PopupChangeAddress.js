@@ -4,12 +4,13 @@ import { fetchAddresses } from "@/store/slices/addressSlice"
 import { fetchCarts, setAddress } from "@/store/slices/cartSlice"
 import { MapPinIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 const PopupChangeAddress = ({ isOpen, closeModal }) => {
     const [isVisible, setIsVisible] = useState(false)
     const dispatch = useDispatch()
+    const modalRef = useRef(null)
     const addresses = useSelector(state => state.address.addresses)
 
     useEffect(() => {
@@ -33,6 +34,27 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
         }, 800)
     }
 
+    const handleOverlayClick = e => {
+        // Check if the click is outside the modal
+        if (modalRef.current && !modalRef.current.contains(e.target)) {
+            closeModal()
+        }
+    }
+
+    useEffect(() => {
+        if (isOpen) {
+            // Add event listener for clicks
+            document.addEventListener("mousedown", handleOverlayClick)
+        } else {
+            // Remove event listener when the modal is closed
+            document.removeEventListener("mousedown", handleOverlayClick)
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleOverlayClick) // Clean up event listener
+        }
+    }, [isOpen])
+
     if (!isOpen && !isVisible) return null
 
     if (!addresses) return <div>Loading ... </div>
@@ -44,6 +66,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                     isOpen ? "opacity-100" : "opacity-0"
                 }`}>
                 <div
+                    ref={modalRef}
                     className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out ${
                         isOpen
                             ? "translate-y-0 scale-100 opacity-100"
@@ -59,10 +82,10 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                             onClick={closeModal}
                         />
                     </div>
-                    <div className="mx-auto max-h-[70svh] max-w-7xl overflow-auto">
+                    <div className="mx-auto max-h-[70svh] min-h-[10svh] max-w-7xl overflow-auto">
                         <div className="px-4">
                             {/* Start : View Mobile */}
-                            {addresses &&
+                            {addresses ? (
                                 addresses.map(address => (
                                     <div
                                         key={address.id}
@@ -100,11 +123,14 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <div>Tidak Ada Alamat </div>
+                            )}
                             {/* End : View Mobile */}
                             <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
                                 <div className="mt-10">
-                                    <Link href="/profile">
+                                    <Link href="/address">
                                         <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                             + Tambah Alamat
                                         </div>

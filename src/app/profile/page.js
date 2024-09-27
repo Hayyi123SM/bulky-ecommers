@@ -193,7 +193,7 @@ function Profile() {
                     </div>
                     <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
                         <div className="mt-10">
-                            <Link href="/profile">
+                            <Link href="/update-profile">
                                 <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                     Ubah Data
                                 </div>
