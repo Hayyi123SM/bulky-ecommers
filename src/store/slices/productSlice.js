@@ -48,7 +48,16 @@ export const fetchProducts = createAsyncThunk(
             const response = await axios.get(`/api/products`, {
                 params,
                 paramsSerializer: params => {
-                    return new URLSearchParams(params).toString()
+                    const searchParams = new URLSearchParams(params)
+
+                    // Handle brands array
+                    if (filters.brands?.length) {
+                        filters.brands.forEach(brand => {
+                            searchParams.append("brands[]", brand)
+                        })
+                    }
+
+                    return searchParams.toString()
                 },
             })
 

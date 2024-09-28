@@ -51,6 +51,7 @@ function Product() {
     const warehouses = useSelector(state => state.filters.warehouses)
     const conditions = useSelector(state => state.filters.conditions)
     const statuses = useSelector(state => state.filters.statuses)
+    const brands = useSelector(state => state.filters.brands)
 
     useEffect(() => {
         if (currentPage && filters) {
@@ -102,6 +103,10 @@ function Product() {
     const selectedStatusNames = statuses
         .filter(status => selectedFilters.statuses.includes(status.id))
         .map(status => status.status)
+
+    const selectedBrandNames = brands
+        .filter(brand => selectedFilters.brands.includes(brand.slug))
+        .map(brand => brand.name)
 
     useEffect(() => {
         if (showPopup || showPopupMenu) {
@@ -195,6 +200,13 @@ function Product() {
                     {selectedStatusNames.map((name, index) => (
                         <div
                             key={`status-${index}`}
+                            className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
+                            {name}
+                        </div>
+                    ))}
+                    {selectedBrandNames.map((name, index) => (
+                        <div
+                            key={`brand-${index}`}
                             className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
                             {name}
                         </div>
