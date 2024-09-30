@@ -5,8 +5,8 @@ import "react-loading-skeleton/dist/skeleton.css"
 import { Suspense } from "react"
 
 export const metadata = {
-    title: "Octagon",
-    description: "Liquidity",
+    title: "Bulky",
+    description: "Bulky",
 }
 
 const ClientProvider = dynamic(() => import("@/components/ClientProvider"), {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                <link rel="icon" href="/logobulky.png" sizes="any" />
+                <link rel="icon" href="/bulky-by-L8.png" sizes="any" />
             </head>
             <body>
                 <Suspense fallback={<div>Loading...</div>}>
