@@ -31,7 +31,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
         dispatch(fetchCarts())
         setTimeout(() => {
             closeModal()
-        }, 800)
+        }, 1000)
     }
 
     const handleOverlayClick = e => {
@@ -83,7 +83,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                         />
                     </div>
                     <div className="mx-auto max-h-[70svh] min-h-[10svh] max-w-7xl overflow-auto">
-                        <div className="px-4">
+                        <div className="mb-16 px-4">
                             {/* Start : View Mobile */}
                             {addresses ? (
                                 addresses.map(address => (
@@ -118,7 +118,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                                 onClick={() =>
                                                     handleSetAddress(address.id)
                                                 }
-                                                className="w-full cursor-pointer rounded-lg bg-secondary py-2 text-center text-xs font-bold">
+                                                className="w-full cursor-pointer rounded-lg border py-2 text-center text-xs font-bold">
                                                 Pilih Alamat
                                             </div>
                                         </div>

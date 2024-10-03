@@ -212,22 +212,6 @@ function PaymentMethod() {
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-5 h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
-                            <div className="py-2">
-                                <div className="py-2 text-sm font-bold text-[#6D7588]">
-                                    KUPON
-                                </div>
-                                <div className="relative w-full lg:max-w-xl">
-                                    <input
-                                        className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none"
-                                        placeholder="Masukan Kode Kupon"
-                                        onChange={e =>
-                                            handleCoupon(e.target.value)
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        </div>
                         <div
                             className={`h-fit w-full transition-all duration-500 ease-in-out lg:max-w-xl ${isSplitPayment ? "mt-5 max-h-screen opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                             <div className="h-fit w-full rounded-t-xl bg-white p-8 lg:max-w-xl">
@@ -352,6 +336,22 @@ function PaymentMethod() {
                                                 ))}
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-5 h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
+                            <div className="py-2">
+                                <div className="py-2 text-sm font-bold text-[#6D7588]">
+                                    KUPON
+                                </div>
+                                <div className="relative w-full lg:max-w-xl">
+                                    <input
+                                        className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none"
+                                        placeholder="Masukan Kode Kupon"
+                                        onChange={e =>
+                                            handleCoupon(e.target.value)
+                                        }
+                                    />
                                 </div>
                             </div>
                         </div>

@@ -175,7 +175,7 @@ function Product() {
                 />
             </div>
             <div className="flex items-center p-4 lg:hidden">
-                <div className="flex items-center overflow-x-auto">
+                <div className="mr-2 flex items-center overflow-x-auto">
                     {selectedCategoryNames.map((name, index) => (
                         <div
                             key={`category-${index}`}
@@ -219,9 +219,20 @@ function Product() {
                     ) : null}
                 </div>
                 <div
-                    className="ml-4 mr-1 flex-shrink-0 rounded-full border border-[#BFC9D9] px-2 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]"
+                    className="mr-1 flex flex-shrink-0 items-center rounded-full border border-[#BFC9D9] px-2 py-2 text-base text-[#6D7588] hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185]"
                     onClick={togglePopup}>
                     <AdjustmentsHorizontalIcon className="h-5 w-5 text-[#2E3137]" />
+                    {selectedCategoryNames.length > 0 ||
+                    selectedWarehouseNames.length > 0 ||
+                    selectedConditionNames.length > 0 ||
+                    selectedStatusNames.length > 0 ||
+                    selectedBrandNames.length > 0 ||
+                    selectedFilters.minPrice ||
+                    selectedFilters.maxPrice ? (
+                        <></>
+                    ) : (
+                        <div className="ml-2">Filter</div>
+                    )}
                 </div>
             </div>
             {showPopup && <PopupFilter closePopup={closePopup} />}

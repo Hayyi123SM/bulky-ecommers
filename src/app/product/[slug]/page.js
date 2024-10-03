@@ -10,7 +10,6 @@ import {
     fetchProductDetail,
     fetchProductRelated,
 } from "@/store/slices/productSlice"
-import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
@@ -109,7 +108,6 @@ function ProductDetail({ params }) {
                     <ArrowLeftIcon className="h-6 w-6" />
                 </Link>
                 <div className="flex items-center">
-                    <ArrowUpOnSquareIcon className="mr-2 h-6 w-6" />
                     <Bars3BottomRightIcon
                         className="h-6 w-6"
                         onClick={togglePopupMenu}

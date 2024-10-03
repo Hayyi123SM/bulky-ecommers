@@ -222,7 +222,7 @@ function PopupFilter({ closePopup }) {
                                             handleBrandChange(e, brand)
                                         }
                                         className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
-                                            selectedBrands.includes(brand.slug)
+                                            selectedBrands.includes(brand.id)
                                                 ? "border-[#007185] bg-[#0071850D] text-[#007185]"
                                                 : "border-[#BFC9D9] text-[#6D7588]"
                                         }`}>
