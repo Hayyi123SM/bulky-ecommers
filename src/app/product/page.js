@@ -120,7 +120,7 @@ function Product() {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-b border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <Link href="history.back()">
+                <Link href="/">
                     <ArrowLeftIcon className="h-6 w-6" />
                 </Link>
                 <div className="w-2/3">
