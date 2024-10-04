@@ -102,7 +102,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 width={60}
                                 height={20}
                                 alt="Logo"
-                                className="h-auto w-full cursor-pointer"
+                                className="cursor-pointer"
                                 priority={false}
                             />
                         </Link>
@@ -194,7 +194,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                     width={100}
                                     height={30}
                                     alt="Logo"
-                                    className="h-auto w-full cursor-pointer"
+                                    className="cursor-pointer"
                                     priority={false}
                                 />
                             </Link>
