@@ -1,3 +1,5 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { ArrowLeftIcon, PlusIcon, StarIcon } from "@heroicons/react/24/solid"
