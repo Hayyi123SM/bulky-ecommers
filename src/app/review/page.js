@@ -1,16 +1,23 @@
+"use client"
+
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { Suspense } from "react"
 
 function Review() {
+    const router = useRouter()
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <div>
                 <Navbar visibleOn="desktop" />
                 <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                    <ArrowLeftIcon className="h-6 w-6" />
+                    <ArrowLeftIcon
+                        className="h-6 w-6"
+                        onClick={() => router.back()}
+                    />
                     <div className="ml-2 font-semibold">Ulasan</div>
                 </div>
                 <div className="mx-auto min-h-screen max-w-7xl lg:flex">

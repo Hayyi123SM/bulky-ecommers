@@ -72,7 +72,10 @@ function PaymentNominal() {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Nominal</div>
             </div>
             <div className="min-h-screen bg-[#F5F5F5] pb-10">

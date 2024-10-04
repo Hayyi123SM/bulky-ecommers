@@ -3,13 +3,14 @@
 import Navbar from "@/components/Navbar"
 import { fetchVideoDetail } from "@/store/slices/videoSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import ReactPlayer from "react-player"
 import { useDispatch, useSelector } from "react-redux"
 
 function VideoDetail({ params }) {
     const videoId = params.videoId
-
+    const router = useRouter()
     const dispatch = useDispatch()
     const videos = useSelector(state => state.videos.items)
     console.log("videos from Redux state:", videos)
@@ -22,7 +23,10 @@ function VideoDetail({ params }) {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Akademi Video</div>
             </div>
             <div className="flex min-h-screen flex-col bg-[#0F0F0F] text-white">

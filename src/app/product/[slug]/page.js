@@ -12,7 +12,6 @@ import {
 } from "@/store/slices/productSlice"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
@@ -104,9 +103,10 @@ function ProductDetail({ params }) {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <Link href="/product">
-                    <ArrowLeftIcon className="h-6 w-6" />
-                </Link>
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="flex items-center">
                     <Bars3BottomRightIcon
                         className="h-6 w-6"
@@ -463,8 +463,8 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <iframe
-                            className="h-[400px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
-                            src={products.pdf_file}
+                            className="h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
+                            src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(products.pdf_file)}`}
                             title="PDF File"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen

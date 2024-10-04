@@ -3,8 +3,10 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 function RegisterMethod() {
+    const router = useRouter()
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5]">
             <div className="flex-1">
@@ -23,9 +25,10 @@ function RegisterMethod() {
                 <div className="flex flex-col items-center justify-center py-5">
                     <div className="h-fit w-full max-w-md rounded-xl border-[#BFC9D9] bg-white p-8 lg:border">
                         <div className="flex items-center pt-6">
-                            <Link href="/login">
-                                <ArrowLeftIcon className="h-5 w-5" />
-                            </Link>
+                            <ArrowLeftIcon
+                                className="h-5 w-5"
+                                onClick={() => router.back()}
+                            />
                             <div className="ml-3 text-2xl font-bold">
                                 Buat Akun
                             </div>

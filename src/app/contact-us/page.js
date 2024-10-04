@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const libraries = ["places"]
 const mapContainerStyle = {
@@ -11,6 +12,7 @@ const mapContainerStyle = {
 }
 
 function ContactUs() {
+    const router = useRouter()
     const coords = { lat: -6.4361817, lng: 106.8459034 }
 
     // useEffect(() => {
@@ -34,7 +36,10 @@ function ContactUs() {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Kontak Kami</div>
             </div>
             <div className="min-h-screen">

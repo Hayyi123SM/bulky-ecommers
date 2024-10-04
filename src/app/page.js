@@ -367,8 +367,8 @@ function Home() {
                     </div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <iframe
-                            className="h-[400px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
-                            src={isPdf}
+                            className="h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
+                            src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
                             title="PDF File"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen

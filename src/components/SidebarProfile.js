@@ -34,10 +34,10 @@ function SidebarProfile() {
                     </div>
                 </div>
             </div>
-            <div className="mt-5 text-base font-bold">Kotak Masuk</div>
+            {/* <div className="mt-5 text-base font-bold">Kotak Masuk</div>
             <div className="mt-3 rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
                 Ulasan
-            </div>
+            </div> */}
             <div className="border-b pb-5"> </div>
             <div className="mt-5 text-base font-bold">Pembelian</div>
             <Link href="/waiting-payment">

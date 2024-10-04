@@ -60,9 +60,9 @@ function Footer() {
                 </div>
                 <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
                     <div className="text-base font-bold">Perusahaan</div>
-                    <div className="mt-3 text-sm">
+                    {/* <div className="mt-3 text-sm">
                         <Link href="/about-us">Tentang Kami</Link>
-                    </div>
+                    </div> */}
                     <div className="mt-3 text-sm">
                         <Link href="/how-to-shop">Cara Pembelian</Link>
                     </div>

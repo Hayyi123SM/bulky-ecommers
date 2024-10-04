@@ -7,11 +7,13 @@ import { changePassword } from "@/store/slices/authSlice"
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 
 function ChangePassword() {
     const dispatch = useDispatch()
+    const router = useRouter()
     const [currentPassword, setCurrentPassword] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
@@ -57,7 +59,10 @@ function ChangePassword() {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Ubah Kata Sandi</div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
@@ -66,7 +71,10 @@ function ChangePassword() {
                 </div>
                 <div className="w-5/5 px-4 py-4 lg:w-4/5 lg:p-7">
                     <div className="hidden items-center border-[#F0F3F7] lg:flex">
-                        <ArrowLeftIcon className="h-6 w-6" />
+                        <ArrowLeftIcon
+                            className="h-6 w-6"
+                            onClick={() => router.back()}
+                        />
                         <div className="ml-2 font-semibold">
                             Ubah Kata Sandi
                         </div>

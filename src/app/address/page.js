@@ -11,10 +11,12 @@ import {
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Address() {
+    const router = useRouter()
     const dispatch = useDispatch()
     const addresses = useSelector(state => state.address.addresses)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -73,7 +75,10 @@ function Address() {
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <Link href="/">
-                    <ArrowLeftIcon className="h-6 w-6" />
+                    <ArrowLeftIcon
+                        className="h-6 w-6"
+                        onClick={() => router.back()}
+                    />
                 </Link>
                 <div className="ml-2 font-semibold">Daftar Alamat</div>
             </div>

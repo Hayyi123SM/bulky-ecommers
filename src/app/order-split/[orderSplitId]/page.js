@@ -61,7 +61,10 @@ function OrderSplitDetail({ params }) {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">
                     Detail Pembayaran Patungan
                 </div>
@@ -73,7 +76,10 @@ function OrderSplitDetail({ params }) {
                 <div className="w-5/5 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden items-center lg:flex">
                         <Link href="/order">
-                            <ArrowLeftIcon className="mr-3 h-7 w-7 cursor-pointer" />
+                            <ArrowLeftIcon
+                                className="mr-3 h-7 w-7 cursor-pointer"
+                                onClick={() => router.back()}
+                            />
                         </Link>
                         <div className="pb-1 text-2xl font-bold">
                             Detail Pembayaran Patungan

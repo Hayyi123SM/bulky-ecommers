@@ -16,12 +16,13 @@ import { Bars3BottomRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Cart() {
     const { user } = useAuth({ middleware: "auth" })
-
+    const router = useRouter()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
@@ -125,7 +126,10 @@ function Cart() {
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <div className="flex items-center">
                     <Link href="/product">
-                        <ArrowLeftIcon className="h-6 w-6" />
+                        <ArrowLeftIcon
+                            className="h-6 w-6"
+                            onClick={() => router.back()}
+                        />
                     </Link>
                     <div className="ml-2 font-semibold">Keranjang</div>
                 </div>

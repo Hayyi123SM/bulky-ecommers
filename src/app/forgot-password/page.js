@@ -7,9 +7,11 @@ import { useAuth } from "@/hooks/auth"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 function ForgotPassword() {
+    const router = useRouter()
     const { forgotPassword } = useAuth()
     const [email, setEmail] = useState("")
     const [errors, setErrors] = useState([])
@@ -59,7 +61,10 @@ function ForgotPassword() {
                             <div className="h-fit w-full max-w-md rounded-xl border-[#BFC9D9] bg-white p-8 lg:border">
                                 <div className="flex items-center py-6">
                                     <Link href="/login">
-                                        <ArrowLeftIcon className="h-5 w-5 text-gray-500" />
+                                        <ArrowLeftIcon
+                                            className="h-5 w-5 text-gray-500"
+                                            onClick={() => router.back()}
+                                        />
                                     </Link>
                                     <div className="pl-3 text-2xl font-bold">
                                         Lupa kata sandi

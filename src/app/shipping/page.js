@@ -9,13 +9,13 @@ import { fetchCarts, getShippingCost } from "@/store/slices/cartSlice"
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, MapPinIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Shipping() {
     const { user } = useAuth({ middleware: "auth" })
-
+    const router = useRouter()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const dispatch = useDispatch()
     const cart = useSelector(state => state.carts.cart)
@@ -87,9 +87,10 @@ function Shipping() {
             <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <div className="flex items-center">
-                    <Link href="/cart">
-                        <ArrowLeftIcon className="h-6 w-6" />
-                    </Link>
+                    <ArrowLeftIcon
+                        className="h-6 w-6"
+                        onClick={() => router.back()}
+                    />
                     <div className="ml-2 font-semibold">Pengiriman</div>
                 </div>
                 <Bars3BottomRightIcon

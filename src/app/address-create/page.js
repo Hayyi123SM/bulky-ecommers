@@ -17,10 +17,12 @@ import {
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function AddressCreate() {
+    const router = useRouter()
     const dispatch = useDispatch()
     const [label, setlabel] = useState("")
     const [name, setName] = useState("")
@@ -109,7 +111,10 @@ function AddressCreate() {
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <Link href="/address">
-                    <ArrowLeftIcon className="h-6 w-6" />
+                    <ArrowLeftIcon
+                        className="h-6 w-6"
+                        onClick={() => router.back()}
+                    />
                 </Link>
                 <div className="ml-2 font-semibold">Tambah Alamat</div>
             </div>
@@ -120,7 +125,10 @@ function AddressCreate() {
                 <div className="w-5/5 px-4 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden items-center border-[#F0F3F7] lg:flex">
                         <Link href="/address">
-                            <ArrowLeftIcon className="h-6 w-6" />
+                            <ArrowLeftIcon
+                                className="h-6 w-6"
+                                onClick={() => router.back()}
+                            />
                         </Link>
                         <div className="ml-2 font-semibold">Tambah Alamat</div>
                     </div>

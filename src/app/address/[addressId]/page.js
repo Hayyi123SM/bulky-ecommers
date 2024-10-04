@@ -17,6 +17,7 @@ import {
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -75,6 +76,7 @@ const geocodeLatLng = (lat, lng, setAddressMaps) => {
 }
 
 function AddressUpdate({ params }) {
+    const router = useRouter()
     const addressId = params.addressId
     const dispatch = useDispatch()
     const [label, setlabel] = useState("")
@@ -197,7 +199,10 @@ function AddressUpdate({ params }) {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Update Alamat</div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
@@ -206,7 +211,10 @@ function AddressUpdate({ params }) {
                 </div>
                 <div className="w-5/5 px-4 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden items-center border-[#F0F3F7] lg:flex">
-                        <ArrowLeftIcon className="h-6 w-6" />
+                        <ArrowLeftIcon
+                            className="h-6 w-6"
+                            onClick={() => router.back()}
+                        />
                         <div className="ml-2 font-semibold">Update Alamat</div>
                     </div>
                     <AuthSessionStatus className="mb-4" status={status} />

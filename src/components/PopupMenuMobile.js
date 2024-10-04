@@ -12,21 +12,23 @@ import {
     PencilIcon,
     QuestionMarkCircleIcon,
     ShieldCheckIcon,
-    StarIcon,
 } from "@heroicons/react/24/outline"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 
 function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
+    const router = useRouter()
     const [showPopupMenuProfile, setShowPopupMenuProfile] = useState(false)
     const { logout } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
-    const { user } = useAuth({ middleware: "auth" })
+    const { user } = useAuth()
     const [savedUser, setSavedUser] = useState(null)
     const modalRef = useRef(null)
+    const profileModalRef = useRef(null)
     // console.log("====================================")
     // console.log("user", user)
     // console.log("====================================")
@@ -56,17 +58,23 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
         } else {
             document.body.classList.remove("modal-open")
         }
-    }, [showPopupMenuProfile])
+    }, [])
 
     const handleOverlayClick = e => {
-        // Check if the click is outside the modal
-        if (modalRef.current && !modalRef.current.contains(e.target)) {
-            closePopupMenu()
+        // Check if the click is outside both the main popup and profile popup
+        if (
+            modalRef.current &&
+            !modalRef.current.contains(e.target) &&
+            profileModalRef.current &&
+            !profileModalRef.current.contains(e.target)
+        ) {
+            closePopupMenu() // Close the main popup
+            setShowPopupMenuProfile(false) // Also close the profile popup if open
         }
     }
 
     useEffect(() => {
-        if (showPopupMenu) {
+        if (showPopupMenu || showPopupMenuProfile) {
             // Add event listener for clicks
             document.addEventListener("mousedown", handleOverlayClick)
         } else {
@@ -77,14 +85,13 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
         return () => {
             document.removeEventListener("mousedown", handleOverlayClick) // Clean up event listener
         }
-    }, [showPopupMenu])
+    }, [showPopupMenu, showPopupMenuProfile])
 
-    // Check if user is available and handle loading or redirecting
-    if (!user) {
-        if (savedUser) {
+    if (user === undefined) {
+        if (savedUser !== null) {
             return <h1>Loading user...</h1>
         } else {
-            handleLogout()
+            router.push("/login")
             return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
         }
     }
@@ -118,12 +125,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 />
                                 <div className="ml-3">
                                     <div className="pb-1 text-base font-bold">
-                                        {user.data.name}
+                                        {user && user.data.name}
                                     </div>
                                     <div className="text-xs">
                                         <Link href="/profile">
                                             <div className="cursor-pointer">
-                                                {user.data.email}
+                                                {user && user.data.email}
                                             </div>
                                         </Link>
                                     </div>
@@ -160,12 +167,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 </div>
                             </div>
                         </Link>
-                        <Link href="/review">
+                        {/* <Link href="/review">
                             <div className="flex items-center py-3">
                                 <StarIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm">Ulasan</div>
                             </div>
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="mt-2 bg-white p-4">
                         <Link href="/privacy-policy">
@@ -210,7 +217,11 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
 
             {showPopupMenuProfile && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 pt-20">
-                    <div className="min-h-screen w-full rounded-lg bg-[#F5F5F5] shadow-lg md:w-5/6">
+                    <div
+                        ref={profileModalRef} // Use ref to detect clicks inside profile modal
+                        className="min-h-screen w-full rounded-lg bg-[#F5F5F5] shadow-lg md:w-5/6"
+                        onClick={e => e.stopPropagation()} // Prevent click events from bubbling to overlay
+                    >
                         <div className="bg-white p-4">
                             <div className="my-4 flex items-center">
                                 <XMarkIcon
@@ -233,12 +244,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     />
                                     <div className="ml-3">
                                         <div className="pb-1 text-base font-bold">
-                                            {user.data.name}
+                                            {user && user.data.name}
                                         </div>
                                         <div className="text-xs">
                                             <Link href="/profile">
                                                 <div className="cursor-pointer">
-                                                    {user.data.email}
+                                                    {user && user.data.email}
                                                 </div>
                                             </Link>
                                         </div>

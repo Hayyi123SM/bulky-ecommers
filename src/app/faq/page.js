@@ -4,11 +4,13 @@ import Navbar from "@/components/Navbar"
 import { fetchPages } from "@/store/slices/pageSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Faq() {
     const dispatch = useDispatch()
+    const router = useRouter()
     const faq = useSelector(state => state.pages.item)
     // const [showFaq, setShowFaq] = useState(true)
     // const [showFaq2, setShowFaq2] = useState(true)
@@ -32,7 +34,10 @@ function Faq() {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">
                     Frequently Asked Questions
                 </div>

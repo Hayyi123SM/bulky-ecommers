@@ -9,10 +9,12 @@ import {
 import { ShieldCheckIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function Payment({ params }) {
+    const router = useRouter()
     const invoiceId = params.invoiceId // Access the dynamic parameter
     const [selectedOption, setSelectedOption] = useState("Pilihan Pembayaran")
     const [selectedOptionCredit, setSelectedOptionCredit] =
@@ -87,7 +89,10 @@ function Payment({ params }) {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <ArrowLeftIcon className="h-6 w-6" />
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Pembayaran</div>
             </div>
             <div className="min-h-screen bg-[#F5F5F5] pb-10">

@@ -8,10 +8,12 @@ import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
 function Profile() {
+    const router = useRouter()
     const { logout } = useAuth({ middleware: "guest" })
     const { user } = useAuth({ middleware: "auth" })
     const dispatch = useDispatch()
@@ -59,9 +61,10 @@ function Profile() {
         <div>
             <Navbar visibleOn="desktop" />
             <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
-                <Link href="/">
-                    <ArrowLeftIcon className="h-6 w-6" />
-                </Link>
+                <ArrowLeftIcon
+                    className="h-6 w-6"
+                    onClick={() => router.back()}
+                />
                 <div className="ml-2 font-semibold">Ubah Profil</div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">

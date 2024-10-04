@@ -16,13 +16,14 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import LoadingSpinner from "@/components/LoadingSpinner"
+import { useRouter } from "next/navigation"
 
 function Register() {
     const { register } = useAuth({
         middleware: "guest",
         redirectIfAuthenticated: "/",
     })
-
+    const router = useRouter()
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -127,9 +128,10 @@ function Register() {
 
                         <form onSubmit={submitForm}>
                             <div className="flex items-center py-6">
-                                <Link href="/register-method">
-                                    <ArrowLeftIcon className="h-5 w-5" />
-                                </Link>
+                                <ArrowLeftIcon
+                                    className="h-5 w-5"
+                                    onClick={() => router.back()}
+                                />
                                 <div className="ml-3 text-2xl font-bold">
                                     Buat Akun
                                 </div>
