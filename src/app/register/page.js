@@ -1,22 +1,15 @@
 "use client"
 
 import AuthSessionStatus from "@/components/AuthSessionStatus"
-import AreaSelect from "@/components/AreaSelect"
 import InputError from "@/components/InputError"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import { useAuth } from "@/hooks/auth"
-import {
-    fetchCities,
-    fetchDistricts,
-    fetchProvinces,
-    fetchSubDistricts,
-} from "@/store/slices/areaSlice"
 import { ArrowLeftIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import LoadingSpinner from "@/components/LoadingSpinner"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
 
 function Register() {
     const { register } = useAuth({
@@ -30,49 +23,49 @@ function Register() {
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [name, setName] = useState("")
     const [username, setUsername] = useState("")
-    const [provinceId, setProvinceId] = useState("")
-    const [cityId, setCityId] = useState("")
-    const [districtId, setDistrictId] = useState("")
-    const [subDistrictId, setSubDistrictId] = useState("")
-    const [address, setAddress] = useState("")
+    // const [provinceId, setProvinceId] = useState("")
+    // const [cityId, setCityId] = useState("")
+    // const [districtId, setDistrictId] = useState("")
+    // const [subDistrictId, setSubDistrictId] = useState("")
+    // const [address, setAddress] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [errors, setErrors] = useState([])
     const [status, setStatus] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        dispatch(fetchProvinces())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(fetchProvinces())
+    // }, [dispatch])
 
-    const provinces = useSelector(state => state.area.provinces)
-    const cities = useSelector(state => state.area.cities)
-    const districts = useSelector(state => state.area.districts)
-    const subDistricts = useSelector(state => state.area.subDistricts)
+    // const provinces = useSelector(state => state.area.provinces)
+    // const cities = useSelector(state => state.area.cities)
+    // const districts = useSelector(state => state.area.districts)
+    // const subDistricts = useSelector(state => state.area.subDistricts)
 
     // console.log("Provinces:", provinces)
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
     }
 
-    const handleSelectProvince = option => {
-        setProvinceId(option.id)
-        dispatch(fetchCities(option.id))
-    }
+    // const handleSelectProvince = option => {
+    //     setProvinceId(option.id)
+    //     dispatch(fetchCities(option.id))
+    // }
 
-    const handleSelectCity = option => {
-        setCityId(option.id)
-        dispatch(fetchDistricts(option.id))
-    }
+    // const handleSelectCity = option => {
+    //     setCityId(option.id)
+    //     dispatch(fetchDistricts(option.id))
+    // }
 
-    const handleSelectDistrict = option => {
-        setDistrictId(option.id)
-        dispatch(fetchSubDistricts(option.id))
-    }
+    // const handleSelectDistrict = option => {
+    //     setDistrictId(option.id)
+    //     dispatch(fetchSubDistricts(option.id))
+    // }
 
-    const handleSelectSubDistrict = option => {
-        setSubDistrictId(option.id)
-    }
+    // const handleSelectSubDistrict = option => {
+    //     setSubDistrictId(option.id)
+    // }
 
     const submitForm = async event => {
         setIsLoading(true)
@@ -90,11 +83,11 @@ function Register() {
                 password,
                 password_confirmation: passwordConfirmation,
                 name,
-                province_id: provinceId,
-                city_id: cityId,
-                district_id: districtId,
-                sub_district_id: subDistrictId,
-                address,
+                // province_id: provinceId,
+                // city_id: cityId,
+                // district_id: districtId,
+                // sub_district_id: subDistrictId,
+                // address,
                 phone_number: phoneNumber,
                 setErrors,
                 setStatus,
@@ -168,7 +161,7 @@ function Register() {
                                     className={"mt-2"}
                                 />
                             </div>
-                            <div className="py-2">
+                            {/* <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                     Alamat
                                 </div>
@@ -239,7 +232,7 @@ function Register() {
                                         className={"mt-2"}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                     Email

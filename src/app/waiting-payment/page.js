@@ -10,7 +10,7 @@ import {
     fetchOrders,
     getMyInvoice,
 } from "@/store/slices/orderSlice"
-import { ArrowLeftIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
+import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -129,7 +129,7 @@ function WaitingPayment() {
                                 onChange={handleSearchChange}
                             />
                         </div>
-                        <div className="item-center hidden w-full lg:flex lg:w-4/12">
+                        <div className="item-center w-full lg:flex lg:w-4/12">
                             <input
                                 className="w-full rounded-lg border border-[#BFBFBF] py-2 text-black focus:border-secondary focus:ring-0"
                                 placeholder="Pilih Tanggal Transaksi"
@@ -137,12 +137,12 @@ function WaitingPayment() {
                                 onChange={handleDateChange}
                             />
                         </div>
-                        <div className="item-center ml-2 w-full lg:hidden lg:w-4/12">
+                        {/* <div className="item-center ml-2 w-full lg:hidden lg:w-4/12">
                             <div className="flex items-center justify-between rounded-full bg-[#F5F5F5] px-4 py-2 text-sm text-[#6D7588]">
                                 Semua Tanggal
                                 <ChevronDownIcon className="ml-2 h-6 w-6" />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     {/* Start : View Website */}
                     {orders.map((order, index) => (

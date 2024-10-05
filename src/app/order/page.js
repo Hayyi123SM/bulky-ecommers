@@ -9,6 +9,7 @@ import { fetchOrders } from "@/store/slices/orderSlice"
 import {
     ArrowLeftIcon,
     ChevronDownIcon,
+    ChevronUpIcon,
     XMarkIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -27,6 +28,8 @@ function Order() {
     const [isOpenLiveStatus, setIsOpenLiveStatus] = useState(false)
     const [status, setStatus] = useState(null)
     const [search, setSearch] = useState("")
+    const [descStatus, setDescStatus] = useState("")
+    const [isOpenStatusMobile, setIsOpenStatusMobile] = useState(false)
 
     useEffect(() => {
         if (currentPage) {
@@ -51,7 +54,10 @@ function Order() {
         }
     }
 
-    const handleStatusChange = status => {
+    const handleStatusChange = (status, desc) => {
+        setDescStatus(desc)
+        setStatus(status)
+        setIsOpenStatusMobile(false) // Close dropdown after selecting a status
         setStatus(status)
         console.log("====================================")
         console.log("status:", status)
@@ -79,6 +85,18 @@ function Order() {
             fetchOrders({
                 currentPage: 1,
                 filters: { type: "orders", date: e.target.value },
+            }),
+        )
+    }
+
+    const handleClearFilter = () => {
+        setSearch("")
+        setStatus(null)
+        setDescStatus("")
+        dispatch(
+            fetchOrders({
+                currentPage: 1,
+                filters: { type: "orders" },
             }),
         )
     }
@@ -179,13 +197,14 @@ function Order() {
                                 Tiba di Tujuan
                             </div>
                             <div
-                                onClick={() => handleStatusChange(null)}
-                                className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === null ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                                Dikomplain
+                                onClick={() => handleStatusChange("canceled")}
+                                className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "canceled" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
+                                Dibatalkan
                             </div>
                         </div>
                     )}
-                    <div className="flex items-center justify-between overflow-x-auto whitespace-nowrap px-4 lg:hidden">
+                    {/* Mobile View */}
+                    {/* <div className="mt-4 flex items-center justify-between overflow-x-auto whitespace-nowrap px-4 lg:hidden">
                         <div className="rounded-full bg-[#F5F5F5] p-2 text-[#6D7588]">
                             <XMarkIcon className="h-6 w-6" />
                         </div>
@@ -197,7 +216,113 @@ function Order() {
                             Semua Tanggal
                             <ChevronDownIcon className="ml-2 h-6 w-6" />
                         </div>
+                    </div> */}
+                    {/* Mobile View */}
+                    <div className="mt-4 flex items-center justify-between overflow-x-auto whitespace-nowrap px-4 lg:hidden">
+                        <div
+                            className="rounded-full bg-[#F5F5F5] p-2 text-[#6D7588]"
+                            onClick={handleClearFilter}>
+                            <XMarkIcon className="h-6 w-6" />
+                        </div>
+
+                        <div
+                            onClick={() =>
+                                setIsOpenStatusMobile(!isOpenStatusMobile)
+                            }
+                            className="mx-2 flex cursor-pointer items-center rounded-full border border-[#007185] bg-[#F4FDFF] px-4 py-2 text-sm font-semibold text-[#007185]">
+                            {descStatus || "Pilih Status"}
+                            {isOpenStatusMobile ? (
+                                <ChevronUpIcon className="ml-2 h-6 w-6" />
+                            ) : (
+                                <ChevronDownIcon className="ml-2 h-6 w-6" />
+                            )}
+                        </div>
+
+                        <input
+                            className="w-full rounded-full border border-[#BFBFBF] py-2 text-black focus:border-secondary focus:ring-0"
+                            placeholder="Pilih Tanggal Transaksi"
+                            type="date"
+                            onChange={handleDateChange}
+                        />
                     </div>
+
+                    {/* Mobile Status Dropdown */}
+                    {isOpenStatusMobile && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="w-full max-w-md rounded-lg bg-white p-4">
+                                <div className="mb-4 flex items-center justify-between">
+                                    <div className="text-lg font-semibold">
+                                        Pilih Status
+                                    </div>
+                                    <XMarkIcon
+                                        className="h-6 w-6 cursor-pointer"
+                                        onClick={() =>
+                                            setIsOpenStatusMobile(false)
+                                        }
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <div
+                                        onClick={() =>
+                                            handleStatusChange(null, "Semua")
+                                        }
+                                        className={`cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === null ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        Semua
+                                    </div>
+                                    <div
+                                        onClick={() =>
+                                            handleStatusChange(
+                                                "waiting_confirmation",
+                                                "Menunggu Konfirmasi",
+                                            )
+                                        }
+                                        className={`cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "waiting_confirmation" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        Menunggu Konfirmasi
+                                    </div>
+                                    <div
+                                        onClick={() =>
+                                            handleStatusChange(
+                                                "processing",
+                                                "Diproses",
+                                            )
+                                        }
+                                        className={`cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "processing" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        Diproses
+                                    </div>
+                                    <div
+                                        onClick={() =>
+                                            handleStatusChange(
+                                                "shipped",
+                                                "Dikirim",
+                                            )
+                                        }
+                                        className={`cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "shipped" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        Dikirim
+                                    </div>
+                                    <div
+                                        onClick={() =>
+                                            handleStatusChange(
+                                                "delivered",
+                                                "Tiba di Tujuan",
+                                            )
+                                        }
+                                        className={`cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "delivered" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        Tiba di Tujuan
+                                    </div>
+                                    <div
+                                        onClick={() =>
+                                            handleStatusChange(
+                                                "canceled",
+                                                "Dibatalkan",
+                                            )
+                                        }
+                                        className={`cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "canceled" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        Dibatalkan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     {/* Start : View Website */}
                     {orders.map((order, index) => (
                         <div
@@ -255,7 +380,7 @@ function Order() {
                         <div
                             key={index}
                             className="m-4 flex flex-col items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
-                            <div className="flex items-center">
+                            <div className="flex w-full items-center">
                                 <div className="w-1/3">
                                     <Image
                                         src={
