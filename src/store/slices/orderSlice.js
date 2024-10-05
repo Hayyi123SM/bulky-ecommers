@@ -141,6 +141,35 @@ export const getMyInvoice = createAsyncThunk(
     },
 )
 
+export const createReview = createAsyncThunk(
+    "orders/createReview",
+    async ({ formData, orderId }, { rejectWithValue }) => {
+        try {
+            console.log("====================================")
+            console.log("Data being sent:", formData)
+            console.log("Order ID:", orderId)
+            console.log("====================================")
+
+            const response = await axios.post(
+                `/api/orders/review/${orderId}`, // orderId used here in the URL
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                },
+            )
+
+            return response.data
+        } catch (error) {
+            console.error("Error in createReview:", error.response)
+            return rejectWithValue(
+                error.response?.data || "Something went wrong",
+            )
+        }
+    },
+)
+
 const orderSlice = createSlice({
     name: "orders",
     initialState,
@@ -244,6 +273,19 @@ const orderSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(getMyInvoice.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(createReview.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(createReview.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.isLoading = false
+            })
+            .addCase(createReview.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

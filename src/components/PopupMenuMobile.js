@@ -12,6 +12,7 @@ import {
     PencilIcon,
     QuestionMarkCircleIcon,
     ShieldCheckIcon,
+    StarIcon,
 } from "@heroicons/react/24/outline"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -167,12 +168,12 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 </div>
                             </div>
                         </Link>
-                        {/* <Link href="/review">
+                        <Link href="/review">
                             <div className="flex items-center py-3">
                                 <StarIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm">Ulasan</div>
                             </div>
-                        </Link> */}
+                        </Link>
                     </div>
                     <div className="mt-2 bg-white p-4">
                         <Link href="/privacy-policy">

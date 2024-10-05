@@ -10,7 +10,11 @@ import {
     fetchProductDetail,
     fetchProductRelated,
 } from "@/store/slices/productSlice"
-import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
+import {
+    ArrowLeftIcon,
+    Bars3BottomRightIcon,
+    StarIcon,
+} from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -379,6 +383,45 @@ function ProductDetail({ params }) {
                         </div>
                     </div>
                 </div>
+
+                {products.reviews?.length > 0 && (
+                    <div className="p-4 lg:mt-20">
+                        <div className="mb-4 text-2xl font-bold">Ulasan</div>
+                        <div className="border-b border-[#BFC9D9] py-2">
+                            <div className="flex items-center">
+                                {[...Array(5)].map((_, index) => (
+                                    <StarIcon
+                                        key={index}
+                                        className={`mr-1 h-4 w-4 cursor-pointer ${
+                                            index <
+                                            products.reviews?.[0]?.rating
+                                                ? "text-secondary"
+                                                : "text-[#BFC9D9]"
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                            <div className="flex items-center py-3">
+                                {products.reviews?.[0]?.images.map(
+                                    (image, index) => (
+                                        <Image
+                                            key={index}
+                                            src={image.url}
+                                            alt={image}
+                                            width={100}
+                                            height={100}
+                                            className="mr-2 h-16 w-16 cursor-pointer rounded-lg"
+                                        />
+                                    ),
+                                )}
+                            </div>
+                            <div className="flex items-center">
+                                {products.reviews?.[0]?.comment}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <div className="mb-20 p-4">
                     <div className="mb-8 text-2xl font-bold">
                         Produk Lainnya
