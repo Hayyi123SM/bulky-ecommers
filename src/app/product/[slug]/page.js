@@ -99,16 +99,16 @@ function ProductDetail({ params }) {
         setIsOpenPdf(true)
     }
 
-    if (!products || !products.condition) {
-        // Optionally, you can return a loading state here
-        return <LoadingSpinner />
-    }
-
     useEffect(() => {
         if (isOpenPdf) {
             setIsLoadingPdf(true) // Reset loading setiap kali PDF dibuka
         }
     }, [isOpenPdf])
+
+    if (!products || !products.condition) {
+        // Optionally, you can return a loading state here
+        return <LoadingSpinner />
+    }
 
     return (
         <div>
@@ -367,7 +367,7 @@ function ProductDetail({ params }) {
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : (
-                                products.category.name
+                                products.category?.name
                             )}
                         </div>
                     </div>
