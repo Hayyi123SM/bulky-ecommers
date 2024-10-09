@@ -107,6 +107,18 @@ export const applyCoupon = createAsyncThunk(
     },
 )
 
+export const clearCoupon = createAsyncThunk(
+    "carts/clearCoupon",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.delete("/api/carts/clear-coupon", data)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
 export const setAddress = createAsyncThunk(
     "carts/setAddress",
     async (data, { rejectWithValue }) => {
@@ -286,6 +298,18 @@ const cartSlice = createSlice({
                 state.cart = action.payload.data
             })
             .addCase(applyCoupon.rejected, (state, action) => {
+                state.updateStatus = "failed"
+                state.updateError = action.payload.data || action.error.message
+            })
+            .addCase(clearCoupon.pending, state => {
+                state.updateStatus = "loading"
+                state.updateError = null
+            })
+            .addCase(clearCoupon.fulfilled, (state, action) => {
+                state.updateStatus = "succeeded"
+                state.cart = action.payload.data
+            })
+            .addCase(clearCoupon.rejected, (state, action) => {
                 state.updateStatus = "failed"
                 state.updateError = action.payload.data || action.error.message
             })

@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar"
 import {
     applyCoupon,
+    clearCoupon,
     fetchCarts,
     placeOrders,
     searchFriends,
@@ -37,6 +38,7 @@ function PaymentMethod() {
     const friendList = useSelector(state => state.carts.friends)
     const myInvoice = useSelector(state => state.orders.myInvoice)
     const coupon = useSelector(state => state.carts.coupon)
+    const [activeCoupon, setActiveCoupon] = useState(null)
 
     console.log("====================================")
     console.log("coupon", coupon)
@@ -59,6 +61,12 @@ function PaymentMethod() {
     useEffect(() => {
         dispatch(fetchCarts())
     }, [dispatch])
+
+    useEffect(() => {
+        if (cart) {
+            setActiveCoupon(cart.coupon_code)
+        }
+    }, [cart])
     // "single_payment/split_payment"
     const handlePlaceOrder = () => {
         if (paymentMethod === "split_payment") {
@@ -91,7 +99,11 @@ function PaymentMethod() {
     }
 
     const handleCoupon = coupon => {
-        dispatch(applyCoupon({ coupon_code: coupon }))
+        if (coupon === null) {
+            dispatch(clearCoupon({ coupon_code: coupon }))
+        } else {
+            dispatch(applyCoupon({ coupon_code: coupon }))
+        }
     }
 
     useEffect(() => {
@@ -354,6 +366,8 @@ function PaymentMethod() {
                                         onChange={e =>
                                             handleCoupon(e.target.value)
                                         }
+                                        type="text"
+                                        defaultValue={activeCoupon}
                                     />
                                 </div>
                             </div>
