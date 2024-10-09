@@ -1,6 +1,7 @@
 "use client"
 
 import Footer from "@/components/Footer"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
@@ -36,6 +37,7 @@ function Home() {
     const loadingProducts = useSelector(state => state.products.isLoading)
     const loadingVideos = useSelector(state => state.videos.isLoading)
     const loadingTestimonies = useSelector(state => state.testimony.isLoading)
+    const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -98,6 +100,12 @@ function Home() {
     const closeModal = () => {
         setIsOpenModal(false)
     }
+
+    useEffect(() => {
+        if (isOpenPdf) {
+            setIsLoadingPdf(true) // Reset loading setiap kali PDF dibuka
+        }
+    }, [isOpenPdf])
 
     return (
         <div>
@@ -366,13 +374,50 @@ function Home() {
                         {" "}
                     </div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
-                        <iframe
-                            className="h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] md:h-[800px] lg:h-[700px] xl:h-[800px]"
-                            src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
-                            title="PDF File"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                        />
+                        <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
+                            {/* start: close modal */}
+                            <div
+                                className="absolute left-4 top-4 flex cursor-pointer rounded-lg border bg-white p-2 text-xs text-[#212121] hover:text-[#007185]"
+                                onClick={() => setIsOpenPdf(false)}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                                Tutup
+                            </div>
+                            {/* end: close modal */}
+
+                            {/* Loading Spinner */}
+                            {isLoadingPdf && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-white">
+                                    Tunggu Sebentar...
+                                    <LoadingSpinner
+                                        text={false}
+                                        color="#000"
+                                        size={20}
+                                    />
+                                </div>
+                            )}
+
+                            {/* PDF Viewer */}
+                            <iframe
+                                className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
+                                src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
+                                title="PDF File"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                onLoad={() => setIsLoadingPdf(false)} // Set loading false saat PDF selesai dimuat
+                            />
+                        </div>
                     </div>
                 </div>
             )}
