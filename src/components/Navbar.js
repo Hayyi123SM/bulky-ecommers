@@ -24,7 +24,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const { user } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
-    const scrollRef = useRef(null) // Reference to the scrollable div
+    // const scrollRef = useRef(null) // Reference to the scrollable div
 
     useEffect(() => {
         // const getUser = JSON.parse(localStorage.getItem("user"))
@@ -73,20 +73,20 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     }, [setShowSearchResults])
 
     // Function to scroll left
-    const scrollLeft = () => {
-        scrollRef.current.scrollBy({
-            left: -200, // Scroll 200px to the left
-            behavior: "smooth", // Smooth scroll animation
-        })
-    }
+    // const scrollLeft = () => {
+    //     scrollRef.current.scrollBy({
+    //         left: -200, // Scroll 200px to the left
+    //         behavior: "smooth", // Smooth scroll animation
+    //     })
+    // }
 
     // Function to scroll right
-    const scrollRight = () => {
-        scrollRef.current.scrollBy({
-            left: 200, // Scroll 200px to the right
-            behavior: "smooth",
-        })
-    }
+    // const scrollRight = () => {
+    //     scrollRef.current.scrollBy({
+    //         left: 200, // Scroll 200px to the right
+    //         behavior: "smooth",
+    //     })
+    // }
 
     const visibilityClasses =
         visibleOn === "mobile"
