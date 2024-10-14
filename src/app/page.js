@@ -6,23 +6,21 @@ import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
 import ProductCard from "@/components/ProductCard"
-import TestimoniCard from "@/components/TestimoniCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
 import { fetchBanners } from "@/store/slices/bannerSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
-import {
-    ClockIcon,
-    CreditCardIcon,
-    HandThumbUpIcon,
-    TruckIcon,
-} from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
+import {
+    ArrowLeftIcon,
+    ArrowRightIcon,
+    StarIcon,
+} from "@heroicons/react/24/solid"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -41,6 +39,19 @@ function Home() {
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
+    const scrollRef = useRef(null)
+
+    const scrollLeft = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: -350, behavior: "smooth" })
+        }
+    }
+
+    const scrollRight = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: 350, behavior: "smooth" })
+        }
+    }
 
     // const dummy = {
     //     data: {
@@ -119,6 +130,215 @@ function Home() {
                 />
             )}
             <div className="">
+                <div className="mx-auto flex max-w-7xl items-center justify-center">
+                    <div className="w-full p-4 md:w-2/3 lg:w-1/2">
+                        <div className="flex flex-col">
+                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">
+                                Bangun Masa Depan Di Bulky.id
+                            </div>
+                            <div className="mt-2 text-xl leading-7 md:pr-28">
+                                Belanja ratusan lelang likuidasi. Puluhan
+                                kategori produk. Semua ukuran dan kondisi.
+                            </div>
+                            <div className="mt-5 flex w-full items-center gap-4 text-center md:pr-28">
+                                <Link
+                                    href="/product"
+                                    className="w-1/2 font-light">
+                                    <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">
+                                        Lihat Semua Produk
+                                    </div>
+                                </Link>
+                                <Link
+                                    href="/product"
+                                    className="w-1/2 font-light">
+                                    <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">
+                                        Lihat Video
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="mt-5 flex items-center gap-8 text-center md:pr-28">
+                                <div>
+                                    <div className="flex items-center border-b border-dashed border-black pb-2">
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <div className="ml-1">4.9</div>
+                                    </div>
+                                    <div className="mt-1">Sugeng Prasetyo</div>
+                                </div>
+                                <div>
+                                    <div className="flex items-center border-b border-dashed border-black pb-2">
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <StarIcon className="h-5 w-5 text-secondary" />
+                                        <div className="ml-1">4.9</div>
+                                    </div>
+                                    <div className="mt-1">Agung Widodo</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="hidden py-10 md:flex md:w-1/3 lg:w-1/2">
+                        <Image
+                            src="/new/Group 198 (1).png"
+                            alt="Product"
+                            width={1000}
+                            height={1000}
+                        />
+                    </div>
+                </div>
+                <div className="hidden w-full bg-secondary bg-opacity-20 py-6 md:block">
+                    <div className="mx-auto grid max-w-7xl grid-cols-3 items-center gap-4 p-4 md:grid-cols-5">
+                        <div className="">
+                            <div className="mb-2 font-bold md:text-2xl lg:text-3xl">
+                                Partner Kami
+                            </div>
+                            <div className="md:text-sm lg:text-lg">
+                                Terpercaya pada beberapa perusahaan
+                            </div>
+                        </div>
+                        <Image
+                            src="/Shopee.png"
+                            alt="Shopee"
+                            width={160}
+                            height={50}
+                        />
+                        <Image
+                            src="/Lazada.png"
+                            alt="Lazada"
+                            width={160}
+                            height={50}
+                        />
+                        <Image
+                            src="/Tokopedia.png"
+                            alt="Tokopedia"
+                            width={160}
+                            height={50}
+                        />
+                        <Image
+                            src="/Amazon.png"
+                            alt="Bukalapak"
+                            width={160}
+                            height={50}
+                        />
+                    </div>
+                </div>
+                <div className="mx-auto my-5 max-w-7xl p-0 lg:p-5">
+                    <div className="grid grid-cols-1 gap-5 py-10 md:grid-cols-2">
+                        <div className="flex items-center bg-secondary bg-opacity-20">
+                            <div className="w-2/3 p-4">
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
+                                    50% OFF
+                                </div>
+                                <div className="py-2 text-3xl font-bold">
+                                    Rednot Pallete
+                                </div>
+                                <div className="mb-5 text-lg">
+                                    Don't miss the last opportunity
+                                </div>
+                                <Link href="/product" className="font-light">
+                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                        Beli Sekarang
+                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="w-1/3 pt-12">
+                                <Image
+                                    src="/image 1587.png"
+                                    alt="Product"
+                                    width={1000}
+                                    height={1000}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex items-center bg-secondary bg-opacity-20">
+                            <div className="w-2/3 p-4">
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
+                                    50% OFF
+                                </div>
+                                <div className="py-2 text-3xl font-bold">
+                                    Fashion Pallate
+                                </div>
+                                <div className="mb-5 text-lg">
+                                    Don't miss the last opportunity
+                                </div>
+                                <Link href="/product" className="font-light">
+                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                        Beli Sekarang
+                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="w-1/3 pt-12">
+                                <Image
+                                    src="/image 1588.png"
+                                    alt="Product"
+                                    width={1000}
+                                    height={1000}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex items-center bg-secondary bg-opacity-20">
+                            <div className="w-2/3 p-4">
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
+                                    50% OFF
+                                </div>
+                                <div className="py-2 text-3xl font-bold">
+                                    Wireless Product
+                                </div>
+                                <div className="mb-5 text-lg">
+                                    Don't miss the last opportunity
+                                </div>
+                                <Link href="/product" className="font-light">
+                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                        Beli Sekarang
+                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="w-1/3 pt-12">
+                                <Image
+                                    src="/image 15.png"
+                                    alt="Product"
+                                    width={1000}
+                                    height={1000}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex items-center bg-secondary bg-opacity-20">
+                            <div className="w-2/3 p-4">
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
+                                    50% OFF
+                                </div>
+                                <div className="py-2 text-3xl font-bold">
+                                    Electronic
+                                </div>
+                                <div className="mb-5 text-lg">
+                                    Don't miss the last opportunity
+                                </div>
+                                <Link href="/product" className="font-light">
+                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                        Beli Sekarang
+                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="w-1/3 pt-12">
+                                <Image
+                                    src="/image 16.png"
+                                    alt="Product"
+                                    width={1000}
+                                    height={1000}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="mx-auto max-w-7xl p-0 lg:p-5">
                     <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
                         {loadingBanners ? (
@@ -212,62 +432,72 @@ function Home() {
                                   ))}
                         </div>
                     </div>
+                </div>
 
-                    <div className="my-10 flex justify-center p-5 text-center text-3xl font-semibold leading-9">
-                        The world's leading retailers work <br /> with Bulky
-                    </div>
-
-                    <div className="overflow-x-auto">
+                <div className="my-10 bg-secondary bg-opacity-20">
+                    <div className="mx-auto max-w-7xl overflow-x-auto p-5">
                         <div className="flex gap-4 lg:grid lg:grid-cols-4">
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <div className="text-left">
-                                    <div className="mb-5 w-fit rounded-full bg-[#212121] p-3">
-                                        <TruckIcon className="h-10 w-10 text-[#FFCF02]" />
-                                    </div>
-                                    <div className="pb-1 text-lg font-bold">
+                                <div className="flex flex-col items-center p-4 text-center">
+                                    <Image
+                                        src="/package box 07.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
+                                    <div className="py-2 text-lg font-bold">
                                         Pengiriman Kargo
                                     </div>
-                                    <div className="pr-10 text-base">
+                                    <div className="text-base">
                                         Ambil Sendiri atau Layanan Pengiriman
                                     </div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <div className="text-left">
-                                    <div className="mb-5 w-fit rounded-full bg-[#212121] p-3">
-                                        <HandThumbUpIcon className="h-10 w-10 text-[#FFCF02]" />
-                                    </div>
-                                    <div className="pb-1 text-lg font-bold">
+                                <div className="flex flex-col items-center p-4 text-center">
+                                    <Image
+                                        src="/package box 8.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
+                                    <div className="py-2 text-lg font-bold">
                                         Legit Seller
                                     </div>
-                                    <div className="pr-10 text-base">
+                                    <div className="text-base">
                                         Semua Produk Lulus QC & Tanpa Perantara
                                     </div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <div className="text-left">
-                                    <div className="mb-5 w-fit rounded-full bg-[#212121] p-3">
-                                        <CreditCardIcon className="h-10 w-10 text-[#FFCF02]" />
-                                    </div>
-                                    <div className="pb-1 text-lg font-bold">
+                                <div className="flex flex-col items-center p-4 text-center">
+                                    <Image
+                                        src="/package box 9.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
+                                    <div className="py-2 text-lg font-bold">
                                         Pembayaran Terjamin
                                     </div>
-                                    <div className="pr-10 text-base">
+                                    <div className="text-base">
                                         <b>100%</b> Pembayaran Aman, dengan
                                         berbagai Metode
                                     </div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                <div className="text-left">
-                                    <div className="mb-5 w-fit rounded-full bg-[#212121] p-3">
-                                        <ClockIcon className="h-10 w-10 text-[#FFCF02]" />
-                                    </div>
-                                    <div className="pb-1 text-lg font-bold">
+                                <div className="flex flex-col items-center p-4 text-center">
+                                    <Image
+                                        src="/package box 10.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
+                                    <div className="py-2 text-lg font-bold">
                                         Dukungan 24 Jam
                                     </div>
-                                    <div className="pr-10 text-base">
+                                    <div className="text-base">
                                         Dukungan Khusus
                                     </div>
                                 </div>
@@ -275,7 +505,179 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-10 bg-[#FFF5EB] px-4 py-10">
+                <div className="mx-auto flex max-w-7xl flex-col items-center justify-center p-4 md:flex-row">
+                    <div className="w-full md:w-1/2">
+                        <Image
+                            src="/new/Illustrations.png"
+                            alt="bulky"
+                            width={1000}
+                            height={1000}
+                        />
+                    </div>
+                    <div className="w-full md:w-1/2">
+                        <div className="text-4xl font-semibold">
+                            Tentang Bulky.id
+                        </div>
+                        <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
+                            Kami adalah perusahaan likuidasi Ritel online
+                            pertama di Indonesia yang berfokus dalam membantu
+                            bisnis Ritel untuk memaksimalkan keuntungan, dengan
+                            cara mengelola kelebihan stock barang, barang gagal
+                            kirim atau barang yang dikembalikan secara efisien,
+                            melalui kemitraan dengan 3PL (logistik pihak
+                            ketiga). Kami memberikan solusi inovatif dan
+                            berkelanjutan untuk bisnis.
+                        </div>
+                        <div className="mt-10 flex w-full justify-between pr-20">
+                            <Link href="/product">
+                                <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                    Pelajari Selanjutnya
+                                </div>
+                            </Link>
+                            <Image
+                                src="/obeng.png"
+                                alt="bulky"
+                                width={150}
+                                height={150}
+                                className="w-1/3"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="mx-auto max-w-7xl p-4">
+                    <div className="flex items-center justify-between">
+                        <div className="w-2/3">
+                            <div className="text-4xl font-semibold">
+                                Kelebihan Kami
+                            </div>
+                            <div className="mt-5 text-lg opacity-60">
+                                Discover our complete range of plumbing services
+                                tailored to meet your need.
+                            </div>
+                        </div>
+                        <div className="flex w-1/3 items-center justify-end gap-3">
+                            <div
+                                className="cursor-pointer rounded-full bg-secondary p-3"
+                                onClick={scrollLeft}>
+                                <ArrowLeftIcon className="h-5 w-5" />
+                            </div>
+                            <div
+                                className="cursor-pointer rounded-full bg-secondary p-3"
+                                onClick={scrollRight}>
+                                <ArrowRightIcon className="h-5 w-5" />
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        className="scrollbar-hide overflow-x-auto py-10"
+                        ref={scrollRef}>
+                        <div className="flex gap-4">
+                            {/* Card 1 */}
+                            <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
+                                <div
+                                    className="h-48 w-full rounded bg-cover bg-center lg:h-64"
+                                    style={{
+                                        backgroundImage:
+                                            'url("/Image-111.png")',
+                                    }}
+                                />
+                                <div className="mt-3 text-lg font-semibold">
+                                    Lebih Mudah
+                                </div>
+                                <div className="mt-5 text-sm opacity-60">
+                                    Layanan yang lebih mudah
+                                </div>
+                            </div>
+                            {/* Card 2 */}
+                            <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
+                                <div
+                                    className="h-48 w-full rounded bg-cover bg-center lg:h-64"
+                                    style={{
+                                        backgroundImage:
+                                            'url("/Image-222.png")',
+                                    }}
+                                />
+                                <div className="mt-3 text-lg font-semibold">
+                                    Keselamatan
+                                </div>
+                                <div className="mt-5 text-sm opacity-60">
+                                    Say goodbye to clogged drains with our
+                                    professional drain cleaning services.
+                                </div>
+                            </div>
+                            {/* Card 3 */}
+                            <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
+                                <div
+                                    className="h-48 w-full rounded bg-cover bg-center lg:h-64"
+                                    style={{
+                                        backgroundImage:
+                                            'url("/Image-333.png")',
+                                    }}
+                                />
+                                <div className="mt-3 text-lg font-semibold">
+                                    Keberlanjutan
+                                </div>
+                                <div className="mt-5 text-sm opacity-60">
+                                    Count on us for precise and reliable fixture
+                                    installations, from faucets to toilets.
+                                </div>
+                            </div>
+                            {/* Card 4 */}
+                            <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
+                                <div
+                                    className="h-48 w-full rounded bg-cover bg-center lg:h-64"
+                                    style={{
+                                        backgroundImage:
+                                            'url("/Image-444.png")',
+                                    }}
+                                />
+                                <div className="mt-3 text-lg font-semibold">
+                                    Inovasi
+                                </div>
+                                <div className="mt-5 text-sm opacity-60">
+                                    Leaky or damaged pipes can cause significant
+                                    issues.
+                                </div>
+                            </div>
+                            {/* Card 5 */}
+                            <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
+                                <div
+                                    className="h-48 w-full rounded bg-cover bg-center lg:h-64"
+                                    style={{
+                                        backgroundImage:
+                                            'url("/Image-111.png")',
+                                    }}
+                                />
+                                <div className="mt-3 text-lg font-semibold">
+                                    Lebih Mudah
+                                </div>
+                                <div className="mt-5 text-sm opacity-60">
+                                    Layanan yang lebih mudah
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center px-4 py-10">
+                    <div className="text-3xl font-bold">
+                        Ada Apa Saja di Bulky.id
+                        <br />
+                        Tonton Video dibawah ini
+                    </div>
+                    <div className="my-2 flex justify-center text-center text-lg leading-9">
+                        Berbagai Kegiatan yang kita lakukan untuk memenuhi
+                        kebutuhan Anda
+                    </div>
+                    <Image
+                        src="/new/Group 1437254503 (1).png"
+                        alt="Product"
+                        width={1000}
+                        height={1000}
+                        className="mb-20 mt-10 w-full"
+                    />
+                </div>
+                <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
                     <div className="mx-auto max-w-7xl">
                         <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
                             TIPS & TRICK IN WHOLESALE BUSINESS
@@ -321,39 +723,115 @@ function Home() {
                         </Link>
                     </div>
                 </div>
-                <div className="mx-auto max-w-7xl px-4 py-10">
-                    <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
-                        BETTER THAN WHOLESALE
+                <div
+                    className="w-full bg-right-bottom bg-no-repeat"
+                    style={{ backgroundImage: 'url("/Group 1437254504.png")' }}>
+                    <div className="mx-auto max-w-7xl px-4 py-10">
+                        <div className="grid w-full grid-cols-1 items-center justify-center gap-10 md:grid-cols-2">
+                            <div className="w-full rounded-lg bg-secondary bg-opacity-20 p-10">
+                                <div className="text-4xl font-bold">
+                                    Testimoni Klien
+                                </div>
+                                <div className="my-10 flex items-center border-l-2 border-black pl-3">
+                                    <div className="text-xl font-semibold">
+                                        30+
+                                    </div>
+                                    <div className="ml-2 text-lg">
+                                        Testimoni
+                                    </div>
+                                </div>
+                                <div className="flex w-1/3 items-center gap-3">
+                                    <div
+                                        className="cursor-pointer rounded-full bg-secondary p-3"
+                                        onClick={scrollLeft}>
+                                        <ArrowLeftIcon className="h-5 w-5" />
+                                    </div>
+                                    <div
+                                        className="cursor-pointer rounded-full bg-secondary p-3"
+                                        onClick={scrollRight}>
+                                        <ArrowRightIcon className="h-5 w-5" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="w-full">
+                                <div
+                                    className="scrollbar-hide overflow-x-auto py-10"
+                                    ref={scrollRef}>
+                                    <div className="flex w-full gap-4">
+                                        {loadingTestimonies
+                                            ? Array.from({ length: 3 }).map(
+                                                  (_, index) => (
+                                                      <div
+                                                          key={index}
+                                                          className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
+                                                          <Skeleton
+                                                              height={150}
+                                                          />
+                                                          <Skeleton width="60%" />
+                                                      </div>
+                                                  ),
+                                              )
+                                            : testimonys &&
+                                              testimonys.map(testimoni => (
+                                                  <div
+                                                      key={testimoni.id}
+                                                      className="min-w-[100%] rounded-lg p-4">
+                                                      <div className="opacity-70">
+                                                          {testimoni.content}
+                                                      </div>
+                                                      <div className="mt-10 flex items-center gap-3">
+                                                          <div
+                                                              className="h-12 w-12 rounded-full bg-cover bg-center"
+                                                              style={{
+                                                                  backgroundImage: `url(${testimoni.image})`,
+                                                              }}
+                                                          />
+                                                          <div className="flex flex-col justify-center">
+                                                              <div className="text-lg font-bold">
+                                                                  {
+                                                                      testimoni.name
+                                                                  }
+                                                              </div>
+                                                              <div className="text-base opacity-60">
+                                                                  {
+                                                                      testimoni.label
+                                                                  }
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="my-2 flex justify-center text-center text-3xl font-semibold leading-9">
-                        Bulky empowers businesses all
-                        <br />
-                        around the world
-                    </div>
-                    <div className="mt-10 overflow-x-auto">
-                        <div className="flex gap-4 lg:grid lg:grid-cols-3">
-                            {loadingTestimonies
-                                ? Array.from({ length: 3 }).map((_, index) => (
-                                      <div
-                                          key={index}
-                                          className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
-                                          <Skeleton height={150} />
-                                          <Skeleton width="60%" />
-                                      </div>
-                                  ))
-                                : testimonys &&
-                                  testimonys.map(testimoni => (
-                                      <div
-                                          key={testimoni.id}
-                                          className="min-w-[100%] md:min-w-[50%] lg:min-w-0">
-                                          <TestimoniCard
-                                              name={testimoni.name}
-                                              image={testimoni.image}
-                                              title={testimoni.label}
-                                              review={testimoni.content}
-                                          />
-                                      </div>
-                                  ))}
+                </div>
+                <div className="bg-secondary bg-opacity-20">
+                    <div className="mx-auto max-w-5xl px-4 py-10">
+                        <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
+                            <Image
+                                src="/box bulky-01 1.png"
+                                alt="Product"
+                                width={400}
+                                height={400}
+                            />
+                            <div className="flex flex-col">
+                                <div className="text-4xl font-semibold">
+                                    Ingin Menjadi Wholesaler Bulky.id?
+                                </div>
+                                <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
+                                    Silahkan Klik Tombol Berikut untuk menjadi
+                                    Wholesaler Bulky.id
+                                </div>
+                                <div className="mt-6 flex justify-between pr-20">
+                                    <Link href="/product">
+                                        <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                            Beli Sekarang
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -4,18 +4,16 @@ import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
 import { fetchCategories } from "@/store/slices/filterSlice"
 import { fetchSearchProducts } from "@/store/slices/productSlice"
-import {
-    ArchiveBoxIcon,
-    Bars3BottomRightIcon,
-} from "@heroicons/react/24/outline"
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
+import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import CategorySelect from "@/components/CategorySelect"
 
 function Navbar({ togglePopupMenu, visibleOn = "both" }) {
+    const router = useRouter()
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
     const inputRef = useRef(null)
@@ -25,7 +23,6 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const currentPage = parseInt(searchParams.get("page")) || 1
     const { user } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
-    const carts = useSelector(state => state.carts.cart)
     const categories = useSelector(state => state.filters.categories)
     const scrollRef = useRef(null) // Reference to the scrollable div
 
@@ -45,6 +42,14 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                 filters: { search: e.target.value },
             }),
         )
+    }
+
+    const handleSelectCategory = category => {
+        if (category) {
+            router.push(`/product?category=${category.slug}`)
+        } else {
+            router.push("/")
+        }
     }
 
     useEffect(() => {
@@ -94,7 +99,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
         <Suspense fallback={<div>Loading ... </div>}>
             <div className={`sticky top-0 z-40 ${visibilityClasses}`}>
                 {/* Mobile Navbar */}
-                <nav className="block h-[134px] bg-primary px-4 py-3 lg:hidden">
+                <nav className="block h-[160px] bg-[#212121] px-4 py-3 lg:hidden">
                     <div className="flex items-center justify-between">
                         <Link href="/">
                             <Image
@@ -154,173 +159,193 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             </>
                         )}
                     </div>
-                    <div className="mt-2 flex items-center justify-between text-sm">
-                        <ChevronLeftIcon
-                            onClick={scrollLeft}
-                            className="mr-1 h-5 w-5 cursor-pointer text-white hover:text-secondary"
-                        />
-                        <div
-                            ref={scrollRef}
-                            className="scrollbar-hide w-full overflow-x-scroll text-sm">
-                            <ul className="inline-flex items-center space-x-4 whitespace-nowrap">
-                                {categories &&
-                                    categories.length > 0 &&
-                                    categories.map(category => (
-                                        <li
-                                            key={category.id}
-                                            className="text-white">
-                                            <Link
-                                                href={`/product?category=${category.slug}`}>
-                                                {category.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                            </ul>
+                    <div className="mt-3 flex items-center justify-between text-sm">
+                        {/*<ChevronLeftIcon*/}
+                        {/*    onClick={scrollLeft}*/}
+                        {/*    className="mr-1 h-5 w-5 cursor-pointer text-white hover:text-secondary"*/}
+                        {/*/>*/}
+                        {/*<div*/}
+                        {/*    ref={scrollRef}*/}
+                        {/*    className="scrollbar-hide w-full overflow-x-scroll text-sm">*/}
+                        {/*    <ul className="inline-flex items-center space-x-4 whitespace-nowrap">*/}
+                        {/*        {categories &&*/}
+                        {/*            categories.length > 0 &&*/}
+                        {/*            categories.map(category => (*/}
+                        {/*                <li*/}
+                        {/*                    key={category.id}*/}
+                        {/*                    className="text-white">*/}
+                        {/*                    <Link*/}
+                        {/*                        href={`/product?category=${category.slug}`}>*/}
+                        {/*                        {category.name}*/}
+                        {/*                    </Link>*/}
+                        {/*                </li>*/}
+                        {/*            ))}*/}
+                        {/*    </ul>*/}
+                        {/*</div>*/}
+                        {/*<ChevronRightIcon*/}
+                        {/*    onClick={scrollRight}*/}
+                        {/*    className="ml-1 h-5 w-5 cursor-pointer text-white hover:text-secondary"*/}
+                        {/*/>*/}
+
+                        <div className="w-full">
+                            <CategorySelect
+                                options={categories}
+                                onSelect={handleSelectCategory}
+                            />
                         </div>
-                        <ChevronRightIcon
-                            onClick={scrollRight}
-                            className="ml-1 h-5 w-5 cursor-pointer text-white hover:text-secondary"
-                        />
                     </div>
                 </nav>
 
                 {/* Desktop Navbar */}
-                <nav className="hidden h-[120px] bg-primary px-10 py-3 md:hidden lg:block">
-                    <div className="item-center flex pt-2">
-                        <div className="item-center flex w-1/12">
-                            <Link href="/">
-                                <Image
-                                    src="/bulky-L8.png"
-                                    width={100}
-                                    height={30}
-                                    alt="Logo"
-                                    className="cursor-pointer"
-                                    priority={false}
-                                />
-                            </Link>
-                        </div>
-                        <div className="item-center flex pl-10 lg:w-7/12 xl:w-9/12 2xl:w-9/12">
-                            <div className="relative w-full xl:pr-20 2xl:pr-0">
-                                <input
-                                    ref={inputRef}
-                                    className="w-full rounded-lg border-2 py-2 pl-14 text-black bg-search focus:border-secondary focus:outline-none"
-                                    placeholder="Cari barang bundlemu di bulky aja..."
-                                    value={searchQuery}
-                                    onChange={handleSearchInputChange}
-                                />
-                                {showSearchResults && (
-                                    <>
-                                        <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
-                                            {" "}
-                                        </div>
-                                        <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
-                                            <ul className="py-2">
-                                                {searchResults &&
-                                                searchResults.length > 0 ? (
-                                                    searchResults.map(
-                                                        product => (
-                                                            <Link
-                                                                href={`/product/${product.slug}`}
-                                                                key={
-                                                                    product.id
-                                                                }>
-                                                                <li
-                                                                    className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]"
-                                                                    onMouseDown={e =>
-                                                                        e.preventDefault()
-                                                                    }>
-                                                                    {
-                                                                        product.name
-                                                                    }
-                                                                </li>
-                                                            </Link>
-                                                        ),
-                                                    )
-                                                ) : (
-                                                    <li className="flex items-center justify-between px-4 py-2">
-                                                        <p className="px-4 py-2">
-                                                            Tidak ada hasilan
-                                                            yang cocok
-                                                        </p>
-                                                    </li>
-                                                )}
-                                            </ul>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                        <div className="flex lg:w-4/12 xl:w-2/12 2xl:w-2/12">
-                            <div className="flex w-full items-center justify-end">
-                                {/* <div className="flex cursor-pointer items-center"> */}
-                                {/* <BellIcon className="mr-2 h-9 w-9 font-bold text-white hover:text-secondary" /> */}
-                                {/* </div> */}
-                                <Link href="/cart">
-                                    <div className="flex items-center text-white hover:text-secondary lg:mx-7">
-                                        <ArchiveBoxIcon className="h-9 w-9 font-bold hover:text-secondary" />
-                                        <div className="ml-3 hover:text-secondary">
-                                            <div className="text-sm">
-                                                Keranjang
-                                            </div>
-                                            <div className="text-sm font-bold">
-                                                {carts ? carts.items_count : 0}{" "}
-                                                Items
-                                            </div>
-                                        </div>
-                                    </div>
+                <nav className="hidden h-[140px] bg-[#212121] md:hidden lg:block">
+                    <div className="mx-auto max-w-7xl px-5 py-3">
+                        <div className="item-center flex pt-2">
+                            <div className="item-center flex w-1/12">
+                                <Link href="/">
+                                    <Image
+                                        src="/bulky-L8.png"
+                                        width={100}
+                                        height={30}
+                                        alt="Logo"
+                                        className="cursor-pointer"
+                                        priority={false}
+                                    />
                                 </Link>
-                                {!user ? (
-                                    <Link
-                                        href="/login"
-                                        className="ml-2 cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
-                                        Masuk
+                            </div>
+                            <div className="item-center flex pl-10 lg:w-9/12 xl:w-9/12 2xl:w-9/12">
+                                <div className="relative w-full">
+                                    <input
+                                        ref={inputRef}
+                                        className="w-full rounded-xl border-2 border-[#212121] py-2 pl-14 text-black bg-search focus:border-2 focus:border-secondary focus:outline-none"
+                                        placeholder="Search..."
+                                        value={searchQuery}
+                                        onChange={handleSearchInputChange}
+                                    />
+                                    {showSearchResults && (
+                                        <>
+                                            <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
+                                                {" "}
+                                            </div>
+                                            <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
+                                                <ul className="py-2">
+                                                    {searchResults &&
+                                                    searchResults.length > 0 ? (
+                                                        searchResults.map(
+                                                            product => (
+                                                                <Link
+                                                                    href={`/product/${product.slug}`}
+                                                                    key={
+                                                                        product.id
+                                                                    }>
+                                                                    <li
+                                                                        className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]"
+                                                                        onMouseDown={e =>
+                                                                            e.preventDefault()
+                                                                        }>
+                                                                        {
+                                                                            product.name
+                                                                        }
+                                                                    </li>
+                                                                </Link>
+                                                            ),
+                                                        )
+                                                    ) : (
+                                                        <li className="flex items-center justify-between px-4 py-2">
+                                                            <p className="px-4 py-2">
+                                                                Tidak ada
+                                                                hasilan yang
+                                                                cocok
+                                                            </p>
+                                                        </li>
+                                                    )}
+                                                </ul>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex lg:w-2/12 xl:w-2/12 2xl:w-2/12">
+                                <div className="flex w-full items-center justify-end">
+                                    <Link href="/cart">
+                                        <div className="flex items-center text-white hover:text-secondary lg:mx-5 xl:mx-10">
+                                            <Image
+                                                src="/cart.png"
+                                                width={24}
+                                                height={24}
+                                                alt="Cart"
+                                            />
+                                        </div>
                                     </Link>
-                                ) : (
-                                    <Link href="/profile">
-                                        <div className="flex items-center px-2">
-                                            <div className="text-white hover:text-secondary">
-                                                <div className="text-sm">
-                                                    Welcome
-                                                </div>
-                                                <div className="flex w-28 cursor-pointer items-center">
-                                                    <div className="line-clamp-1 text-sm font-bold">
-                                                        {user && user.data.name}
+                                    {!user ? (
+                                        <Link
+                                            href="/login"
+                                            className="cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-base hover:bg-[#e8bc00]">
+                                            Masuk
+                                        </Link>
+                                    ) : (
+                                        <Link href="/profile">
+                                            <div className="flex items-center px-2">
+                                                <div className="text-white hover:text-secondary">
+                                                    <div className="text-sm">
+                                                        Welcome
+                                                    </div>
+                                                    <div className="flex w-28 cursor-pointer items-center">
+                                                        <div className="line-clamp-1 text-sm font-bold">
+                                                            {user &&
+                                                                user.data.name}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                )}
+                                        </Link>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="mt-5 flex items-center justify-between text-sm">
-                        <ChevronLeftIcon
-                            onClick={scrollLeft}
-                            className="mr-2 h-5 w-5 cursor-pointer text-white hover:text-secondary"
-                        />
-                        <div
-                            ref={scrollRef}
-                            className="scrollbar-hide w-full overflow-x-scroll whitespace-nowrap">
-                            <ul className="inline-flex items-center whitespace-nowrap">
-                                {categories &&
-                                    categories.length > 0 &&
-                                    categories.map(category => (
-                                        <li
-                                            key={category.id}
-                                            className="mr-5 text-white">
-                                            <Link
-                                                href={`/product?category=${category.slug}`}>
-                                                {category.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                            </ul>
+                        <div className="mt-4 flex items-center text-sm">
+                            {/*<ChevronLeftIcon*/}
+                            {/*    onClick={scrollLeft}*/}
+                            {/*    className="mr-2 h-5 w-5 cursor-pointer text-white hover:text-secondary"*/}
+                            {/*/>*/}
+                            {/*<div*/}
+                            {/*    ref={scrollRef}*/}
+                            {/*    className="scrollbar-hide w-full overflow-x-scroll whitespace-nowrap">*/}
+                            {/*    <ul className="inline-flex items-center whitespace-nowrap">*/}
+                            {/*        {categories &&*/}
+                            {/*            categories.length > 0 &&*/}
+                            {/*            categories.map(category => (*/}
+                            {/*                <li*/}
+                            {/*                    key={category.id}*/}
+                            {/*                    className="mr-5 text-white">*/}
+                            {/*                    <Link*/}
+                            {/*                        href={`/product?category=${category.slug}`}>*/}
+                            {/*                        {category.name}*/}
+                            {/*                    </Link>*/}
+                            {/*                </li>*/}
+                            {/*            ))}*/}
+                            {/*    </ul>*/}
+                            {/*</div>*/}
+                            {/*<ChevronRightIcon*/}
+                            {/*    onClick={scrollRight}*/}
+                            {/*    className="ml-2 h-5 w-5 cursor-pointer text-white hover:text-secondary"*/}
+                            {/*/>*/}
+
+                            <div className="w-3/12 pr-16">
+                                <CategorySelect
+                                    options={categories}
+                                    onSelect={handleSelectCategory}
+                                />
+                            </div>
+                            <div className="flex w-7/12 items-center justify-between">
+                                <div className="px-8 text-white">Home</div>
+                                <div className="px-8 text-white">Shop</div>
+                                <div className="px-8 text-white">About Us</div>
+                                <div className="px-8 text-white">Blog</div>
+                                <div className="px-8 text-white">
+                                    Contact Us
+                                </div>
+                            </div>
                         </div>
-                        <ChevronRightIcon
-                            onClick={scrollRight}
-                            className="ml-2 h-5 w-5 cursor-pointer text-white hover:text-secondary"
-                        />
                     </div>
                 </nav>
             </div>
