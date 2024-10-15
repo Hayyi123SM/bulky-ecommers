@@ -289,7 +289,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                     <div className="text-sm">
                                                         Welcome
                                                     </div>
-                                                    <div className="flex w-28 cursor-pointer items-center">
+                                                    <div className="flex cursor-pointer items-center">
                                                         <div className="line-clamp-1 text-sm font-bold">
                                                             {user &&
                                                                 user.data.name}
@@ -337,13 +337,31 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 />
                             </div>
                             <div className="flex w-7/12 items-center justify-between">
-                                <div className="px-8 text-white">Home</div>
-                                <div className="px-8 text-white">Shop</div>
-                                <div className="px-8 text-white">About Us</div>
-                                <div className="px-8 text-white">Blog</div>
-                                <div className="px-8 text-white">
-                                    Contact Us
-                                </div>
+                                <Link href="/">
+                                    <div className="px-8 text-white hover:text-secondary">
+                                        Home
+                                    </div>
+                                </Link>
+                                <Link href="/product">
+                                    <div className="px-8 text-white hover:text-secondary">
+                                        Shop
+                                    </div>
+                                </Link>
+                                <Link href="/about-us">
+                                    <div className="px-8 text-white hover:text-secondary">
+                                        About Us
+                                    </div>
+                                </Link>
+                                <Link href="/">
+                                    <div className="px-8 text-white hover:text-secondary">
+                                        Blog
+                                    </div>
+                                </Link>
+                                <Link href="/contact-us">
+                                    <div className="px-8 text-white hover:text-secondary">
+                                        Contact Us
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
