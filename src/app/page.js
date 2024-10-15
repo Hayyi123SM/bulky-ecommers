@@ -40,6 +40,7 @@ function Home() {
     const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
     const scrollRef = useRef(null)
+    const scrollRefTwo = useRef(null)
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -50,6 +51,18 @@ function Home() {
     const scrollRight = () => {
         if (scrollRef.current) {
             scrollRef.current.scrollBy({ left: 350, behavior: "smooth" })
+        }
+    }
+
+    const scrollLeftTwo = () => {
+        if (scrollRefTwo.current) {
+            scrollRefTwo.current.scrollBy({ left: -350, behavior: "smooth" })
+        }
+    }
+
+    const scrollRightTwo = () => {
+        if (scrollRefTwo.current) {
+            scrollRefTwo.current.scrollBy({ left: 350, behavior: "smooth" })
         }
     }
 
@@ -130,7 +143,7 @@ function Home() {
                 />
             )}
             <div className="">
-                <div className="mx-auto flex max-w-7xl items-center justify-center">
+                <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-center md:flex-row">
                     <div className="w-full p-4 md:w-2/3 lg:w-1/2">
                         <div className="flex flex-col">
                             <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">
@@ -182,7 +195,7 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className="hidden py-10 md:flex md:w-1/3 lg:w-1/2">
+                    <div className="w-full py-10 md:w-1/3 lg:w-1/2">
                         <Image
                             src="/new/Group 198 (1).png"
                             alt="Product"
@@ -191,40 +204,52 @@ function Home() {
                         />
                     </div>
                 </div>
-                <div className="hidden w-full bg-secondary bg-opacity-20 py-6 md:block">
-                    <div className="mx-auto grid max-w-7xl grid-cols-3 items-center gap-4 p-4 md:grid-cols-5">
-                        <div className="">
-                            <div className="mb-2 font-bold md:text-2xl lg:text-3xl">
-                                Partner Kami
+                <div className="w-full bg-secondary bg-opacity-20 p-6 md:block">
+                    <div className="mx-auto max-w-7xl overflow-x-auto">
+                        <div className="flex items-center md:grid md:grid-cols-5 md:gap-10">
+                            <div className="min-w-[50%]">
+                                <div className="flex flex-col">
+                                    <div className="mb-2 font-bold md:text-2xl lg:text-3xl">
+                                        Partner Kami
+                                    </div>
+                                    <div className="md:text-sm lg:text-lg">
+                                        Terpercaya pada beberapa perusahaan
+                                    </div>
+                                </div>
                             </div>
-                            <div className="md:text-sm lg:text-lg">
-                                Terpercaya pada beberapa perusahaan
+                            <div className="min-w-[50%]">
+                                <Image
+                                    src="/Shopee.png"
+                                    alt="Shopee"
+                                    width={160}
+                                    height={50}
+                                />
+                            </div>
+                            <div className="min-w-[50%]">
+                                <Image
+                                    src="/Lazada.png"
+                                    alt="Lazada"
+                                    width={160}
+                                    height={50}
+                                />
+                            </div>
+                            <div className="min-w-[50%]">
+                                <Image
+                                    src="/Tokopedia.png"
+                                    alt="Tokopedia"
+                                    width={160}
+                                    height={50}
+                                />
+                            </div>
+                            <div className="min-w-[50%]">
+                                <Image
+                                    src="/Amazon.png"
+                                    alt="Bukalapak"
+                                    width={160}
+                                    height={50}
+                                />
                             </div>
                         </div>
-                        <Image
-                            src="/Shopee.png"
-                            alt="Shopee"
-                            width={160}
-                            height={50}
-                        />
-                        <Image
-                            src="/Lazada.png"
-                            alt="Lazada"
-                            width={160}
-                            height={50}
-                        />
-                        <Image
-                            src="/Tokopedia.png"
-                            alt="Tokopedia"
-                            width={160}
-                            height={50}
-                        />
-                        <Image
-                            src="/Amazon.png"
-                            alt="Bukalapak"
-                            width={160}
-                            height={50}
-                        />
                     </div>
                 </div>
                 <div className="mx-auto my-5 max-w-7xl p-0 lg:p-5">
@@ -234,8 +259,8 @@ function Home() {
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
                                     50% OFF
                                 </div>
-                                <div className="py-2 text-3xl font-bold">
-                                    Rednot Pallete
+                                <div className="py-2 text-2xl font-bold">
+                                    PALET SEPATU
                                 </div>
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
@@ -261,8 +286,8 @@ function Home() {
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
                                     50% OFF
                                 </div>
-                                <div className="py-2 text-3xl font-bold">
-                                    Fashion Pallate
+                                <div className="py-2 text-2xl font-bold">
+                                    PALET FASHION
                                 </div>
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
@@ -288,8 +313,8 @@ function Home() {
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
                                     50% OFF
                                 </div>
-                                <div className="py-2 text-3xl font-bold">
-                                    Wireless Product
+                                <div className="py-2 text-2xl font-bold">
+                                    PALET ELEKTRONIK
                                 </div>
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
@@ -315,8 +340,8 @@ function Home() {
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
                                     50% OFF
                                 </div>
-                                <div className="py-2 text-3xl font-bold">
-                                    Electronic
+                                <div className="py-2 text-2xl font-bold">
+                                    PALET UNGGULAN
                                 </div>
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
@@ -582,10 +607,13 @@ function Home() {
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
-                                    Lebih Mudah
+                                    LAYANAN PELANGGAN
                                 </div>
                                 <div className="mt-5 text-sm opacity-60">
-                                    Layanan yang lebih mudah
+                                    Kami berdedikasi untuk menyediakan layanan
+                                    pelanggan yang luar biasa dan membangun
+                                    hubungan jangka panjang dengan klien kami
+                                    berdasarkan kepercayaan dan kehandalan.
                                 </div>
                             </div>
                             {/* Card 2 */}
@@ -598,11 +626,11 @@ function Home() {
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
-                                    Keselamatan
+                                    KESELAMATAN
                                 </div>
                                 <div className="mt-5 text-sm opacity-60">
-                                    Say goodbye to clogged drains with our
-                                    professional drain cleaning services.
+                                    Kami memprioritaskan keselamatan karyawan,
+                                    klien, dan lingkungan di semua operasi kami.
                                 </div>
                             </div>
                             {/* Card 3 */}
@@ -615,11 +643,13 @@ function Home() {
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
-                                    Keberlanjutan
+                                    KEBERLANJUTAN
                                 </div>
                                 <div className="mt-5 text-sm opacity-60">
-                                    Count on us for precise and reliable fixture
-                                    installations, from faucets to toilets.
+                                    Kami berkomitmen untuk menyediakan limbah
+                                    yang berkelanjutan solusi manajemen yang
+                                    melestarikan sumber daya alam dan melindungi
+                                    lingkungan.
                                 </div>
                             </div>
                             {/* Card 4 */}
@@ -632,11 +662,13 @@ function Home() {
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
-                                    Inovasi
+                                    INVOVASI
                                 </div>
                                 <div className="mt-5 text-sm opacity-60">
-                                    Leaky or damaged pipes can cause significant
-                                    issues.
+                                    Kami terus mengeksplorasi teknologi dan
+                                    proses baru untuk meningkatkan layanan kami
+                                    dan memberikan solusi pengelolaan limbah
+                                    yang lebih efisien dan efektif.
                                 </div>
                             </div>
                             {/* Card 5 */}
@@ -645,14 +677,16 @@ function Home() {
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
                                         backgroundImage:
-                                            'url("/Image-111.png")',
+                                            'url("/Image-555.png")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
-                                    Lebih Mudah
+                                    INTEGRITAS
                                 </div>
                                 <div className="mt-5 text-sm opacity-60">
-                                    Layanan yang lebih mudah
+                                    Kami menjalankan bisnis kami dengan tingkat
+                                    integritas,transparansi, dan standar etika
+                                    tertinggi.
                                 </div>
                             </div>
                         </div>
@@ -669,13 +703,17 @@ function Home() {
                         Berbagai Kegiatan yang kita lakukan untuk memenuhi
                         kebutuhan Anda
                     </div>
-                    <Image
-                        src="/new/Group 1437254503 (1).png"
-                        alt="Product"
-                        width={1000}
-                        height={1000}
-                        className="mb-20 mt-10 w-full"
-                    />
+                    <Link
+                        href="https://youtu.be/gTQamrVevWE?si=G6B6PrEWsKgjI_tZ"
+                        target="_blank">
+                        <Image
+                            src="/new/Group 1437254503 (1).png"
+                            alt="Product"
+                            width={1000}
+                            height={1000}
+                            className="mb-20 mt-10 w-full"
+                        />
+                    </Link>
                 </div>
                 <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
                     <div className="mx-auto max-w-7xl">
@@ -702,7 +740,7 @@ function Home() {
                                       videos.length > 0 &&
                                       videos.map(video => (
                                           <div
-                                              className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                              className="min-w-[100%] md:min-w-[30%] lg:min-w-0"
                                               key={video.id}>
                                               <Link href={`/video/${video.id}`}>
                                                   <VideoThumbnail
@@ -743,12 +781,12 @@ function Home() {
                                 <div className="flex w-1/3 items-center gap-3">
                                     <div
                                         className="cursor-pointer rounded-full bg-secondary p-3"
-                                        onClick={scrollLeft}>
+                                        onClick={scrollLeftTwo}>
                                         <ArrowLeftIcon className="h-5 w-5" />
                                     </div>
                                     <div
                                         className="cursor-pointer rounded-full bg-secondary p-3"
-                                        onClick={scrollRight}>
+                                        onClick={scrollRightTwo}>
                                         <ArrowRightIcon className="h-5 w-5" />
                                     </div>
                                 </div>
@@ -756,7 +794,7 @@ function Home() {
                             <div className="w-full">
                                 <div
                                     className="scrollbar-hide overflow-x-auto py-10"
-                                    ref={scrollRef}>
+                                    ref={scrollRefTwo}>
                                     <div className="flex w-full gap-4">
                                         {loadingTestimonies
                                             ? Array.from({ length: 3 }).map(

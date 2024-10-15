@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                <link rel="icon" href="/bulky-by-L8.png" sizes="any" />
+                <link rel="icon" href="/new/favicon bulky-01.png" sizes="any" />
             </head>
             <body>
                 <Suspense fallback={<div>Loading...</div>}>

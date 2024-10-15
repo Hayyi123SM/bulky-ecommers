@@ -49,10 +49,10 @@ function ProductCard({
             </Link>
             <div className="h-[180px] flex-grow px-1 py-4">
                 <Link href={url}>
-                    <div className="py-1 text-sm font-bold text-[#007185]">
+                    <div className="py-1 text-xs font-bold text-[#007185]">
                         {location}
                     </div>
-                    <div className="line-clamp-2 py-1 text-sm">{title}</div>
+                    <div className="line-clamp-2 py-1 text-base">{title}</div>
                     <div className="py-1 text-base font-bold">{price}</div>
                     {sale && (
                         <div className="flex items-center">
