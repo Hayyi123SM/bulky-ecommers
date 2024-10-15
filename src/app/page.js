@@ -529,7 +529,7 @@ function Home() {
                             berkelanjutan untuk bisnis.
                         </div>
                         <div className="mt-10 flex w-full justify-between pr-20">
-                            <Link href="/product">
+                            <Link href="/contact-us">
                                 <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
                                     Pelajari Selanjutnya
                                 </div>

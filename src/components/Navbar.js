@@ -352,11 +352,6 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                         About Us
                                     </div>
                                 </Link>
-                                <Link href="/">
-                                    <div className="px-8 text-white hover:text-secondary">
-                                        Blog
-                                    </div>
-                                </Link>
                                 <Link href="/contact-us">
                                     <div className="px-8 text-white hover:text-secondary">
                                         Contact Us
