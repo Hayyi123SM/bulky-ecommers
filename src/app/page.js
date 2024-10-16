@@ -21,11 +21,12 @@ import {
     ArrowRightIcon,
     StarIcon,
 } from "@heroicons/react/24/solid"
+import { useRouter } from "next/navigation"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const [current, setCurrent] = useState(0)
-
+    const router = useRouter()
     const dispatch = useDispatch()
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
@@ -265,12 +266,14 @@ function Home() {
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
                                 </div>
-                                <Link href="/product" className="font-light">
-                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                        Beli Sekarang
-                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
-                                    </div>
-                                </Link>
+                                <div
+                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
+                                    onClick={() =>
+                                        router.push("/product?category=sepatu")
+                                    }>
+                                    Beli Sekarang
+                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                </div>
                             </div>
                             <div className="w-1/3 pt-12">
                                 <Image
@@ -292,12 +295,16 @@ function Home() {
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
                                 </div>
-                                <Link href="/product" className="font-light">
-                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                        Beli Sekarang
-                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
-                                    </div>
-                                </Link>
+                                <div
+                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
+                                    onClick={() =>
+                                        router.push(
+                                            "/product?category=fashion-1",
+                                        )
+                                    }>
+                                    Beli Sekarang
+                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                </div>
                             </div>
                             <div className="w-1/3 pt-12">
                                 <Image
@@ -319,12 +326,16 @@ function Home() {
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
                                 </div>
-                                <Link href="/product" className="font-light">
-                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                        Beli Sekarang
-                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
-                                    </div>
-                                </Link>
+                                <div
+                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
+                                    onClick={() =>
+                                        router.push(
+                                            "/product?category=elektronik",
+                                        )
+                                    }>
+                                    Beli Sekarang
+                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                </div>
                             </div>
                             <div className="w-1/3 pt-12">
                                 <Image
@@ -346,12 +357,14 @@ function Home() {
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
                                 </div>
-                                <Link href="/product" className="font-light">
-                                    <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                        Beli Sekarang
-                                        <ArrowRightIcon className="ml-2 h-4 w-4" />
-                                    </div>
-                                </Link>
+                                <div
+                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
+                                    onClick={() =>
+                                        router.push("/product?category=fmcg")
+                                    }>
+                                    Beli Sekarang
+                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                                </div>
                             </div>
                             <div className="w-1/3 pt-12">
                                 <Image
