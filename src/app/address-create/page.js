@@ -1,24 +1,18 @@
 "use client"
 
-import AreaSelect from "@/components/AreaSelect"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
 import InputError from "@/components/InputError"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupAddress from "@/components/PopupAddress"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
 import { addAddress } from "@/store/slices/addressSlice"
-import {
-    fetchCities,
-    fetchDistricts,
-    fetchProvinces,
-    fetchSubDistricts,
-} from "@/store/slices/areaSlice"
 import { MapPinIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 function AddressCreate() {
@@ -27,47 +21,48 @@ function AddressCreate() {
     const [label, setlabel] = useState("")
     const [name, setName] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    const [address, setAddress] = useState("")
-    const [provinceId, setProvinceId] = useState("")
-    const [cityId, setCityId] = useState("")
-    const [districtId, setDistrictId] = useState("")
-    const [subDistrictId, setSubDistrictId] = useState("")
+    // const [address, setAddress] = useState("")
+    // const [provinceId, setProvinceId] = useState("")
+    // const [cityId, setCityId] = useState("")
+    // const [districtId, setDistrictId] = useState("")
+    // const [subDistrictId, setSubDistrictId] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
     const errors = useSelector(state => state.address.error)
+    const [isLoading, setIsLoading] = useState(false)
     const [isShow, setIsShow] = useState(false)
     const [isShowMap, setIsShowMap] = useState(false)
     const [selectedAddress, setSelectedAddress] = useState("")
     const [selectedLatitude, setSelectedLatitude] = useState(null)
     const [selectedLongitude, setSelectedLongitude] = useState(null)
 
-    useEffect(() => {
-        dispatch(fetchProvinces())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(fetchProvinces())
+    // }, [dispatch])
 
-    const provinces = useSelector(state => state.area.provinces)
-    const cities = useSelector(state => state.area.cities)
-    const districts = useSelector(state => state.area.districts)
-    const subDistricts = useSelector(state => state.area.subDistricts)
+    // const provinces = useSelector(state => state.area.provinces)
+    // const cities = useSelector(state => state.area.cities)
+    // const districts = useSelector(state => state.area.districts)
+    // const subDistricts = useSelector(state => state.area.subDistricts)
 
-    const handleSelectProvince = option => {
-        setProvinceId(option.id)
-        dispatch(fetchCities(option.id))
-    }
+    // const handleSelectProvince = option => {
+    //     setProvinceId(option.id)
+    //     dispatch(fetchCities(option.id))
+    // }
 
-    const handleSelectCity = option => {
-        setCityId(option.id)
-        dispatch(fetchDistricts(option.id))
-    }
+    // const handleSelectCity = option => {
+    //     setCityId(option.id)
+    //     dispatch(fetchDistricts(option.id))
+    // }
 
-    const handleSelectDistrict = option => {
-        setDistrictId(option.id)
-        dispatch(fetchSubDistricts(option.id))
-    }
+    // const handleSelectDistrict = option => {
+    //     setDistrictId(option.id)
+    //     dispatch(fetchSubDistricts(option.id))
+    // }
 
-    const handleSelectSubDistrict = option => {
-        setSubDistrictId(option.id)
-    }
+    // const handleSelectSubDistrict = option => {
+    //     setSubDistrictId(option.id)
+    // }
 
     const handleSaveAddress = (lat, lng, address) => {
         setSelectedLatitude(lat)
@@ -79,16 +74,17 @@ function AddressCreate() {
     }
 
     const submitForm = e => {
+        setIsLoading(true)
         e.preventDefault()
         const data = {
             label,
             name,
             phoneNumber,
-            address,
-            provinceId,
-            cityId,
-            districtId,
-            subDistrictId,
+            // address,
+            // provinceId,
+            // cityId,
+            // districtId,
+            // subDistrictId,
             latitude: selectedLatitude,
             longitude: selectedLongitude,
             isPrimary: false,
@@ -100,9 +96,6 @@ function AddressCreate() {
             return
         } else {
             setIsShow(true)
-            setTimeout(() => {
-                window.location.href = "/address"
-            }, 1000)
         }
     }
 
@@ -207,7 +200,7 @@ function AddressCreate() {
                                 />
                             </div>
                         </div>
-                        <div className="mt-3 items-center justify-between lg:flex">
+                        {/* <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
                                     Alamat
@@ -286,7 +279,7 @@ function AddressCreate() {
                                     />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="mt-3 flex items-center justify-between">
                             <div className="item-center flex w-full lg:w-5/12">
                                 <div className="item-center w-1/2 pr-2">
@@ -345,8 +338,19 @@ function AddressCreate() {
                             <div className="mt-5">
                                 <button
                                     type="submit"
-                                    className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Simpan
+                                    className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    {isLoading ? (
+                                        <>
+                                            Tunggu Sebentar...
+                                            <LoadingSpinner
+                                                text={false}
+                                                color="#000"
+                                                size={16}
+                                            />
+                                        </>
+                                    ) : (
+                                        "Simpan"
+                                    )}
                                 </button>
                             </div>
                             <div className="mt-3">
@@ -373,6 +377,7 @@ function AddressCreate() {
                 type={"notification"}
                 title={"Pemberitahuan"}
                 message={`Selamat, alamat baru telah ditambahkan.`}
+                urlConfirm="/address"
             />
             {/* <Footer /> */}
         </div>

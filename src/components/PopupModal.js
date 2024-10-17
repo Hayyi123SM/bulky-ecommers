@@ -11,6 +11,7 @@ const PopupModal = ({
     onConfirm = null,
     confirmText = "Confirm",
     cancelText = "Cancel",
+    urlConfirm = "#",
 }) => {
     const [isVisible, setIsVisible] = useState(false)
 
@@ -65,11 +66,13 @@ const PopupModal = ({
                         </>
                     )}
                     {type === "notification" && (
-                        <button
-                            className="w-full rounded-lg bg-secondary px-4 py-2 font-semibold hover:bg-[#e8bc00]"
-                            onClick={closeModal}>
-                            OK
-                        </button>
+                        <Link href={urlConfirm} className="w-full">
+                            <button
+                                className="w-full rounded-lg bg-secondary px-4 py-2 font-semibold hover:bg-[#e8bc00]"
+                                onClick={closeModal}>
+                                OK
+                            </button>
+                        </Link>
                     )}
                     {type === "updateProfile" && (
                         <>

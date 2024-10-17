@@ -145,15 +145,13 @@ function Payment({ params }) {
                                                         className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
                                                         onClick={() =>
                                                             handleOptionClick(
-                                                                "/" +
-                                                                    method.code +
-                                                                    ".svg",
+                                                                method.logo,
                                                                 method.name,
                                                                 method.id,
                                                             )
                                                         }>
                                                         <Image
-                                                            src={`/${method.code}.svg`}
+                                                            src={method.logo}
                                                             width={24}
                                                             height={24}
                                                             alt={method.name}

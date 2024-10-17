@@ -88,14 +88,20 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
         }
     }, [showPopupMenu, showPopupMenuProfile])
 
-    if (user === undefined) {
-        if (savedUser !== null) {
-            return <h1>Loading user...</h1>
-        } else {
+    useEffect(() => {
+        if (!user) {
             router.push("/login")
-            return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
         }
-    }
+    }, [user, router])
+
+    // if (user === undefined) {
+    //     if (savedUser !== null) {
+    //         return <h1>Loading user...</h1>
+    //     } else {
+    //         router.push("/login")
+    //         return <h1>Redirecting...</h1> // Optionally add a loading state or spinner
+    //     }
+    // }
 
     return (
         <div

@@ -2,19 +2,21 @@
 "use client"
 
 import Footer from "@/components/Footer"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import Pagination from "@/components/Pagination"
 import PopupFilter from "@/components/PopupFilter"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import SidebarProduct from "@/components/SidebarProduct"
+import { setFilters } from "@/store/slices/filterSlice"
 import {
     AdjustmentsHorizontalIcon,
     ArchiveBoxIcon,
 } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
@@ -22,10 +24,10 @@ import {
     fetchProducts,
     fetchSearchProducts,
 } from "../../store/slices/productSlice"
-import LoadingSpinner from "@/components/LoadingSpinner"
 
-function Product() {
-    const category = useSearchParams().get("category")
+function Product({ searchParams }) {
+    // const category = useSearchParams().get("category")
+    const category = searchParams.category
 
     const [showPopup, setShowPopup] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -56,8 +58,18 @@ function Product() {
     const brands = useSelector(state => state.filters.brands)
 
     useEffect(() => {
+        if (category) {
+            dispatch(setFilters({ categories: [category] }))
+        }
+    }, [category])
+
+    useEffect(() => {
         if (currentPage && filters) {
-            dispatch(fetchProducts({ currentPage, filters })) // pastikan currentPage tidak undefined
+            if (category) {
+                dispatch(fetchProducts({ currentPage, filters, category }))
+            } else {
+                dispatch(fetchProducts({ currentPage, filters }))
+            }
         }
     }, [currentPage, filters, dispatch])
 

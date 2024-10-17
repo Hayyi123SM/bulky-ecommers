@@ -22,11 +22,17 @@ import {
     StarIcon,
 } from "@heroicons/react/24/solid"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/auth"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/css"
+import "swiper/css/autoplay"
+import { Autoplay } from "swiper/modules"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const [current, setCurrent] = useState(0)
     const router = useRouter()
+    const { user } = useAuth()
     const dispatch = useDispatch()
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
@@ -90,7 +96,13 @@ function Home() {
     // console.log("loadingBanners:", loadingBanners)
     // console.log("====================================")
 
-    const togglePopupMenu = () => setShowPopupMenu(!showPopupMenu)
+    const togglePopupMenu = () => {
+        if (!user) {
+            router.push("/login")
+        } else {
+            setShowPopupMenu(!showPopupMenu)
+        }
+    }
     const closePopupMenu = () => setShowPopupMenu(false)
     const handlePackageDetail = pdf => {
         setIsOpenPdf(true)
@@ -205,52 +217,106 @@ function Home() {
                         />
                     </div>
                 </div>
-                <div className="w-full bg-secondary bg-opacity-20 p-6 md:block">
-                    <div className="mx-auto max-w-7xl overflow-x-auto">
-                        <div className="flex items-center md:grid md:grid-cols-5 md:gap-10">
-                            <div className="min-w-[50%]">
-                                <div className="flex flex-col">
-                                    <div className="mb-2 font-bold md:text-2xl lg:text-3xl">
-                                        Partner Kami
-                                    </div>
-                                    <div className="md:text-sm lg:text-lg">
-                                        Terpercaya pada beberapa perusahaan
-                                    </div>
-                                </div>
+                <div className="w-full bg-secondary bg-opacity-20 p-6">
+                    <div className="mx-auto flex max-w-7xl items-center">
+                        <div className="flex w-full flex-col md:w-1/3">
+                            <div className="mb-4 font-bold md:text-2xl lg:text-3xl">
+                                Partner Kami
                             </div>
-                            <div className="min-w-[50%]">
-                                <Image
-                                    src="/Shopee.png"
-                                    alt="Shopee"
-                                    width={160}
-                                    height={50}
-                                />
-                            </div>
-                            <div className="min-w-[50%]">
-                                <Image
-                                    src="/Lazada.png"
-                                    alt="Lazada"
-                                    width={160}
-                                    height={50}
-                                />
-                            </div>
-                            <div className="min-w-[50%]">
-                                <Image
-                                    src="/Tokopedia.png"
-                                    alt="Tokopedia"
-                                    width={160}
-                                    height={50}
-                                />
-                            </div>
-                            <div className="min-w-[50%]">
-                                <Image
-                                    src="/Amazon.png"
-                                    alt="Bukalapak"
-                                    width={160}
-                                    height={50}
-                                />
+                            <div className="mb-6 md:text-sm lg:text-lg">
+                                Terpercaya pada beberapa perusahaan
                             </div>
                         </div>
+
+                        <Swiper
+                            modules={[Autoplay]}
+                            spaceBetween={20}
+                            slidesPerView={4}
+                            loop={true}
+                            autoplay={{
+                                delay: 2000,
+                                disableOnInteraction: false,
+                            }}
+                            breakpoints={{
+                                // When window width is >= 640px (mobile)
+                                425: {
+                                    slidesPerView: 2, // Show 2 slides
+                                },
+                                // When window width is >= 768px (tablet)
+                                768: {
+                                    slidesPerView: 3, // Show 3 slides
+                                },
+                                // When window width is >= 1024px (desktop)
+                                1024: {
+                                    slidesPerView: 4, // Show 4 slides
+                                },
+                            }}
+                            className="flex items-center justify-center">
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo.webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo (2).webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo (3).webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo (4) s.png"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/lel.webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo (6).webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo (7).webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex justify-center">
+                                <Image
+                                    src="/new/logo (8).webp"
+                                    alt="Partner"
+                                    width={160}
+                                    height={50}
+                                />
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
                 </div>
                 <div className="mx-auto my-5 max-w-7xl p-0 lg:p-5">
@@ -352,7 +418,7 @@ function Home() {
                                     50% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
-                                    PALET UNGGULAN
+                                    PALET FMCG
                                 </div>
                                 <div className="mb-5 text-lg">
                                     Don't miss the last opportunity
@@ -615,8 +681,7 @@ function Home() {
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
-                                        backgroundImage:
-                                            'url("/Image-111.png")',
+                                        backgroundImage: 'url("/new/1.webp")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
@@ -634,8 +699,7 @@ function Home() {
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
-                                        backgroundImage:
-                                            'url("/Image-222.png")',
+                                        backgroundImage: 'url("/new/2.webp")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
@@ -651,8 +715,7 @@ function Home() {
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
-                                        backgroundImage:
-                                            'url("/Image-333.png")',
+                                        backgroundImage: 'url("/new/3.webp")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
@@ -670,8 +733,7 @@ function Home() {
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
-                                        backgroundImage:
-                                            'url("/Image-444.png")',
+                                        backgroundImage: 'url("/new/4.webp")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
@@ -689,8 +751,7 @@ function Home() {
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
-                                        backgroundImage:
-                                            'url("/Image-555.png")',
+                                        backgroundImage: 'url("/new/5.webp")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
@@ -716,17 +777,16 @@ function Home() {
                         Berbagai Kegiatan yang kita lakukan untuk memenuhi
                         kebutuhan Anda
                     </div>
-                    <Link
-                        href="https://youtu.be/gTQamrVevWE?si=G6B6PrEWsKgjI_tZ"
-                        target="_blank">
-                        <Image
-                            src="/new/Group 1437254503 (1).png"
-                            alt="Product"
-                            width={1000}
-                            height={1000}
-                            className="mb-20 mt-10 w-full"
-                        />
-                    </Link>
+                    <div className="h-[300px] w-full md:h-[400px] lg:h-[450px]">
+                        <iframe
+                            className="h-full w-full" // Menyesuaikan iframe dengan ukuran parent
+                            src="https://www.youtube.com/embed/gTQamrVevWE?si=8HxQ3jZMHPZcg_zM"
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen></iframe>
+                    </div>
                 </div>
                 <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
                     <div className="mx-auto max-w-7xl">
