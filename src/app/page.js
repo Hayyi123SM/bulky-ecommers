@@ -785,7 +785,8 @@ function Home() {
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen></iframe>
+                            allowFullScreen
+                        />
                     </div>
                 </div>
                 <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
