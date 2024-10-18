@@ -1,5 +1,5 @@
 import axios from "@/lib/axios"
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     items: [],
@@ -7,6 +7,7 @@ const initialState = {
     relatedProducts: [],
     searchResults: [],
     totalPages: 0,
+    totalItems: 0,
     currentPage: 1,
     error: null,
     isLoading: true,
@@ -140,6 +141,7 @@ const productSlice = createSlice({
                 state.items = action.payload.data
                 state.totalPages = action.payload.meta.last_page
                 state.currentPage = action.payload.meta.current_page
+                state.totalItems = action.payload.meta.total
                 state.isLoading = false
             })
             .addCase(fetchProducts.rejected, (state, action) => {
