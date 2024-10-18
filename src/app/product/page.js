@@ -271,7 +271,7 @@ function Product({ searchParams }) {
                         <> */}
                     <div className="pb-5 text-sm text-[#212121]">
                         Menampilkan 1 - {loadingProducts ? 0 : products.length}{" "}
-                        barang dari {loadingProducts ? 0 : totalItems} barang
+                        barang dari {loadingProducts ? 0 : totalItems} Produk
                     </div>
                     <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
                         {loadingProducts
