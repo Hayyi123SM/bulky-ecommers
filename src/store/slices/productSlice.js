@@ -1,5 +1,7 @@
 import axios from "@/lib/axios"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createApi } from "@reduxjs/toolkit/query/react"
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss"
 
 const initialState = {
     items: [],
@@ -12,6 +14,81 @@ const initialState = {
     error: null,
     isLoading: true,
 }
+
+// Custom baseQuery to use axios instance
+const axiosBaseQuery =
+    ({ baseUrl } = { baseUrl: "" }) =>
+    async ({ url, method, data, params }) => {
+        try {
+            const result = await axios({
+                url: baseUrl + url,
+                method,
+                data,
+                params,
+            })
+            return { data: result.data }
+        } catch (axiosError) {
+            let err = axiosError
+            return {
+                error: {
+                    status: err.response?.status,
+                    data: err.response?.data || err.message,
+                },
+            }
+        }
+    }
+
+export const productApi = createApi({
+    reducerPath: "productApi",
+    baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
+    endpoints: builder => ({
+        fetchProducts: builder.query({
+            query: ({ currentPage, filters }) => {
+                const params = {
+                    page: currentPage,
+                    per_page: filters.perPage || 15,
+                    ...(filters.search && { search: filters.search }),
+                    ...(filters.categories &&
+                        filters.categories.length && {
+                            category: filters.categories.join(","),
+                        }),
+                    ...(filters.conditions &&
+                        filters.conditions.length && {
+                            condition: filters.conditions.join(","),
+                        }),
+                    ...(filters.statuses &&
+                        filters.statuses.length && {
+                            status: filters.statuses.join(","),
+                        }),
+                    ...(filters.warehouses &&
+                        filters.warehouses.length && {
+                            warehouse: filters.warehouses.join(","),
+                        }),
+                    ...(filters.priceMin && { price_min: filters.priceMin }),
+                    ...(filters.priceMax && { price_max: filters.priceMax }),
+                    ...(filters.brands &&
+                        filters.brands.length && {
+                            brands: filters.brands,
+                        }),
+                }
+
+                const searchParams = new URLSearchParams(params)
+
+                // Handle brands array
+                if (filters.brands?.length) {
+                    filters.brands.forEach(brand => {
+                        searchParams.append("brands[]", brand)
+                    })
+                }
+
+                return {
+                    url: `/api/products?${searchParams.toString()}`,
+                    method: "GET",
+                }
+            },
+        }),
+    }),
+})
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
@@ -193,6 +270,7 @@ const productSlice = createSlice({
     },
 })
 
+export const { useFetchProductsQuery } = productApi
 export const { setStateProduct, setProductName, initializeProduct } =
     productSlice.actions
 export default productSlice.reducer

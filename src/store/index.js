@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import productReducer from "./slices/productSlice"
+import productReducer, { productApi } from "./slices/productSlice"
 import bannerReducer from "./slices/bannerSlice"
 import videoReducer from "./slices/videoSlice"
 import cartSlice from "./slices/cartSlice"
@@ -13,6 +13,7 @@ import pageSlice from "./slices/pageSlice"
 
 export const store = configureStore({
     reducer: {
+        [productApi.reducerPath]: productApi.reducer,
         auth: authSlice,
         products: productReducer,
         banners: bannerReducer,
@@ -25,4 +26,6 @@ export const store = configureStore({
         testimony: testimonySlice,
         pages: pageSlice,
     },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(productApi.middleware),
 })

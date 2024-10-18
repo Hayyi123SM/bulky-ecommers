@@ -96,6 +96,15 @@ const filterSlice = createSlice({
                 ...action.payload,
             }
         },
+        resetFilters(state) {
+            state.selectedFilters = {
+                categories: [],
+                warehouses: [],
+                conditions: [],
+                statuses: [],
+                brands: [],
+            }
+        },
     },
     extraReducers: builder => {
         builder
@@ -181,5 +190,5 @@ const filterSlice = createSlice({
     },
 })
 
-export const { setFilters } = filterSlice.actions
+export const { setFilters, resetFilters } = filterSlice.actions
 export default filterSlice.reducer

@@ -9,7 +9,6 @@ import PopupFilter from "@/components/PopupFilter"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import SidebarProduct from "@/components/SidebarProduct"
-import { setFilters } from "@/store/slices/filterSlice"
 import {
     AdjustmentsHorizontalIcon,
     ArchiveBoxIcon,
@@ -23,7 +22,9 @@ import { useDispatch, useSelector } from "react-redux"
 import {
     fetchProducts,
     fetchSearchProducts,
+    useFetchProductsQuery,
 } from "../../store/slices/productSlice"
+import { resetFilters } from "@/store/slices/filterSlice"
 
 function Product({ searchParams }) {
     // const category = useSearchParams().get("category")
@@ -44,11 +45,7 @@ function Product({ searchParams }) {
     const currentPage = useSelector(state => state.products.currentPage || 1)
 
     const dispatch = useDispatch()
-    const products = useSelector(state => state.products.items)
-    const totalPages = useSelector(state => state.products.totalPages)
-    const totalItems = useSelector(state => state.products.totalItems)
     const filters = useSelector(state => state.filters.selectedFilters)
-    const loadingProducts = useSelector(state => state.products.isLoading)
     const searchResults = useSelector(state => state.products.searchResults)
 
     const selectedFilters = useSelector(state => state.filters.selectedFilters)
@@ -58,21 +55,27 @@ function Product({ searchParams }) {
     const statuses = useSelector(state => state.filters.statuses)
     const brands = useSelector(state => state.filters.brands)
 
-    useEffect(() => {
-        if (category) {
-            dispatch(setFilters({ categories: [category] }))
-        }
-    }, [category])
+    console.log("====================================")
+    console.log("filters", filters)
+    console.log("====================================")
 
     useEffect(() => {
-        if (currentPage && filters) {
-            if (category) {
-                dispatch(fetchProducts({ currentPage, filters, category }))
-            } else {
-                dispatch(fetchProducts({ currentPage, filters }))
-            }
+        if (!category) {
+            dispatch(resetFilters())
         }
-    }, [currentPage, filters, dispatch])
+    }, [])
+
+    const {
+        data,
+        error,
+        isLoading: loadingProducts,
+    } = useFetchProductsQuery({ currentPage, filters })
+
+    const products = data?.data || []
+    const totalItems = data?.meta?.total || 0
+    const totalPages = data?.meta?.last_page || 0
+
+    console.log("RTK QUERY", products)
 
     const handleSearchInputChange = e => {
         setSearchQuery(e.target.value)
@@ -136,6 +139,8 @@ function Product({ searchParams }) {
             setIsLoadingPdf(true) // Reset loading setiap kali PDF dibuka
         }
     }, [isOpenPdf])
+
+    if (error) return <div>Error: {error.data || error.message}</div>
 
     return (
         <div>
@@ -276,7 +281,7 @@ function Product({ searchParams }) {
                     <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
                         {loadingProducts
                             ? Array.from({
-                                  length: products.length,
+                                  length: 15,
                               }).map((_, index) => (
                                   <div key={index}>
                                       <Skeleton height={200} />

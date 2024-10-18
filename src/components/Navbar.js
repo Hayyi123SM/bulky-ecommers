@@ -1,16 +1,16 @@
 "use client"
 
+import CategorySelect from "@/components/CategorySelect"
 import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
-import { fetchCategories } from "@/store/slices/filterSlice"
-import { fetchSearchProducts } from "@/store/slices/productSlice"
+import { fetchCategories, resetFilters } from "@/store/slices/filterSlice"
+import { useFetchProductsQuery } from "@/store/slices/productSlice"
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import CategorySelect from "@/components/CategorySelect"
 
 function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const router = useRouter()
@@ -18,13 +18,20 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const [showSearchResults, setShowSearchResults] = useState(false)
     const inputRef = useRef(null)
     const popupRef = useRef(null)
-    const searchResults = useSelector(state => state.products.searchResults)
+    // const searchResults = useSelector(state => state.products.searchResults)
     const searchParams = useSearchParams()
     const currentPage = parseInt(searchParams.get("page")) || 1
     const { user } = useAuth({ middleware: "guest" })
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
     // const scrollRef = useRef(null) // Reference to the scrollable div
+
+    const { data } = useFetchProductsQuery(
+        { currentPage, filters: { search: searchQuery } },
+        { skip: !searchQuery }, // Skip if there is no search query
+    )
+
+    const searchResults = data?.data || []
 
     useEffect(() => {
         // const getUser = JSON.parse(localStorage.getItem("user"))
@@ -36,12 +43,13 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const handleSearchInputChange = e => {
         setSearchQuery(e.target.value)
         setShowSearchResults(e.target.value.length > 0)
-        dispatch(
-            fetchSearchProducts({
-                currentPage,
-                filters: { search: e.target.value },
-            }),
-        )
+        // dispatch(
+        //     fetchSearchProducts({
+        //         currentPage,
+        //         filters: { search: e.target.value },
+        //     }),
+        // )
+        setSearchQuery(e.target.value)
     }
 
     const handleSelectCategory = category => {
@@ -87,6 +95,11 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     //         behavior: "smooth",
     //     })
     // }
+
+    const handleToProducts = () => {
+        dispatch(resetFilters())
+        router.push("/product")
+    }
 
     const visibilityClasses =
         visibleOn === "mobile"
@@ -342,11 +355,11 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                         Home
                                     </div>
                                 </Link>
-                                <Link href="/product">
-                                    <div className="px-8 text-white hover:text-secondary">
-                                        Shop
-                                    </div>
-                                </Link>
+                                <div
+                                    className="cursor-pointer px-8 text-white hover:text-secondary"
+                                    onClick={handleToProducts}>
+                                    Shop
+                                </div>
                                 <Link href="/about-us">
                                     <div className="px-8 text-white hover:text-secondary">
                                         About Us
