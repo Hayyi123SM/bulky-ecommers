@@ -3,7 +3,11 @@
 import CategorySelect from "@/components/CategorySelect"
 import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
-import { fetchCategories, resetFilters } from "@/store/slices/filterSlice"
+import {
+    fetchCategories,
+    resetFilters,
+    setFilters,
+} from "@/store/slices/filterSlice"
 import { useFetchProductsQuery } from "@/store/slices/productSlice"
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -54,6 +58,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
 
     const handleSelectCategory = category => {
         if (category) {
+            dispatch(setFilters({ categories: [category.slug] }))
             router.push(`/product?category=${category.slug}`)
         } else {
             router.push("/")

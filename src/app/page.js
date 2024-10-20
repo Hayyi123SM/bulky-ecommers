@@ -27,6 +27,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import "swiper/css/autoplay"
 import { Autoplay } from "swiper/modules"
+import { setFilters } from "@/store/slices/filterSlice"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -143,6 +144,11 @@ function Home() {
             setIsLoadingPdf(true) // Reset loading setiap kali PDF dibuka
         }
     }, [isOpenPdf])
+
+    const handleSelectCategory = category => {
+        dispatch(setFilters({ categories: [category] }))
+        router.push(`/product?category=${category}`)
+    }
 
     return (
         <div>
@@ -335,7 +341,7 @@ function Home() {
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
-                                        router.push("/product?category=sepatu")
+                                        handleSelectCategory("sepatu")
                                     }>
                                     Beli Sekarang
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
@@ -364,9 +370,7 @@ function Home() {
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
-                                        router.push(
-                                            "/product?category=fashion-1",
-                                        )
+                                        handleSelectCategory("fashion-1")
                                     }>
                                     Beli Sekarang
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
@@ -395,9 +399,7 @@ function Home() {
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
-                                        router.push(
-                                            "/product?category=elektronik",
-                                        )
+                                        handleSelectCategory("elektronik")
                                     }>
                                     Beli Sekarang
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
@@ -426,7 +428,7 @@ function Home() {
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
-                                        router.push("/product?category=fmcg")
+                                        handleSelectCategory("fmcg")
                                     }>
                                     Beli Sekarang
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
