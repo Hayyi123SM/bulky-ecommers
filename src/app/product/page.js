@@ -23,7 +23,7 @@ import {
     fetchSearchProducts,
     useFetchProductsQuery,
 } from "../../store/slices/productSlice"
-import { resetFilters } from "@/store/slices/filterSlice"
+import { resetFilters, setFilters } from "@/store/slices/filterSlice"
 
 function Product({ searchParams }) {
     // const category = useSearchParams().get("category")
@@ -64,6 +64,7 @@ function Product({ searchParams }) {
         if (!category) {
             dispatch(resetFilters())
         } else {
+            dispatch(setFilters({ categories: [category] }))
             router.push(`?category=${category}`)
         }
     }, [category])
