@@ -20,7 +20,6 @@ import { useEffect, useRef, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 import {
-    fetchProducts,
     fetchSearchProducts,
     useFetchProductsQuery,
 } from "../../store/slices/productSlice"
@@ -28,7 +27,8 @@ import { resetFilters } from "@/store/slices/filterSlice"
 
 function Product({ searchParams }) {
     // const category = useSearchParams().get("category")
-    const category = searchParams.category
+    const category = searchParams?.category || ""
+    const pages = Number(searchParams?.page) || 1
 
     const [showPopup, setShowPopup] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -42,7 +42,8 @@ function Product({ searchParams }) {
     const popupRef = useRef(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
-    const currentPage = useSelector(state => state.products.currentPage || 1)
+    // const currentPage = useSelector(state => state.products.currentPage || 1)
+    const [currentPage, setCurrentPage] = useState(pages)
 
     const dispatch = useDispatch()
     const filters = useSelector(state => state.filters.selectedFilters)
@@ -62,8 +63,18 @@ function Product({ searchParams }) {
     useEffect(() => {
         if (!category) {
             dispatch(resetFilters())
+        } else {
+            router.push(`?category=${category}`)
         }
-    }, [])
+    }, [category])
+
+    useEffect(() => {
+        const queryPage = new URLSearchParams(window.location.search).get(
+            "page",
+        )
+        const pageNumber = Number(queryPage) || 1
+        setCurrentPage(pageNumber)
+    }, [router])
 
     const {
         data,
@@ -90,8 +101,9 @@ function Product({ searchParams }) {
 
     const handlePageChange = page => {
         if (page) {
+            setCurrentPage(page)
             router.push(`?page=${page}`)
-            dispatch(fetchProducts({ currentPage: page, filters }))
+            // dispatch(fetchProducts({ currentPage: page, filters }))
         }
     }
 
