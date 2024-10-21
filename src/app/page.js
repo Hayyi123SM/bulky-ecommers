@@ -88,7 +88,7 @@ function Home() {
     useEffect(() => {
         dispatch(fetchBanners())
         dispatch(fetchProducts({ filters: { perPage: 6 } }))
-        dispatch(fetchTestimonies({ take: 3 }))
+        dispatch(fetchTestimonies({ take: 20 }))
         dispatch(fetchVideos({ perPage: 8, paginate: 1 }))
 
         // localStorage.setItem("signinWithGoogle", JSON.stringify(dummy))
@@ -779,7 +779,7 @@ function Home() {
                         Berbagai Kegiatan yang kita lakukan untuk memenuhi
                         kebutuhan Anda
                     </div>
-                    <div className="h-[300px] w-full md:h-[400px] lg:h-[450px]">
+                    <div className="h-[300px] w-full md:h-[400px] lg:h-[450px] lg:w-2/3">
                         <iframe
                             className="h-full w-full" // Menyesuaikan iframe dengan ukuran parent
                             src="https://www.youtube.com/embed/gTQamrVevWE?si=8HxQ3jZMHPZcg_zM"
