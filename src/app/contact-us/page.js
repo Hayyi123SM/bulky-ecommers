@@ -13,7 +13,7 @@ const mapContainerStyle = {
 
 function ContactUs() {
     const router = useRouter()
-    const coords = { lat: -6.4361817, lng: 106.8459034 }
+    const coords = { lat: -6.4365753, lng: 106.847836 }
 
     // useEffect(() => {
     //     if (navigator.geolocation) {

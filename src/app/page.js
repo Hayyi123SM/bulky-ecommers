@@ -641,7 +641,7 @@ function Home() {
                                 </div>
                             </Link>
                             <Image
-                                src="/obeng.png"
+                                src="/new/cartoon-2.png"
                                 alt="bulky"
                                 width={150}
                                 height={150}
@@ -838,8 +838,8 @@ function Home() {
                     </div>
                 </div>
                 <div
-                    className="w-full bg-right-bottom bg-no-repeat"
-                    style={{ backgroundImage: 'url("/Group 1437254504.png")' }}>
+                    className="w-full bg-contain bg-right-bottom bg-no-repeat"
+                    style={{ backgroundImage: 'url("/new/cartoon-1.png")' }}>
                     <div className="mx-auto max-w-7xl px-4 py-10">
                         <div className="grid w-full grid-cols-1 items-center justify-center gap-10 md:grid-cols-2">
                             <div className="w-full rounded-lg bg-secondary bg-opacity-20 p-10">
@@ -889,7 +889,7 @@ function Home() {
                                               testimonys.map(testimoni => (
                                                   <div
                                                       key={testimoni.id}
-                                                      className="min-w-[100%] rounded-lg p-4">
+                                                      className="min-w-[100%] rounded-lg p-4 md:pr-20">
                                                       <div className="opacity-70">
                                                           {testimoni.content}
                                                       </div>
