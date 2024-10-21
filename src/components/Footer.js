@@ -46,17 +46,13 @@ function Footer() {
                     <div className="mt-3 flex text-sm">
                         <EnvelopeIcon className="h-auto w-4" />
                         <div className="ml-2 font-semibold text-[#007185] underline">
-                            admin@bulky.com
+                            admin@bulky.id
                         </div>
                     </div>
                 </div>
                 <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
                     <div className="text-base font-bold">Lokasi Gudang</div>
-                    <div className="mt-3 text-sm">Jakarta</div>
-                    <div className="mt-3 text-sm">Bandung</div>
-                    <div className="mt-3 text-sm">Surabaya</div>
-                    <div className="mt-3 text-sm">Medan</div>
-                    <div className="mt-3 text-sm">Solo</div>
+                    <div className="mt-3 text-sm">Depok</div>
                 </div>
                 <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
                     <div className="text-base font-bold">Perusahaan</div>

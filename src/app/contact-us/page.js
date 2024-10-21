@@ -77,7 +77,7 @@ function ContactUs() {
                                         Kontak kami melalui WhatsApp
                                     </div>
                                     <div className="mt-2 w-full text-sm leading-6 text-[#007185]">
-                                        cutomercare@bulky.com
+                                        admin@bulky.id
                                     </div>
                                 </div>
                             </div>
