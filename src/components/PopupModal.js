@@ -89,6 +89,22 @@ const PopupModal = ({
                             </Link>
                         </>
                     )}
+                    {type === "addToCart" && (
+                        <>
+                            <Link
+                                href="/cart"
+                                className="w-1/2 rounded-lg border px-4 py-2 text-center font-semibold hover:bg-[#f5f5f5]"
+                                onClick={closeModal}>
+                                Lihat Cart
+                            </Link>
+                            <Link
+                                href="/product"
+                                className="w-1/2 rounded-lg bg-secondary px-4 py-2 text-center font-semibold hover:bg-[#e8bc00]"
+                                onClick={onConfirm}>
+                                Lanjutkan Belanja
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

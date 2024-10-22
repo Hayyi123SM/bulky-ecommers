@@ -3,13 +3,13 @@
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
-import { clearUser } from "@/store/slices/authSlice"
+import { clearUser, updateProfilePicture } from "@/store/slices/authSlice"
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useDispatch } from "react-redux"
 
 function Profile() {
@@ -18,6 +18,9 @@ function Profile() {
     const { user } = useAuth({ middleware: "auth" })
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(true)
+    const [selectedFile, setSelectedFile] = useState(null) // Store a single file
+    const [previewImage, setPreviewImage] = useState(null) // For preview
+    const fileInputRef = useRef(null)
 
     const handleLogout = async () => {
         console.log("Handling logout...")
@@ -52,6 +55,49 @@ function Profile() {
             }
         }
     }, [user, isLoading])
+
+    const handleImageChange = e => {
+        const file = e.target.files[0] // Get the first file (single image)
+        if (file) {
+            // Save the file for FormData (uploading)
+            setSelectedFile(file)
+
+            // Generate a preview for displaying the image
+            const previewUrl = URL.createObjectURL(file)
+            setPreviewImage(previewUrl) // Set the preview image
+        }
+    }
+
+    const handleButtonClick = () => {
+        fileInputRef.current.click() // Trigger file input click
+    }
+
+    const handleSubmit = async () => {
+        const formData = new FormData()
+        if (selectedFile) {
+            formData.append("image", selectedFile) // Append the file object
+        }
+
+        // Log FormData contents (optional for debugging)
+        formData.forEach((value, key) => {
+            if (value instanceof File) {
+                console.log(`${key}:`, {
+                    name: value.name,
+                    size: value.size,
+                    type: value.type,
+                })
+            } else {
+                console.log(`${key}:`, value)
+            }
+        })
+
+        try {
+            await dispatch(updateProfilePicture(formData)).unwrap()
+            console.log("Update Profile Picture successfully!")
+        } catch (error) {
+            console.error("Error Update Profile Picture:", error)
+        }
+    }
 
     if (isLoading) {
         return <h1>Loading...</h1>
@@ -90,16 +136,54 @@ function Profile() {
                     <div className="w-full rounded-xl bg-white py-4 lg:my-7 lg:flex lg:px-5 lg:shadow">
                         <div className="hidden lg:block">
                             <div className="w-80 rounded-lg bg-white px-5 py-4 shadow">
-                                <Image
-                                    src="/bio.png"
-                                    width={300}
-                                    height={300}
-                                    alt="biodata"
-                                    priority={false}
-                                />
-                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
+                                {previewImage ? (
+                                    // If user has uploaded a photo, show preview
+                                    <Image
+                                        src={previewImage}
+                                        width={300}
+                                        height={300}
+                                        alt="Preview"
+                                        className="rounded-lg"
+                                    />
+                                ) : user.data.profile_picture ? (
+                                    // If user has a stored photo, show it
+                                    <Image
+                                        src={user.data.profile_picture}
+                                        width={300}
+                                        height={300}
+                                        alt="User Photo"
+                                        className="rounded-lg"
+                                    />
+                                ) : (
+                                    // Otherwise, show the default image
+                                    <Image
+                                        src="/bio.png"
+                                        width={300}
+                                        height={300}
+                                        alt="Default Image"
+                                        priority={false}
+                                        className="rounded-lg"
+                                    />
+                                )}
+                                <div
+                                    className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]"
+                                    onClick={handleButtonClick}>
                                     Pilih Foto
                                 </div>
+                                {previewImage && (
+                                    <div
+                                        className="my-4 cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#f2d365]"
+                                        onClick={handleSubmit}>
+                                        Simpan Perubahan
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    accept="image/png, image/jpeg"
+                                    ref={fileInputRef}
+                                    style={{ display: "none" }}
+                                    onChange={handleImageChange}
+                                />
                                 <div className="text-sm font-light text-[#6D7588]">
                                     Besar file: maksimum 10.000.000 bytes (10
                                     Megabytes). Ekstensi file yang
@@ -119,19 +203,47 @@ function Profile() {
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center lg:hidden">
-                            <Image
-                                src="/bio.png"
-                                width={56}
-                                height={56}
-                                alt="Profile"
-                                className="cursor-pointer rounded-full"
-                                priority={true}
-                            />
-                            <Link href="/change-password">
-                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#007185]">
-                                    Ubah Kata Sandi
+                            {previewImage ? (
+                                // If user has uploaded a photo, show preview
+                                <Image
+                                    src={previewImage}
+                                    width={60}
+                                    height={60}
+                                    alt="Preview"
+                                    className="cursor-pointer rounded-full"
+                                />
+                            ) : user.data.profile_picture ? (
+                                // If user has a stored photo, show it
+                                <Image
+                                    src={user.data.profile_picture}
+                                    width={60}
+                                    height={60}
+                                    alt="User Photo"
+                                    className="cursor-pointer rounded-full"
+                                />
+                            ) : (
+                                // Otherwise, show the default image
+                                <Image
+                                    src="/bio.png"
+                                    width={60}
+                                    height={60}
+                                    alt="Default Image"
+                                    priority={false}
+                                    className="cursor-pointer rounded-full"
+                                />
+                            )}
+                            <div
+                                className="mt-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#007185]"
+                                onClick={handleButtonClick}>
+                                Ubah Foto Profil
+                            </div>
+                            {previewImage && (
+                                <div
+                                    className="mb-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-secondary"
+                                    onClick={handleSubmit}>
+                                    Simpan Perubahan
                                 </div>
-                            </Link>
+                            )}
                         </div>
                         <div className="flex-grow">
                             <div className="flex-grow border-t px-10 py-4 lg:border-none">

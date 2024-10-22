@@ -288,8 +288,8 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                         <div className="flex items-center text-white hover:text-secondary lg:mx-5 xl:mx-10">
                                             <Image
                                                 src="/cart.png"
-                                                width={24}
-                                                height={24}
+                                                width={34}
+                                                height={34}
                                                 alt="Cart"
                                             />
                                         </div>
@@ -297,7 +297,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                     {!user ? (
                                         <Link
                                             href="/login"
-                                            className="cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-base hover:bg-[#e8bc00]">
+                                            className="cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-sm hover:bg-[#e8bc00]">
                                             Masuk
                                         </Link>
                                     ) : (

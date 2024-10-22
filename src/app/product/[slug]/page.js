@@ -479,6 +479,7 @@ function ProductDetail({ params }) {
                                               )}
                                               totalQty={product.total_quantity}
                                               isOpenPdf={handlePackageDetail}
+                                              soldOut={product.sold_out}
                                           />
                                       </div>
                                   ))}

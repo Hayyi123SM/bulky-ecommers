@@ -414,7 +414,7 @@ function Home() {
                                 />
                             </div>
                         </div>
-                        <div className="flex items-center bg-secondary bg-opacity-20">
+                        <div className="flex bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
                                     50% OFF
@@ -435,12 +435,13 @@ function Home() {
                                 </div>
                             </div>
                             <div className="w-1/3 pt-12">
-                                <Image
-                                    src="/image 16.png"
-                                    alt="Product"
-                                    width={1000}
-                                    height={1000}
-                                />
+                                <div
+                                    className="h-[170px] bg-black bg-cover bg-top"
+                                    style={{
+                                        backgroundImage: `url("/new/fmcg.jpeg")`,
+                                    }}>
+                                    {" "}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -533,6 +534,7 @@ function Home() {
                                                       product.pdf_file,
                                                   )
                                               }
+                                              soldOut={product.sold_out}
                                           />
                                       </div>
                                   ))}

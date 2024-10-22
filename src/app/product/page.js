@@ -327,6 +327,7 @@ function Product({ searchParams }) {
                                       isOpenPdf={() =>
                                           handlePackageDetail(product.pdf_file)
                                       }
+                                      soldOut={product.sold_out}
                                   />
                               ))}
                     </div>

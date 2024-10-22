@@ -78,6 +78,30 @@ export const getCallbackGoogle = createAsyncThunk(
     },
 )
 
+export const updateProfilePicture = createAsyncThunk(
+    "auth/updateProfilePicture",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(
+                "/api/user/profile/profile-picture",
+                data,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                },
+            )
+
+            console.log("====================================")
+            console.log("updateProfilePicture fulfilled", response.data)
+            console.log("====================================")
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
