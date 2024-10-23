@@ -15,23 +15,23 @@ function OrderDetail({ params }) {
     const orderId = params.orderId
     const dispatch = useDispatch()
     const order = useSelector(state => state.orders.orderDetail)
-    const trackingData = [
-        {
-            location: "Jakarta",
-            timestamp: "2024-07-12 10:00",
-            status: "Delivered",
-        },
-        {
-            location: "Bandung",
-            timestamp: "2024-07-11 08:00",
-            status: "In Transit",
-        },
-        {
-            location: "Surabaya",
-            timestamp: "2024-07-10 12:00",
-            status: "Dispatched",
-        },
-    ]
+    // const trackingData = [
+    //     {
+    //         location: "Jakarta",
+    //         timestamp: "2024-07-12 10:00",
+    //         status: "Delivered",
+    //     },
+    //     {
+    //         location: "Bandung",
+    //         timestamp: "2024-07-11 08:00",
+    //         status: "In Transit",
+    //     },
+    //     {
+    //         location: "Surabaya",
+    //         timestamp: "2024-07-10 12:00",
+    //         status: "Dispatched",
+    //     },
+    // ]
 
     useEffect(() => {
         dispatch(fetchOrderDetail(orderId))
@@ -218,7 +218,7 @@ function OrderDetail({ params }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-4 h-full rounded-xl bg-white px-5 py-4 lg:shadow">
+                            {/* <div className="mt-4 h-full rounded-xl bg-white px-5 py-4 lg:shadow">
                                 <div className="flex items-center">
                                     <div className="mb-5 ml-5 text-sm leading-6">
                                         <div className="text-base font-bold">
@@ -260,7 +260,7 @@ function OrderDetail({ params }) {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

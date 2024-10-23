@@ -39,8 +39,15 @@ function Footer() {
                     </div>
                     <div className="mt-3 flex text-sm">
                         <PhoneIcon className="h-auto w-4" />
-                        <div className="ml-2 font-semibold text-[#007185] underline">
-                            0811 803 157
+                        <div
+                            className="ml-2 cursor-pointer font-semibold text-[#007185] underline"
+                            onClick={() =>
+                                window.open(
+                                    "https://wa.me/62811858834",
+                                    "_blank",
+                                )
+                            }>
+                            0811 858 834
                         </div>
                     </div>
                     <div className="mt-3 flex text-sm">

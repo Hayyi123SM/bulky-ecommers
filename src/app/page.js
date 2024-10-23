@@ -839,9 +839,7 @@ function Home() {
                         </Link>
                     </div>
                 </div>
-                <div
-                    className="w-full bg-contain bg-right-bottom bg-no-repeat"
-                    style={{ backgroundImage: 'url("/new/cartoon-1.png")' }}>
+                <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat md:bg-[url('/new/cartoon-1.png')]">
                     <div className="mx-auto max-w-7xl px-4 py-10">
                         <div className="grid w-full grid-cols-1 items-center justify-center gap-10 md:grid-cols-2">
                             <div className="w-full rounded-lg bg-secondary bg-opacity-20 p-10">
@@ -871,7 +869,7 @@ function Home() {
                             </div>
                             <div className="w-full">
                                 <div
-                                    className="scrollbar-hide overflow-x-auto py-10"
+                                    className="scrollbar-hide overflow-x-auto py-0 md:py-10"
                                     ref={scrollRefTwo}>
                                     <div className="flex w-full gap-4">
                                         {loadingTestimonies
