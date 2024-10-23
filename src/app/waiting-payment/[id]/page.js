@@ -117,7 +117,7 @@ function OrderDetail({ params }) {
                                                 {order &&
                                                     order.invoices &&
                                                     order.invoices[0]
-                                                        ?.payment_method.name}
+                                                        ?.payment_method?.name}
                                             </div>
                                         </div>
                                         <div className="flex items-center p-1">
@@ -125,7 +125,8 @@ function OrderDetail({ params }) {
                                                 Metode Pengiriman
                                             </div>
                                             <div className="w-1/2">
-                                                Deliveree
+                                                {order &&
+                                                    order.shipping_method.label}
                                             </div>
                                         </div>
                                     </div>

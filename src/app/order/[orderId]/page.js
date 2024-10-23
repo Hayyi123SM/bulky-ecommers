@@ -145,7 +145,10 @@ function OrderDetail({ params }) {
                                         <div className="w-1/2 text-[#6D7588]">
                                             Metode Pengiriman
                                         </div>
-                                        <div className="w-1/2">Deliveree</div>
+                                        <div className="w-1/2">
+                                            {order &&
+                                                order.shipping_method.label}
+                                        </div>
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">

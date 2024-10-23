@@ -158,7 +158,10 @@ function OrderSplitDetail({ params }) {
                                         <div className="w-1/2 text-[#6D7588]">
                                             Metode Pengiriman
                                         </div>
-                                        <div className="w-1/2">Deliveree</div>
+                                        <div className="w-1/2">
+                                            {order &&
+                                                order.shipping_method.label}
+                                        </div>
                                     </div>
                                     <div className="my-2 mb-4 flex items-center justify-between p-1 text-sm">
                                         <div>
