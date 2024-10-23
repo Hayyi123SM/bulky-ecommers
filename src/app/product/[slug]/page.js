@@ -11,13 +11,19 @@ import {
     fetchProductRelated,
 } from "@/store/slices/productSlice"
 import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ChevronUpIcon,
+} from "@heroicons/react/24/outline"
+import {
     ArrowLeftIcon,
     Bars3BottomRightIcon,
     StarIcon,
 } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 import "swiper/css"
@@ -43,6 +49,7 @@ function ProductDetail({ params }) {
     const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     // const [savedUser, setSavedUser] = useState(null)
     const { user } = useAuth()
+    const scrollRef = useRef(null)
 
     // useEffect(() => {
     // const getUser = localStorage.getItem("user")
@@ -105,6 +112,20 @@ function ProductDetail({ params }) {
         }
     }, [isOpenPdf])
 
+    const showPreviousImage = () => {
+        const currentIndex = productImages.indexOf(mainImage)
+        const newIndex =
+            currentIndex === 0 ? productImages.length - 1 : currentIndex - 1
+        setMainImage(productImages[newIndex])
+    }
+
+    const showNextImage = () => {
+        const currentIndex = productImages.indexOf(mainImage)
+        const newIndex =
+            currentIndex === productImages.length - 1 ? 0 : currentIndex + 1
+        setMainImage(productImages[newIndex])
+    }
+
     if (!products || !products.condition) {
         // Optionally, you can return a loading state here
         return <LoadingSpinner />
@@ -133,29 +154,70 @@ function ProductDetail({ params }) {
             )}
             <div className="mx-auto max-w-7xl lg:p-8 lg:px-44">
                 <div className="flex flex-col gap-2 lg:flex-row">
-                    <div className="scrollbar-hide hidden max-h-80 flex-col overflow-y-auto whitespace-nowrap lg:flex">
+                    <div className="scrollbar-hide relative hidden max-h-[400px] flex-col overflow-y-auto whitespace-nowrap lg:flex">
                         {productImages.length === 0 ? (
                             <Skeleton height={80} width={80} />
                         ) : (
-                            productImages.map((image, index) => (
-                                <Image
-                                    key={index}
-                                    src={image}
-                                    alt={`product-${index}`}
-                                    width={80}
-                                    height={80}
-                                    className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${mainImage === image ? "border-[#007185]" : "border-[#BFC9D9]"}`}
-                                    onClick={() => setMainImage(image)}
-                                    priority={false}
-                                />
-                            ))
+                            <>
+                                {/* Scroll Up Button */}
+                                <div
+                                    className="absolute left-0 right-0 top-0 z-10 flex cursor-pointer items-center justify-center bg-white bg-opacity-50"
+                                    onClick={() => {
+                                        if (scrollRef.current) {
+                                            scrollRef.current.scrollBy({
+                                                top: -100,
+                                                behavior: "smooth",
+                                            })
+                                        }
+                                    }}>
+                                    <ChevronUpIcon className="h-5 w-5" />
+                                </div>
+
+                                {/* Image Thumbnails */}
+                                <div
+                                    ref={scrollRef}
+                                    className="scrollbar-hide flex flex-col gap-1 overflow-y-auto">
+                                    {productImages.map((image, index) => (
+                                        <Image
+                                            key={index}
+                                            src={image}
+                                            alt={`product-${index}`}
+                                            width={80}
+                                            height={80}
+                                            className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${
+                                                mainImage === image
+                                                    ? "border-[#007185]"
+                                                    : "border-[#BFC9D9]"
+                                            }`}
+                                            onClick={() => setMainImage(image)}
+                                            priority={false}
+                                        />
+                                    ))}
+                                </div>
+
+                                {/* Scroll Down Button */}
+                                <div
+                                    className="absolute bottom-0 left-0 right-0 z-10 flex cursor-pointer items-center justify-center bg-white bg-opacity-50"
+                                    onClick={() => {
+                                        if (scrollRef.current) {
+                                            scrollRef.current.scrollBy({
+                                                top: 100,
+                                                behavior: "smooth",
+                                            })
+                                        }
+                                    }}>
+                                    <ChevronDownIcon className="h-5 w-5" />
+                                </div>
+                            </>
                         )}
                     </div>
+
                     <div className="ml-2 hidden lg:block lg:w-1/2">
                         {!mainImage ? (
                             <Skeleton height={400} />
                         ) : (
-                            <div className="flex items-center justify-center">
+                            <div className="relative flex items-center justify-center">
+                                {/* Main Image */}
                                 <Image
                                     src={mainImage}
                                     alt="main product"
@@ -163,9 +225,24 @@ function ProductDetail({ params }) {
                                     height={400}
                                     priority={true}
                                 />
+
+                                {/* Previous Image Button */}
+                                <div
+                                    className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2"
+                                    onClick={showPreviousImage}>
+                                    <ChevronLeftIcon className="h-5 w-5" />
+                                </div>
+
+                                {/* Next Image Button */}
+                                <div
+                                    className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2"
+                                    onClick={showNextImage}>
+                                    <ChevronRightIcon className="h-5 w-5" />
+                                </div>
                             </div>
                         )}
                     </div>
+
                     <div className="lg:hidden">
                         <Swiper
                             className="mySwiper"
@@ -209,11 +286,34 @@ function ProductDetail({ params }) {
                         <h1 className="mb-4 text-2xl font-bold">
                             {loadingProducts ? <Skeleton /> : products.name}
                         </h1>
-                        <div className="mb-4 text-xl font-bold text-[#007185]">
+                        <div className="mb-1 text-xl font-bold text-[#007185]">
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : (
                                 products.price?.formatted
+                            )}
+                        </div>
+                        <div className="mb-4 text-xl font-bold text-[#007185]">
+                            {products.show_price_before_discount && (
+                                <div className="flex items-center">
+                                    <div className="text-xs font-bold text-gray-400 line-through">
+                                        {
+                                            products.price_before_discount
+                                                .formatted
+                                        }
+                                    </div>
+                                    <div className="ml-1 text-xs font-bold text-[#007185]">
+                                        {Math.round(
+                                            ((products.price_before_discount
+                                                .numeric -
+                                                products.price.numeric) /
+                                                products.price_before_discount
+                                                    .numeric) *
+                                                100,
+                                        )}
+                                        %
+                                    </div>
+                                </div>
                             )}
                         </div>
                         <div className="mb-1 flex items-center">
