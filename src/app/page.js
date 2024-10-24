@@ -7,27 +7,25 @@ import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
 import ProductCard from "@/components/ProductCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
+import { useAuth } from "@/hooks/auth"
 import { fetchBanners } from "@/store/slices/bannerSlice"
+import { setFilters } from "@/store/slices/filterSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
-import Image from "next/image"
-import Link from "next/link"
-import React, { useEffect, useRef, useState } from "react"
-import Skeleton from "react-loading-skeleton"
-import { useDispatch, useSelector } from "react-redux"
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
     StarIcon,
 } from "@heroicons/react/24/solid"
+import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/hooks/auth"
-import { Swiper, SwiperSlide } from "swiper/react"
+import { useEffect, useRef, useState } from "react"
+import Skeleton from "react-loading-skeleton"
+import { useDispatch, useSelector } from "react-redux"
 import "swiper/css"
 import "swiper/css/autoplay"
-import { Autoplay } from "swiper/modules"
-import { setFilters } from "@/store/slices/filterSlice"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -223,7 +221,7 @@ function Home() {
                         />
                     </div>
                 </div>
-                <div className="w-full bg-secondary bg-opacity-20 p-6">
+                {/* <div className="w-full bg-secondary bg-opacity-20 p-6">
                     <div className="mx-auto flex max-w-7xl items-center">
                         <div className="flex w-full flex-col md:w-1/3">
                             <div className="mb-4 font-bold md:text-2xl lg:text-3xl">
@@ -244,15 +242,12 @@ function Home() {
                                 disableOnInteraction: false,
                             }}
                             breakpoints={{
-                                // When window width is >= 640px (mobile)
                                 425: {
                                     slidesPerView: 2, // Show 2 slides
                                 },
-                                // When window width is >= 768px (tablet)
                                 768: {
                                     slidesPerView: 3, // Show 3 slides
                                 },
-                                // When window width is >= 1024px (desktop)
                                 1024: {
                                     slidesPerView: 4, // Show 4 slides
                                 },
@@ -324,7 +319,7 @@ function Home() {
                             </SwiperSlide>
                         </Swiper>
                     </div>
-                </div>
+                </div> */}
                 <div className="mx-auto my-5 max-w-7xl p-0 lg:p-5">
                     <div className="grid grid-cols-1 gap-5 py-10 md:grid-cols-2">
                         <div className="flex items-center bg-secondary bg-opacity-20">
