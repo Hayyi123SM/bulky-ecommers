@@ -160,7 +160,7 @@ function OrderSplitDetail({ params }) {
                                         </div>
                                         <div className="w-1/2">
                                             {order &&
-                                                order.shipping_method.label}
+                                                order?.shipping_method?.label}
                                         </div>
                                     </div>
                                     <div className="my-2 mb-4 flex items-center justify-between p-1 text-sm">
@@ -184,7 +184,9 @@ function OrderSplitDetail({ params }) {
                                     <div className="w-1/2 text-[#6D7588]">
                                         Alamat
                                     </div>
-                                    <div className="w-1/2">Alamat</div>
+                                    <div className="w-1/2">
+                                        {order && order.shipping_address}
+                                    </div>
                                 </div>
                                 <div
                                     onClick={() => handleToPayment()}

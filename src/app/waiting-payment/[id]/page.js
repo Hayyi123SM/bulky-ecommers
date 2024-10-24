@@ -126,7 +126,8 @@ function OrderDetail({ params }) {
                                             </div>
                                             <div className="w-1/2">
                                                 {order &&
-                                                    order.shipping_method.label}
+                                                    order?.shipping_method
+                                                        ?.label}
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +135,9 @@ function OrderDetail({ params }) {
                                         <div className="w-1/2 text-[#6D7588]">
                                             Alamat
                                         </div>
-                                        <div className="w-1/2">Alamat</div>
+                                        <div className="w-1/2">
+                                            {order && order.shipping_address}
+                                        </div>
                                     </div>
                                     {myInvoice && myInvoice.payment_url && (
                                         <Link href={myInvoice.payment_url}>
