@@ -136,10 +136,6 @@ function Address() {
                                             <div className="pb-1 text-xs font-normal">
                                                 {address.phone_number}
                                             </div>
-                                            <div className="text-md">
-                                                {address.address},{" "}
-                                                {address.formatted_area}
-                                            </div>
                                         </div>
                                     </div>
                                     <div className="flex items-center py-1">
@@ -220,10 +216,6 @@ function Address() {
                                         </div>
                                         <div className="pb-1 text-xs font-normal">
                                             {address.phone_number}
-                                        </div>
-                                        <div className="text-sm">
-                                            {address.address},{" "}
-                                            {address.formatted_area}
                                         </div>
                                     </div>
                                     <div className="w-2/5">
