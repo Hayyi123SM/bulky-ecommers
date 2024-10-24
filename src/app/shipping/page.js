@@ -5,7 +5,7 @@ import PopupChangeAddress from "@/components/PopupChangeAddress"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
 import { useAuth } from "@/hooks/auth"
-import { fetchCarts, getShippingCost } from "@/store/slices/cartSlice"
+import { fetchCheckout, getShippingCost } from "@/store/slices/cartSlice"
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, MapPinIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -18,14 +18,14 @@ function Shipping() {
     const router = useRouter()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.carts.cart)
+    const cart = useSelector(state => state.carts.checkout)
     const [isOpenModalUser, setIsOpenModalUser] = useState(false)
     const [openModalAddress, setOpenModalAddress] = useState(false)
     const shippingCost = useSelector(state => state.carts.shippingCost)
     const setAddress = useSelector(state => state.carts.setAddress)
 
     useEffect(() => {
-        dispatch(fetchCarts())
+        dispatch(fetchCheckout())
         dispatch(getShippingCost())
     }, [dispatch, user])
 

@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 const initialState = {
     cart: null,
+    checkout: null,
     selectedItems: [],
     friends: [],
     totalPrice: 0,
@@ -39,6 +40,18 @@ export const fetchCarts = createAsyncThunk("carts/fetchCarts", async () => {
         throw error
     }
 })
+
+export const fetchCheckout = createAsyncThunk(
+    "carts/fetchCheckout",
+    async () => {
+        try {
+            const response = await axios.get("/api/carts?mode=checkout")
+            return response.data
+        } catch (error) {
+            throw error
+        }
+    },
+)
 
 export const updateSelectedItems = createAsyncThunk(
     "carts/updateSelectedItems",
@@ -226,6 +239,17 @@ const cartSlice = createSlice({
                 state.cart = action.payload.data
             })
             .addCase(fetchCarts.rejected, (state, action) => {
+                state.status = "failed"
+                state.error = action.error.message
+            })
+            .addCase(fetchCheckout.pending, state => {
+                state.status = "loading"
+            })
+            .addCase(fetchCheckout.fulfilled, (state, action) => {
+                state.status = "succeeded"
+                state.checkout = action.payload.data
+            })
+            .addCase(fetchCheckout.rejected, (state, action) => {
                 state.status = "failed"
                 state.error = action.error.message
             })

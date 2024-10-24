@@ -97,12 +97,13 @@ const PopupModal = ({
                                 onClick={closeModal}>
                                 Lihat Cart
                             </Link>
-                            <Link
-                                href="/product"
-                                className="w-1/2 rounded-lg bg-secondary px-4 py-2 text-center font-semibold hover:bg-[#e8bc00]"
-                                onClick={onConfirm}>
+                            <div
+                                className="w-1/2 cursor-pointer rounded-lg bg-secondary px-4 py-2 text-center font-semibold hover:bg-[#e8bc00]"
+                                onClick={() =>
+                                    (window.location.href = "/product")
+                                }>
                                 Lanjutkan Belanja
-                            </Link>
+                            </div>
                         </>
                     )}
                 </div>
