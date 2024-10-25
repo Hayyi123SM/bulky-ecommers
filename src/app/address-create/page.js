@@ -89,14 +89,9 @@ function AddressCreate() {
             longitude: selectedLongitude,
             isPrimary: false,
         }
-        dispatch(addAddress(data))
 
-        // Redirect to profile page
-        if (errors) {
-            return
-        } else {
-            setIsShow(true)
-        }
+        dispatch(addAddress(data))
+        setIsShow(true)
     }
 
     return (
