@@ -83,7 +83,7 @@ function ProductCard({
                 <div
                     onClick={isOpenPdf}
                     className="mb-2 flex cursor-pointer items-center justify-between border-b border-t border-[#F0F3F7] px-1 py-4 hover:rounded-lg hover:bg-[#f5f5f5]">
-                    <div className="text-sm font-bold">View PDF Detail</div>
+                    <div className="text-sm font-bold">Lihat Detail Produk</div>
                     <Square2StackIcon className="h-5 w-5 text-[#007185]" />
                 </div>
                 {soldOut ? (

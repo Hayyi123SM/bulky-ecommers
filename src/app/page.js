@@ -196,7 +196,7 @@ function Home() {
                                         <StarIcon className="h-5 w-5 text-secondary" />
                                         <div className="ml-1">4.9</div>
                                     </div>
-                                    <div className="mt-1">Sugeng Prasetyo</div>
+                                    <div className="mt-1">Bapak Aan</div>
                                 </div>
                                 <div>
                                     <div className="flex items-center border-b border-dashed border-black pb-2">
@@ -207,14 +207,14 @@ function Home() {
                                         <StarIcon className="h-5 w-5 text-secondary" />
                                         <div className="ml-1">4.9</div>
                                     </div>
-                                    <div className="mt-1">Agung Widodo</div>
+                                    <div className="mt-1">Bapak Yudi</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="w-full py-10 md:w-1/3 lg:w-1/2">
                         <Image
-                            src="/new/Group 198 (1).png"
+                            src="/new/hero.png"
                             alt="Product"
                             width={1000}
                             height={1000}
@@ -325,7 +325,7 @@ function Home() {
                         <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    50% OFF
+                                    70% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
                                     PALET SEPATU
@@ -344,7 +344,7 @@ function Home() {
                             </div>
                             <div className="w-1/3 pt-12">
                                 <Image
-                                    src="/image 1587.png"
+                                    src="/new/Pallet Sepatu.png"
                                     alt="Product"
                                     width={1000}
                                     height={1000}
@@ -354,7 +354,7 @@ function Home() {
                         <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    50% OFF
+                                    70% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
                                     PALET FASHION
@@ -373,7 +373,7 @@ function Home() {
                             </div>
                             <div className="w-1/3 pt-12">
                                 <Image
-                                    src="/image 1588.png"
+                                    src="/new/Pallet Fashion.png"
                                     alt="Product"
                                     width={1000}
                                     height={1000}
@@ -400,7 +400,7 @@ function Home() {
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
-                            <div className="w-1/3 pt-12">
+                            <div className="w-1/3">
                                 <Image
                                     src="/image 15.png"
                                     alt="Product"
@@ -412,7 +412,7 @@ function Home() {
                         <div className="flex bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    50% OFF
+                                    60% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
                                     PALET FMCG
@@ -429,14 +429,13 @@ function Home() {
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
-                            <div className="w-1/3 pt-12">
-                                <div
-                                    className="h-[170px] bg-black bg-cover bg-top"
-                                    style={{
-                                        backgroundImage: `url("/new/fmcg.jpeg")`,
-                                    }}>
-                                    {" "}
-                                </div>
+                            <div className="w-1/3">
+                                <Image
+                                    src="/new/Pallet FMCG.png"
+                                    alt="Product"
+                                    width={1000}
+                                    height={1000}
+                                />
                             </div>
                         </div>
                     </div>
@@ -632,7 +631,7 @@ function Home() {
                             berkelanjutan untuk bisnis.
                         </div>
                         <div className="mt-10 flex w-full justify-between pr-20">
-                            <Link href="/contact-us">
+                            <Link href="/about-us">
                                 <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
                                     Pelajari Selanjutnya
                                 </div>
@@ -680,7 +679,8 @@ function Home() {
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
                                     style={{
-                                        backgroundImage: 'url("/new/1.webp")',
+                                        backgroundImage:
+                                            'url("/new/Layanan Pelanggan.jpg")',
                                     }}
                                 />
                                 <div className="mt-3 text-lg font-semibold">
