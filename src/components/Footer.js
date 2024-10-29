@@ -107,30 +107,42 @@ function Footer() {
                         <Link href="/profile">Profil Pengguna</Link>
                     </div>
                     <div className="mt-3 flex text-sm">
-                        <Image
-                            src="/instagram 1.svg"
-                            width={17}
-                            height={20}
-                            alt="Logo"
-                            className="mr-2 cursor-pointer"
-                            priority={false}
-                        />
-                        <Image
-                            src="/facebook.svg"
-                            width={17}
-                            height={20}
-                            alt="Logo"
-                            className="mr-2 cursor-pointer"
-                            priority={false}
-                        />
-                        <Image
-                            src="/tiktok.svg"
-                            width={17}
-                            height={20}
-                            alt="Logo"
-                            className="mr-2 cursor-pointer"
-                            priority={false}
-                        />
+                        <Link
+                            href="https://www.instagram.com/liquid8wholesale/"
+                            target="_blank">
+                            <Image
+                                src="/instagram 1.svg"
+                                width={17}
+                                height={20}
+                                alt="Logo"
+                                className="mr-2 cursor-pointer"
+                                priority={false}
+                            />
+                        </Link>
+                        <Link
+                            href="https://www.facebook.com/liquid8wholesale"
+                            target="_blank">
+                            <Image
+                                src="/facebook.svg"
+                                width={17}
+                                height={20}
+                                alt="Logo"
+                                className="mr-2 cursor-pointer"
+                                priority={false}
+                            />
+                        </Link>
+                        <Link
+                            href="https://www.tiktok.com/@liquid8wholesale"
+                            target="_blank">
+                            <Image
+                                src="/tiktok.svg"
+                                width={17}
+                                height={20}
+                                alt="Logo"
+                                className="mr-2 cursor-pointer"
+                                priority={false}
+                            />
+                        </Link>
                     </div>
                 </div>
                 <div className="w-full p-5 md:w-full lg:w-3/12 xl:w-3/12">

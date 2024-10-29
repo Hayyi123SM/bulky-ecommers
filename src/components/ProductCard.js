@@ -64,7 +64,9 @@ function ProductCard({
                         <div className="line-clamp-2 py-1 text-base">
                             {title}
                         </div>
-                        <div className="py-1 text-base font-bold">{price}</div>
+                        <div className="py-1 text-base font-bold text-[#007185]">
+                            {price}
+                        </div>
                         {sale && (
                             <div className="flex items-center">
                                 <div className="text-xs font-bold text-gray-400 line-through">

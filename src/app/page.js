@@ -7,7 +7,6 @@ import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
 import ProductCard from "@/components/ProductCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
-import { useAuth } from "@/hooks/auth"
 import { fetchBanners } from "@/store/slices/bannerSlice"
 import { setFilters } from "@/store/slices/filterSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
@@ -26,12 +25,15 @@ import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
 import "swiper/css"
 import "swiper/css/autoplay"
+import "swiper/css/navigation"
+import { Navigation } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/swiper-bundle.css"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const [current, setCurrent] = useState(0)
     const router = useRouter()
-    const { user } = useAuth()
     const dispatch = useDispatch()
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
@@ -46,7 +48,24 @@ function Home() {
     const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
     const scrollRef = useRef(null)
-    const scrollRefTwo = useRef(null)
+    const prevRef = useRef(null)
+    const nextRef = useRef(null)
+    const [isClient, setIsClient] = useState(false)
+    const [swiperInstance, setSwiperInstance] = useState(null)
+
+    useEffect(() => {
+        setIsClient(true) // This ensures that Swiper only renders on the client
+    }, [])
+
+    useEffect(() => {
+        if (swiperInstance && prevRef.current && nextRef.current) {
+            // Set navigation elements after Swiper is initialized
+            swiperInstance.params.navigation.prevEl = prevRef.current
+            swiperInstance.params.navigation.nextEl = nextRef.current
+            swiperInstance.navigation.init()
+            swiperInstance.navigation.update()
+        }
+    }, [swiperInstance])
 
     const scrollLeft = () => {
         if (scrollRef.current) {
@@ -57,18 +76,6 @@ function Home() {
     const scrollRight = () => {
         if (scrollRef.current) {
             scrollRef.current.scrollBy({ left: 350, behavior: "smooth" })
-        }
-    }
-
-    const scrollLeftTwo = () => {
-        if (scrollRefTwo.current) {
-            scrollRefTwo.current.scrollBy({ left: -350, behavior: "smooth" })
-        }
-    }
-
-    const scrollRightTwo = () => {
-        if (scrollRefTwo.current) {
-            scrollRefTwo.current.scrollBy({ left: 350, behavior: "smooth" })
         }
     }
 
@@ -96,11 +103,11 @@ function Home() {
     // console.log("====================================")
 
     const togglePopupMenu = () => {
-        if (!user) {
-            router.push("/login")
-        } else {
-            setShowPopupMenu(!showPopupMenu)
-        }
+        // if (!user) {
+        //     router.push("/login")
+        // } else {
+        setShowPopupMenu(!showPopupMenu)
+        // }
     }
     const closePopupMenu = () => setShowPopupMenu(false)
     const handlePackageDetail = pdf => {
@@ -147,6 +154,8 @@ function Home() {
         dispatch(setFilters({ categories: [category] }))
         router.push(`/product?category=${category}`)
     }
+
+    if (!isClient) return null
 
     return (
         <div>
@@ -834,10 +843,10 @@ function Home() {
                         </Link>
                     </div>
                 </div>
-                <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat md:bg-[url('/new/cartoon-1.png')]">
+                <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat lg:bg-[url('/new/cartoon-1.png')]">
                     <div className="mx-auto max-w-7xl px-4 py-10">
-                        <div className="grid w-full grid-cols-1 items-center justify-center gap-10 md:grid-cols-2">
-                            <div className="w-full rounded-lg bg-secondary bg-opacity-20 p-10">
+                        <div className="flex w-full grid-cols-1 items-center justify-center gap-10">
+                            {/* <div className="w-1/3 rounded-lg bg-secondary bg-opacity-20 p-10">
                                 <div className="text-4xl font-bold">
                                     Testimoni Klien
                                 </div>
@@ -861,9 +870,9 @@ function Home() {
                                         <ArrowRightIcon className="h-5 w-5" />
                                     </div>
                                 </div>
-                            </div>
-                            <div className="w-full">
-                                <div
+                            </div> */}
+                            <div className="w-full px-4">
+                                {/* <div
                                     className="scrollbar-hide overflow-x-auto py-0 md:py-10"
                                     ref={scrollRefTwo}>
                                     <div className="flex w-full gap-4">
@@ -911,6 +920,107 @@ function Home() {
                                                   </div>
                                               ))}
                                     </div>
+                                </div> */}
+                                <div className="relative px-4">
+                                    <Swiper
+                                        className="mySwiper"
+                                        modules={[Navigation]}
+                                        slidesPerView={1} // Default slides per view
+                                        breakpoints={{
+                                            426: { slidesPerView: 1 }, // sm: 1 slide
+                                            768: { slidesPerView: 2 }, // md: 2 slides
+                                            1024: { slidesPerView: 3 }, // lg and above: 3 slides
+                                        }}
+                                        onSwiper={setSwiperInstance}>
+                                        {loadingTestimonies ? (
+                                            <Skeleton height={1000} />
+                                        ) : (
+                                            testimonys.map(
+                                                (testimoni, index) => (
+                                                    <SwiperSlide key={index}>
+                                                        <div
+                                                            key={testimoni.id}
+                                                            className="min-w-[100%] rounded-lg p-4 md:pr-20">
+                                                            <div className="opacity-70">
+                                                                {
+                                                                    testimoni.content
+                                                                }
+                                                            </div>
+                                                            <div className="mt-10 flex items-center gap-3">
+                                                                <div
+                                                                    className="h-12 w-12 rounded-full bg-cover bg-center"
+                                                                    style={{
+                                                                        backgroundImage: `url(${testimoni.image})`,
+                                                                    }}
+                                                                />
+                                                                <div className="flex flex-col justify-center">
+                                                                    <div className="text-lg font-bold">
+                                                                        {
+                                                                            testimoni.name
+                                                                        }
+                                                                    </div>
+                                                                    <div className="text-base opacity-60">
+                                                                        {
+                                                                            testimoni.label
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </SwiperSlide>
+                                                ),
+                                            )
+                                        )}
+                                    </Swiper>
+
+                                    {/* Custom Navigation Buttons */}
+                                    <button
+                                        ref={prevRef}
+                                        className="custom-swiper-button custom-swiper-button-prev">
+                                        <ArrowLeftIcon className="h-6 w-6" />
+                                    </button>
+                                    <button
+                                        ref={nextRef}
+                                        className="custom-swiper-button custom-swiper-button-next">
+                                        <ArrowRightIcon className="h-6 w-6" />
+                                    </button>
+
+                                    <style>{`
+                                        .custom-swiper-button {
+                                            position: absolute;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                            background-color: #ffcf02;
+                                            color: #000000;
+                                            padding: 10px;
+                                            border-radius: 50%;
+                                            cursor: pointer;
+                                            z-index: 10;
+                                        }
+
+                                        .custom-swiper-button-prev {
+                                            left: -30px;
+                                        }
+
+                                        .custom-swiper-button-next {
+                                            right: -30px;
+                                        }
+
+                                        @media (max-width: 426px) {
+                                            .custom-swiper-button {
+                                                padding: 8px;
+                                                top: 45%;
+                                                transform: translateY(-45%);
+                                                font-size: 12px;
+                                            }
+                                            .custom-swiper-button-prev {
+                                                left: -20px;
+                                            }
+                                            .custom-swiper-button-next {
+                                                right: -20px;
+                                            }
+                                        }
+                                    `}</style>
                                 </div>
                             </div>
                         </div>
