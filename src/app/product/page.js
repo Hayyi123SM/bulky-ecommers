@@ -9,13 +9,14 @@ import PopupFilter from "@/components/PopupFilter"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import SidebarProduct from "@/components/SidebarProduct"
+import { resetFilters, setFilters } from "@/store/slices/filterSlice"
 import {
     AdjustmentsHorizontalIcon,
     ArchiveBoxIcon,
 } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
@@ -23,12 +24,11 @@ import {
     fetchSearchProducts,
     useFetchProductsQuery,
 } from "../../store/slices/productSlice"
-import { resetFilters, setFilters } from "@/store/slices/filterSlice"
 
 function Product({ searchParams }) {
-    // const category = useSearchParams().get("category")
-    const category = searchParams?.category || ""
-    const pages = Number(searchParams?.page) || 1
+    const category = useSearchParams().get("category")
+    // const category = searchParams?.category || ""
+    const pages = searchParams?.page || 1
 
     const [showPopup, setShowPopup] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -56,15 +56,19 @@ function Product({ searchParams }) {
     const statuses = useSelector(state => state.filters.statuses)
     const brands = useSelector(state => state.filters.brands)
 
-    console.log("====================================")
-    console.log("filters", filters)
-    console.log("====================================")
-
     useEffect(() => {
         if (!category) {
+            console.log("====================================")
+            console.log("not category", category)
+            console.log("====================================")
             dispatch(resetFilters())
+            localStorage.removeItem("category")
         } else {
+            console.log("====================================")
+            console.log("yes category", category)
+            console.log("====================================")
             dispatch(setFilters({ categories: [category] }))
+            localStorage.setItem("category", category)
             router.push(`?category=${category}`)
         }
     }, [category])
@@ -76,6 +80,10 @@ function Product({ searchParams }) {
         const pageNumber = Number(queryPage) || 1
         setCurrentPage(pageNumber)
     }, [router])
+
+    console.log("====================================")
+    console.log("filters product", filters)
+    console.log("====================================")
 
     const {
         data,

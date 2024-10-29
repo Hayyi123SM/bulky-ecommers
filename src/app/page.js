@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux"
 import "swiper/css"
 import "swiper/css/autoplay"
 import "swiper/css/navigation"
-import { Navigation } from "swiper/modules"
+import { Autoplay, Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 
@@ -47,7 +47,7 @@ function Home() {
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
-    const scrollRef = useRef(null)
+    // const scrollRef = useRef(null)
     const prevRef = useRef(null)
     const nextRef = useRef(null)
     const [isClient, setIsClient] = useState(false)
@@ -67,17 +67,17 @@ function Home() {
         }
     }, [swiperInstance])
 
-    const scrollLeft = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: -350, behavior: "smooth" })
-        }
-    }
+    // const scrollLeft = () => {
+    //     if (scrollRef.current) {
+    //         scrollRef.current.scrollBy({ left: -350, behavior: "smooth" })
+    //     }
+    // }
 
-    const scrollRight = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: 350, behavior: "smooth" })
-        }
-    }
+    // const scrollRight = () => {
+    //     if (scrollRef.current) {
+    //         scrollRef.current.scrollBy({ left: 350, behavior: "smooth" })
+    //     }
+    // }
 
     // const dummy = {
     //     data: {
@@ -152,6 +152,7 @@ function Home() {
 
     const handleSelectCategory = category => {
         dispatch(setFilters({ categories: [category] }))
+        localStorage.setItem("category", category)
         router.push(`/product?category=${category}`)
     }
 
@@ -188,7 +189,7 @@ function Home() {
                                     </div>
                                 </Link>
                                 <Link
-                                    href="/product"
+                                    href="/video"
                                     className="w-1/2 font-light">
                                     <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">
                                         Lihat Video
@@ -409,7 +410,7 @@ function Home() {
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-1/3 pt-12">
                                 <Image
                                     src="/image 15.png"
                                     alt="Product"
@@ -418,7 +419,7 @@ function Home() {
                                 />
                             </div>
                         </div>
-                        <div className="flex bg-secondary bg-opacity-20">
+                        <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
                                 <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
                                     60% OFF
@@ -438,7 +439,7 @@ function Home() {
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-1/3 pt-12">
                                 <Image
                                     src="/new/Pallet FMCG.png"
                                     alt="Product"
@@ -655,7 +656,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="mx-auto max-w-7xl p-4">
+                {/* <div className="mx-auto max-w-7xl p-4">
                     <div className="flex items-center justify-between">
                         <div className="w-2/3">
                             <div className="text-4xl font-semibold">
@@ -683,7 +684,6 @@ function Home() {
                         className="scrollbar-hide overflow-x-auto py-10"
                         ref={scrollRef}>
                         <div className="flex gap-4">
-                            {/* Card 1 */}
                             <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
@@ -702,7 +702,6 @@ function Home() {
                                     berdasarkan kepercayaan dan kehandalan.
                                 </div>
                             </div>
-                            {/* Card 2 */}
                             <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
@@ -718,7 +717,6 @@ function Home() {
                                     klien, dan lingkungan di semua operasi kami.
                                 </div>
                             </div>
-                            {/* Card 3 */}
                             <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
@@ -736,7 +734,6 @@ function Home() {
                                     lingkungan.
                                 </div>
                             </div>
-                            {/* Card 4 */}
                             <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
@@ -754,7 +751,6 @@ function Home() {
                                     yang lebih efisien dan efektif.
                                 </div>
                             </div>
-                            {/* Card 5 */}
                             <div className="min-w-[250px] rounded-lg bg-white p-4 shadow-lg lg:w-auto lg:min-w-[350px]">
                                 <div
                                     className="h-48 w-full rounded bg-cover bg-center lg:h-64"
@@ -773,7 +769,7 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center px-4 py-10">
                     <div className="text-3xl font-bold">
@@ -924,8 +920,12 @@ function Home() {
                                 <div className="relative px-4">
                                     <Swiper
                                         className="mySwiper"
-                                        modules={[Navigation]}
+                                        modules={[Navigation, Autoplay]}
                                         slidesPerView={1} // Default slides per view
+                                        autoplay={{
+                                            delay: 2000,
+                                            disableOnInteraction: false,
+                                        }}
                                         breakpoints={{
                                             426: { slidesPerView: 1 }, // sm: 1 slide
                                             768: { slidesPerView: 2 }, // md: 2 slides

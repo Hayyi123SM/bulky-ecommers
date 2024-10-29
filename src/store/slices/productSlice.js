@@ -64,8 +64,8 @@ export const productApi = createApi({
                         filters.warehouses.length && {
                             warehouse: filters.warehouses.join(","),
                         }),
-                    ...(filters.priceMin && { price_min: filters.priceMin }),
-                    ...(filters.priceMax && { price_max: filters.priceMax }),
+                    ...(filters.minPrice && { price_min: filters.minPrice }),
+                    ...(filters.maxPrice && { price_max: filters.maxPrice }),
                     ...(filters.brands &&
                         filters.brands.length && {
                             brands: filters.brands,
@@ -94,6 +94,9 @@ export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async ({ currentPage, filters }) => {
         try {
+            console.log("====================================")
+            console.log("filters product", filters)
+            console.log("====================================")
             // Build the params object dynamically
             const params = {
                 page: currentPage,
@@ -115,8 +118,8 @@ export const fetchProducts = createAsyncThunk(
                     filters.warehouses.length && {
                         warehouse: filters.warehouses.join(","),
                     }),
-                ...(filters.priceMin && { price_min: filters.priceMin }),
-                ...(filters.priceMax && { price_max: filters.priceMax }),
+                ...(filters.minPrice && { price_min: filters.minPrice }),
+                ...(filters.maxPrice && { price_max: filters.maxPrice }),
                 ...(filters.brands &&
                     filters.brands.length && { brands: filters.brands }),
             }

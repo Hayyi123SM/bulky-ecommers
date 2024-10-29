@@ -29,9 +29,11 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
     const handleSetAddress = addressId => {
         dispatch(setAddress({ address_id: addressId }))
         dispatch(fetchCarts())
-        setTimeout(() => {
-            closeModal()
-        }, 1000)
+        // setTimeout(() => {
+        //     closeModal()
+        // }, 2000)
+
+        window.location.reload()
     }
 
     const handleOverlayClick = e => {
@@ -113,12 +115,12 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                                 Sudah Pin Point
                                             </div>
                                         </div>
-                                        <div className="items-center py-1">
-                                            <div
-                                                onClick={() =>
-                                                    handleSetAddress(address.id)
-                                                }
-                                                className="w-full cursor-pointer rounded-lg border py-2 text-center text-xs font-bold">
+                                        <div
+                                            className="cursor-pointer items-center py-1"
+                                            onClick={() =>
+                                                handleSetAddress(address.id)
+                                            }>
+                                            <div className="w-full rounded-lg border py-2 text-center text-xs font-bold">
                                                 Pilih Alamat
                                             </div>
                                         </div>

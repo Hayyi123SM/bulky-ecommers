@@ -1,5 +1,5 @@
 import axios from "@/lib/axios"
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     categories: [],
@@ -7,12 +7,16 @@ const initialState = {
     conditions: [],
     statuses: [],
     brands: [],
+    minPrice: null,
+    maxPrice: null,
     selectedFilters: {
         categories: [],
         warehouses: [],
         conditions: [],
         statuses: [],
         brands: [],
+        minPrice: null,
+        maxPrice: null,
     },
     error: null,
     isLoading: true,
@@ -96,6 +100,11 @@ const filterSlice = createSlice({
                 ...action.payload,
             }
         },
+        setPriceRange(state, action) {
+            const { minPrice, maxPrice } = action.payload
+            state.selectedFilters.minPrice = minPrice
+            state.selectedFilters.maxPrice = maxPrice
+        },
         resetFilters(state) {
             state.selectedFilters = {
                 categories: [],
@@ -103,6 +112,8 @@ const filterSlice = createSlice({
                 conditions: [],
                 statuses: [],
                 brands: [],
+                minPrice: null,
+                maxPrice: null,
             }
         },
     },
@@ -190,5 +201,5 @@ const filterSlice = createSlice({
     },
 })
 
-export const { setFilters, resetFilters } = filterSlice.actions
+export const { setFilters, resetFilters, setPriceRange } = filterSlice.actions
 export default filterSlice.reducer

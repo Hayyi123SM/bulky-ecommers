@@ -170,19 +170,22 @@ function OrderDetail({ params }) {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">
-                                            Total Ongkos Kirim
-                                        </label>
+                                {order && order.shipping && (
+                                    <div className="flex justify-between">
+                                        <div className="text-sm leading-6">
+                                            <label className="text-sm font-light">
+                                                Total Ongkos Kirim
+                                            </label>
+                                        </div>
+                                        <div className="ml-5 text-right text-sm leading-6">
+                                            <label className="text-md font-light">
+                                                {order &&
+                                                    order.shipping
+                                                        ?.shipping_cost}
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">
-                                            {order &&
-                                                order.total_price?.formatted}
-                                        </label>
-                                    </div>
-                                </div>
+                                )}
                                 <div className="my-3 border-b p-1"> </div>
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">

@@ -1,24 +1,16 @@
 "use client"
 
-import { fetchPaymentMethod } from "@/store/slices/orderSlice"
 import { EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline"
 import { PhoneIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 
 function Footer() {
     const payments = []
-    const dispatch = useDispatch()
 
     for (let i = 1; i < 16; i++) {
         payments.push(i)
     }
-
-    useEffect(() => {
-        dispatch(fetchPaymentMethod())
-    }, [dispatch])
 
     return (
         <div className="bg-[#F5F5F5] lg:p-14">
@@ -151,7 +143,7 @@ function Footer() {
                         {payments.map((payment, index) => (
                             <Image
                                 key={index}
-                                src={`/payment_method/image ${payment}.svg`}
+                                src={`/payment/image ${payment}.svg`}
                                 width={100}
                                 height={100}
                                 alt="Logo"

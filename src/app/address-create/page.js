@@ -73,7 +73,7 @@ function AddressCreate() {
         setIsShowMap(false) // Close the popup after saving
     }
 
-    const submitForm = e => {
+    const submitForm = async e => {
         setIsLoading(true)
         e.preventDefault()
         const data = {
@@ -90,8 +90,19 @@ function AddressCreate() {
             isPrimary: false,
         }
 
-        dispatch(addAddress(data))
-        setIsShow(true)
+        const result = await dispatch(addAddress(data)) // Dispatch action and wait for completion
+
+        // Assuming errors are handled and updated in the component's state after dispatch
+        if (!result.error) {
+            // Only set `isShow` to true if there are no errors
+            setIsShow(true)
+        } else {
+            console.log("====================================")
+            console.log("Error:", result.error) // Log errors if any
+            console.log("====================================")
+        }
+
+        setIsLoading(false) // Stop loading spinner after submission
     }
 
     return (

@@ -29,6 +29,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const dispatch = useDispatch()
     const categories = useSelector(state => state.filters.categories)
     // const scrollRef = useRef(null) // Reference to the scrollable div
+    const carts = useSelector(state => state.carts.cart)
 
     const { data } = useFetchProductsQuery(
         { currentPage, filters: { search: searchQuery } },
@@ -59,8 +60,10 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const handleSelectCategory = category => {
         if (category) {
             dispatch(setFilters({ categories: [category.slug] }))
+            localStorage.setItem("category", category.slug)
             router.push(`/product?category=${category.slug}`)
         } else {
+            localStorage.removeItem("category")
             router.push("/")
         }
     }
@@ -283,15 +286,24 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 </div>
                             </div>
                             <div className="flex lg:w-2/12 xl:w-2/12 2xl:w-2/12">
-                                <div className="flex w-full items-center justify-end">
+                                <div className="flex w-full items-center justify-between">
                                     <Link href="/cart">
-                                        <div className="flex items-center text-white hover:text-secondary lg:mx-5 xl:mx-10">
+                                        <div className="flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
                                             <Image
                                                 src="/cart.png"
                                                 width={34}
                                                 height={34}
                                                 alt="Cart"
                                             />
+                                            <div className="flex flex-col text-center text-xs">
+                                                Pesanan
+                                                <span className="text-sm font-bold">
+                                                    {carts
+                                                        ? carts.items_count
+                                                        : 0}{" "}
+                                                    Item
+                                                </span>
+                                            </div>
                                         </div>
                                     </Link>
                                     {!user ? (

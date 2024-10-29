@@ -91,12 +91,13 @@ const PopupModal = ({
                     )}
                     {type === "addToCart" && (
                         <>
-                            <Link
-                                href="/cart"
-                                className="w-1/2 rounded-lg border px-4 py-2 text-center font-semibold hover:bg-[#f5f5f5]"
-                                onClick={closeModal}>
+                            <div
+                                className="w-1/2 cursor-pointer rounded-lg border px-4 py-2 text-center font-semibold hover:bg-[#f5f5f5]"
+                                onClick={() =>
+                                    (window.location.href = "/cart")
+                                }>
                                 Lihat Cart
-                            </Link>
+                            </div>
                             <div
                                 className="w-1/2 cursor-pointer rounded-lg bg-secondary px-4 py-2 text-center font-semibold hover:bg-[#e8bc00]"
                                 onClick={() =>

@@ -50,6 +50,10 @@ function OrderSplitDetail({ params }) {
         }
     }
 
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(myInvoice.payment_url)
+    }
+
     // console.log("order:", order)
     // console.log("orderSplitId:", orderSplitId)
     // console.log("myInvoice:", myInvoice)
@@ -169,10 +173,17 @@ function OrderSplitDetail({ params }) {
                                                 Split Link
                                             </div>
                                             <div className="text-[#007185] lg:w-1/2">
-                                                https://g.co/gemini/share/44ff9809b4ed
+                                                {myInvoice &&
+                                                    myInvoice.payment_url}
                                             </div>
                                         </div>
-                                        <div className="ml-5 flex items-center text-right text-sm">
+                                        <div
+                                            className="ml-5 flex cursor-pointer items-center text-right text-sm"
+                                            onClick={() =>
+                                                copyToClipboard(
+                                                    myInvoice.payment_url,
+                                                )
+                                            }>
                                             <div className="mr-1 text-sm font-bold text-[#007185]">
                                                 Salin
                                             </div>
@@ -217,19 +228,22 @@ function OrderSplitDetail({ params }) {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">
-                                            Total Ongkos Kirim
-                                        </label>
+                                {order && order.shipping && (
+                                    <div className="flex justify-between">
+                                        <div className="text-sm leading-6">
+                                            <label className="text-sm font-light">
+                                                Total Ongkos Kirim
+                                            </label>
+                                        </div>
+                                        <div className="ml-5 text-right text-sm leading-6">
+                                            <label className="text-md font-light">
+                                                {order &&
+                                                    order.shipping
+                                                        ?.shipping_cost}
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">
-                                            {order &&
-                                                order.total_price?.formatted}
-                                        </label>
-                                    </div>
-                                </div>
+                                )}
                                 <div className="my-3 border-b p-1"> </div>
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
