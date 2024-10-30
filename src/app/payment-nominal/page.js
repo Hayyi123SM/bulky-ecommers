@@ -17,11 +17,24 @@ function PaymentNominal() {
     const dispatch = useDispatch()
     const [order, setOrder] = useState({})
     const [amount, setAmount] = useState(0)
+    const [numericAmount, setNumericAmount] = useState(null)
     const afterSetInvoiceAmount = useSelector(
         state => state.orders.afterSetInvoiceAmount,
     )
     const myInvoice = useSelector(state => state.orders.myInvoice)
     const [isError, setIsError] = useState(false)
+
+    const formatToIDR = number => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+            currencyDisplay: "narrowSymbol",
+        })
+            .format(number)
+            .replace("Rp", "")
+            .trim() // Remove "Rp" prefix
+    }
 
     useEffect(() => {
         const getOrder = JSON.parse(localStorage.getItem("order"))
@@ -52,6 +65,16 @@ function PaymentNominal() {
         if (afterSetInvoiceAmount !== null) {
             router.push("/payment-method/" + myInvoice.id)
         }
+    }
+
+    const handleSetAmount = e => {
+        const rawValue = e.target.value.replace(/[^\d]/g, "")
+        const numericValue = rawValue ? parseInt(rawValue, 10) : null
+        const formattedValue = rawValue ? formatToIDR(numericValue) : ""
+
+        setAmount(numericValue)
+        setNumericAmount(formattedValue)
+        setIsError(false)
     }
 
     // console.log("====================================")
@@ -96,12 +119,11 @@ function PaymentNominal() {
                                 </div>
                                 <div className="relative w-full lg:max-w-xl">
                                     <input
-                                        type="number"
+                                        type="text"
                                         className={`h-10 w-full rounded-lg border ${isError ? "border-[#D0021B]" : "border-[#6D7588]"} p-2 focus:border-[#007185] focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]`}
                                         placeholder="IDR. 0"
-                                        onChange={e =>
-                                            setAmount(e.target.value)
-                                        }
+                                        value={numericAmount}
+                                        onChange={handleSetAmount}
                                     />
                                 </div>
                                 {isError && (

@@ -30,6 +30,8 @@ function PopupFilter({ closePopup }) {
     )
     const [minPrice, setMinPrice] = useState(selectedFilters.minPrice || null)
     const [maxPrice, setMaxPrice] = useState(selectedFilters.maxPrice || null)
+    const [numericMinPrice, setNumericMinPrice] = useState(null)
+    const [numericMaxPrice, setNumericMaxPrice] = useState(null)
 
     // State untuk toggle "Lihat Semua"
     const [showAllCategories, setShowAllCategories] = useState(false)
@@ -45,6 +47,18 @@ function PopupFilter({ closePopup }) {
     const statuses = useSelector(state => state.filters.statuses)
     const brands = useSelector(state => state.filters.brands)
     const loadingFilters = useSelector(state => state.filters.isLoading)
+
+    const formatToIDR = number => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+            currencyDisplay: "narrowSymbol",
+        })
+            .format(number)
+            .replace("Rp", "")
+            .trim() // Remove "Rp" prefix
+    }
 
     useEffect(() => {
         dispatch(fetchCategories())
@@ -117,11 +131,58 @@ function PopupFilter({ closePopup }) {
     }
 
     const handleMinPriceChange = e => {
-        setMinPrice(e.target.value)
+        const rawMinValue = e.target.value.replace(/[^\d]/g, "")
+        const numericMinValue = rawMinValue ? parseInt(rawMinValue, 10) : null
+        const formattedMinValue = rawMinValue
+            ? formatToIDR(numericMinValue)
+            : ""
+
+        setMinPrice(formattedMinValue) // Set the formatted value for display
+
+        if (numericMinValue !== null) {
+            if (maxPrice) {
+                const numericMaxPrice = parseInt(
+                    maxPrice.replace(/[^\d]/g, ""),
+                    10,
+                )
+                // Validate min price against max price
+                if (numericMinValue <= numericMaxPrice) {
+                    setNumericMinPrice(numericMinValue)
+                }
+            } else {
+                setNumericMinPrice(numericMinValue)
+            }
+        } else {
+            setNumericMinPrice(null)
+        }
     }
 
     const handleMaxPriceChange = e => {
-        setMaxPrice(e.target.value)
+        const rawMaxValue = e.target.value.replace(/[^\d]/g, "")
+        const numericMaxValue = rawMaxValue ? parseInt(rawMaxValue, 10) : null
+        const formattedMaxValue = rawMaxValue
+            ? formatToIDR(numericMaxValue)
+            : ""
+
+        setMaxPrice(formattedMaxValue) // Set the formatted value for display
+
+        if (numericMaxValue !== null) {
+            const numericMinPrice = parseInt(minPrice.replace(/[^\d]/g, ""), 10)
+
+            // Validate max price against min price
+            if (minPrice && numericMaxValue < numericMinPrice) {
+                // Optionally: handle error message for max < min
+                console.error("Max price must be greater than min price")
+                return // Stop if validation fails
+            }
+
+            // Validate max price against the minimum threshold
+            if (numericMaxValue > 10000) {
+                setNumericMaxPrice(numericMaxValue)
+            }
+        } else {
+            setNumericMaxPrice(null)
+        }
     }
 
     const handleFilter = () => {
@@ -132,8 +193,8 @@ function PopupFilter({ closePopup }) {
                 conditions: selectedConditions,
                 statuses: selectedStatuses,
                 brands: selectedBrands,
-                minPrice,
-                maxPrice,
+                minPrice: numericMinPrice,
+                maxPrice: numericMaxPrice,
             }),
         )
         closePopup()
@@ -290,7 +351,7 @@ function PopupFilter({ closePopup }) {
                                         Rp
                                     </div>
                                     <input
-                                        type="number"
+                                        type="text"
                                         value={minPrice}
                                         onChange={handleMinPriceChange}
                                         className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0"
@@ -306,7 +367,7 @@ function PopupFilter({ closePopup }) {
                                         Rp
                                     </div>
                                     <input
-                                        type="number"
+                                        type="text"
                                         value={maxPrice}
                                         onChange={handleMaxPriceChange}
                                         className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0"

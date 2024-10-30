@@ -2,6 +2,7 @@ import { useAuth } from "@/hooks/auth"
 import { clearUser, setUser } from "@/store/slices/authSlice"
 import { resetFilters } from "@/store/slices/filterSlice"
 import {
+    ArrowLeftEndOnRectangleIcon,
     ArrowRightStartOnRectangleIcon,
     BanknotesIcon,
     BuildingStorefrontIcon,
@@ -140,6 +141,16 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                             <div className="flex items-center py-3">
                                 <PhoneIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm"> Contact Us</div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div className="mt-2 bg-white p-4">
+                        <Link href="/login">
+                            <div className="flex items-center py-3">
+                                <ArrowLeftEndOnRectangleIcon className="h-6 w-6 cursor-pointer" />
+                                <div className="ml-3 text-sm font-bold">
+                                    Masuk / Daftar
+                                </div>
                             </div>
                         </Link>
                     </div>

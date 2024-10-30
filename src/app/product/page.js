@@ -56,6 +56,18 @@ function Product({ searchParams }) {
     const statuses = useSelector(state => state.filters.statuses)
     const brands = useSelector(state => state.filters.brands)
 
+    const formatToIDR = number => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+            currencyDisplay: "narrowSymbol",
+        })
+            .format(number)
+            .replace("Rp", "")
+            .trim() // Remove "Rp" prefix
+    }
+
     useEffect(() => {
         if (!category) {
             console.log("====================================")
@@ -262,7 +274,7 @@ function Product({ searchParams }) {
                     {/* Render price range if available */}
                     {selectedFilters.minPrice || selectedFilters.maxPrice ? (
                         <div className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
-                            {`Rp ${selectedFilters.minPrice || 0} - Rp ${selectedFilters.maxPrice || "∞"}`}
+                            {`Rp ${formatToIDR(selectedFilters.minPrice) || 0} - Rp ${formatToIDR(selectedFilters.maxPrice) || "∞"}`}
                         </div>
                     ) : null}
                 </div>
