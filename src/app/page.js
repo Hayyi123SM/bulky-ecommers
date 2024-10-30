@@ -1,6 +1,7 @@
 "use client"
 
 import Footer from "@/components/Footer"
+import InputError from "@/components/InputError"
 import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
@@ -8,10 +9,12 @@ import PopupModal from "@/components/PopupModal"
 import ProductCard from "@/components/ProductCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
 import { fetchBanners } from "@/store/slices/bannerSlice"
-import { setFilters } from "@/store/slices/filterSlice"
+import { fetchCategories, setFilters } from "@/store/slices/filterSlice"
+import { createWholesale, getBudgets } from "@/store/slices/orderSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
@@ -47,11 +50,22 @@ function Home() {
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
-    // const scrollRef = useRef(null)
+    const [showWholesale, setShowWholesale] = useState(false)
     const prevRef = useRef(null)
     const nextRef = useRef(null)
     const [isClient, setIsClient] = useState(false)
     const [swiperInstance, setSwiperInstance] = useState(null)
+    const categories = useSelector(state => state.filters.categories)
+    const [selectedCategories, setSelectedCategories] = useState([])
+
+    const [nameWholesale, setNameWholesale] = useState("")
+    const [selectedOption, setSelectedOption] = useState("Budgetmu")
+    const [phoneWholesale, setPhoneWholesale] = useState("")
+    const [addressWholesale, setAddressWholesale] = useState("")
+    const [isOpen, setIsOpen] = useState(false)
+    const budgets = useSelector(state => state.orders.budgets)
+    const errors = useSelector(state => state.orders.errors)
+    const [showNotification, setShowNotification] = useState(false)
 
     useEffect(() => {
         setIsClient(true) // This ensures that Swiper only renders on the client
@@ -95,12 +109,10 @@ function Home() {
         dispatch(fetchProducts({ filters: { perPage: 6 } }))
         dispatch(fetchTestimonies({ take: 20 }))
         dispatch(fetchVideos({ perPage: 8, paginate: 1 }))
-
+        dispatch(fetchCategories())
+        dispatch(getBudgets())
         // localStorage.setItem("signinWithGoogle", JSON.stringify(dummy))
     }, [dispatch])
-    // console.log("====================================")
-    // console.log("loadingBanners:", loadingBanners)
-    // console.log("====================================")
 
     const togglePopupMenu = () => {
         // if (!user) {
@@ -154,6 +166,46 @@ function Home() {
         dispatch(setFilters({ categories: [category] }))
         localStorage.setItem("category", category)
         router.push(`/product?category=${category}`)
+    }
+
+    const handleCloseWholesale = () => {
+        setShowWholesale(false)
+        setShowNotification(false)
+    }
+
+    const handleOptionClick = name => {
+        setSelectedOption(name)
+        setIsOpen(false)
+    }
+
+    const handleCategoryChange = (e, category) => {
+        const updatedCategories = e.target.checked
+            ? [...selectedCategories, category.id]
+            : selectedCategories.filter(id => id !== category.id)
+        setSelectedCategories(updatedCategories)
+    }
+
+    const handleSubmitWholesale = async e => {
+        e.preventDefault()
+
+        const data = {
+            name: nameWholesale,
+            phone_number: phoneWholesale,
+            address: addressWholesale,
+            budget: selectedOption,
+            categories: selectedCategories,
+        }
+
+        const result = await dispatch(createWholesale(data))
+
+        if (!result.error) {
+            setShowWholesale(false)
+            setShowNotification(true)
+        } else {
+            console.log("====================================")
+            console.log("Error:", result.error) // Log errors if any
+            console.log("====================================")
+        }
     }
 
     if (!isClient) return null
@@ -1044,11 +1096,11 @@ function Home() {
                                     Wholesaler Bulky.id
                                 </div>
                                 <div className="mt-6 flex justify-between pr-20">
-                                    <Link href="/product">
-                                        <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                            Beli Sekarang
-                                        </div>
-                                    </Link>
+                                    <div
+                                        className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
+                                        onClick={() => setShowWholesale(true)}>
+                                        Beli Sekarang
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1118,6 +1170,172 @@ function Home() {
                     </div>
                 </div>
             )}
+
+            {showWholesale && (
+                <div
+                    className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}>
+                    <div
+                        className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
+                        <div className="my-4 flex items-center">
+                            <ArrowLeftIcon
+                                className="mr-5 h-6 w-6 cursor-pointer"
+                                onClick={handleCloseWholesale}
+                            />
+                            <h2 className="text-xl font-semibold">
+                                Form Partai Besar/Borongan
+                            </h2>
+                        </div>
+                        <div className="py-1">
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                Nama
+                            </div>
+                            <input
+                                type="text"
+                                value={nameWholesale}
+                                onChange={e => setNameWholesale(e.target.value)}
+                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                placeholder="Masukkan Nama"
+                            />
+                            <InputError
+                                messages={errors && errors.name}
+                                className={"mt-2"}
+                            />
+                        </div>
+                        <div className="py-1">
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                Telepon / WhatsApp
+                            </div>
+                            <input
+                                type="text"
+                                value={phoneWholesale}
+                                onChange={e =>
+                                    setPhoneWholesale(e.target.value)
+                                }
+                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                placeholder="cth: 0852-1234-1234"
+                            />
+                            <InputError
+                                messages={errors && errors.phone_number}
+                                className={"mt-2"}
+                            />
+                        </div>
+                        <div className="py-1">
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                Alamat
+                            </div>
+                            <input
+                                type="text"
+                                value={addressWholesale}
+                                onChange={e =>
+                                    setAddressWholesale(e.target.value)
+                                }
+                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                placeholder="Alamatmu"
+                            />
+                            <InputError
+                                messages={errors && errors.address}
+                                className={"mt-2"}
+                            />
+                        </div>
+                        <div className="py-1">
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                Budget
+                            </div>
+                            <div className="relative w-full lg:max-w-xl">
+                                <div
+                                    className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    onClick={() => setIsOpen(!isOpen)}>
+                                    <div className="flex items-center">
+                                        {selectedOption}
+                                    </div>
+                                    {isOpen ? (
+                                        <ChevronUpIcon className="inline-block h-5 w-5" />
+                                    ) : (
+                                        <ChevronDownIcon className="inline-block h-5 w-5" />
+                                    )}
+                                </div>
+
+                                {/* Dropdown options */}
+                                <div
+                                    className={`mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${
+                                        isOpen
+                                            ? "max-h-screen opacity-100"
+                                            : "max-h-0 overflow-hidden opacity-0"
+                                    }`}>
+                                    {budgets.map((option, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
+                                            onClick={() =>
+                                                handleOptionClick(option)
+                                            }>
+                                            {option}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <InputError
+                                messages={errors && errors.budget}
+                                className={"mt-2"}
+                            />
+                        </div>
+                        <div className="py-1">
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                Kategori Produk
+                            </div>
+                            <div className="grid max-h-32 grid-cols-2 gap-2 overflow-y-auto">
+                                {categories.map((category, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
+                                        <input
+                                            id={`category-${category.id}`} // Unique ID for accessibility
+                                            aria-describedby="comments-description"
+                                            name="comments"
+                                            type="checkbox"
+                                            checked={selectedCategories.includes(
+                                                category.id,
+                                            )}
+                                            onChange={e =>
+                                                handleCategoryChange(
+                                                    e,
+                                                    category,
+                                                )
+                                            }
+                                            className="h-3 w-3 rounded border-black checked:bg-[#007185] checked:text-[#007185] focus:ring-0"
+                                        />
+                                        <label
+                                            htmlFor={`category-${category.id}`}
+                                            className="text-sm font-bold text-[#6D7588]">
+                                            {category.name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                            <InputError
+                                messages={errors && errors.categories}
+                                className={"mt-2"}
+                            />
+                        </div>
+                        <div className="mt-6 flex justify-center">
+                            <div
+                                className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
+                                onClick={handleSubmitWholesale}>
+                                Beli Sekarang
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <PopupModal
+                isOpen={showNotification}
+                closeModal={handleCloseWholesale}
+                type={"notification"}
+                title={"Pemberitahuan"}
+                message={`Selamat, wholesale berhasil dikirim.`}
+                urlConfirm="/"
+            />
             <Footer />
 
             {/* <LoadingSpinner /> */}

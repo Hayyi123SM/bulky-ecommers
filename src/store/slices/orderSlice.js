@@ -12,6 +12,7 @@ const initialState = {
     afterSetInvoiceAmount: {},
     myInvoice: {},
     totalPages: 0,
+    budgets: [],
     currentPage: 1,
     error: null,
     isLoading: false,
@@ -170,6 +171,30 @@ export const createReview = createAsyncThunk(
     },
 )
 
+export const getBudgets = createAsyncThunk("orders/getBudgets", async () => {
+    try {
+        const response = await axios.get("/api/general/wholesale-form/budget")
+        return response.data
+    } catch (error) {
+        return error.response.data
+    }
+})
+
+export const createWholesale = createAsyncThunk(
+    "orders/createWholesale",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(
+                "/api/general/wholesale-form/send",
+                data,
+            )
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
 const orderSlice = createSlice({
     name: "orders",
     initialState,
@@ -286,6 +311,33 @@ const orderSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(createReview.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(getBudgets.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(getBudgets.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.budgets = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(getBudgets.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(createWholesale.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(createWholesale.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.isLoading = false
+            })
+            .addCase(createWholesale.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

@@ -2,7 +2,9 @@
 
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
+import { getStatusColor } from "@/lib/helper"
 import { fetchOrderDetail } from "@/store/slices/orderSlice"
+import { ClockIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
@@ -174,7 +176,7 @@ function OrderDetail({ params }) {
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">
-                            <div className="h-full rounded-xl bg-white px-5 py-4 lg:shadow">
+                            <div className="mb-4 h-full rounded-xl bg-white px-5 py-4 lg:shadow">
                                 <div className="flex items-center">
                                     <div className="mb-5 text-sm leading-6">
                                         <div className="text-base font-bold">
@@ -226,6 +228,54 @@ function OrderDetail({ params }) {
                                     </div>
                                 </div>
                             </div>
+                            {order &&
+                                order?.shipping_method?.label ===
+                                    "Self Pickup" && (
+                                    <div className="rounded-xl bg-secondary px-5 py-4 text-sm lg:shadow">
+                                        <div className="flex items-center">
+                                            <div className="mb-5 text-sm leading-6">
+                                                <div className="text-sm font-bold">
+                                                    Informasi Pickup Gudang
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="py-2 text-sm">
+                                            Anda bisa mengambil barang yang
+                                            sudah anda beli di gudang kami yang
+                                            beralamat di :
+                                        </div>
+                                        <div className="py-2 text-sm font-bold">
+                                            Jl. Cilodong Raya No. 89, Colodong,
+                                            Kec. Cilodong, Kota Depok, Jawa
+                                            Barat 16414
+                                        </div>
+                                        <div className="pt-2 text-sm">
+                                            Jam Operasional Gudang :
+                                        </div>
+                                        <div className="flex items-center pb-2 text-sm font-bold">
+                                            Senin - Sabtu Pukul 09.00 - 18.00
+                                            WIB
+                                            <div
+                                                className={`ml-2 flex w-fit items-center gap-1 rounded-lg bg-white px-2 py-1 ${getStatusColor()}`}>
+                                                <ClockIcon className="h-4 w-4" />
+                                                {getStatusColor() ===
+                                                "text-green-500"
+                                                    ? "Gudang Buka"
+                                                    : "Gudang Tutup"}
+                                            </div>
+                                        </div>
+                                        <div className="py-2 text-sm font-bold">
+                                            Atau anda juga bisa menghubungi
+                                            admin kami dengan klik tombol{" "}
+                                            <Link
+                                                href="/contact-us"
+                                                className="text-[#2E84F6] underline">
+                                                WA ADMIN
+                                            </Link>{" "}
+                                            untuk menjadwalkan pickup.
+                                        </div>
+                                    </div>
+                                )}
                             {/* <div className="mt-4 h-full rounded-xl bg-white px-5 py-4 lg:shadow">
                                 <div className="flex items-center">
                                     <div className="mb-5 ml-5 text-sm leading-6">
