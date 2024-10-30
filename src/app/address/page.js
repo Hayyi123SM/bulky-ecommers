@@ -69,7 +69,17 @@ function Address() {
         }, 2000)
     }
 
-    if (!addresses) return <div>Loading ... </div>
+    if (!addresses) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
             <Navbar visibleOn="desktop" />

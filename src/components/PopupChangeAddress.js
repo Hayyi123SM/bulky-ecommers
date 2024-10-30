@@ -32,7 +32,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
         setTimeout(() => {
             closeModal()
             window.location.reload()
-        }, 2000)
+        }, 1500)
     }
 
     const handleOverlayClick = e => {
@@ -58,7 +58,16 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
 
     if (!isOpen && !isVisible) return null
 
-    if (!addresses) return <div>Loading ... </div>
+    if (!addresses) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div>

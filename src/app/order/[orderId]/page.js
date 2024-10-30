@@ -42,7 +42,16 @@ function OrderDetail({ params }) {
     // console.log("order:", order)
     // console.log("orderId:", orderId)
     // console.log("params:", params)
-    if (order === null) return <div>Loading...</div>
+    if (order === null) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div>

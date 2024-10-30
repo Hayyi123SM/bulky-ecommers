@@ -25,7 +25,16 @@ function OrderDetail({ params }) {
     }, [dispatch, id])
 
     // console.log("order:", order)
-    if (!order) return <div>Loading...</div>
+    if (!order) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <Suspense fallback={<div>Loading...</div>}>

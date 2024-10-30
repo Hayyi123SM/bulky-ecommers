@@ -77,7 +77,14 @@ function Shipping() {
     }
 
     if (!cart) {
-        return <div>Loading cart...</div>
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
     }
 
     // console.log(cart.items)

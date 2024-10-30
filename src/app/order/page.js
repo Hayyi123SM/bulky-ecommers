@@ -101,7 +101,16 @@ function Order() {
         )
     }
 
-    if (!orders) return <div>Loading ... </div>
+    if (!orders) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
+    }
 
     console.log("====================================")
     console.log("user:", user)

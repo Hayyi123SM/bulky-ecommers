@@ -59,7 +59,16 @@ function OrderSplitDetail({ params }) {
     // console.log("myInvoice:", myInvoice)
     // console.log("totalPaidAmount:", totalPaidAmount)
 
-    if (order === null || myInvoice === null) return <div>Loading...</div>
+    if (order === null || myInvoice === null) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <div className="text-center">
+                    <div className="text-lg font-semibold">Loading...</div>
+                    <div className="mt-2 text-gray-500">Please wait...</div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div>
