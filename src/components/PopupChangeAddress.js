@@ -29,11 +29,10 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
     const handleSetAddress = addressId => {
         dispatch(setAddress({ address_id: addressId }))
         dispatch(fetchCarts())
-        // setTimeout(() => {
-        //     closeModal()
-        // }, 2000)
-
-        window.location.reload()
+        setTimeout(() => {
+            closeModal()
+            window.location.reload()
+        }, 2000)
     }
 
     const handleOverlayClick = e => {

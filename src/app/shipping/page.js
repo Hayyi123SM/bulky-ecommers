@@ -381,7 +381,7 @@ function Shipping() {
                                 <div className="w-1/2 text-sm leading-6">
                                     <label className="text-sm">Total</label>
                                     <div className="text-base font-bold">
-                                        {cart.total_price.formatted}
+                                        {cart.total?.formatted}
                                     </div>
                                 </div>
                                 <div className="w-1/2">

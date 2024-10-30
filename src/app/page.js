@@ -893,6 +893,9 @@ function Home() {
                 </div>
                 <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat lg:bg-[url('/new/cartoon-1.png')]">
                     <div className="mx-auto max-w-7xl px-4 py-10">
+                        <div className="mb-10 flex justify-center text-center text-2xl font-semibold leading-9">
+                            Testimoni Klien Kami
+                        </div>
                         <div className="flex w-full grid-cols-1 items-center justify-center gap-10">
                             {/* <div className="w-1/3 rounded-lg bg-secondary bg-opacity-20 p-10">
                                 <div className="text-4xl font-bold">
