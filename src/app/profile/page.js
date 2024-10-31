@@ -1,6 +1,7 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
 import { clearUser, updateProfilePicture } from "@/store/slices/authSlice"
@@ -21,6 +22,7 @@ function Profile() {
     const [selectedFile, setSelectedFile] = useState(null) // Store a single file
     const [previewImage, setPreviewImage] = useState(null) // For preview
     const fileInputRef = useRef(null)
+    const [notification, setNotfication] = useState(false)
 
     const handleLogout = async () => {
         console.log("Handling logout...")
@@ -92,11 +94,22 @@ function Profile() {
         })
 
         try {
-            await dispatch(updateProfilePicture(formData)).unwrap()
-            console.log("Update Profile Picture successfully!")
+            const response = await dispatch(
+                updateProfilePicture(formData),
+            ).unwrap()
+
+            if (response.data) {
+                setNotfication(true)
+
+                console.log("Update Profile Picture successfully!", response)
+            }
         } catch (error) {
             console.error("Error Update Profile Picture:", error)
         }
+    }
+
+    const handleCloseNotification = () => {
+        setNotfication(false)
     }
 
     if (isLoading) {
@@ -317,6 +330,13 @@ function Profile() {
                     </div>
                 </div>
             </div>
+            <PopupModal
+                isOpen={notification}
+                closeModal={handleCloseNotification}
+                type={"notification"}
+                title={"Pemberitahuan"}
+                message={`berhasil mengubah photo profil.`}
+            />
             {/* <Footer /> */}
         </div>
     )

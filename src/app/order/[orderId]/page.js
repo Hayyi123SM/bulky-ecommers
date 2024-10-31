@@ -91,24 +91,36 @@ function OrderDetail({ params }) {
                                     order.items.map((item, index) => (
                                         <div
                                             key={index}
-                                            className="flex items-center py-2">
-                                            <div>
-                                                <Image
-                                                    src={item.product.images[0]}
-                                                    width={100}
-                                                    height={100}
-                                                    alt="cart-product"
-                                                    priority={false}
-                                                />
-                                            </div>
-                                            <div className="ml-5 text-sm leading-6">
-                                                <div className="text-md pb-1">
-                                                    {item.product.name}
+                                            className="flex items-center justify-between py-2">
+                                            <div className="flex items-center">
+                                                <div>
+                                                    <Image
+                                                        src={
+                                                            item.product
+                                                                .images[0]
+                                                        }
+                                                        width={100}
+                                                        height={100}
+                                                        alt="cart-product"
+                                                        priority={false}
+                                                    />
                                                 </div>
-                                                <div className="text-md font-bold">
-                                                    {item.price.formatted}
+                                                <div className="ml-5 text-sm leading-6">
+                                                    <div className="text-md pb-1">
+                                                        {item.product.name}
+                                                    </div>
+                                                    <div className="text-md font-bold">
+                                                        {item.price.formatted}
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <Link
+                                                href={`/review-create?orderId=${orderId}&productId=${item.product.id}`}>
+                                                <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                                    Beri Ulasan
+                                                </div>
+                                            </Link>
                                         </div>
                                     ))}
                             </div>
@@ -179,9 +191,6 @@ function OrderDetail({ params }) {
                                         {order && order.shipping_address}
                                     </div>
                                 </div>
-                                {/* <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Bayar Sekarang
-                                </div> */}
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">

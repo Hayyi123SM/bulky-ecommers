@@ -1,11 +1,12 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
 import { createReview } from "@/store/slices/orderSlice"
 import { ArrowLeftIcon, PlusIcon, StarIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useState } from "react"
 import { useDispatch } from "react-redux"
 
@@ -15,8 +16,14 @@ function ReviewCreate() {
     const [rating, setRating] = useState(0)
     const [selectedFiles, setSelectedFiles] = useState([])
     const [comment, setComment] = useState("")
-    const orderId = "9d19c232-1d5d-4ffa-bba3-30c72f24c7e2"
-    const productId = "9d13b573-fb99-4765-9ce5-a37a429bac8a"
+    const orderId = useSearchParams().get("orderId")
+    const productId = useSearchParams().get("productId")
+    const [notification, setNotfication] = useState(false)
+
+    console.log("====================================")
+    console.log("orderId:", orderId)
+    console.log("productId:", productId)
+    console.log("====================================")
 
     const handleClick = index => {
         setRating(index + 1)
@@ -65,11 +72,25 @@ function ReviewCreate() {
 
         // Handle the async dispatch and error catching
         try {
-            await dispatch(createReview({ formData, orderId })).unwrap()
+            const response = await dispatch(
+                createReview({ formData, orderId }),
+            ).unwrap()
+
+            if (response.data) {
+                setNotfication(true)
+
+                setTimeout(() => {
+                    router.push("/order")
+                }, 2000)
+            }
             console.log("Review created successfully!")
         } catch (error) {
             console.error("Error creating review:", error)
         }
+    }
+
+    const handleCloseNotification = () => {
+        setNotfication(false)
     }
 
     return (
@@ -179,6 +200,13 @@ function ReviewCreate() {
                 </div>
                 {/* <Footer /> */}
             </div>
+            <PopupModal
+                isOpen={notification}
+                closeModal={handleCloseNotification}
+                type={"notification"}
+                title={"Pemberitahuan"}
+                message={`berhasil memberikan ulasan.`}
+            />
         </Suspense>
     )
 }
