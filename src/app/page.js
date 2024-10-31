@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Footer from "@/components/Footer"
 import InputError from "@/components/InputError"
 import LoadingSpinner from "@/components/LoadingSpinner"
@@ -14,7 +15,11 @@ import { createWholesale, getBudgets } from "@/store/slices/orderSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
+import {
+    ChevronDownIcon,
+    ChevronUpIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline"
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
@@ -1179,14 +1184,14 @@ function Home() {
                     className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}>
                     <div
                         className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
-                        <div className="my-4 flex items-center">
-                            <ArrowLeftIcon
-                                className="mr-5 h-6 w-6 cursor-pointer"
-                                onClick={handleCloseWholesale}
-                            />
+                        <div className="my-4 flex items-center justify-between">
                             <h2 className="text-xl font-semibold">
                                 Form Partai Besar/Borongan
                             </h2>
+                            <XMarkIcon
+                                className="h-6 w-6 cursor-pointer"
+                                onClick={handleCloseWholesale}
+                            />
                         </div>
                         <div className="py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
@@ -1342,6 +1347,8 @@ function Home() {
             <Footer />
 
             {/* <LoadingSpinner /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

@@ -18,6 +18,8 @@ module.exports = {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+                "gradient-whatsapp":
+                    "linear-gradient(154.73deg, #2ECC75 13.01%, #0B964A 88.12%)",
             },
             lineClamp: {
                 3: "3",
