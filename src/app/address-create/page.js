@@ -21,7 +21,7 @@ function AddressCreate() {
     const [label, setlabel] = useState("")
     const [name, setName] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    // const [address, setAddress] = useState("")
+    const [address, setAddress] = useState("")
     // const [provinceId, setProvinceId] = useState("")
     // const [cityId, setCityId] = useState("")
     // const [districtId, setDistrictId] = useState("")
@@ -80,7 +80,7 @@ function AddressCreate() {
             label,
             name,
             phoneNumber,
-            // address,
+            address,
             // provinceId,
             // cityId,
             // districtId,
@@ -206,7 +206,7 @@ function AddressCreate() {
                                 />
                             </div>
                         </div>
-                        {/* <div className="mt-3 items-center justify-between lg:flex">
+                        <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
                                     Alamat
@@ -224,7 +224,7 @@ function AddressCreate() {
                                 />
                             </div>
                         </div>
-                        <div className="mt-3 flex items-center justify-between">
+                        {/*  <div className="mt-3 flex items-center justify-between">
                             <div className="item-center flex w-full lg:w-5/12">
                                 <div className="item-center w-1/2 pr-2">
                                     <div className="mb-1 font-semibold text-[#B1B1B1]">

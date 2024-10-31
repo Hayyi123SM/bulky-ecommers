@@ -75,6 +75,7 @@ function AddressUpdate({ params }) {
     const [label, setlabel] = useState("")
     const [name, setName] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [address, setAddress] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
     const errors = useSelector(state => state.address.error)
@@ -96,6 +97,7 @@ function AddressUpdate({ params }) {
             setlabel(addressDetail.label)
             setName(addressDetail.name)
             setPhoneNumber(addressDetail.phone_number)
+            setAddress(addressDetail.address)
             setLatitude(addressDetail.latitude)
             setLongitude(addressDetail.longitude)
             // Jika latitude dan longitude tersedia, lakukan reverse geocoding
@@ -124,6 +126,7 @@ function AddressUpdate({ params }) {
             addressId,
             label,
             name,
+            address,
             phoneNumber,
             latitude: selectedLatitude ? selectedLatitude : latitude,
             longitude: selectedLongitude ? selectedLongitude : longitude,
@@ -229,6 +232,24 @@ function AddressUpdate({ params }) {
                                 />
                                 <InputError
                                     messages={errors && errors.phone_number}
+                                    className={"mt-2"}
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-3 items-center justify-between lg:flex">
+                            <div className="item-center lg:w-5/12">
+                                <div className="mb-1 font-semibold text-[#B1B1B1]">
+                                    Alamat
+                                </div>
+                                <input
+                                    type="text"
+                                    className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    placeholder="Alamat"
+                                    onChange={e => setAddress(e.target.value)}
+                                    defaultValue={address}
+                                />
+                                <InputError
+                                    messages={errors && errors.address}
                                     className={"mt-2"}
                                 />
                             </div>

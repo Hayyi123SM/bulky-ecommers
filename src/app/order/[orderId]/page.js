@@ -191,6 +191,17 @@ function OrderDetail({ params }) {
                                         {order && order.shipping_address}
                                     </div>
                                 </div>
+                                {order && order.shipping?.show_tracking_url && (
+                                    <div className="my-2 mb-4 border-b p-1 text-sm">
+                                        <div className="w-1/2 text-[#6D7588]">
+                                            Live Tracking Deliveree
+                                        </div>
+                                        <div className="w-1/2">
+                                            {order &&
+                                                order.shipping?.tracking_url}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">
