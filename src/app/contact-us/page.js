@@ -77,7 +77,7 @@ function ContactUs() {
                                         className="mt-2 w-full cursor-pointer text-sm leading-6 text-[#007185]"
                                         onClick={() =>
                                             window.open(
-                                                "https://wa.me/62811858834",
+                                                "https://wa.me/62811833164",
                                                 "_blank",
                                             )
                                         }>

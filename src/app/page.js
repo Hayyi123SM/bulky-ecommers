@@ -190,6 +190,17 @@ function Home() {
         setSelectedCategories(updatedCategories)
     }
 
+    const handleSelectAllCategories = e => {
+        if (e.target.checked) {
+            // Select all category IDs
+            const allCategoryIds = categories.map(category => category.id)
+            setSelectedCategories(allCategoryIds)
+        } else {
+            // Deselect all categories
+            setSelectedCategories([])
+        }
+    }
+
     const handleSubmitWholesale = async e => {
         e.preventDefault()
 
@@ -1265,7 +1276,7 @@ function Home() {
 
                                 {/* Dropdown options */}
                                 <div
-                                    className={`mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${
+                                    className={`absolute mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${
                                         isOpen
                                             ? "max-h-screen opacity-100"
                                             : "max-h-0 overflow-hidden opacity-0"
@@ -1287,11 +1298,30 @@ function Home() {
                                 className={"mt-2"}
                             />
                         </div>
-                        <div className="py-1">
+                        <div className="mt-2 py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
                                 Kategori Produk
                             </div>
                             <div className="grid max-h-32 grid-cols-2 gap-2 overflow-y-auto">
+                                <div className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
+                                    <input
+                                        id={`selected-all`} // Unique ID for accessibility
+                                        aria-describedby="comments-description"
+                                        name="comments"
+                                        type="checkbox"
+                                        checked={
+                                            selectedCategories.length ===
+                                            categories.length
+                                        }
+                                        onChange={handleSelectAllCategories}
+                                        className="h-3 w-3 rounded border-black checked:bg-[#007185] checked:text-[#007185] focus:ring-0"
+                                    />
+                                    <label
+                                        htmlFor={`selected-all`}
+                                        className="text-sm font-bold text-[#6D7588]">
+                                        Semua Kategori
+                                    </label>
+                                </div>
                                 {categories.map((category, index) => (
                                     <div
                                         key={index}

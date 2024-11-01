@@ -315,7 +315,7 @@ function TermsAndConditions() {
                                 JL. CILODONG RAYA NO.89, CILODONG,KEC.CILODONG,
                                 DEPOK CITY, WEST JAVA 16414, INDONESIA <br />
                                 EMAIL: admin@Bulky.ID <br />
-                                PHONE: 0811 858 834
+                                PHONE: 0811 822 164
                             </div> */}
                         </div>
                     </div>

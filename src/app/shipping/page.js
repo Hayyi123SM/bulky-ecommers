@@ -202,7 +202,7 @@ function Shipping() {
                                     Atau jika Anda membutuhkan bantuan untuk
                                     pengiriman ekspedisi lain, silahkan
                                     menghubungi admin kami di nomor{" "}
-                                    <b> 0811803157 </b>
+                                    <b> 0811 822 164 </b>
                                     <br />
                                     <br />
                                     Terima Kasih sudah berbelanja di Bulky.id

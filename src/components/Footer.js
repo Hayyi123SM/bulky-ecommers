@@ -43,11 +43,11 @@ function Footer() {
                             className="ml-2 cursor-pointer font-semibold text-[#007185] underline"
                             onClick={() =>
                                 window.open(
-                                    "https://wa.me/62811858834",
+                                    "https://wa.me/62811833164",
                                     "_blank",
                                 )
                             }>
-                            0811 858 834
+                            0811 822 164
                         </div>
                     </div>
                     <div className="mt-3 flex text-sm">
