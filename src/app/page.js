@@ -1329,7 +1329,7 @@ function Home() {
                             <div
                                 className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
                                 onClick={handleSubmitWholesale}>
-                                Beli Sekarang
+                                Kirim Form
                             </div>
                         </div>
                     </div>
