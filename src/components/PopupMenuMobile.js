@@ -204,6 +204,14 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 </div>
                             </div>
                             <div className="mt-2 bg-white p-4">
+                                <Link href="/cart">
+                                    <div className="flex items-center py-3">
+                                        <ShoppingCartIcon className="h-6 w-6 cursor-pointer" />
+                                        <div className="ml-3 text-sm">
+                                            Keranjang
+                                        </div>
+                                    </div>
+                                </Link>
                                 <Link href="/waiting-payment">
                                     <div className="flex items-center py-3">
                                         <CreditCardIcon className="h-6 w-6 cursor-pointer" />
