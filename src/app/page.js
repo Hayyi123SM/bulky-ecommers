@@ -1118,7 +1118,7 @@ function Home() {
                                     <div
                                         className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
                                         onClick={() => setShowWholesale(true)}>
-                                        Beli Sekarang
+                                        Daftar Sekarang
                                     </div>
                                 </div>
                             </div>
