@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
@@ -336,6 +337,8 @@ function Address() {
                 title={"Pemberitahuan"}
                 message={`Selamat, berhasil menjadikan alamat utama.`}
             />
+
+            <FloatingIcon />
         </div>
     )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import { formatCurrency } from "@/lib/helper"
@@ -247,6 +248,8 @@ function PaymentNominal() {
                 </div>
             </div>
             {/* <Footer /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

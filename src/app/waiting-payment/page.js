@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import Pagination from "@/components/Pagination"
@@ -277,6 +278,8 @@ function WaitingPayment() {
                 />
             )}
             <Footer />
+
+            <FloatingIcon />
         </div>
     )
 }

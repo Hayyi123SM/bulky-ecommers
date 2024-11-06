@@ -1,6 +1,7 @@
 "use client"
 
 import AuthSessionStatus from "@/components/AuthSessionStatus"
+import FloatingIcon from "@/components/FloatingIcon"
 import InputError from "@/components/InputError"
 import Navbar from "@/components/Navbar"
 import PopupModal from "@/components/PopupModal"
@@ -182,6 +183,8 @@ function UpdateProfile() {
                 message={`Selamat, profil anda telah diperbarui.`}
             />
             {/* <Footer /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

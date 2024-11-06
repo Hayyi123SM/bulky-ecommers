@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import {
     applyCoupon,
@@ -463,6 +464,8 @@ function PaymentMethod() {
                 </div>
             </div>
             {/* <Footer /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

@@ -1,4 +1,5 @@
 "use client"
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api"
@@ -107,6 +108,7 @@ function ContactUs() {
                 </div>
             </div>
             {/* <Footer /> */}
+            <FloatingIcon />
         </div>
     )
 }

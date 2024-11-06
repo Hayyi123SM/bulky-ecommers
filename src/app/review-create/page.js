@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
@@ -207,6 +208,8 @@ function ReviewCreate() {
                 title={"Pemberitahuan"}
                 message={`berhasil memberikan ulasan.`}
             />
+
+            <FloatingIcon />
         </Suspense>
     )
 }

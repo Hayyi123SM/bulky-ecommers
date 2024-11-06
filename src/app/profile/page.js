@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
@@ -338,6 +339,8 @@ function Profile() {
                 message={`berhasil mengubah photo profil.`}
             />
             {/* <Footer /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import {
     createPayment,
@@ -354,6 +355,8 @@ function Payment({ params }) {
                 </div>
             </div>
             {/* <Footer /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

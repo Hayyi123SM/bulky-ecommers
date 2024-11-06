@@ -1,6 +1,7 @@
 "use client"
 
 import AuthSessionStatus from "@/components/AuthSessionStatus"
+import FloatingIcon from "@/components/FloatingIcon"
 import InputError from "@/components/InputError"
 import Navbar from "@/components/Navbar"
 import PopupAddress from "@/components/PopupAddress"
@@ -347,6 +348,7 @@ function AddressUpdate({ params }) {
                 urlConfirm="/address"
             />
             {/* <Footer /> */}
+            <FloatingIcon />
         </div>
     )
 }

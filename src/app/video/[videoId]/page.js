@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import { fetchVideoDetail } from "@/store/slices/videoSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
@@ -46,6 +47,8 @@ function VideoDetail({ params }) {
                     </div>
                 </div>
             </div>
+
+            <FloatingIcon />
         </div>
     )
 }

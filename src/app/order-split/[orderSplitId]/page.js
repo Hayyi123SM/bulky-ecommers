@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { formatCurrency } from "@/lib/helper"
@@ -326,6 +327,8 @@ function OrderSplitDetail({ params }) {
                 </div>
             </div>
             {/* <Footer /> */}
+
+            <FloatingIcon />
         </div>
     )
 }

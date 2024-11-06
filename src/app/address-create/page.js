@@ -1,6 +1,7 @@
 "use client"
 
 import AuthSessionStatus from "@/components/AuthSessionStatus"
+import FloatingIcon from "@/components/FloatingIcon"
 import InputError from "@/components/InputError"
 import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
@@ -386,6 +387,7 @@ function AddressCreate() {
                 urlConfirm="/address"
             />
             {/* <Footer /> */}
+            <FloatingIcon />
         </div>
     )
 }

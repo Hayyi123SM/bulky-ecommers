@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
@@ -664,6 +665,7 @@ function ProductDetail({ params }) {
                 </div>
             )}
             {/* <Footer /> */}
+            <FloatingIcon />
         </div>
     )
 }

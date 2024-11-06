@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
@@ -215,6 +216,8 @@ function PaymentOnGoing() {
                     </div>
                 </div>
                 {/* <Footer /> */}
+
+                <FloatingIcon />
             </div>
         </Suspense>
     )

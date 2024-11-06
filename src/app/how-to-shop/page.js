@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import { fetchPages } from "@/store/slices/pageSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
@@ -110,6 +111,7 @@ function HowToShop() {
                 </div>
             </div>
             {/* <Footer /> */}
+            <FloatingIcon />
         </div>
     )
 }

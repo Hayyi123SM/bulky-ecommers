@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
@@ -346,6 +347,8 @@ function Cart() {
                 confirmText="Lengkapi Sekarang"
                 cancelText="Nanti"
             />
+
+            <FloatingIcon />
         </div>
     )
 }

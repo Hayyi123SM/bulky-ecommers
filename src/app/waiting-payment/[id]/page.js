@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { getStatusColor } from "@/lib/helper"
@@ -270,6 +271,8 @@ function OrderDetail({ params }) {
                 </div>
                 {/* <Footer /> */}
             </div>
+
+            <FloatingIcon />
         </Suspense>
     )
 }

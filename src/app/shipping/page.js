@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import PopupChangeAddress from "@/components/PopupChangeAddress"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
@@ -420,6 +421,8 @@ function Shipping() {
                 confirmText="Lengkapi Sekarang"
                 cancelText="Nanti"
             />
+
+            <FloatingIcon />
         </div>
     )
 }

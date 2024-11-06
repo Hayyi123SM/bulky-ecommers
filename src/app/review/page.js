@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
@@ -220,6 +221,8 @@ function Review() {
                     </div>
                 </div>
                 {/* <Footer /> */}
+
+                <FloatingIcon />
             </div>
         </Suspense>
     )

@@ -24,6 +24,7 @@ import {
     fetchSearchProducts,
     useFetchProductsQuery,
 } from "../../store/slices/productSlice"
+import FloatingIcon from "@/components/FloatingIcon"
 
 function Product({ searchParams }) {
     const category = useSearchParams().get("category")
@@ -419,6 +420,7 @@ function Product({ searchParams }) {
             <div className="hidden lg:block">
                 <Footer />
             </div>
+            <FloatingIcon />
         </div>
     )
 }

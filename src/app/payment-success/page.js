@@ -1,5 +1,6 @@
 "use client"
 
+import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -122,6 +123,7 @@ function PaymentSuccess() {
                     </div>
                 </div>
                 {/* <Footer /> */}
+                <FloatingIcon />
             </div>
         </Suspense>
     )
