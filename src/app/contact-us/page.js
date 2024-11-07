@@ -73,7 +73,7 @@ function ContactUs() {
                                 </div>
                                 <div className="mt-4 text-sm font-normal leading-6 opacity-80">
                                     Jam operasional: <br /> Senin-Jumat |
-                                    8.00-17.00 <br />
+                                    9.00-18.00 <br />
                                     <div
                                         className="mt-2 w-full cursor-pointer text-sm leading-6 text-[#007185]"
                                         onClick={() =>
