@@ -238,7 +238,7 @@ function WaitingPayment() {
                         <div
                             key={index}
                             className="m-4 flex items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
-                            <div className="flex items-center">
+                            <div className="flex w-full items-center">
                                 <div className="w-1/3">
                                     <Image
                                         src="/order.svg"
@@ -256,12 +256,20 @@ function WaitingPayment() {
                                     <div className="text-md font-bold">
                                         {order.total_price.formatted}
                                     </div>
-                                    <div
-                                        onClick={() =>
-                                            handleGetInvoice(order.id)
-                                        }
-                                        className="mt-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                        Bayar Sekarang
+                                    <div className="mt-2 flex w-full items-center">
+                                        <Link
+                                            href={`/waiting-payment/${order.id}`}>
+                                            <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                                                Detail Pesanan
+                                            </div>
+                                        </Link>
+                                        <div
+                                            onClick={() =>
+                                                handleGetInvoice(order.id)
+                                            }
+                                            className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                            Bayar Sekarang
+                                        </div>
                                     </div>
                                 </div>
                             </div>

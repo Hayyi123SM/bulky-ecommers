@@ -164,7 +164,7 @@ function PaymentNominal() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-md font-light">
-                                        {order.total_price?.formatted}
+                                        {order && order.shipping?.shipping_cost}
                                     </label>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@ function PaymentNominal() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-lg font-bold">
-                                        {order.total_price?.formatted}
+                                        {order.total?.formatted}
                                     </label>
                                 </div>
                             </div>

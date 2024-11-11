@@ -210,8 +210,7 @@ function OrderDetail({ params }) {
                                         <div className="ml-5 text-right text-sm leading-6">
                                             <label className="text-base font-bold">
                                                 {order &&
-                                                    order.total_price
-                                                        ?.formatted}
+                                                    order.total?.formatted}
                                             </label>
                                         </div>
                                     </div>

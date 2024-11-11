@@ -389,7 +389,8 @@ function Order() {
                     {orders.map((order, index) => (
                         <div
                             key={index}
-                            className="m-4 flex flex-col items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
+                            className="m-4 flex flex-col items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden"
+                            onClick={() => router.push(`/order/${order.id}`)}>
                             <div className="flex w-full items-center">
                                 <div className="w-1/3">
                                     <Image

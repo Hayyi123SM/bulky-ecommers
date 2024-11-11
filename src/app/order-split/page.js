@@ -239,8 +239,8 @@ function OrderSplit() {
                     {orders.map((order, index) => (
                         <div
                             key={index}
-                            className="m-4 flex items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
-                            <div className="flex items-center">
+                            className="m-4 flex w-full items-center rounded-xl bg-white px-5 py-4 shadow lg:hidden">
+                            <div className="flex w-full items-center">
                                 <div className="w-1/3">
                                     <Image
                                         src="/order.svg"
@@ -258,12 +258,19 @@ function OrderSplit() {
                                     <div className="text-md font-bold">
                                         {order.total_price.formatted}
                                     </div>
-                                    <div
-                                        onClick={() =>
-                                            handleGetInvoice(order.id)
-                                        }
-                                        className="mt-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                        Bayar Sekarang
+                                    <div className="mt-2 flex w-full items-center gap-2">
+                                        <Link href={`/order-split/${order.id}`}>
+                                            <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
+                                                Detail Pesanan
+                                            </div>
+                                        </Link>
+                                        <div
+                                            onClick={() =>
+                                                handleGetInvoice(order.id)
+                                            }
+                                            className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                            Bayar Sekarang
+                                        </div>
                                     </div>
                                 </div>
                             </div>
