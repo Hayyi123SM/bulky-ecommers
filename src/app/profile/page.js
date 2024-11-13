@@ -5,13 +5,21 @@ import Navbar from "@/components/Navbar"
 import PopupModal from "@/components/PopupModal"
 import SidebarProfile from "@/components/SidebarProfile"
 import { useAuth } from "@/hooks/auth"
-import { clearUser, updateProfilePicture } from "@/store/slices/authSlice"
-import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
+import {
+    clearUser,
+    deleteAccount,
+    updateProfilePicture,
+} from "@/store/slices/authSlice"
+import {
+    ArrowRightStartOnRectangleIcon,
+    TrashIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 
 function Profile() {
@@ -24,6 +32,9 @@ function Profile() {
     const [previewImage, setPreviewImage] = useState(null) // For preview
     const fileInputRef = useRef(null)
     const [notification, setNotfication] = useState(false)
+    const [isDeleteAccount, setisDeleteAccount] = useState(false)
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
 
     const handleLogout = async () => {
         console.log("Handling logout...")
@@ -111,6 +122,17 @@ function Profile() {
 
     const handleCloseNotification = () => {
         setNotfication(false)
+    }
+
+    const handleDeleteAccount = () => {
+        if (password === "") {
+            setError("Password wajib diisi")
+            return
+        }
+
+        dispatch(deleteAccount({ password: password }))
+
+        window.location.href = "/"
     }
 
     if (isLoading) {
@@ -214,6 +236,12 @@ function Profile() {
                                 onClick={handleLogout}>
                                 <ArrowRightStartOnRectangleIcon className="mr-3 h-6 w-6" />
                                 Keluar Akun
+                            </div>
+                            <div
+                                className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]"
+                                onClick={() => setisDeleteAccount(true)}>
+                                <TrashIcon className="mr-3 h-6 w-6" />
+                                Hapus Akun
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center lg:hidden">
@@ -339,6 +367,53 @@ function Profile() {
                 message={`berhasil mengubah photo profil.`}
             />
             {/* <Footer /> */}
+
+            {isDeleteAccount && (
+                <div
+                    className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}>
+                    <div
+                        className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
+                        <div className="my-4 flex items-center justify-between">
+                            <h2 className="text-xl font-semibold">
+                                Hapus Akun
+                            </h2>
+                            <XMarkIcon
+                                className="h-6 w-6 cursor-pointer"
+                                onClick={() => setisDeleteAccount(false)}
+                            />
+                        </div>
+                        <div className="mb-2 py-1 text-sm text-[#6D7588]">
+                            Apakah anda yakin ingin menghapus akun ?
+                            <br />
+                            Silahkan masukkan password anda untuk melanjutkan
+                        </div>
+                        <div className="py-1">
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                Password
+                            </div>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                className={`h-10 w-full rounded-lg border p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33] ${error === null ? "border-gray-300" : "border-red-300"}`}
+                                placeholder="Masukkan Password"
+                            />
+                            {error && (
+                                <div className="mt-2 text-sm text-red-500">
+                                    {error}
+                                </div>
+                            )}
+                        </div>
+                        <div className="mt-6 flex justify-center">
+                            <div
+                                className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 font-semibold hover:bg-[#e8bc00]"
+                                onClick={handleDeleteAccount}>
+                                Kirim
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <FloatingIcon />
         </div>

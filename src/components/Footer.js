@@ -47,7 +47,7 @@ function Footer() {
                                     "_blank",
                                 )
                             }>
-                            0811 822 164
+                            0811 833 164
                         </div>
                     </div>
                     <div className="mt-3 flex text-sm">

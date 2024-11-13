@@ -102,6 +102,21 @@ export const updateProfilePicture = createAsyncThunk(
     },
 )
 
+export const deleteAccount = createAsyncThunk(
+    "auth/deleteAccount",
+    async (data, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(
+                "/api/user/profile/delete-account",
+                data,
+            )
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    },
+)
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -181,6 +196,21 @@ const authSlice = createSlice({
                 state.user = action.payload
             })
             .addCase(updateProfile.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error
+            })
+            .addCase(deleteAccount.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(deleteAccount.fulfilled, (state, action) => {
+                console.log("====================================")
+                console.log("deleteAccount fulfilled", action.payload)
+                console.log("====================================")
+                state.isLoading = false
+                state.user = action.payload
+            })
+            .addCase(deleteAccount.rejected, (state, action) => {
                 state.isLoading = false
                 state.error = action.error
             })

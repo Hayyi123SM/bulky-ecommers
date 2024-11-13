@@ -65,6 +65,12 @@ function SidebarProfile() {
                     Pembayaran Patungan
                 </div>
             </Link>
+            {/* <div className="mt-5 text-base font-bold">Profile Pengguna</div>
+            <Link href="/bank-account">
+                <div className="mt-3 rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
+                    Nomor Rekening
+                </div>
+            </Link> */}
         </div>
     )
 }

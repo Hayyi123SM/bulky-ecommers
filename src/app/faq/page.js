@@ -1,6 +1,7 @@
 "use client"
 
 import FloatingIcon from "@/components/FloatingIcon"
+import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { fetchPages } from "@/store/slices/pageSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
@@ -231,7 +232,7 @@ function Faq() {
                     </div>
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
             <FloatingIcon />
         </div>
     )

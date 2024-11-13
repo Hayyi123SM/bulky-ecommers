@@ -19,6 +19,7 @@ import {
     ShieldCheckIcon,
     ShoppingCartIcon,
     StarIcon,
+    TrashIcon,
 } from "@heroicons/react/24/outline"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -358,6 +359,21 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                             </div>
                                         </div>
                                     </Link>
+                                    {/* <Link href="/bank-account">
+                                        <div className="flex items-center py-3">
+                                            <CurrencyDollarIcon className="h-6 w-6 cursor-pointer" />
+                                            <div className="ml-3">
+                                                <div className="pb-1 text-base font-bold">
+                                                    Daftar Bank
+                                                </div>
+                                                <div className="text-xs">
+                                                    <div className="cursor-pointer">
+                                                        Atur rekening bank
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link> */}
                                     <Link href="/change-password">
                                         <div className="flex items-center py-3">
                                             <LockClosedIcon className="h-6 w-6 cursor-pointer" />
@@ -376,6 +392,14 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     </Link>
                                 </div>
                                 <div className="mt-2 bg-white p-4">
+                                    <div
+                                        className="flex items-center py-3"
+                                        onClick={handleLogout}>
+                                        <TrashIcon className="h-6 w-6 cursor-pointer" />
+                                        <div className="ml-3 text-sm font-bold">
+                                            Hapus Akun
+                                        </div>
+                                    </div>
                                     <div
                                         className="flex items-center py-3"
                                         onClick={handleLogout}>

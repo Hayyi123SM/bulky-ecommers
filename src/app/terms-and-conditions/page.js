@@ -1,6 +1,7 @@
 "use client"
 
 import FloatingIcon from "@/components/FloatingIcon"
+import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { fetchPages } from "@/store/slices/pageSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
@@ -316,13 +317,13 @@ function TermsAndConditions() {
                                 JL. CILODONG RAYA NO.89, CILODONG,KEC.CILODONG,
                                 DEPOK CITY, WEST JAVA 16414, INDONESIA <br />
                                 EMAIL: admin@Bulky.ID <br />
-                                PHONE: 0811 822 164
+                                PHONE: 0811 833 164
                             </div> */}
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
 
             <FloatingIcon />
         </div>

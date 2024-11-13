@@ -251,8 +251,25 @@ function Cart() {
                             </div>
                             <div className="rounded-b-lg bg-white px-5 py-5">
                                 <div
-                                    onClick={() => setIsShipping(true)}
-                                    className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
+                                    onClick={
+                                        cart.items.some(
+                                            item => item.is_selected,
+                                        )
+                                            ? () => setIsShipping(true)
+                                            : null
+                                    }
+                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${
+                                        cart.items.some(
+                                            item => item.is_selected,
+                                        )
+                                            ? ""
+                                            : "cursor-not-allowed opacity-50"
+                                    }`}
+                                    disabled={
+                                        !cart.items.some(
+                                            item => item.is_selected,
+                                        )
+                                    }>
                                     Beli
                                 </div>
                             </div>
@@ -267,8 +284,25 @@ function Cart() {
                                 </div>
                                 <div className="w-1/2">
                                     <div
-                                        onClick={() => setIsShipping(true)}
-                                        className="cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]">
+                                        onClick={
+                                            cart.items.some(
+                                                item => item.is_selected,
+                                            )
+                                                ? () => setIsShipping(true)
+                                                : null
+                                        }
+                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${
+                                            cart.items.some(
+                                                item => item.is_selected,
+                                            )
+                                                ? ""
+                                                : "cursor-not-allowed opacity-50"
+                                        }`}
+                                        disabled={
+                                            !cart.items.some(
+                                                item => item.is_selected,
+                                            )
+                                        }>
                                         Beli
                                     </div>
                                 </div>

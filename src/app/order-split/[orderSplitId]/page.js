@@ -3,7 +3,6 @@
 import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
-import { formatCurrency } from "@/lib/helper"
 import { fetchOrderDetail, getMyInvoice } from "@/store/slices/orderSlice"
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
@@ -32,9 +31,6 @@ function OrderSplitDetail({ params }) {
         dispatch(fetchOrderDetail(orderSplitId))
         dispatch(getMyInvoice(orderSplitId))
     }, [dispatch, orderSplitId])
-
-    const totalPaidAmount = order.paid_amount?.numeric
-    const remainingAmount = order.total_price?.numeric - totalPaidAmount
 
     const handleToPayment = () => {
         if (myInvoice.payment_url) {
@@ -317,7 +313,8 @@ function OrderSplitDetail({ params }) {
                                     </div>
                                     <div className="font-extrabold">
                                         {/* {order && order.total_price?.formatted} */}
-                                        {formatCurrency(remainingAmount)}
+                                        {order &&
+                                            order.remaining_amount?.formatted}
                                     </div>
                                 </div>
                             </div>
