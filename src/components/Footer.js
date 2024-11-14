@@ -33,8 +33,9 @@ function Footer() {
                     <div className="mt-3 flex text-sm">
                         <MapPinIcon className="h-auto w-6 md:w-9" />
                         <div className="ml-2">
-                            Jl. Cilodong Raya No.89, Cilodong, Kec. Cilodong,
-                            Kota Depok, Jawa Barat 16414
+                            Sahid Sudriman Center 40th Floor <br />
+                            Jl. Jend. Sudirman No.86, Kota Administrasi Jakarta
+                            Pusat - 10220 Indonesia (ID)
                         </div>
                     </div>
                     <div className="mt-3 flex text-sm">
