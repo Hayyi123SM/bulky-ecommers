@@ -298,15 +298,17 @@ function PopupFilter({ closePopup }) {
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
                             <div className="text-sm font-bold">Lokasi</div>
-                            <div
-                                onClick={() =>
-                                    setShowAllWarehouses(!showAllWarehouses)
-                                }
-                                className="cursor-pointer text-sm font-semibold text-[#007185]">
-                                {showAllWarehouses
-                                    ? "Lihat Lebih Sedikit"
-                                    : "Lihat Semua"}
-                            </div>
+                            {warehouses.length > 5 && (
+                                <div
+                                    onClick={() =>
+                                        setShowAllWarehouses(!showAllWarehouses)
+                                    }
+                                    className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                    {showAllWarehouses
+                                        ? "Lihat Lebih Sedikit"
+                                        : "Lihat Semua"}
+                                </div>
+                            )}
                         </div>
                         <div
                             className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${

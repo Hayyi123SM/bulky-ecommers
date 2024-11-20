@@ -374,22 +374,25 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                             </div>
                                         </div>
                                     </Link> */}
-                                    <Link href="/change-password">
-                                        <div className="flex items-center py-3">
-                                            <LockClosedIcon className="h-6 w-6 cursor-pointer" />
-                                            <div className="ml-3">
-                                                <div className="pb-1 text-base font-bold">
-                                                    Ubah Kata Sandi
-                                                </div>
-                                                <div className="text-xs">
-                                                    <div className="cursor-pointer">
-                                                        Atur kata sandi yang
-                                                        kamu ingin gunakan
+
+                                    {user?.data?.has_set_password && (
+                                        <Link href="/change-password">
+                                            <div className="flex items-center py-3">
+                                                <LockClosedIcon className="h-6 w-6 cursor-pointer" />
+                                                <div className="ml-3">
+                                                    <div className="pb-1 text-base font-bold">
+                                                        Ubah Kata Sandi
+                                                    </div>
+                                                    <div className="text-xs">
+                                                        <div className="cursor-pointer">
+                                                            Atur kata sandi yang
+                                                            kamu ingin gunakan
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                    )}
                                 </div>
                                 <div className="mt-2 bg-white p-4">
                                     <div

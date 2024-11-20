@@ -181,7 +181,8 @@ function Profile() {
                                         alt="Preview"
                                         className="rounded-lg"
                                     />
-                                ) : user.data.profile_picture ? (
+                                ) : user.data.profile_picture !==
+                                  "https://back-office.bulky.id/storage/" ? (
                                     // If user has a stored photo, show it
                                     <Image
                                         src={user.data.profile_picture}
@@ -226,11 +227,13 @@ function Profile() {
                                     diperbolehkan: .JPG .JPEG .PNG
                                 </div>
                             </div>
-                            <Link href="/change-password">
-                                <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]">
-                                    Ubah Kata Sandi
-                                </div>
-                            </Link>
+                            {user?.data?.has_set_password && (
+                                <Link href="/change-password">
+                                    <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]">
+                                        Ubah Kata Sandi
+                                    </div>
+                                </Link>
+                            )}
                             <div
                                 className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]"
                                 onClick={handleLogout}>
@@ -254,7 +257,8 @@ function Profile() {
                                     alt="Preview"
                                     className="cursor-pointer rounded-full"
                                 />
-                            ) : user.data.profile_picture ? (
+                            ) : user.data.profile_picture !==
+                              "https://back-office.bulky.id/storage/" ? (
                                 // If user has a stored photo, show it
                                 <Image
                                     src={user.data.profile_picture}

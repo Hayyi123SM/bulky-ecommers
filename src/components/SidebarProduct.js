@@ -349,11 +349,15 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
-                <div
-                    onClick={() => setShowAllWarehouses(!showAllWarehouses)}
-                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterWarehouses ? "visible" : "hidden"}`}>
-                    {showAllWarehouses ? "Lihat Lebih Sedikit" : "Lihat Semua"}
-                </div>
+                {warehouses.length > 5 && (
+                    <div
+                        onClick={() => setShowAllWarehouses(!showAllWarehouses)}
+                        className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterWarehouses ? "visible" : "hidden"}`}>
+                        {showAllWarehouses
+                            ? "Lihat Lebih Sedikit"
+                            : "Lihat Semua"}
+                    </div>
+                )}
                 {/* )} */}
             </div>
             <div className="border-b py-2">

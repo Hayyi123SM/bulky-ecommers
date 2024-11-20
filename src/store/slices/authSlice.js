@@ -197,7 +197,7 @@ const authSlice = createSlice({
             })
             .addCase(updateProfile.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.error
+                state.error = action.payload.errors
             })
             .addCase(deleteAccount.pending, state => {
                 state.isLoading = true

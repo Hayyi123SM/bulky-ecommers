@@ -21,14 +21,28 @@ function SidebarProfile() {
     return (
         <div>
             <div className="flex items-center">
-                <Image
-                    src="/profile.png"
-                    width={56}
-                    height={56}
-                    alt="Profile"
-                    className="cursor-pointer"
-                    priority={false}
-                />
+                {user.data.profile_picture !==
+                "https://back-office.bulky.id/storage/" ? (
+                    // If user has a stored photo, show it
+                    <Image
+                        src={user.data.profile_picture}
+                        width={56}
+                        height={56}
+                        alt="Profile"
+                        className="cursor-pointer"
+                        priority={false}
+                    />
+                ) : (
+                    // Otherwise, show the default image
+                    <Image
+                        src="/bio.png"
+                        width={56}
+                        height={56}
+                        alt="Profile"
+                        className="cursor-pointer"
+                        priority={false}
+                    />
+                )}
                 <div className="ml-3">
                     <div className="pb-1 text-base font-bold">
                         {user.data.name}

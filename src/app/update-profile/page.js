@@ -37,23 +37,26 @@ function UpdateProfile() {
         }
     }, [user])
 
-    const submitForm = e => {
+    const submitForm = async e => {
         e.preventDefault()
+
         const data = {
             email,
             name,
             phoneNumber,
         }
-        dispatch(updateProfile(data))
+
+        const result = await dispatch(updateProfile(data))
 
         // Redirect to profile page
-        if (errors) {
-            return
-        } else {
+        if (!result.error) {
+            // Only set `isShow` to true if there are no errors
             setIsShow(true)
-            setTimeout(() => {
-                window.location.href = "/profile"
-            }, 1000)
+            localStorage.getItem("signinWithGoogle")
+        } else {
+            console.log("====================================")
+            console.log("Error:", result.error) // Log errors if any
+            console.log("====================================")
         }
     }
 
@@ -96,7 +99,7 @@ function UpdateProfile() {
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                     placeholder="Nama"
                                     onChange={e => setName(e.target.value)}
-                                    defaultValue={name}
+                                    value={name}
                                 />
                                 <InputError
                                     messages={errors && errors.name}
@@ -114,7 +117,7 @@ function UpdateProfile() {
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                     placeholder="Cth: Perusahaan"
                                     onChange={e => setEmail(e.target.value)}
-                                    defaultValue={email}
+                                    value={email}
                                 />
                                 <InputError
                                     messages={errors && errors.email}
@@ -134,7 +137,7 @@ function UpdateProfile() {
                                     onChange={e =>
                                         setPhoneNumber(e.target.value)
                                     }
-                                    defaultValue={phoneNumber}
+                                    value={phoneNumber}
                                 />
                                 <InputError
                                     messages={errors && errors.phone_number}
@@ -181,6 +184,7 @@ function UpdateProfile() {
                 type={"notification"}
                 title={"Pemberitahuan"}
                 message={`Selamat, profil anda telah diperbarui.`}
+                urlConfirm="/profile"
             />
             {/* <Footer /> */}
 
