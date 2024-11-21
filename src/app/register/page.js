@@ -68,7 +68,9 @@ function Register() {
     // }
 
     const submitForm = async event => {
+        event.preventDefault()
         setIsLoading(true)
+
         if (password !== passwordConfirmation) {
             setErrors({ password: "The password confirmation does not match." })
             setIsLoading(false)
@@ -77,27 +79,32 @@ function Register() {
 
         event.preventDefault()
 
-        await register(
-            {
-                email,
-                password,
-                password_confirmation: passwordConfirmation,
-                name,
-                // province_id: provinceId,
-                // city_id: cityId,
-                // district_id: districtId,
-                // sub_district_id: subDistrictId,
-                // address,
-                phone_number: phoneNumber,
+        try {
+            await register(
+                {
+                    email,
+                    password,
+                    password_confirmation: passwordConfirmation,
+                    name,
+                    // province_id: provinceId,
+                    // city_id: cityId,
+                    // district_id: districtId,
+                    // sub_district_id: subDistrictId,
+                    // address,
+                    phone_number: phoneNumber,
+                    setErrors,
+                    setStatus,
+                    redirectOnSuccess: "/",
+                },
+                dispatch,
                 setErrors,
                 setStatus,
-            },
-            dispatch,
-            setErrors,
-            setStatus,
-        )
-
-        setIsLoading(false)
+            )
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (

@@ -26,22 +26,26 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const csrf = () => axios.get("/sanctum/csrf-cookie")
 
-    const register = async ({ setErrors, ...props }) => {
+    const register = async ({
+        setErrors,
+        redirectOnSuccess = "/",
+        ...props
+    }) => {
         await csrf()
 
         setErrors([])
 
-        axios
-            .post("/api/auth/web/register", props)
-            .then(() => mutate())
-            .catch(error => {
-                if (error.response.status === 422) {
-                    // Set the validation errors to the state
-                    setErrors(error.response.data.errors)
-                } else {
-                    console.error("An unexpected error occurred:", error)
-                }
-            })
+        try {
+            await axios.post("/api/auth/web/register", props)
+            mutate() // Perbarui data user
+            router.push(redirectOnSuccess) // Redirect setelah sukses
+        } catch (error) {
+            if (error.response?.status === 422) {
+                setErrors(error.response.data.errors) // Error validasi
+            } else {
+                console.error("An unexpected error occurred:", error)
+            }
+        }
     }
 
     const login = async ({ setErrors, setStatus, ...props }, dispatch) => {
