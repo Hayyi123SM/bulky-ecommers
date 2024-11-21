@@ -32,6 +32,21 @@ export default function RootLayout({ children }) {
                 />
                 {/* End Google Tag Manager */}
 
+                {/* Google Tag Manager */}
+                <Script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-E0RBRJ4G64"
+                />
+                <Script
+                    id="google-analytics"
+                    dangerouslySetInnerHTML={{
+                        __html: `window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+                            gtag('config', 'G-E0RBRJ4G64');`,
+                    }}
+                />
+
                 <link rel="icon" href="/new/favicon bulky-01.png" sizes="any" />
             </head>
             <body>
