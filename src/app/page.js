@@ -37,6 +37,8 @@ import "swiper/css/navigation"
 import { Autoplay, Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
+import Hero from "../../public/new/hero.png"
+import Illustration from "../../public/new/Illustrations.png"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -292,10 +294,14 @@ function Home() {
                     </div>
                     <div className="w-full py-10 md:w-1/3 lg:w-1/2">
                         <Image
-                            src="/new/hero.png"
+                            {...Hero}
                             alt="Product"
-                            width={1000}
-                            height={1000}
+                            width={700}
+                            height={700}
+                            priority={true}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            quality={75}
+                            placeholder="blur"
                         />
                     </div>
                 </div>
@@ -424,8 +430,8 @@ function Home() {
                                 <Image
                                     src="/new/Pallet Sepatu.png"
                                     alt="Product"
-                                    width={1000}
-                                    height={1000}
+                                    width={200}
+                                    height={200}
                                 />
                             </div>
                         </div>
@@ -453,8 +459,8 @@ function Home() {
                                 <Image
                                     src="/new/Pallet Fashion.png"
                                     alt="Product"
-                                    width={1000}
-                                    height={1000}
+                                    width={200}
+                                    height={200}
                                 />
                             </div>
                         </div>
@@ -482,8 +488,8 @@ function Home() {
                                 <Image
                                     src="/image 15.png"
                                     alt="Product"
-                                    width={1000}
-                                    height={1000}
+                                    width={200}
+                                    height={200}
                                 />
                             </div>
                         </div>
@@ -511,8 +517,8 @@ function Home() {
                                 <Image
                                     src="/new/Pallet FMCG.png"
                                     alt="Product"
-                                    width={1000}
-                                    height={1000}
+                                    width={200}
+                                    height={200}
                                 />
                             </div>
                         </div>
@@ -688,10 +694,14 @@ function Home() {
                 <div className="mx-auto flex max-w-7xl flex-col items-center justify-center p-4 md:flex-row">
                     <div className="w-full md:w-1/2">
                         <Image
-                            src="/new/Illustrations.png"
+                            {...Illustration}
                             alt="bulky"
-                            width={1000}
-                            height={1000}
+                            width={500}
+                            height={500}
+                            priority={true}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            quality={75}
+                            placeholder="blur"
                         />
                     </div>
                     <div className="w-full md:w-1/2">
