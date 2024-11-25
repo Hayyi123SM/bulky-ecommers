@@ -37,8 +37,8 @@ import "swiper/css/navigation"
 import { Autoplay, Navigation } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
-import Hero from "../../public/new/hero.png"
-import Illustration from "../../public/new/Illustrations.png"
+import Hero from "../../public/new/hero.webp"
+import Illustration from "../../public/new/Illustrations.webp"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
