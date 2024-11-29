@@ -163,6 +163,12 @@ function Footer() {
                             height={100}
                             alt="Logo"
                             priority={false}
+                            className="cursor-pointer"
+                            onClick={() =>
+                                window.open(
+                                    "https://apps.apple.com/app/bulky-id/id6738534149",
+                                )
+                            }
                         />
                         <Image
                             src={`/payment_method/gplay.svg`}
@@ -170,6 +176,12 @@ function Footer() {
                             height={100}
                             alt="Logo"
                             priority={false}
+                            className="cursor-pointer"
+                            onClick={() =>
+                                window.open(
+                                    "https://play.google.com/store/games?hl=id&pli=1",
+                                )
+                            }
                         />
                     </div>
                 </div>

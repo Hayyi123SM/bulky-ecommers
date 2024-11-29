@@ -153,7 +153,7 @@ function UpdateProfile() {
                                     Simpan
                                 </button>
                                 <Link
-                                    href="/address"
+                                    href="/profile"
                                     className="w-full cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
                                     Batalkan
                                 </Link>
@@ -168,7 +168,7 @@ function UpdateProfile() {
                                 </button>
                             </div>
                             <div className="mt-3">
-                                <Link href="/profile">
+                                <Link href="/">
                                     <div className="w-full cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
                                         Batalkan
                                     </div>
