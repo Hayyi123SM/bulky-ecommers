@@ -162,7 +162,7 @@ function Shipping() {
                                 {cart.items.length > 0 ? (
                                     cart.items.map(item => (
                                         <div
-                                            className="flex items-center"
+                                            className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4"
                                             key={item.id}>
                                             <div className="flex w-1/5 items-center">
                                                 <Image
