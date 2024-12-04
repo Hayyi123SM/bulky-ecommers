@@ -39,6 +39,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 import Hero from "../../public/new/hero.webp"
 import Illustration from "../../public/new/Illustrations.webp"
+import { getGeneralReview } from "@/store/slices/pageSlice"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -48,11 +49,12 @@ function Home() {
     const banners = useSelector(state => state.banners.items)
     const products = useSelector(state => state.products.items)
     const videos = useSelector(state => state.videos.items)
-    const testimonys = useSelector(state => state.testimony.items)
+    // const testimonys = useSelector(state => state.testimony.items)
     const loadingBanners = useSelector(state => state.banners.isLoading)
     const loadingProducts = useSelector(state => state.products.isLoading)
     const loadingVideos = useSelector(state => state.videos.isLoading)
-    const loadingTestimonies = useSelector(state => state.testimony.isLoading)
+    const loadingReviews = useSelector(state => state.pages.isLoading)
+    const reviews = useSelector(state => state.pages.reviews)
     const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isPdf, setIsPdf] = useState(null)
@@ -118,6 +120,7 @@ function Home() {
         dispatch(fetchVideos({ perPage: 8, paginate: 1 }))
         dispatch(fetchCategories())
         dispatch(getBudgets())
+        dispatch(getGeneralReview())
         // localStorage.setItem("signinWithGoogle", JSON.stringify(dummy))
     }, [dispatch])
 
@@ -953,7 +956,7 @@ function Home() {
                                     className="scrollbar-hide overflow-x-auto py-0 md:py-10"
                                     ref={scrollRefTwo}>
                                     <div className="flex w-full gap-4">
-                                        {loadingTestimonies
+                                        {loadingReviews
                                             ? Array.from({ length: 3 }).map(
                                                   (_, index) => (
                                                       <div
@@ -1013,44 +1016,70 @@ function Home() {
                                             1024: { slidesPerView: 3 }, // lg and above: 3 slides
                                         }}
                                         onSwiper={setSwiperInstance}>
-                                        {loadingTestimonies ? (
+                                        {loadingReviews ? (
                                             <Skeleton height={1000} />
                                         ) : (
-                                            testimonys.map(
-                                                (testimoni, index) => (
-                                                    <SwiperSlide key={index}>
-                                                        <div
-                                                            key={testimoni.id}
-                                                            className="min-w-[100%] rounded-lg p-4 md:pr-20">
-                                                            <div className="opacity-70">
-                                                                {
-                                                                    testimoni.content
-                                                                }
-                                                            </div>
-                                                            <div className="mt-10 flex items-center gap-3">
-                                                                <div
-                                                                    className="h-12 w-12 rounded-full bg-cover bg-center"
-                                                                    style={{
-                                                                        backgroundImage: `url(${testimoni.image})`,
-                                                                    }}
-                                                                />
-                                                                <div className="flex flex-col justify-center">
-                                                                    <div className="text-lg font-bold">
-                                                                        {
-                                                                            testimoni.name
-                                                                        }
-                                                                    </div>
-                                                                    <div className="text-base opacity-60">
-                                                                        {
-                                                                            testimoni.label
-                                                                        }
-                                                                    </div>
+                                            reviews.map((review, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <div
+                                                        key={review.id}
+                                                        className="min-w-[100%] rounded-lg p-4 md:pr-20">
+                                                        <div className="opacity-70">
+                                                            {review.comment}
+                                                        </div>
+                                                        <div className="mt-10 flex items-center gap-3">
+                                                            {review.images &&
+                                                                review.images.map(
+                                                                    (
+                                                                        image,
+                                                                        index2,
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                index2
+                                                                            }
+                                                                            className="h-12 w-12 rounded-full bg-cover bg-center"
+                                                                            style={{
+                                                                                backgroundImage: `url(${image.path})`,
+                                                                            }}
+                                                                        />
+                                                                    ),
+                                                                )}
+                                                            <div className="flex flex-col justify-center">
+                                                                <div className="text-lg font-bold">
+                                                                    {
+                                                                        review.rated_by
+                                                                    }
+                                                                </div>
+                                                                <div className="flex items-center">
+                                                                    {[
+                                                                        ...Array(
+                                                                            5,
+                                                                        ),
+                                                                    ].map(
+                                                                        (
+                                                                            _,
+                                                                            index3,
+                                                                        ) => (
+                                                                            <StarIcon
+                                                                                key={
+                                                                                    index3
+                                                                                }
+                                                                                className={`mr-1 h-4 w-4 cursor-pointer ${
+                                                                                    index3 <
+                                                                                    review.rating
+                                                                                        ? "text-secondary"
+                                                                                        : "text-[#BFC9D9]"
+                                                                                }`}
+                                                                            />
+                                                                        ),
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </SwiperSlide>
-                                                ),
-                                            )
+                                                    </div>
+                                                </SwiperSlide>
+                                            ))
                                         )}
                                     </Swiper>
 

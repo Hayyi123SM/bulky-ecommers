@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 const initialState = {
     item: {},
     floatingButton: {},
+    reviews: [],
     error: null,
     isLoading: true,
 }
@@ -24,6 +25,19 @@ export const fetchFloatingWhatsapp = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/general/floating-button")
+            return response.data
+        } catch (error) {
+            console.error("Error fetching pages:", error) // Log errors
+            throw error
+        }
+    },
+)
+
+export const getGeneralReview = createAsyncThunk(
+    "pages/getGeneralReview",
+    async () => {
+        try {
+            const response = await axios.get("/api/general/reviews")
             return response.data
         } catch (error) {
             console.error("Error fetching pages:", error) // Log errors
@@ -63,6 +77,20 @@ const pagesSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(fetchFloatingWhatsapp.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(getGeneralReview.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(getGeneralReview.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                console.log("Current state:", state)
+                state.reviews = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(getGeneralReview.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })
