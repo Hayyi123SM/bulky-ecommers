@@ -116,12 +116,17 @@ function OrderDetail({ params }) {
                                                 </div>
                                             </div>
 
-                                            <Link
-                                                href={`/review-create?orderId=${orderId}&productId=${item.product.id}`}>
-                                                <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                                    Beri Ulasan
-                                                </div>
-                                            </Link>
+                                            {order.order_status.value ===
+                                                "delivered" &&
+                                                order.has_reviewed ===
+                                                    false && (
+                                                    <Link
+                                                        href={`/review-create?orderId=${orderId}&productId=${item.product.id}`}>
+                                                        <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                                            Beri Ulasan
+                                                        </div>
+                                                    </Link>
+                                                )}
                                         </div>
                                     ))}
                             </div>
