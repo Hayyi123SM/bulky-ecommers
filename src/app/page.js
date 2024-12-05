@@ -1181,9 +1181,9 @@ function Home() {
                         {" "}
                     </div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
-                        <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[600px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
+                        <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[500px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
                             {/* start: close modal */}
-                            <div
+                            {/* <div
                                 className="absolute left-4 top-4 flex cursor-pointer rounded-lg border bg-white p-2 text-xs text-[#212121] hover:text-[#007185]"
                                 onClick={() => setIsOpenPdf(false)}>
                                 <svg
@@ -1200,7 +1200,7 @@ function Home() {
                                     />
                                 </svg>
                                 Tutup
-                            </div>
+                            </div> */}
                             {/* end: close modal */}
 
                             {/* Loading Spinner */}
@@ -1216,13 +1216,23 @@ function Home() {
                             )}
 
                             {/* PDF Viewer */}
-                            <iframe
+                            {/* <iframe
                                 className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
                                 src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
                                 title="PDF File"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 onLoad={() => setIsLoadingPdf(false)} // Set loading false saat PDF selesai dimuat
+                            /> */}
+
+                            <iframe
+                                src={isPdf}
+                                className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
+                                allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title="PDF Viewer"
+                                type="application/pdf"
+                                onLoad={() => setIsLoadingPdf(false)}
                             />
                         </div>
                     </div>

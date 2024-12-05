@@ -1,3 +1,8 @@
+// src/app/layout.js
+
+// "use client" directive should be at the very top of the file.
+"use client"
+
 import dynamic from "next/dynamic"
 import "../../styles/globals.css"
 import "../../styles/static.css"
@@ -5,13 +10,9 @@ import "react-loading-skeleton/dist/skeleton.css"
 import { Suspense } from "react"
 import Script from "next/script"
 
-export const metadata = {
-    title: "Bulky",
-    description: "Bulky",
-}
-
+// Dynamically import the ClientProvider component
 const ClientProvider = dynamic(() => import("@/components/ClientProvider"), {
-    ssr: false,
+    ssr: false, // Ensure it's client-side only
 })
 
 export default function RootLayout({ children }) {
@@ -32,7 +33,6 @@ export default function RootLayout({ children }) {
                 />
                 {/* End Google Tag Manager */}
 
-                {/* Google Tag Manager */}
                 <Script
                     async
                     src="https://www.googletagmanager.com/gtag/js?id=G-E0RBRJ4G64"
@@ -48,6 +48,7 @@ export default function RootLayout({ children }) {
                 />
 
                 <link rel="icon" href="/new/favicon bulky-01.png" sizes="any" />
+                <title>Bulky</title>
             </head>
             <body>
                 {/* Google Tag Manager (noscript) */}
@@ -61,6 +62,7 @@ export default function RootLayout({ children }) {
                 </noscript>
                 {/* End Google Tag Manager (noscript) */}
 
+                {/* Wrap ClientProvider with Suspense */}
                 <Suspense fallback={<div>Loading...</div>}>
                     <ClientProvider>{children}</ClientProvider>
                 </Suspense>
