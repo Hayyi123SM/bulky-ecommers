@@ -233,120 +233,150 @@ const cartSlice = createSlice({
             })
             .addCase(fetchCarts.pending, state => {
                 state.status = "loading"
+                state.isLoading = true
             })
             .addCase(fetchCarts.fulfilled, (state, action) => {
                 state.status = "succeeded"
+                state.isLoading = false
                 state.cart = action.payload.data
             })
             .addCase(fetchCarts.rejected, (state, action) => {
                 state.status = "failed"
+                state.isLoading = false
                 state.error = action.error.message
             })
             .addCase(fetchCheckout.pending, state => {
                 state.status = "loading"
+                state.isLoading = true
             })
             .addCase(fetchCheckout.fulfilled, (state, action) => {
                 state.status = "succeeded"
+                state.isLoading = false
                 state.checkout = action.payload.data
             })
             .addCase(fetchCheckout.rejected, (state, action) => {
                 state.status = "failed"
+                state.isLoading = false
                 state.error = action.error.message
             })
             .addCase(updateSelectedItems.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(updateSelectedItems.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.cart = action.payload.data
             })
             .addCase(updateSelectedItems.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(removeItems.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(removeItems.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.cart = action.payload.data
             })
             .addCase(removeItems.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(setShippingMethod.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(setShippingMethod.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.shippingMethod = action.payload.data
             })
             .addCase(setShippingMethod.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(setAddress.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(setAddress.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.setAddress = action.payload.data
             })
             .addCase(setAddress.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(getShippingCost.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(getShippingCost.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.shippingCost = action.payload.data
             })
             .addCase(getShippingCost.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.error.message
             })
             .addCase(applyCoupon.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(applyCoupon.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.cart = action.payload.data
             })
             .addCase(applyCoupon.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(clearCoupon.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(clearCoupon.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.cart = action.payload.data
             })
             .addCase(clearCoupon.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(placeOrders.pending, state => {
                 state.updateStatus = "loading"
+                state.isLoading = true
                 state.updateError = null
             })
             .addCase(placeOrders.fulfilled, (state, action) => {
                 state.updateStatus = "succeeded"
+                state.isLoading = false
                 state.order = action.payload.data
             })
             .addCase(placeOrders.rejected, (state, action) => {
                 state.updateStatus = "failed"
+                state.isLoading = false
                 state.updateError = action.payload.data || action.error.message
             })
             .addCase(searchFriends.pending, state => {

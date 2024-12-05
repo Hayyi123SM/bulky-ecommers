@@ -12,6 +12,7 @@ import VideoThumbnail from "@/components/VideoThumbnail"
 import { fetchBanners } from "@/store/slices/bannerSlice"
 import { fetchCategories, setFilters } from "@/store/slices/filterSlice"
 import { createWholesale, getBudgets } from "@/store/slices/orderSlice"
+import { getGeneralReview } from "@/store/slices/pageSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
@@ -39,7 +40,6 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 import Hero from "../../public/new/hero.webp"
 import Illustration from "../../public/new/Illustrations.webp"
-import { getGeneralReview } from "@/store/slices/pageSlice"
 
 function Home() {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -1202,7 +1202,6 @@ function Home() {
                                 Tutup
                             </div> */}
                             {/* end: close modal */}
-
                             {/* Loading Spinner */}
                             {isLoadingPdf && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-white">
@@ -1214,18 +1213,16 @@ function Home() {
                                     />
                                 </div>
                             )}
-
                             {/* PDF Viewer */}
-                            {/* <iframe
+                            <iframe
                                 className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
                                 src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
                                 title="PDF File"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 onLoad={() => setIsLoadingPdf(false)} // Set loading false saat PDF selesai dimuat
-                            /> */}
-
-                            <iframe
+                            />
+                            {/* <iframe
                                 src={isPdf}
                                 className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
                                 allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1233,7 +1230,18 @@ function Home() {
                                 title="PDF Viewer"
                                 type="application/pdf"
                                 onLoad={() => setIsLoadingPdf(false)}
-                            />
+                            /> */}
+                            {/* <object
+                                width="100%"
+                                height="400"
+                                data={isPdf}
+                                type="application/pdf"
+                                className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
+                                allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                title="PDF Viewer"
+                                onLoad={() => setIsLoadingPdf(false)}
+                            /> */}
+                            {/* <PdfViewer isPdf={isPdf} /> */}
                         </div>
                     </div>
                 </div>

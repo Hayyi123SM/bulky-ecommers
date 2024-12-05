@@ -24,6 +24,7 @@ function Shipping() {
     const [openModalAddress, setOpenModalAddress] = useState(false)
     const shippingCost = useSelector(state => state.carts.shippingCost)
     const setAddress = useSelector(state => state.carts.setAddress)
+    const isLoading = useSelector(state => state.carts.isLoading)
 
     useEffect(() => {
         dispatch(fetchCheckout())
@@ -158,7 +159,7 @@ function Shipping() {
                                     </>
                                 )}
                             </div>
-                            <div className="mb-2 rounded-lg bg-white px-5 py-4 lg:mb-4">
+                            <div className="mb-2 rounded-lg py-4 lg:mb-4">
                                 {cart.items.length > 0 ? (
                                     cart.items.map(item => (
                                         <div
@@ -395,7 +396,8 @@ function Shipping() {
                                 <div className="w-1/2">
                                     <div
                                         onClick={() => handleCheckout()}
-                                        className="cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]">
+                                        className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                                        disabled={isLoading}>
                                         Pilihan Pembayaran
                                     </div>
                                 </div>
