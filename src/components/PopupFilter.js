@@ -200,6 +200,29 @@ function PopupFilter({ closePopup }) {
         closePopup()
     }
 
+    const handleResetFilter = () => {
+        dispatch(
+            setFilters({
+                categories: [],
+                warehouses: [],
+                conditions: [],
+                statuses: [],
+                brands: [],
+                minPrice: null,
+                maxPrice: null,
+            }),
+        )
+        setSelectedCategories([])
+        setSelectedWarehouses([])
+        setSelectedConditions([])
+        setSelectedStatuses([])
+        setSelectedBrands([])
+        setMinPrice(null)
+        setMaxPrice(null)
+
+        closePopup()
+    }
+
     return (
         <div>
             <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
@@ -464,6 +487,11 @@ function PopupFilter({ closePopup }) {
                         </div>
                     </div>
 
+                    <div
+                        onClick={handleResetFilter}
+                        className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                        Reset Filter
+                    </div>
                     <div
                         onClick={handleFilter}
                         className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
