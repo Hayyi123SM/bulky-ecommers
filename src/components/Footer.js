@@ -179,7 +179,7 @@ function Footer() {
                             className="cursor-pointer"
                             onClick={() =>
                                 window.open(
-                                    "https://play.google.com/store/games?hl=id&pli=1",
+                                    "https://play.google.com/store/apps/details?id=com.bulky.app",
                                 )
                             }
                         />

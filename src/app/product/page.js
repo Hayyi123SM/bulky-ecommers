@@ -405,16 +405,16 @@ function Product({ searchParams }) {
                             )}
 
                             {/* PDF Viewer */}
-                            {/* <iframe
+                            <iframe
                                 className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
                                 src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
                                 title="PDF File"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 onLoad={() => setIsLoadingPdf(false)} // Set loading false saat PDF selesai dimuat
-                            /> */}
+                            />
 
-                            <iframe
+                            {/* <iframe
                                 src={isPdf}
                                 className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
                                 allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -422,7 +422,7 @@ function Product({ searchParams }) {
                                 title="PDF Viewer"
                                 type="application/pdf"
                                 onLoad={() => setIsLoadingPdf(false)}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>
