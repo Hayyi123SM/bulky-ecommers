@@ -209,6 +209,14 @@ function SidebarProduct({ category }) {
     return (
         <div className="hidden w-1/5 lg:block">
             <div className="p-4 font-bold">Filter</div>
+
+            <div className="border-b py-2">
+                <div
+                    className="mx-2 flex cursor-pointer items-center justify-center rounded-lg bg-secondary p-2 hover:opacity-80"
+                    onClick={handleResetFilter}>
+                    Reset Filter
+                </div>
+            </div>
             <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
@@ -543,14 +551,6 @@ function SidebarProduct({ category }) {
                     {showAllStatuses ? "Lihat Lebih Sedikit" : "Lihat Semua"}
                 </div>
                 {/* )} */}
-            </div>
-
-            <div className="border-b py-2">
-                <div
-                    className="mx-2 flex cursor-pointer items-center justify-center rounded-lg bg-secondary p-2 hover:opacity-80"
-                    onClick={handleResetFilter}>
-                    Reset Filter
-                </div>
             </div>
             {/*<div className="border-b py-2">
                         <div
