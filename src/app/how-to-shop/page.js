@@ -9,8 +9,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function HowToShop() {
+    const t = useTranslations()
     const dispatch = useDispatch()
     const router = useRouter()
     const howToShop = useSelector(state => state.pages.item)
@@ -26,18 +28,18 @@ function HowToShop() {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Cara Membeli di Bulky</div>
+                <div className="ml-2 font-semibold">{t("page.howtobuy")}</div>
             </div>
             <div className="min-h-screen">
                 <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
-                        Cara Membeli di Bulky
+                        {t("page.howtobuy")}
                     </div>
                     <div className="px-7 text-[#007185]">
                         <Link href="/profile" className="cursor-pointer">
                             Home
                         </Link>{" "}
-                        / Cara Membeli di Bulky
+                        / {t("page.howtobuy")}
                     </div>
                 </div>
                 <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>

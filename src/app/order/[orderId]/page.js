@@ -12,8 +12,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function OrderDetail({ params }) {
+    const t = useTranslations()
     const router = useRouter()
     const orderId = params.orderId
     const dispatch = useDispatch()
@@ -62,7 +64,9 @@ function OrderDetail({ params }) {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Detail Status Pesanan</div>
+                <div className="ml-2 font-semibold">
+                    {t("orderDetail.detailOrderStatus")}
+                </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -77,14 +81,14 @@ function OrderDetail({ params }) {
                             />
                         </Link>
                         <div className="pb-1 text-2xl font-bold">
-                            Detail Status Pesanan
+                            {t("orderDetail.detailOrderStatus")}
                         </div>
                     </div>
                     <div className="flex flex-col lg:my-7 lg:flex-row lg:gap-4">
                         <div className="lg:w-1/2">
                             <div className="mb-4 rounded-xl bg-white px-5 py-4 lg:shadow">
                                 <div className="mb-4 text-sm font-extrabold">
-                                    Produk yang dibeli
+                                    {t("orderDetail.productBuy")}
                                 </div>
                                 {order &&
                                     order.items &&
@@ -123,7 +127,9 @@ function OrderDetail({ params }) {
                                                     <Link
                                                         href={`/review-create?orderId=${orderId}&productId=${item.product.id}`}>
                                                         <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                                            Beri Ulasan
+                                                            {t(
+                                                                "orderDetail.writeReview",
+                                                            )}
                                                         </div>
                                                     </Link>
                                                 )}
@@ -132,12 +138,12 @@ function OrderDetail({ params }) {
                             </div>
                             <div className="rounded-xl bg-white px-5 py-4 text-sm lg:shadow">
                                 <div className="mb-4 text-sm font-extrabold">
-                                    Metode Bayar & Alamat
+                                    {t("orderDetail.paymentMethodAndAddress")}
                                 </div>
                                 <div className="border-b py-2 text-sm">
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Waktu Transaksi
+                                            {t("orderDetail.timeTransaction")}
                                         </div>
                                         <div className="w-1/2">
                                             {order && order.order_date}
@@ -145,7 +151,7 @@ function OrderDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Nomor Pesanan
+                                            {t("orderDetail.orderNumber")}
                                         </div>
                                         <div className="w-1/2">
                                             {order && order.order_number}
@@ -153,15 +159,7 @@ function OrderDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Cara Bayar
-                                        </div>
-                                        <div className="w-1/2">
-                                            {order && order.order_number}
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center p-1">
-                                        <div className="w-1/2 text-[#6D7588]">
-                                            Metode Pembayaran
+                                            {t("orderDetail.paymentMethod")}
                                         </div>
                                         <div className="w-1/2">
                                             {order &&
@@ -172,7 +170,7 @@ function OrderDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Metode Pengiriman
+                                            {t("orderDetail.shippingMethod")}
                                         </div>
                                         <div className="w-1/2">
                                             {order &&
@@ -191,7 +189,7 @@ function OrderDetail({ params }) {
                                 </div>
                                 <div className="my-2 mb-4 border-b p-1 text-sm">
                                     <div className="w-1/2 text-[#6D7588]">
-                                        Alamat
+                                        {t("orderDetail.address")}
                                     </div>
                                     <div className="w-1/2">
                                         {order && order.shipping_address}
@@ -215,14 +213,14 @@ function OrderDetail({ params }) {
                                 <div className="flex items-center">
                                     <div className="mb-5 text-sm leading-6">
                                         <div className="text-base font-bold">
-                                            Ringkasan Pembayaran
+                                            {t("orderDetail.summaryPayment")}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-light">
-                                            Total Harga Barang
+                                            {t("orderDetail.totalPrice")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -236,7 +234,7 @@ function OrderDetail({ params }) {
                                     <div className="flex justify-between">
                                         <div className="text-sm leading-6">
                                             <label className="text-sm font-light">
-                                                Total Ongkos Kirim
+                                                {t("orderDetail.shippingCost")}
                                             </label>
                                         </div>
                                         <div className="ml-5 text-right text-sm leading-6">
@@ -252,7 +250,7 @@ function OrderDetail({ params }) {
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">
-                                            Total Tagihan
+                                            {t("orderDetail.totalInvoice")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -269,14 +267,14 @@ function OrderDetail({ params }) {
                                         <div className="flex items-center">
                                             <div className="mb-5 text-sm leading-6">
                                                 <div className="text-sm font-bold">
-                                                    Informasi Pickup Gudang
+                                                    {t(
+                                                        "orderDetail.infoPickup",
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="py-2 text-sm">
-                                            Anda bisa mengambil barang yang
-                                            sudah anda beli di gudang kami yang
-                                            beralamat di :
+                                            {t("orderDetail.description")} :
                                         </div>
                                         <div className="py-2 text-sm font-bold">
                                             Jl. Cilodong Raya No. 89, Colodong,
@@ -284,7 +282,7 @@ function OrderDetail({ params }) {
                                             Barat 16414
                                         </div>
                                         <div className="pt-2 text-sm">
-                                            Jam Operasional Gudang :
+                                            {t("orderDetail.timeOperational")}
                                         </div>
                                         <div className="flex items-center pb-2 text-sm font-bold">
                                             Senin - Sabtu Pukul 09.00 - 18.00
@@ -299,14 +297,13 @@ function OrderDetail({ params }) {
                                             </div>
                                         </div>
                                         <div className="py-2 text-sm font-bold">
-                                            Atau anda juga bisa menghubungi
-                                            admin kami dengan klik tombol{" "}
+                                            {t("orderDetail.descriptionWa")}{" "}
                                             <Link
                                                 href="/contact-us"
                                                 className="text-[#2E84F6] underline">
                                                 WA ADMIN
                                             </Link>{" "}
-                                            untuk menjadwalkan pickup.
+                                            {t("orderDetail.forPickup")}
                                         </div>
                                     </div>
                                 )}

@@ -17,8 +17,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function OrderSplit() {
+    const t = useTranslations()
     // const searchParams = useSearchParams()
     // const currentPage = parseInt(searchParams.get("page")) || 1
     const { user } = useAuth({ middleware: "auth" })
@@ -124,7 +126,9 @@ function OrderSplit() {
                         onClick={() => router.back()}
                     />
                 </Link>
-                <div className="ml-2 font-semibold">Pembayaran Patungan</div>
+                <div className="ml-2 font-semibold">
+                    {t("listOrder.splitPayment")}
+                </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -132,7 +136,7 @@ function OrderSplit() {
                 </div>
                 <div className="w-5/5 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
-                        Pembayaran Patungan
+                        {t("listOrder.splitPayment")}
                     </div>
                     <div className="mt-4 flex items-center px-4 lg:mt-10 lg:px-0">
                         <div className="item-center mr-2 w-full lg:mb-0 lg:flex lg:w-8/12">
@@ -164,7 +168,7 @@ function OrderSplit() {
                             className="hidden border-b border-[#F0F3F7] px-5 py-4 lg:block">
                             <div className="flex items-center">
                                 <div className="mr-4 text-sm font-bold">
-                                    Tanggal Transaksi
+                                    {t("listOrder.dateTransaction")}
                                 </div>
                                 <div className="text-sm">
                                     {order.order_date}
@@ -195,7 +199,7 @@ function OrderSplit() {
                                 </div>
                                 <div className="w-2/12 text-sm leading-6">
                                     <div className="text-md pb-1">
-                                        Metode Pembayaran
+                                        {t("listOrder.paymentMethod")}
                                     </div>
                                     <div className="text-md font-bold">
                                         {order.invoices_count > 0 &&
@@ -208,7 +212,7 @@ function OrderSplit() {
                                 </div>
                                 <div className="w-2/12 text-sm leading-6">
                                     <div className="text-md pb-1">
-                                        Total Tagihan
+                                        {t("listOrder.totalInvoice")}
                                     </div>
                                     <div className="text-md font-bold">
                                         {order.total_price.formatted}
@@ -218,7 +222,7 @@ function OrderSplit() {
                                     <div className="flex items-center justify-end">
                                         <Link href={`/order-split/${order.id}`}>
                                             <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
-                                                Detail Pesanan
+                                                {t("listOrder.orderDetail")}
                                             </div>
                                         </Link>
                                         <div
@@ -226,7 +230,7 @@ function OrderSplit() {
                                                 handleGetInvoice(order.id)
                                             }
                                             className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            Bayar Sekarang
+                                            {t("listOrder.payNow")}
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +265,7 @@ function OrderSplit() {
                                     <div className="mt-2 flex w-full items-center gap-2">
                                         <Link href={`/order-split/${order.id}`}>
                                             <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
-                                                Detail Pesanan
+                                                {t("listOrder.orderDetail")}
                                             </div>
                                         </Link>
                                         <div
@@ -269,7 +273,7 @@ function OrderSplit() {
                                                 handleGetInvoice(order.id)
                                             }
                                             className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            Bayar Sekarang
+                                            {t("listOrder.payNow")}
                                         </div>
                                     </div>
                                 </div>

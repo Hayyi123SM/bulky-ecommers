@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation"
 // import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 // import { useState } from "react"
 
 function PaymentNominal() {
+    const t = useTranslations()
     const router = useRouter()
     const dispatch = useDispatch()
     const [order, setOrder] = useState({})
@@ -113,10 +115,10 @@ function PaymentNominal() {
                         <div className="h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
                             <div className="py-2">
                                 <div className="py-2 text-sm font-bold text-[#6D7588]">
-                                    NOMINAL BAYAR
+                                    {t("paymentNominal.paymentNominal")}
                                 </div>
                                 <div className="mb-1 text-sm">
-                                    Masukkan Nominalmu
+                                    {t("paymentNominal.entryNominal")}
                                 </div>
                                 <div className="relative w-full lg:max-w-xl">
                                     <input
@@ -129,25 +131,24 @@ function PaymentNominal() {
                                 </div>
                                 {isError && (
                                     <div className="mt-1 text-sm text-[#D0021B]">
-                                        Nominal yang anda masukkan tidak valid
+                                        {t("paymentNominal.error")}
                                     </div>
                                 )}
                                 <div className="mt-1 text-sm text-[#6D7588]">
-                                    Sesuaikan nominal yang hendak kamu bayar
-                                    secara patungan.
+                                    {t("paymentNominal.description")}
                                 </div>
                             </div>
                         </div>
                         <div className="mb-0 mt-5 h-fit w-full rounded-t-xl bg-white p-8 lg:mb-0 lg:max-w-xl">
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">
-                                    Ringkasan Pembayaran
+                                    {t("paymentNominal.summaryOrder")}
                                 </div>
                             </div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Harga Barang
+                                        {t("paymentNominal.totalPrice")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -159,7 +160,7 @@ function PaymentNominal() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Ongkos Kirim
+                                        {t("paymentNominal.shippingCost")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -172,7 +173,7 @@ function PaymentNominal() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm">
-                                        Total Belanja
+                                        {t("paymentNominal.totalShopping")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -185,13 +186,13 @@ function PaymentNominal() {
                         <div className="mb-10 mt-0.5 h-fit w-full bg-white p-8 lg:mb-0 lg:max-w-xl">
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">
-                                    Total Bayarmu
+                                    {t("paymentNominal.totalPayment")}
                                 </div>
                             </div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total yang sudah dibayarkan
+                                        {t("paymentNominal.totalDibayarkan")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -203,7 +204,7 @@ function PaymentNominal() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Bayarmu
+                                        {t("paymentNominal.totalPayment")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -216,7 +217,7 @@ function PaymentNominal() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm">
-                                        Sisa Tagihan Belanja
+                                        {t("paymentNominal.sisaTagihan")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -233,7 +234,7 @@ function PaymentNominal() {
                                 onClick={handleCreatePayment}
                                 className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                Bayar
+                                {t("paymentNominal.payment")}
                             </div>
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
@@ -241,7 +242,7 @@ function PaymentNominal() {
                                 onClick={handleCreatePayment}
                                 className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                Bayar
+                                {t("paymentNominal.payment")}
                             </div>
                         </div>
                     </div>

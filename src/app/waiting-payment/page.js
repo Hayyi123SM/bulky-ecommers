@@ -17,8 +17,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function WaitingPayment() {
+    const t = useTranslations()
     // const searchParams = useSearchParams()
     // const currentPage = parseInt(searchParams.get("page")) || 1
     const { user } = useAuth({ middleware: "auth" })
@@ -121,7 +123,9 @@ function WaitingPayment() {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Menunggu Pembayaran</div>
+                <div className="ml-2 font-semibold">
+                    {t("listOrder.waitingPayment")}
+                </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -129,7 +133,7 @@ function WaitingPayment() {
                 </div>
                 <div className="w-5/5 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
-                        Menunggu Pembayaran
+                        {t("listOrder.waitingPayment")}
                     </div>
                     <div className="mt-4 flex items-center px-4 lg:mt-10 lg:px-0">
                         <div className="item-center mr-2 w-full lg:mb-0 lg:flex lg:w-8/12">
@@ -161,7 +165,7 @@ function WaitingPayment() {
                             className="hidden border-b border-[#F0F3F7] px-5 py-4 lg:block">
                             <div className="flex items-center">
                                 <div className="mr-4 text-sm font-bold">
-                                    Tanggal Transaksi
+                                    {t("listOrder.dateTransaction")}
                                 </div>
                                 <div className="text-sm">
                                     {order.order_date}
@@ -192,7 +196,7 @@ function WaitingPayment() {
                                 </div>
                                 <div className="w-2/12 text-sm leading-6">
                                     <div className="text-md pb-1">
-                                        Metode Pembayaran
+                                        {t("listOrder.paymentMethod")}
                                     </div>
                                     <div className="text-md font-bold">
                                         {order.invoices_count > 0 &&
@@ -205,7 +209,7 @@ function WaitingPayment() {
                                 </div>
                                 <div className="w-2/12 text-sm leading-6">
                                     <div className="text-md pb-1">
-                                        Total Tagihan
+                                        {t("listOrder.totalInvoice")}
                                     </div>
                                     <div className="text-md font-bold">
                                         {order.total_price.formatted}
@@ -216,7 +220,7 @@ function WaitingPayment() {
                                         <Link
                                             href={`/waiting-payment/${order.id}`}>
                                             <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
-                                                Detail Pesanan
+                                                {t("listOrder.orderDetail")}
                                             </div>
                                         </Link>
                                         <div
@@ -224,7 +228,7 @@ function WaitingPayment() {
                                                 handleGetInvoice(order.id)
                                             }
                                             className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            Bayar Sekarang
+                                            {t("listOrder.payNow")}
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +264,7 @@ function WaitingPayment() {
                                         <Link
                                             href={`/waiting-payment/${order.id}`}>
                                             <div className="cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#B1B1B1]">
-                                                Detail Pesanan
+                                                {t("listOrder.orderDetail")}
                                             </div>
                                         </Link>
                                         <div
@@ -268,7 +272,7 @@ function WaitingPayment() {
                                                 handleGetInvoice(order.id)
                                             }
                                             className="ml-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            Bayar Sekarang
+                                            {t("listOrder.payNow")}
                                         </div>
                                     </div>
                                 </div>

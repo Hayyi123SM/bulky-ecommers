@@ -3,8 +3,10 @@
 import { useAuth } from "@/hooks/auth"
 import Image from "next/image"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 function SidebarProfile() {
+    const t = useTranslations()
     const { user } = useAuth()
 
     if (!user) {
@@ -63,20 +65,22 @@ function SidebarProfile() {
                 </div>
             </Link> */}
             <div className="border-b pb-5"> </div>
-            <div className="mt-5 text-base font-bold">Pembelian</div>
+            <div className="mt-5 text-base font-bold">
+                {t("mobileMenu.myorder")}
+            </div>
             <Link href="/waiting-payment">
                 <div className="mt-3 rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
-                    Menunggu Pembayaran
+                    {t("mobileMenu.waitingPayment")}
                 </div>
             </Link>
             <Link href="/order">
                 <div className="rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
-                    Status Pesanan
+                    {t("mobileMenu.orderStatus")}
                 </div>
             </Link>
             <Link href="/order-split">
                 <div className="rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
-                    Pembayaran Patungan
+                    {t("mobileMenu.splitPayment")}
                 </div>
             </Link>
             {/* <div className="mt-5 text-base font-bold">Profile Pengguna</div>

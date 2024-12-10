@@ -10,8 +10,10 @@ import {
     fetchWarehouses,
     setFilters,
 } from "../store/slices/filterSlice"
+import { useTranslations } from "next-intl"
 
 function SidebarProduct({ category }) {
+    const t = useTranslations()
     const [selectedCategories, setSelectedCategories] = useState([])
     const [selectedWarehouses, setSelectedWarehouses] = useState([])
     const [selectedConditions, setSelectedConditions] = useState([])
@@ -20,7 +22,7 @@ function SidebarProduct({ category }) {
     const [minPrice, setMinPrice] = useState(null)
     const [maxPrice, setMaxPrice] = useState(null)
 
-    // State untuk toggle "Lihat Semua"
+    // State untuk toggle t("filter.showMore")}
     const [showAllCategories, setShowAllCategories] = useState(false)
     const [showAllWarehouses, setShowAllWarehouses] = useState(false)
     const [showAllConditions, setShowAllConditions] = useState(false)
@@ -221,7 +223,7 @@ function SidebarProduct({ category }) {
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                     onClick={() => toggleShowGroup("categories")}>
-                    <div className="font-bold">Kategori</div>
+                    <div className="font-bold">{t("filter.category")}</div>
                     {showFilterCategories ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
@@ -269,7 +271,9 @@ function SidebarProduct({ category }) {
                 <div
                     onClick={() => setShowAllCategories(!showAllCategories)}
                     className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterCategories ? "visible" : "hidden"}`}>
-                    {showAllCategories ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                    {showAllCategories
+                        ? t("filter.showLess")
+                        : t("filter.showMore")}
                 </div>
                 {/* )} */}
             </div>
@@ -277,7 +281,7 @@ function SidebarProduct({ category }) {
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                     onClick={() => toggleShowGroup("brands")}>
-                    <div className="font-bold">Brand</div>
+                    <div className="font-bold">{t("filter.brand")}</div>
                     {showFilterBrands ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
@@ -325,7 +329,9 @@ function SidebarProduct({ category }) {
                 <div
                     onClick={() => setShowAllBrands(!showAllBrands)}
                     className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterBrands ? "visible" : "hidden"}`}>
-                    {showAllBrands ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                    {showAllBrands
+                        ? t("filter.showLess")
+                        : t("filter.showMore")}
                 </div>
                 {/* )} */}
             </div>
@@ -333,7 +339,7 @@ function SidebarProduct({ category }) {
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                     onClick={() => toggleShowGroup("warehouses")}>
-                    <div className="font-bold">Lokasi</div>
+                    <div className="font-bold">{t("filter.warehouse")}</div>
                     {showFilterWarehouses ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
@@ -383,8 +389,8 @@ function SidebarProduct({ category }) {
                         onClick={() => setShowAllWarehouses(!showAllWarehouses)}
                         className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterWarehouses ? "visible" : "hidden"}`}>
                         {showAllWarehouses
-                            ? "Lihat Lebih Sedikit"
-                            : "Lihat Semua"}
+                            ? t("filter.showLess")
+                            : t("filter.showMore")}
                     </div>
                 )}
                 {/* )} */}
@@ -393,7 +399,7 @@ function SidebarProduct({ category }) {
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                     onClick={() => toggleShowGroup("prices")}>
-                    <div className="font-bold">Harga</div>
+                    <div className="font-bold">{t("filter.price")}</div>
                     {showFilterPrices ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
@@ -442,7 +448,7 @@ function SidebarProduct({ category }) {
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100"
                     onClick={() => toggleShowGroup("conditions")}>
-                    <div className="font-bold">Kondisi</div>
+                    <div className="font-bold">{t("filter.condition")}</div>
                     {showFilterConditions ? (
                         <ChevronUpIcon className="h-5 w-5" />
                     ) : (
@@ -492,7 +498,9 @@ function SidebarProduct({ category }) {
                 <div
                     onClick={() => setShowAllConditions(!showAllConditions)}
                     className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterConditions ? "visible" : "hidden"}`}>
-                    {showAllConditions ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                    {showAllConditions
+                        ? t("filter.showLess")
+                        : t("filter.showMore")}
                 </div>
                 {/* )} */}
             </div>
@@ -548,7 +556,9 @@ function SidebarProduct({ category }) {
                 <div
                     onClick={() => setShowAllStatuses(!showAllStatuses)}
                     className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterStatuses ? "visible" : "hidden"}`}>
-                    {showAllStatuses ? "Lihat Lebih Sedikit" : "Lihat Semua"}
+                    {showAllStatuses
+                        ? t("filter.showLess")
+                        : t("filter.showMore")}
                 </div>
                 {/* )} */}
             </div>

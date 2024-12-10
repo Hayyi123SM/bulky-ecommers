@@ -11,8 +11,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function OrderSplitDetail({ params }) {
+    const t = useTranslations()
     const orderSplitId = params.orderSplitId
     const dispatch = useDispatch()
     const router = useRouter()
@@ -76,7 +78,7 @@ function OrderSplitDetail({ params }) {
                     onClick={() => router.back()}
                 />
                 <div className="ml-2 font-semibold">
-                    Detail Pembayaran Patungan
+                    {t("orderDetail.detailSplitPayment")}
                 </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
@@ -92,14 +94,14 @@ function OrderSplitDetail({ params }) {
                             />
                         </Link>
                         <div className="pb-1 text-2xl font-bold">
-                            Detail Pembayaran Patungan
+                            {t("orderDetail.detailSplitPayment")}
                         </div>
                     </div>
                     <div className="flex flex-col lg:my-7 lg:flex-row lg:gap-4">
                         <div className="lg:w-1/2">
                             <div className="mb-4 rounded-xl bg-white px-5 py-4 lg:shadow">
                                 <div className="mb-4 text-sm font-extrabold">
-                                    Produk yang dibeli
+                                    {t("orderDetail.productBuy")}
                                 </div>
                                 {order &&
                                     order.items &&
@@ -130,12 +132,12 @@ function OrderSplitDetail({ params }) {
                             </div>
                             <div className="rounded-xl bg-white px-5 py-4 text-sm lg:shadow">
                                 <div className="mb-4 text-sm font-extrabold">
-                                    Metode Bayar & Alamat
+                                    {t("orderDetail.paymentMethodAndAddress")}
                                 </div>
                                 <div className="border-b py-2 text-sm">
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Waktu Transaksi
+                                            {t("orderDetail.timeTransaction")}
                                         </div>
                                         <div className="w-1/2">
                                             {order && order.order_date}
@@ -143,7 +145,7 @@ function OrderSplitDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Nomor Pesanan
+                                            {t("orderDetail.orderNumber")}
                                         </div>
                                         <div className="w-1/2">
                                             {order && order.order_number}
@@ -151,7 +153,7 @@ function OrderSplitDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Metode Pembayaran
+                                            {t("orderDetail.paymentMethod")}
                                         </div>
                                         <div className="w-1/2">
                                             {order > 0
@@ -166,7 +168,7 @@ function OrderSplitDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">
-                                            Metode Pengiriman
+                                            {t("orderDetail.shippingMethod")}
                                         </div>
                                         <div className="w-1/2">
                                             {order &&
@@ -191,7 +193,7 @@ function OrderSplitDetail({ params }) {
                                                 )
                                             }>
                                             <div className="mr-1 text-sm font-bold text-[#007185]">
-                                                Salin
+                                                {t("orderDetail.copy")}
                                             </div>
                                             <ClipboardDocumentIcon className="h-5 w-5 font-bold text-[#007185]" />
                                         </div>
@@ -199,7 +201,7 @@ function OrderSplitDetail({ params }) {
                                 </div>
                                 <div className="my-2 mb-4 border-b p-1 text-sm">
                                     <div className="w-1/2 text-[#6D7588]">
-                                        Alamat
+                                        {t("orderDetail.address")}
                                     </div>
                                     <div className="w-1/2">
                                         {order && order.shipping_address}
@@ -208,7 +210,7 @@ function OrderSplitDetail({ params }) {
                                 <div
                                     onClick={() => handleToPayment()}
                                     className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Bayar Sekarang
+                                    {t("orderDetail.payNow")}
                                 </div>
                             </div>
                         </div>
@@ -217,14 +219,14 @@ function OrderSplitDetail({ params }) {
                                 <div className="flex items-center">
                                     <div className="mb-5 text-sm leading-6">
                                         <div className="text-base font-bold">
-                                            Ringkasan Pembayaran
+                                            {t("orderDetail.summaryPayment")}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-light">
-                                            Total Harga Barang
+                                            {t("orderDetail.totalPrice")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -238,7 +240,7 @@ function OrderSplitDetail({ params }) {
                                     <div className="flex justify-between">
                                         <div className="text-sm leading-6">
                                             <label className="text-sm font-light">
-                                                Total Ongkos Kirim
+                                                {t("orderDetail.shippingCost")}
                                             </label>
                                         </div>
                                         <div className="ml-5 text-right text-sm leading-6">
@@ -254,7 +256,7 @@ function OrderSplitDetail({ params }) {
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">
-                                            Total Tagihan
+                                            {t("orderDetail.totalInvoice")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -266,7 +268,7 @@ function OrderSplitDetail({ params }) {
                             </div>
                             <div className="my-2 rounded-xl bg-white px-5 py-4 shadow">
                                 <div className="mb-2 font-extrabold">
-                                    Status Pembayaran
+                                    {t("orderDetail.statusPayment")}
                                 </div>
                                 {order &&
                                     order.invoices &&
@@ -309,7 +311,7 @@ function OrderSplitDetail({ params }) {
                             <div className="rounded-xl bg-white px-5 py-4 shadow">
                                 <div className="flex items-center justify-between">
                                     <div className="text-sm">
-                                        Sisa Total Tagihan
+                                        {t("orderDetail.remainingPayment")}
                                     </div>
                                     <div className="font-extrabold">
                                         {/* {order && order.total_price?.formatted} */}

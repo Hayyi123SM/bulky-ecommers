@@ -9,8 +9,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useTranslations } from "next-intl"
 
 function ForgotPassword() {
+    const t = useTranslations()
     const router = useRouter()
     const { forgotPassword } = useAuth()
     const [email, setEmail] = useState("")
@@ -67,7 +69,7 @@ function ForgotPassword() {
                                         />
                                     </Link>
                                     <div className="pl-3 text-2xl font-bold">
-                                        Lupa kata sandi
+                                        {t("forgotPassword.title")}
                                     </div>
                                 </div>
                                 <AuthSessionStatus
@@ -77,7 +79,7 @@ function ForgotPassword() {
                                 <form onSubmit={handleSubmit}>
                                     <div className="py-2">
                                         <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                            Masukan Email
+                                            Email
                                         </div>
                                         <input
                                             type="email"
@@ -93,9 +95,9 @@ function ForgotPassword() {
                                             className={"mt-2"}
                                         />
                                         <div className="mb-2 py-2 text-sm text-[#6D7588]">
-                                            Cek email untuk mendapatkan
-                                            konfirmasi pengaturan ulang kata
-                                            sandi
+                                            {t(
+                                                "forgotPassword.emailDescription",
+                                            )}
                                         </div>
                                     </div>
                                     <button
@@ -103,7 +105,7 @@ function ForgotPassword() {
                                         className="w-full cursor-pointer rounded-xl bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                         {isLoading ? (
                                             <>
-                                                Tunggu Sebentar...
+                                                {t("waiting")}...
                                                 <LoadingSpinner
                                                     text={false}
                                                     color="#000"
@@ -111,7 +113,7 @@ function ForgotPassword() {
                                                 />
                                             </>
                                         ) : (
-                                            "Kirim"
+                                            t("forgotPassword.submit")
                                         )}
                                     </button>
                                 </form>
@@ -131,8 +133,8 @@ function ForgotPassword() {
                         />
                         <div className="ml-5 text-left">
                             <div className="mb-5 text-2xl font-semibold text-[#212121]">
-                                Silakan cek emailmu untuk melakukan <br />
-                                verifikasi...
+                                {t("forgotPassword.emailSent")} <br />
+                                {t("forgotPassword.verify")}...
                             </div>
 
                             <div
@@ -140,7 +142,7 @@ function ForgotPassword() {
                                 className="flex w-fit cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-3 py-2 text-sm font-bold hover:bg-[#f5f5f5]">
                                 {isLoading ? (
                                     <>
-                                        Tunggu Sebentar...
+                                        {t("waiting")}...
                                         <LoadingSpinner
                                             text={false}
                                             color="#000"
@@ -148,7 +150,7 @@ function ForgotPassword() {
                                         />
                                     </>
                                 ) : (
-                                    "Kirim ulang verifikasi"
+                                    t("forgotPassword.sendAgain")
                                 )}
                             </div>
                         </div>

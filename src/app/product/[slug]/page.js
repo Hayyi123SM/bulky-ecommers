@@ -33,8 +33,10 @@ import "swiper/css/pagination"
 import { Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
+import { useTranslations } from "next-intl"
 
 function ProductDetail({ params }) {
+    const t = useTranslations()
     const productId = params.slug // Access the dynamic parameter
     const [mainImage, setMainImage] = useState("")
     const [productImages, setProductImages] = useState([])
@@ -388,12 +390,11 @@ function ProductDetail({ params }) {
                                 </div> */}
                                 <div className="hidden items-center py-3 lg:flex">
                                     <div className="ml-2 text-xs">
-                                        Barang ini telah dibeli oleh pengguna
-                                        Bulky lainnya
+                                        {t("product.outOfStock")}
                                     </div>
                                 </div>
                                 <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">
-                                    Produk Tidak Tersedia
+                                    {t("product.notAvailable")}
                                 </div>
                             </>
                         ) : (
@@ -402,7 +403,7 @@ function ProductDetail({ params }) {
                                 className="hidden cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:flex">
                                 {isLoading ? (
                                     <>
-                                        Tunggu Sebentar...
+                                        {t("waiting")}...
                                         <LoadingSpinner
                                             text={false}
                                             color="#000"
@@ -410,7 +411,7 @@ function ProductDetail({ params }) {
                                         />
                                     </>
                                 ) : (
-                                    "Masukkan Keranjang"
+                                    t("product.addToCart")
                                 )}
                             </div>
                         )}
@@ -420,7 +421,7 @@ function ProductDetail({ params }) {
                     <div className="mb-4 text-2xl font-bold">Deskripsi</div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
-                            Kondisi :
+                            {t("filter.condition")} :
                         </div>
                         <div className="w-5/6 text-base">
                             {loadingProducts ? (
@@ -432,7 +433,7 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
-                            Brand :
+                            {t("filter.brand")} :
                         </div>
                         <div className="w-5/6 text-base">
                             {loadingProducts ? (
@@ -462,7 +463,7 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">
-                            Kategori :
+                            {t("filter.category")} :
                         </div>
                         <div className="w-5/6 text-base font-semibold text-[#007185]">
                             {loadingProducts ? (
@@ -535,7 +536,7 @@ function ProductDetail({ params }) {
 
                 <div className="mb-20 p-4">
                     <div className="mb-8 text-2xl font-bold">
-                        Produk Lainnya
+                        {t("product.otherProducts")}
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-2 md:grid-cols-4 lg:grid lg:grid-cols-5">
@@ -590,14 +591,15 @@ function ProductDetail({ params }) {
                     <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
                         {products && products.sold_out ? (
                             <div className="w-full cursor-pointer rounded-lg bg-[#F5F5F5] px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                Produk Tidak Tersedia
+                                {t("product.notAvailable")}
                             </div>
                         ) : (
                             <div
                                 onClick={() => handleAddToCart(products.id)}
                                 className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 {isLoading
-                                    ? "Tunggu Sebentar... " +
+                                    ? t("waiting") +
+                                      "... " +
                                       (
                                           <LoadingSpinner
                                               text={false}
@@ -605,7 +607,7 @@ function ProductDetail({ params }) {
                                               size={22}
                                           />
                                       )
-                                    : "Masukkan Keranjang"}
+                                    : t("product.addToCart")}
                             </div>
                         )}
                     </div>
@@ -642,7 +644,7 @@ function ProductDetail({ params }) {
                             {/* Loading Spinner */}
                             {isLoadingPdf && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-white">
-                                    Tunggu Sebentar...
+                                    {t("waiting")}...
                                     <LoadingSpinner
                                         text={false}
                                         color="#000"

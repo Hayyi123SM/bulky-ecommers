@@ -10,8 +10,10 @@ import AuthSessionStatus from "@/components/AuthSessionStatus"
 import { useDispatch } from "react-redux"
 import { useSearchParams } from "next/navigation"
 import LoadingSpinner from "@/components/LoadingSpinner"
+import { useTranslations } from "next-intl"
 
 function ResetPassword() {
+    const t = useTranslations()
     const { resetPassword } = useAuth()
 
     const dispatch = useDispatch()
@@ -79,11 +81,11 @@ function ResetPassword() {
 
                         <form onSubmit={submitForm}>
                             <div className="py-4 text-2xl font-bold">
-                                Reset Password
+                                {t("resetPassword.title")}
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Masukan Email
+                                    Email
                                 </div>
                                 <input
                                     type="email"
@@ -99,7 +101,7 @@ function ResetPassword() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Kata Sandi
+                                    {t("resetPassword.password")}
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
@@ -124,7 +126,7 @@ function ResetPassword() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Konfirmasi Kata Sandi
+                                    {t("resetPassword.confirmPassword")}
                                 </div>
                                 <input
                                     type={
@@ -160,7 +162,7 @@ function ResetPassword() {
                                 className="mt-2 flex w-full cursor-pointer items-center justify-center rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 {isLoading ? (
                                     <>
-                                        Tunggu Sebentar...
+                                        {t("waiting")}...
                                         <LoadingSpinner
                                             text={false}
                                             color="#000"
@@ -168,7 +170,7 @@ function ResetPassword() {
                                         />
                                     </>
                                 ) : (
-                                    "Kirim"
+                                    t("resetPassword.submit")
                                 )}
                             </button>
                         </form>

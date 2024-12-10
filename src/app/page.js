@@ -40,8 +40,10 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 import Hero from "../../public/new/hero.webp"
 import Illustration from "../../public/new/Illustrations.webp"
+import { useTranslations } from "next-intl"
 
 function Home() {
+    const t = useTranslations()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const [current, setCurrent] = useState(0)
     const router = useRouter()
@@ -247,25 +249,24 @@ function Home() {
                     <div className="w-full p-4 md:w-2/3 lg:w-1/2">
                         <div className="flex flex-col">
                             <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">
-                                Bangun Masa Depan Di Bulky.id
+                                {t("welcome")}
                             </div>
                             <div className="mt-2 text-xl leading-7 md:pr-28">
-                                Belanja ratusan lelang likuidasi. Puluhan
-                                kategori produk. Semua ukuran dan kondisi.
+                                {t("description")}
                             </div>
                             <div className="mt-5 flex w-full items-center gap-4 text-center md:pr-28">
                                 <Link
                                     href="/product"
                                     className="w-1/2 font-light">
                                     <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">
-                                        Lihat Semua Produk
+                                        {t("showAllProduct")}
                                     </div>
                                 </Link>
                                 <Link
                                     href="/video"
                                     className="w-1/2 font-light">
                                     <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">
-                                        Lihat Video
+                                        {t("showVideo")}
                                     </div>
                                 </Link>
                             </div>
@@ -418,14 +419,14 @@ function Home() {
                                     PALET SEPATU
                                 </div>
                                 <div className="mb-5 text-lg">
-                                    Don't miss the last opportunity
+                                    {t("dontMiss")}
                                 </div>
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
                                         handleSelectCategory("sepatu")
                                     }>
-                                    Beli Sekarang
+                                    {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
@@ -447,14 +448,14 @@ function Home() {
                                     PALET FASHION
                                 </div>
                                 <div className="mb-5 text-lg">
-                                    Don't miss the last opportunity
+                                    {t("dontMiss")}
                                 </div>
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
                                         handleSelectCategory("fashion-1")
                                     }>
-                                    Beli Sekarang
+                                    {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
@@ -476,14 +477,14 @@ function Home() {
                                     PALET ELEKTRONIK
                                 </div>
                                 <div className="mb-5 text-lg">
-                                    Don't miss the last opportunity
+                                    {t("dontMiss")}
                                 </div>
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
                                         handleSelectCategory("elektronik")
                                     }>
-                                    Beli Sekarang
+                                    {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
@@ -505,14 +506,14 @@ function Home() {
                                     PALET FMCG
                                 </div>
                                 <div className="mb-5 text-lg">
-                                    Don't miss the last opportunity
+                                    {t("dontMiss")}
                                 </div>
                                 <div
                                     className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
                                     onClick={() =>
                                         handleSelectCategory("fmcg")
                                     }>
-                                    Beli Sekarang
+                                    {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
@@ -566,7 +567,7 @@ function Home() {
                         <div className="text-xl font-bold">New Pallets</div>
                         <Link href="/product">
                             <div className="text-base font-semibold text-[#007185]">
-                                Lihat Semua
+                                {t("showAll")}
                             </div>
                         </Link>
                     </div>
@@ -635,10 +636,10 @@ function Home() {
                                         height={36}
                                     />
                                     <div className="py-2 text-lg font-bold">
-                                        Pengiriman Kargo
+                                        {t("sendCargo")}
                                     </div>
                                     <div className="text-base">
-                                        Ambil Sendiri atau Layanan Pengiriman
+                                        {t("services")}
                                     </div>
                                 </div>
                             </div>
@@ -651,10 +652,10 @@ function Home() {
                                         height={36}
                                     />
                                     <div className="py-2 text-lg font-bold">
-                                        Legit Seller
+                                        {t("legitSeller")}
                                     </div>
                                     <div className="text-base">
-                                        Semua Produk Lulus QC & Tanpa Perantara
+                                        {t("qcDone")}
                                     </div>
                                 </div>
                             </div>
@@ -667,11 +668,10 @@ function Home() {
                                         height={36}
                                     />
                                     <div className="py-2 text-lg font-bold">
-                                        Pembayaran Terjamin
+                                        {t("paymentTerjamin")}
                                     </div>
                                     <div className="text-base">
-                                        <b>100%</b> Pembayaran Aman, dengan
-                                        berbagai Metode
+                                        <b>100%</b> {t("safetyPayment")}
                                     </div>
                                 </div>
                             </div>
@@ -684,10 +684,10 @@ function Home() {
                                         height={36}
                                     />
                                     <div className="py-2 text-lg font-bold">
-                                        Dukungan 24 Jam
+                                        {t("support24Hours")}
                                     </div>
                                     <div className="text-base">
-                                        Dukungan Khusus
+                                        {t("supportPrivate")}
                                     </div>
                                 </div>
                             </div>
@@ -709,22 +709,15 @@ function Home() {
                     </div>
                     <div className="w-full md:w-1/2">
                         <div className="text-4xl font-semibold">
-                            Tentang Bulky.id
+                            {t("aboutBulky")}
                         </div>
                         <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
-                            Kami adalah perusahaan likuidasi Ritel online
-                            pertama di Indonesia yang berfokus dalam membantu
-                            bisnis Ritel untuk memaksimalkan keuntungan, dengan
-                            cara mengelola kelebihan stock barang, barang gagal
-                            kirim atau barang yang dikembalikan secara efisien,
-                            melalui kemitraan dengan 3PL (logistik pihak
-                            ketiga). Kami memberikan solusi inovatif dan
-                            berkelanjutan untuk bisnis.
+                            {t("aboutBulkyDescription")}
                         </div>
                         <div className="mt-10 flex w-full justify-between pr-20">
                             <Link href="/about-us">
                                 <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                    Pelajari Selanjutnya
+                                    {t("learnNext")}
                                 </div>
                             </Link>
                             <Image
@@ -854,13 +847,12 @@ function Home() {
 
                 <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center px-4 py-10">
                     <div className="text-3xl font-bold">
-                        Ada Apa Saja di Bulky.id
+                        {t("whatInBulky")}
                         <br />
-                        Tonton Video dibawah ini
+                        {t("viewVideo")}
                     </div>
                     <div className="my-2 flex justify-center text-center text-lg leading-9">
-                        Berbagai Kegiatan yang kita lakukan untuk memenuhi
-                        kebutuhan Anda
+                        {t("descriptionVideo")}
                     </div>
                     <div className="h-[300px] w-full md:h-[400px] lg:h-[450px] lg:w-2/3">
                         <iframe
@@ -877,10 +869,10 @@ function Home() {
                 <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
                     <div className="mx-auto max-w-7xl">
                         <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
-                            TIPS & TRICK IN WHOLESALE BUSINESS
+                            {t("tipsAndTrick")}
                         </div>
                         <div className="my-2 flex justify-center text-center text-3xl font-semibold leading-9">
-                            Wholesales Academy by Bulky <br /> Build your future
+                            {t("academyBulky")} <br /> {t("buildFuture")}
                         </div>
                         <div className="mt-10 overflow-x-auto">
                             <div className="flex gap-4 lg:grid lg:grid-cols-4">
@@ -915,7 +907,7 @@ function Home() {
                         </div>
                         <Link href="/video">
                             <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">
-                                View All Comunity Video
+                                {t("viewAllVideo")}
                             </div>
                         </Link>
                     </div>
@@ -923,7 +915,7 @@ function Home() {
                 <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat lg:bg-[url('/new/cartoon-1.png')]">
                     <div className="mx-auto max-w-7xl px-4 py-10">
                         <div className="mb-10 flex justify-center text-center text-2xl font-semibold leading-9">
-                            Testimoni Klien Kami
+                            {t("testimonyUs")}
                         </div>
                         <div className="flex w-full grid-cols-1 items-center justify-center gap-10">
                             {/* <div className="w-1/3 rounded-lg bg-secondary bg-opacity-20 p-10">
@@ -1003,7 +995,6 @@ function Home() {
                                 </div> */}
                                 <div className="relative px-4">
                                     <Swiper
-                                        className="mySwiper"
                                         modules={[Navigation, Autoplay]}
                                         slidesPerView={1} // Default slides per view
                                         autoplay={{
@@ -1023,11 +1014,11 @@ function Home() {
                                                 <SwiperSlide key={index}>
                                                     <div
                                                         key={review.id}
-                                                        className="min-w-[100%] rounded-lg p-4 md:pr-20">
+                                                        className="flex h-56 min-w-[100%] flex-col justify-end rounded-lg p-4 md:pr-20">
                                                         <div className="opacity-70">
                                                             {review.comment}
                                                         </div>
-                                                        <div className="mt-10 flex items-center gap-3">
+                                                        <div className="mt-10 flex gap-3">
                                                             {review.images &&
                                                                 review.images.map(
                                                                     (
@@ -1045,13 +1036,13 @@ function Home() {
                                                                         />
                                                                     ),
                                                                 )}
-                                                            <div className="flex flex-col justify-center">
+                                                            <div className="flex flex-col">
                                                                 <div className="text-lg font-bold">
                                                                     {
                                                                         review.rated_by
                                                                     }
                                                                 </div>
-                                                                <div className="flex items-center">
+                                                                <div className="flex">
                                                                     {[
                                                                         ...Array(
                                                                             5,
@@ -1147,17 +1138,16 @@ function Home() {
                             />
                             <div className="flex flex-col">
                                 <div className="text-4xl font-semibold">
-                                    Ingin Menjadi Wholesaler Bulky.id?
+                                    {t("wantWholesaler")}
                                 </div>
                                 <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
-                                    Silahkan Klik Tombol Berikut untuk menjadi
-                                    Wholesaler Bulky.id
+                                    {t("descriptionWholesale")}
                                 </div>
                                 <div className="mt-6 flex justify-between pr-20">
                                     <div
                                         className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
                                         onClick={() => setShowWholesale(true)}>
-                                        Daftar Sekarang
+                                        {t("registerNow")}
                                     </div>
                                 </div>
                             </div>
@@ -1169,10 +1159,10 @@ function Home() {
                 isOpen={isOpenModal}
                 closeModal={closeModal}
                 type="updateProfile"
-                title="Pemberitahuan"
-                message="Anda belum melengkapi data diri"
-                confirmText="Lengkapi Sekarang"
-                cancelText="Nanti"
+                title={t("notification")}
+                message={t("notificationMessage")}
+                confirmText={t("fillNow")}
+                cancelText={t("later")}
             />
 
             {isOpenPdf && (
@@ -1205,7 +1195,7 @@ function Home() {
                             {/* Loading Spinner */}
                             {isLoadingPdf && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-white">
-                                    Tunggu Sebentar...
+                                    {t("waiting")}...
                                     <LoadingSpinner
                                         text={false}
                                         color="#000"
@@ -1254,7 +1244,7 @@ function Home() {
                         className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
                         <div className="my-4 flex items-center justify-between">
                             <h2 className="text-xl font-semibold">
-                                Form Partai Besar/Borongan
+                                {t("formWholesale")}
                             </h2>
                             <XMarkIcon
                                 className="h-6 w-6 cursor-pointer"
@@ -1263,14 +1253,14 @@ function Home() {
                         </div>
                         <div className="py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                Nama
+                                {t("form.name")}
                             </div>
                             <input
                                 type="text"
                                 value={nameWholesale}
                                 onChange={e => setNameWholesale(e.target.value)}
                                 className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                placeholder="Masukkan Nama"
+                                placeholder={t("placeholder.name")}
                             />
                             <InputError
                                 messages={errors && errors.name}
@@ -1279,7 +1269,7 @@ function Home() {
                         </div>
                         <div className="py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                Telepon / WhatsApp
+                                {t("form.phone")}
                             </div>
                             <input
                                 type="text"
@@ -1288,7 +1278,7 @@ function Home() {
                                     setPhoneWholesale(e.target.value)
                                 }
                                 className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                placeholder="cth: 0852-1234-1234"
+                                placeholder={t("placeholder.phone")}
                             />
                             <InputError
                                 messages={errors && errors.phone_number}
@@ -1297,7 +1287,7 @@ function Home() {
                         </div>
                         <div className="py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                Alamat
+                                {t("form.address")}
                             </div>
                             <input
                                 type="text"
@@ -1306,7 +1296,7 @@ function Home() {
                                     setAddressWholesale(e.target.value)
                                 }
                                 className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                placeholder="Alamatmu"
+                                placeholder={t("placeholder.address")}
                             />
                             <InputError
                                 messages={errors && errors.address}
@@ -1315,7 +1305,7 @@ function Home() {
                         </div>
                         <div className="py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                Budget
+                                {t("form.budget")}
                             </div>
                             <div className="relative w-full lg:max-w-xl">
                                 <div
@@ -1357,7 +1347,7 @@ function Home() {
                         </div>
                         <div className="mt-2 py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                Kategori Produk
+                                {t("form.productCategory")}
                             </div>
                             <div className="grid max-h-32 grid-cols-2 gap-2 overflow-y-auto">
                                 <div className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
@@ -1416,7 +1406,7 @@ function Home() {
                             <div
                                 className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
                                 onClick={handleSubmitWholesale}>
-                                Kirim Form
+                                {t("form.sendForm")}
                             </div>
                         </div>
                     </div>
@@ -1427,8 +1417,8 @@ function Home() {
                 isOpen={showNotification}
                 closeModal={handleCloseWholesale}
                 type={"notification"}
-                title={"Pemberitahuan"}
-                message={`Selamat, wholesale berhasil dikirim.`}
+                title={t("notification")}
+                message={t("congratulationWholesale")}
                 urlConfirm="/"
             />
             <Footer />

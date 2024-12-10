@@ -9,8 +9,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function AboutUs() {
+    const t = useTranslations()
     const router = useRouter()
     const dispatch = useDispatch()
     const aboutUs = useSelector(state => state.pages.item)
@@ -27,18 +29,18 @@ function AboutUs() {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Tentang Kami</div>
+                <div className="ml-2 font-semibold">{t("page.aboutus")}</div>
             </div>
             <div className="min-h-screen">
                 <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
-                        Tentang Kami
+                        {t("page.aboutus")}
                     </div>
                     <div className="px-7 text-[#007185]">
                         <Link href="/profile" className="cursor-pointer">
                             Home
                         </Link>{" "}
-                        / Tentang Kami
+                        / {t("page.aboutus")}
                     </div>
                 </div>
                 <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>

@@ -5,6 +5,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 const libraries = ["places"]
 const mapContainerStyle = {
@@ -13,6 +14,7 @@ const mapContainerStyle = {
 }
 
 function ContactUs() {
+    const t = useTranslations()
     const router = useRouter()
     const coords = { lat: -6.4365753, lng: 106.847836 }
 
@@ -41,18 +43,18 @@ function ContactUs() {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Kontak Kami</div>
+                <div className="ml-2 font-semibold">{t("page.contactus")}</div>
             </div>
             <div className="min-h-screen">
                 <div className="mx-auto hidden max-w-7xl lg:block">
                     <div className="px-7 pb-1 pt-12 text-2xl font-bold">
-                        Kontak Kami
+                        {t("page.contactus")}
                     </div>
                     <div className="px-7 text-[#007185]">
                         <Link href="/profile" className="cursor-pointer">
                             Home
                         </Link>{" "}
-                        / Kontak Kami
+                        / {t("page.contactus")}
                     </div>
                 </div>
                 <div className="border-b border-[#F0F3F7] lg:mt-6"> </div>
@@ -61,12 +63,10 @@ function ContactUs() {
                         <div className="lg:w-2/5">
                             <div className="bg-white p-4 lg:rounded-xl lg:p-12 lg:shadow">
                                 <div className="text-sm font-bold lg:text-2xl">
-                                    Pusat Bantuan
+                                    {t("page.helpCenter")}
                                 </div>
                                 <div className="mt-4 text-sm font-normal leading-6">
-                                    Apakah anda adalah merchant kami dan punya
-                                    pertanyaan seputar akun anda? Hubungi kami
-                                    melalui kontak berikut
+                                    {t("page.contactDescription")}
                                 </div>
                                 <div className="mt-10 text-xs font-extrabold text-[#6D7588] lg:text-sm">
                                     Jakarta
@@ -82,7 +82,7 @@ function ContactUs() {
                                                 "_blank",
                                             )
                                         }>
-                                        Kontak kami melalui WhatsApp
+                                        {t("page.contactMeByWatsapp")}
                                     </div>
                                     <div className="mt-2 w-full text-sm leading-6 text-[#007185]">
                                         admin@bulky.id

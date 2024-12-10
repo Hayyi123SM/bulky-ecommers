@@ -18,15 +18,16 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Order() {
+    const t = useTranslations()
     const { user } = useAuth({ middleware: "auth" })
     const dispatch = useDispatch()
     const router = useRouter()
     const orders = useSelector(state => state.orders.orders)
     const currentPage = useSelector(state => state.orders.currentPage || 1)
     const totalPages = useSelector(state => state.orders.totalPages)
-    const [isOpenLiveStatus, setIsOpenLiveStatus] = useState(false)
     const [status, setStatus] = useState(null)
     const [search, setSearch] = useState("")
     const [descStatus, setDescStatus] = useState("")
@@ -130,7 +131,7 @@ function Order() {
                         onClick={() => router.back()}
                     />
                 </Link>
-                <div className="ml-2 font-semibold">Status Pesanan</div>
+                <div className="ml-2 font-semibold">{t("orderStatus")}</div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -138,7 +139,7 @@ function Order() {
                 </div>
                 <div className="w-5/5 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
-                        Status Pesanan
+                        {t("orderStatus")}
                     </div>
                     <div className="mt-4 flex flex-col items-center px-4 lg:mt-10 lg:flex-row lg:px-0">
                         <div className="item-center mr-2 w-full lg:mb-0 lg:flex lg:w-8/12">
@@ -162,57 +163,36 @@ function Order() {
                         <div
                             onClick={() => handleStatusChange(null)}
                             className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === null ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                            Semua
+                            {t("listOrder.all")}
                         </div>
                         <div
                             onClick={() =>
-                                setIsOpenLiveStatus(!isOpenLiveStatus)
+                                handleStatusChange("waiting_confirmation")
                             }
-                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === null ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                            Berlangsung
+                            className={`mr-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "waiting_confirmation" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
+                            {t("listOrder.waitingConfirmation")}
                         </div>
                         <div
-                            onClick={() => handleStatusChange(null)}
-                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === null ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                            Berhasil
+                            onClick={() => handleStatusChange("processing")}
+                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "processing" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
+                            {t("listOrder.process")}
                         </div>
                         <div
-                            onClick={() => handleStatusChange(null)}
-                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === null ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                            Tidak Berhasil
+                            onClick={() => handleStatusChange("shipped")}
+                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "shipped" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
+                            {t("listOrder.delivery")}
+                        </div>
+                        <div
+                            onClick={() => handleStatusChange("delivered")}
+                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "delivered" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
+                            {t("listOrder.finish")}
+                        </div>
+                        <div
+                            onClick={() => handleStatusChange("canceled")}
+                            className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "canceled" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
+                            {t("listOrder.cancel")}
                         </div>
                     </div>
-                    {isOpenLiveStatus && (
-                        <div className="my-2 hidden items-center lg:flex">
-                            <div
-                                onClick={() =>
-                                    handleStatusChange("waiting_confirmation")
-                                }
-                                className={`mr-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "waiting_confirmation" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                                Menunggu Konfirmasi
-                            </div>
-                            <div
-                                onClick={() => handleStatusChange("processing")}
-                                className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "processing" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                                Diproses
-                            </div>
-                            <div
-                                onClick={() => handleStatusChange("shipped")}
-                                className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "shipped" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                                Dikirim
-                            </div>
-                            <div
-                                onClick={() => handleStatusChange("delivered")}
-                                className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "delivered" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                                Tiba di Tujuan
-                            </div>
-                            <div
-                                onClick={() => handleStatusChange("canceled")}
-                                className={`mx-2 cursor-pointer rounded-lg border px-6 py-2 text-base hover:border-[#007185] hover:bg-[#0071850D] hover:text-[#007185] ${status === "canceled" ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}}`}>
-                                Dibatalkan
-                            </div>
-                        </div>
-                    )}
                     {/* Mobile View */}
                     {/* <div className="mt-4 flex items-center justify-between overflow-x-auto whitespace-nowrap px-4 lg:hidden">
                         <div className="rounded-full bg-[#F5F5F5] p-2 text-[#6D7588]">
@@ -262,7 +242,7 @@ function Order() {
                             <div className="w-full max-w-md rounded-lg bg-white p-4">
                                 <div className="mb-4 flex items-center justify-between">
                                     <div className="text-lg font-semibold">
-                                        Pilih Status
+                                        {t("listOrder.selectStatus")}
                                     </div>
                                     <XMarkIcon
                                         className="h-6 w-6 cursor-pointer"
@@ -367,7 +347,7 @@ function Order() {
                                 <div className="flex items-center justify-between">
                                     <div className="ml-5 text-sm leading-6">
                                         <div className="text-md pb-1">
-                                            Status Pesanan:
+                                            {t("listOrder.orderStatus")}:
                                         </div>
                                         <div
                                             className={`w-fit rounded-lg bg-[${order.order_status.color}] px-2 py-1 text-xs font-semibold text-[#007185]`}>
@@ -376,7 +356,7 @@ function Order() {
                                     </div>
                                     <Link href={`/order/${order.id}`}>
                                         <div className="cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            Lacak Pesanan
+                                            {t("listOrder.trackOrder")}
                                         </div>
                                     </Link>
                                 </div>

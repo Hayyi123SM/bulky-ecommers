@@ -13,8 +13,10 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Payment({ params }) {
+    const t = useTranslations()
     const router = useRouter()
     const invoiceId = params.invoiceId // Access the dynamic parameter
     const [selectedOption, setSelectedOption] = useState("Pilihan Pembayaran")
@@ -94,20 +96,20 @@ function Payment({ params }) {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Pembayaran</div>
+                <div className="ml-2 font-semibold">{t("payment.payment")}</div>
             </div>
             <div className="min-h-screen bg-[#F5F5F5] pb-10">
                 <div className="mx-auto max-w-7xl">
                     <div className="hidden justify-center py-5 lg:flex">
                         <div className="w-full text-2xl font-extrabold lg:max-w-xl">
-                            Pembayaran
+                            {t("payment.payment")}
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center py-2">
                         <div className="h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
                             <div className="py-2">
                                 <div className="py-2 text-sm font-bold text-[#6D7588]">
-                                    METODE PEMBAYARAN
+                                    {t("payment.paymentMethod")}
                                 </div>
                                 <div className="relative w-full lg:max-w-xl">
                                     <div
@@ -172,12 +174,12 @@ function Payment({ params }) {
                             className={`h-fit w-full rounded-xl bg-white transition-all duration-500 ease-in-out lg:max-w-xl ${isCreditCard ? "mt-5 max-h-screen p-8 opacity-100" : "max-h-0 opacity-0"} overflow-hidden`}>
                             <div className="py-2">
                                 <div className="text-lg font-bold text-[#6D7588]">
-                                    KARTU KREDIT / DEBIT
+                                    {t("payment.creditCard")}
                                 </div>
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-light">
-                                    Nomor Kartu
+                                    {t("payment.cardNumber")}
                                 </div>
                                 <input
                                     type="text"
@@ -188,7 +190,7 @@ function Payment({ params }) {
                             <div className="flex py-2">
                                 <div className="mr-5 w-1/2">
                                     <div className="mb-2 text-sm font-light">
-                                        Masa Berlaku
+                                        {t("payment.expired")}
                                     </div>
                                     <input
                                         type="text"
@@ -239,7 +241,7 @@ function Payment({ params }) {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-light">
-                                    Pilih Pembayaran
+                                    {t("payment.selectPayment")}
                                 </div>
                                 <div className="relative w-full max-w-xl">
                                     <div
@@ -263,7 +265,7 @@ function Payment({ params }) {
                                                     "Bank Transfer",
                                                 )
                                             }>
-                                            Penuh
+                                            {t("payment.cash")}
                                         </div>
                                         <div
                                             className="cursor-pointer border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
@@ -272,7 +274,7 @@ function Payment({ params }) {
                                                     "Bank Transfer",
                                                 )
                                             }>
-                                            Cicilan
+                                            {t("payment.credit")}
                                         </div>
                                     </div>
                                 </div>
@@ -289,8 +291,7 @@ function Payment({ params }) {
                                 </div>
                                 <div className="ml-2 text-xs">
                                     <label className="font-light text-[#6D7588]">
-                                        Saya menyetujui Syarat & Ketentuan serta
-                                        Kebijakan Privasi Kartu Kredit.
+                                        {t("payment.description")}
                                     </label>
                                 </div>
                             </div>
@@ -298,13 +299,13 @@ function Payment({ params }) {
                         <div className="mb-10 mt-5 h-fit w-full rounded-t-xl bg-white p-8 lg:mb-0 lg:max-w-xl">
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">
-                                    Ringkasan Pembayaran
+                                    {t("payment.summaryOrder")}
                                 </div>
                             </div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Harga
+                                        {t("payment.totalPrice")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -319,7 +320,7 @@ function Payment({ params }) {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">
-                                        Total
+                                        {t("payment.total")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -337,7 +338,7 @@ function Payment({ params }) {
                                 onClick={() => handleCreatePayment()}
                                 className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                Bayar
+                                {t("payment.pay")}
                             </div>
                             {/* </Link> */}
                         </div>
@@ -347,7 +348,7 @@ function Payment({ params }) {
                             {/* <Link href="/payment"> */}
                             <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
-                                Bayar
+                                {t("payment.pay")}
                             </div>
                             {/* </Link> */}
                         </div>

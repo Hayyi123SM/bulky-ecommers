@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/auth"
 import { addToCart } from "@/store/slices/cartSlice"
 import { useRouter } from "next/navigation"
 import PopupModal from "./PopupModal"
+import { useTranslations } from "next-intl"
 
 function ProductCard({
     url = "#",
@@ -22,6 +23,7 @@ function ProductCard({
     productId,
     soldOut = false,
 }) {
+    const t = useTranslations()
     const { user } = useAuth()
     const dispatch = useDispatch()
     const [isLoading, setIsloading] = useState(false)
@@ -85,12 +87,14 @@ function ProductCard({
                 <div
                     onClick={isOpenPdf}
                     className="mb-2 flex cursor-pointer items-center justify-between border-b border-t border-[#F0F3F7] px-1 py-4 hover:rounded-lg hover:bg-[#f5f5f5]">
-                    <div className="text-sm font-bold">Lihat Detail Produk</div>
+                    <div className="text-sm font-bold">
+                        {t("product.showDetail")}
+                    </div>
                     <Square2StackIcon className="h-5 w-5 text-[#007185]" />
                 </div>
                 {soldOut ? (
                     <div className="flex items-center justify-center rounded-lg bg-[#F5F5F5] py-3 text-center text-sm font-bold text-[#BFC9D9]">
-                        Add to Cart
+                        {t("product.addToCart")}
                     </div>
                 ) : (
                     <div
@@ -98,7 +102,7 @@ function ProductCard({
                         className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                         {isLoading ? (
                             <>
-                                Tunggu Sebentar...
+                                {t("product.waiting")}...
                                 <LoadingSpinner
                                     text={false}
                                     color="#000"
@@ -106,7 +110,7 @@ function ProductCard({
                                 />
                             </>
                         ) : (
-                            "Add to Cart"
+                            t("product.addToCart")
                         )}
                     </div>
                 )}
@@ -116,8 +120,8 @@ function ProductCard({
                 isOpen={showModal}
                 closeModal={handleCloseModal}
                 type="addToCart"
-                title="Pemberitahuan"
-                message="Produk ditambahkan ke keranjang"
+                title={t("notification")}
+                message={t("product.successAddCart")}
             />
         </>
     )

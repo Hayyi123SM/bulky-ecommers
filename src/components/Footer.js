@@ -4,8 +4,10 @@ import { EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/outline"
 import { PhoneIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 function Footer() {
+    const t = useTranslations()
     const payments = []
 
     for (let i = 1; i < 16; i++) {
@@ -27,8 +29,7 @@ function Footer() {
                         />
                     </Link>
                     <div className="mt-3 text-sm">
-                        Kami adalah perusahaan likuidasi Ritel online pertama di
-                        Indonesia yang berfokus dalam membantu bisnis Ritel
+                        {t("footer.description")}
                     </div>
                     <div className="mt-3 flex text-sm">
                         <MapPinIcon className="h-auto w-6 md:w-9" />
@@ -59,45 +60,55 @@ function Footer() {
                     </div>
                 </div>
                 <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
-                    <div className="text-base font-bold">Lokasi Gudang</div>
+                    <div className="text-base font-bold">
+                        {t("footer.locationWarehouse")}
+                    </div>
                     <div className="mt-3 text-sm">Depok</div>
                 </div>
                 <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
-                    <div className="text-base font-bold">Perusahaan</div>
-                    <div className="mt-3 text-sm">
-                        <Link href="/about-us">Tentang Kami</Link>
+                    <div className="text-base font-bold">
+                        {t("footer.office")}
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/how-to-shop">Cara Pembelian</Link>
+                        <Link href="/about-us">{t("footer.aboutUs")}</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/about-payment">Pembayaran</Link>
+                        <Link href="/how-to-shop">{t("footer.howToBuy")}</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/contact-us">Kontak</Link>
+                        <Link href="/about-payment">
+                            {t("footer.aboutPayment")}
+                        </Link>
+                    </div>
+                    <div className="mt-3 text-sm">
+                        <Link href="/contact-us">{t("footer.contactUs")}</Link>
                     </div>
                     <div className="mt-3 text-sm">
                         <Link href="/faq">FAQ</Link>
                     </div>
                     <div className="mt-3 text-sm">
                         <Link href="/terms-and-conditions">
-                            Syarat & Ketentuan
+                            {t("footer.termsAndConditions")}
                         </Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/privacy-policy">Kebijakan Privasi</Link>
+                        <Link href="/privacy-policy">
+                            {t("footer.privacyPolicy")}
+                        </Link>
                     </div>
                 </div>
                 <div className="w-1/3 p-5 md:w-1/5 lg:w-2/12 xl:w-2/12">
-                    <div className="text-base font-bold">Layanan</div>
-                    <div className="mt-3 text-sm">
-                        <Link href="/product">Produk Lainnya</Link>
+                    <div className="text-base font-bold">
+                        {t("footer.services")}
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/order">Order & Status Return</Link>
+                        <Link href="/product">{t("footer.otherProducts")}</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/profile">Profil Pengguna</Link>
+                        <Link href="/order">{t("footer.orderStatus")}</Link>
+                    </div>
+                    <div className="mt-3 text-sm">
+                        <Link href="/profile">{t("footer.profile")}</Link>
                     </div>
                     <div className="mt-3 flex text-sm">
                         <Link
@@ -139,7 +150,9 @@ function Footer() {
                     </div>
                 </div>
                 <div className="w-full p-5 md:w-full lg:w-3/12 xl:w-3/12">
-                    <div className="text-base font-bold">Metode Pembayaran</div>
+                    <div className="text-base font-bold">
+                        {t("footer.paymentMethod")}
+                    </div>
                     <div className="mt-3 grid grid-cols-6 gap-3 text-sm">
                         {payments.map((payment, index) => (
                             <Image
@@ -154,7 +167,7 @@ function Footer() {
                     </div>
 
                     <div className="mt-10 text-base font-bold">
-                        Akses Melalui Aplikasi
+                        {t("footer.accessApp")}
                     </div>
                     <div className="mt-3 flex items-center text-sm">
                         <Image

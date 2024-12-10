@@ -13,8 +13,10 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Shipping() {
+    const t = useTranslations()
     const { user } = useAuth({ middleware: "auth" })
     const router = useRouter()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -100,7 +102,9 @@ function Shipping() {
                         className="h-6 w-6"
                         onClick={() => router.back()}
                     />
-                    <div className="ml-2 font-semibold">Pengiriman</div>
+                    <div className="ml-2 font-semibold">
+                        {t("shipping.shipping")}
+                    </div>
                 </div>
                 <Bars3BottomRightIcon
                     className="h-6 w-6"
@@ -116,13 +120,13 @@ function Shipping() {
             <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
                     <div className="hidden text-2xl font-extrabold lg:block">
-                        Pengiriman
+                        {t("shipping.shipping")}
                     </div>
                     <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 lg:py-10">
                         <div className="w-full lg:col-span-2">
                             <div className="mb-2 flex flex-col bg-white px-5 py-4 lg:mb-4 lg:rounded-lg">
                                 <div className="text-sm font-extrabold text-[#6D7588]">
-                                    Alamat Pengiriman
+                                    {t("shipping.address")}
                                 </div>
                                 {cart.address !== null ? (
                                     <>
@@ -141,20 +145,20 @@ function Shipping() {
                                                 setOpenModalAddress(true)
                                             }
                                             className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
-                                            Ganti Alamat
+                                            {t("shipping.changeAddress")}
                                         </div>
                                     </>
                                 ) : (
                                     <>
                                         <div className="mt-4 text-sm">
-                                            Belum Memilih Alamat
+                                            {t("shipping.notYetAddress")}
                                         </div>
                                         <div
                                             onClick={() =>
                                                 setOpenModalAddress(true)
                                             }
                                             className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
-                                            Pilih Alamat
+                                            {t("shipping.selectAddress")}
                                         </div>
                                     </>
                                 )}
@@ -340,12 +344,12 @@ function Shipping() {
                         <div className="hidden w-full lg:block">
                             <div className="mb-0.5 rounded-t-lg bg-white px-5 py-1 pt-3">
                                 <div className="text-md mb-3 font-bold">
-                                    Ringkasan Belanja
+                                    {t("shipping.summaryOrder")}
                                 </div>
                                 <div className="flex justify-between pb-0.5">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm text-[#6D7588]">
-                                            Total Harga
+                                            {t("shipping.totalPrice")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -357,7 +361,7 @@ function Shipping() {
                                 <div className="flex justify-between pb-0.5">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm text-[#6D7588]">
-                                            Total Ongkos Kirim
+                                            {t("shipping.shippingCost")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -381,7 +385,7 @@ function Shipping() {
                                 <div
                                     onClick={() => handleCheckout()}
                                     className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Pilihan Pembayaran
+                                    {t("shipping.selectPayment")}
                                 </div>
                             </div>
                         </div>
@@ -398,7 +402,7 @@ function Shipping() {
                                         onClick={() => handleCheckout()}
                                         className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
                                         disabled={isLoading}>
-                                        Pilihan Pembayaran
+                                        {t("shipping.selectPayment")}
                                     </div>
                                 </div>
                             </div>
@@ -418,10 +422,10 @@ function Shipping() {
                 isOpen={isOpenModalUser}
                 closeModal={closeModalUser}
                 type="updateProfile"
-                title="Pemberitahuan"
-                message="Sebelum melakukan checkout, Anda harus melengkapi data diri"
-                confirmText="Lengkapi Sekarang"
-                cancelText="Nanti"
+                title={t("notification")}
+                message={t("shipping.messageAddress")}
+                confirmText={t("fillNow")}
+                cancelText={t("later")}
             />
 
             <FloatingIcon />

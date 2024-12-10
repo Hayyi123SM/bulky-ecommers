@@ -14,8 +14,10 @@ import {
     getRedrectUrlGoogle,
 } from "@/store/slices/authSlice"
 import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 function Login() {
+    const t = useTranslations()
     const code = useSearchParams().get("code")
     const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false)
@@ -105,11 +107,11 @@ function Login() {
 
                                 <form onSubmit={submitForm}>
                                     <div className="py-6 text-2xl font-bold">
-                                        Masuk
+                                        {t("login.login")}
                                     </div>
                                     <div className="py-2">
                                         <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                            Masukan Email
+                                            Email
                                         </div>
                                         <input
                                             type="email"
@@ -127,7 +129,7 @@ function Login() {
                                     </div>
                                     <div className="py-2">
                                         <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                            Kata Sandi
+                                            {t("login.password")}
                                         </div>
                                         <input
                                             type={
@@ -176,7 +178,7 @@ function Login() {
                                             </div>
                                             <div className="ml-2 text-sm leading-6">
                                                 <label className="font-sm text-[#6D7588]">
-                                                    Ingat Saya
+                                                    {t("login.rememberMe")}
                                                 </label>
                                             </div>
                                         </div>
@@ -184,7 +186,7 @@ function Login() {
                                             <Link
                                                 href="/forgot-password"
                                                 className="text-sm font-semibold text-[#007185]">
-                                                Lupa Kata Sandi?
+                                                {t("login.forgotPassword")}?
                                             </Link>
                                         </div>
                                     </div>
@@ -193,7 +195,7 @@ function Login() {
                                         className="flex w-full cursor-pointer items-center justify-center rounded-xl bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                         {isLoading ? (
                                             <>
-                                                Tunggu Sebentar...
+                                                {t("waiting")}...
                                                 <LoadingSpinner
                                                     text={false}
                                                     color="#000"
@@ -201,7 +203,7 @@ function Login() {
                                                 />
                                             </>
                                         ) : (
-                                            "Masuk"
+                                            t("login.login")
                                         )}
                                     </button>
                                     <div
@@ -211,7 +213,7 @@ function Login() {
                                         className="mt-4 flex w-full max-w-md cursor-pointer items-center justify-center rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
                                         {isLoadingGoogle ? (
                                             <>
-                                                Tunggu Sebentar...
+                                                {t("waiting")}...
                                                 <LoadingSpinner
                                                     text={false}
                                                     color="#000"
@@ -228,7 +230,7 @@ function Login() {
                                                     className="mr-2"
                                                     priority={false}
                                                 />
-                                                Masuk dengan Google
+                                                {t("login.loginWithGoogle")}
                                             </>
                                         )}
                                     </div>
@@ -237,14 +239,14 @@ function Login() {
                             <div className="flex w-full max-w-md py-5 text-center">
                                 <div className="mt-3 w-1/5 border-t-2"> </div>
                                 <div className="w-3/5 text-[#6D7588]">
-                                    Apakah kamu pengguna baru?
+                                    {t("login.newUser")}
                                 </div>
                                 <div className="mt-3 w-1/5 border-t-2"> </div>
                             </div>
                             <div className="h-fit w-full max-w-md px-8 lg:px-0">
                                 <Link href="/register-method">
                                     <div className="w-full max-w-md cursor-pointer rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold">
-                                        Buat akun bulkymu
+                                        {t("login.newAccount")}
                                     </div>
                                 </Link>
                             </div>

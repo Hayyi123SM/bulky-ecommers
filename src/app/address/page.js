@@ -15,8 +15,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Address() {
+    const t = useTranslations()
     const router = useRouter()
     const dispatch = useDispatch()
     const addresses = useSelector(state => state.address.addresses)
@@ -99,18 +101,18 @@ function Address() {
                 </div>
                 <div className="w-5/5 px-4 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
-                        Profil
+                        {t("profile.profile")}
                     </div>
                     <div className="mt-5 hidden items-center justify-center lg:flex">
                         <Link
                             href="/profile"
                             className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 py-4 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
-                            Biodata
+                            {t("profile.biodata")}
                         </Link>
                         <Link
                             href="/address"
                             className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] py-4 text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
-                            Daftar Alamat
+                            {t("profile.listAddress")}
                         </Link>
                     </div>
 
@@ -125,7 +127,7 @@ function Address() {
                             <Link
                                 href="/address-create"
                                 className="w-fit cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                + Tambah Alamat Baru
+                                + {t("profile.addNewAddress")}
                             </Link>
                         </div>
                     </div>
@@ -152,13 +154,13 @@ function Address() {
                                     <div className="flex items-center py-1">
                                         <MapPinIcon className="h-5 w-5 text-[#007185]" />
                                         <div className="ml-2 text-xs font-bold text-[#007185]">
-                                            Sudah Pin Point
+                                            {t("profile.alreadyPinPoint")}
                                         </div>
                                     </div>
                                     <div className="flex items-center py-1">
                                         <Link href={`/address/${address.id}`}>
                                             <div className="cursor-pointer text-xs font-bold text-[#007185] hover:text-secondary">
-                                                Ubah Alamat
+                                                {t("profile.changeAddress")}
                                             </div>
                                         </Link>
                                         {address.is_primary === false && (
@@ -170,14 +172,14 @@ function Address() {
                                                         )
                                                     }
                                                     className="cursor-pointer px-5 text-xs font-bold text-[#007185] hover:text-secondary">
-                                                    Jadikan Alamat Utama
+                                                    {t("profile.setPrimary")}
                                                 </div>
                                                 <div
                                                     onClick={() =>
                                                         openModal(address.id)
                                                     }
                                                     className="cursor-pointer text-xs font-bold text-[#007185] hover:text-secondary">
-                                                    Hapus
+                                                    {t("profile.deleteAddress")}
                                                 </div>
                                             </>
                                         )}
@@ -200,7 +202,9 @@ function Address() {
                                                             )
                                                         }
                                                         className="mr-2 cursor-pointer rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                                        Alamat Utama
+                                                        {t(
+                                                            "profile.primaryAddress",
+                                                        )}
                                                     </div>
                                                 )}
                                             </div>
@@ -247,7 +251,7 @@ function Address() {
                                 <div className="flex items-center py-4">
                                     <MapPinIcon className="h-5 w-5 text-[#007185]" />
                                     <div className="ml-2 text-xs font-bold text-[#007185]">
-                                        Sudah Pin Point
+                                        {t("profile.alreadyPinPoint")}
                                     </div>
                                 </div>
                                 <div className="items-center py-1">
@@ -258,27 +262,31 @@ function Address() {
                                                     openModalPrimary(address.id)
                                                 }
                                                 className="w-full rounded-lg bg-green-300 py-2 text-center text-xs font-bold">
-                                                Jadikan Alamat Utama
+                                                {t("profile.setPrimary")}
                                             </div>
                                             <div className="flex items-center gap-2 py-2">
                                                 <Link
                                                     href={`/address/${address.id}`}
                                                     className="w-1/2 rounded-lg border border-[#B2B2B2] bg-white py-2 text-center text-xs font-bold">
-                                                    <div>Ubah Alamat</div>
+                                                    <div>
+                                                        {t(
+                                                            "profile.changeAddress",
+                                                        )}
+                                                    </div>
                                                 </Link>
                                                 <div
                                                     onClick={() =>
                                                         openModal(address.id)
                                                     }
                                                     className="w-1/2 rounded-lg border border-red-300 bg-white py-2 text-center text-xs font-bold">
-                                                    Hapus
+                                                    {t("profile.deleteAddress")}
                                                 </div>
                                             </div>
                                         </>
                                     ) : (
                                         <Link href={`/address/${address.id}`}>
                                             <div className="w-full rounded-lg bg-secondary py-2 text-center text-xs font-bold">
-                                                Ubah Alamat
+                                                {t("profile.changeAddress")}
                                             </div>
                                         </Link>
                                     )}
@@ -290,7 +298,7 @@ function Address() {
                         <div className="mt-10">
                             <Link href="/address-create">
                                 <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    + Tambah Alamat
+                                    + {t("profile.addNewAddress")}
                                 </div>
                             </Link>
                         </div>
@@ -304,38 +312,38 @@ function Address() {
                 isOpen={isModalOpen}
                 closeModal={closeModal}
                 type="confirmation"
-                title="Konfirmasi"
-                message="Apakah anda yakin ingin menghapus item ini?"
+                title={t("profile.confirmation")}
+                message={t("profile.confirmDelete")}
                 onConfirm={handleConfirm}
-                confirmText="Ya, Lanjutkan"
-                cancelText="Kembali"
+                confirmText={t("profile.yes")}
+                cancelText={t("profile.cancel")}
             />
 
             <PopupModal
                 isOpen={isShow}
                 closeModal={closeModal}
                 type={"notification"}
-                title={"Pemberitahuan"}
-                message={`Berhasil hapus alamat`}
+                title={t("notification")}
+                message={t("profile.successDelete")}
             />
 
             <PopupModal
                 isOpen={isModalOpenPrimary}
                 closeModal={closeModalPrimary}
                 type="confirmation"
-                title="Konfirmasi"
-                message="Apakah anda yakin ingin menjadikan alamat utama?"
+                title={t("profile.confirmation")}
+                message={t("profile.confirmSetPrimary")}
                 onConfirm={handleConfirmPrimary}
-                confirmText="Ya, Lanjutkan"
-                cancelText="Kembali"
+                confirmText={t("profile.yes")}
+                cancelText={t("profile.cancel")}
             />
 
             <PopupModal
                 isOpen={isShowPrimary}
                 closeModal={closeModalPrimary}
                 type={"notification"}
-                title={"Pemberitahuan"}
-                message={`Selamat, berhasil menjadikan alamat utama.`}
+                title={t("notification")}
+                message={t("profile.successSetPrimary")}
             />
 
             <FloatingIcon />

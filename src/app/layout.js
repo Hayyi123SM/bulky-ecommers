@@ -1,6 +1,3 @@
-// src/app/layout.js
-
-// "use client" directive should be at the very top of the file.
 "use client"
 
 import dynamic from "next/dynamic"
@@ -9,17 +6,29 @@ import "../../styles/static.css"
 import "react-loading-skeleton/dist/skeleton.css"
 import { Suspense } from "react"
 import Script from "next/script"
+import { NextIntlClientProvider } from "next-intl"
+import Cookies from "js-cookie"
 
 // Dynamically import the ClientProvider component
 const ClientProvider = dynamic(() => import("@/components/ClientProvider"), {
-    ssr: false, // Ensure it's client-side only
+    ssr: false,
 })
 
 export default function RootLayout({ children }) {
+    const languageCookie = Cookies.get("locale")
+    const locale = languageCookie || "id" // Default ke "en" jika tidak ada cookie
+
+    let messages
+    try {
+        messages = require(`../locales/${locale}.json`)
+    } catch (error) {
+        console.warn(`No translations found for locale: ${locale}`)
+        messages = {}
+    }
+
     return (
-        <html lang="en">
+        <html lang={locale}>
             <head>
-                {/* Google Tag Manager */}
                 <Script
                     id="google-tag-manager"
                     strategy="afterInteractive"
@@ -31,40 +40,14 @@ export default function RootLayout({ children }) {
                             })(window,document,'script','dataLayer','GTM-5S7MDMBK');`,
                     }}
                 />
-                {/* End Google Tag Manager */}
-
-                <Script
-                    async
-                    src="https://www.googletagmanager.com/gtag/js?id=G-E0RBRJ4G64"
-                />
-                <Script
-                    id="google-analytics"
-                    dangerouslySetInnerHTML={{
-                        __html: `window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                            gtag('js', new Date());
-                            gtag('config', 'G-E0RBRJ4G64');`,
-                    }}
-                />
-
                 <link rel="icon" href="/new/favicon bulky-01.png" sizes="any" />
                 <title>Bulky</title>
             </head>
             <body>
-                {/* Google Tag Manager (noscript) */}
-                <noscript>
-                    <iframe
-                        src="https://www.googletagmanager.com/ns.html?id=GTM-5S7MDMBK"
-                        height="0"
-                        width="0"
-                        style={{ display: "none", visibility: "hidden" }}
-                    />
-                </noscript>
-                {/* End Google Tag Manager (noscript) */}
-
-                {/* Wrap ClientProvider with Suspense */}
                 <Suspense fallback={<div>Loading...</div>}>
-                    <ClientProvider>{children}</ClientProvider>
+                    <NextIntlClientProvider locale={locale} messages={messages}>
+                        <ClientProvider>{children}</ClientProvider>
+                    </NextIntlClientProvider>
                 </Suspense>
             </body>
         </html>

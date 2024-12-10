@@ -22,8 +22,10 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function PaymentMethod() {
+    const t = useTranslations()
     const router = useRouter()
     const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
     const [selectedIcon, setSelectedIcon] = useState(null)
@@ -149,20 +151,22 @@ function PaymentMethod() {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Pembayaran</div>
+                <div className="ml-2 font-semibold">
+                    {t("paymentMethod.paymentMethod")}
+                </div>
             </div>
             <div className="min-h-screen bg-[#F5F5F5] pb-10">
                 <div className="mx-auto max-w-7xl">
                     <div className="hidden justify-center py-5 lg:flex">
                         <div className="w-full text-2xl font-extrabold lg:max-w-xl">
-                            Pembayaran
+                            {t("paymentMethod.paymentMethod")}
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center lg:py-2">
                         <div className="h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
                             <div className="py-2">
                                 <div className="py-2 text-sm font-bold text-[#6D7588]">
-                                    PILIH CARA BAYAR
+                                    {t("paymentMethod.selectPayment")}
                                 </div>
                                 <div className="relative w-full lg:max-w-xl">
                                     <div
@@ -211,7 +215,7 @@ function PaymentMethod() {
                                                 className="mr-2"
                                                 priority={false}
                                             />
-                                            Bayar Langsung
+                                            {t("paymentMethod.directPayment")}
                                         </div>
                                         <div
                                             className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-sm hover:rounded-lg hover:bg-[#F5F5F5]"
@@ -229,7 +233,7 @@ function PaymentMethod() {
                                                 className="mr-2"
                                                 priority={false}
                                             />
-                                            Bayar Patungan dengan Teman
+                                            {t("paymentMethod.splitPayment")}
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +244,7 @@ function PaymentMethod() {
                             <div className="h-fit w-full rounded-t-xl bg-white p-8 lg:max-w-xl">
                                 <div className="py-2">
                                     <div className="py-2 text-sm font-bold text-[#6D7588]">
-                                        ADD YOUR FRIEND
+                                        {t("paymentMethod.addFriend")}
                                     </div>
                                     <div className="relative w-full lg:max-w-xl">
                                         {selectedFriend.map(friend => (
@@ -287,7 +291,7 @@ function PaymentMethod() {
                                     }>
                                     <PlusCircleIcon className="h-5 w-5 cursor-pointer text-[#007185] hover:text-[#00D5FB]" />
                                     <div className="ml-1 text-sm font-semibold text-[#007185]">
-                                        Invite your friends
+                                        {t("paymentMethod.inviteFriend")}
                                     </div>
                                 </div>
                             </div>
@@ -304,7 +308,7 @@ function PaymentMethod() {
                                             )
                                         }>
                                         <div className="flex items-center">
-                                            Pilih Teman
+                                            {t("paymentMethod.selectFriend")}
                                         </div>
                                         <ChevronDownIcon className="inline-block h-5 w-5" />
                                     </div>
@@ -365,7 +369,7 @@ function PaymentMethod() {
                         <div className="mt-5 h-fit w-full bg-white p-8 lg:max-w-xl lg:rounded-xl">
                             <div className="py-2">
                                 <div className="py-2 text-sm font-bold text-[#6D7588]">
-                                    KUPON
+                                    {t("paymentMethod.coupon")}
                                 </div>
                                 <div className="relative w-full lg:max-w-xl">
                                     <input
@@ -383,13 +387,13 @@ function PaymentMethod() {
                         <div className="mb-10 mt-5 h-fit w-full rounded-t-xl bg-white p-8 lg:mb-0 lg:max-w-xl">
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">
-                                    Ringkasan Pembayaran
+                                    {t("paymentMethod.summaryOrder")}
                                 </div>
                             </div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">
-                                        Total Harga
+                                        {t("paymentMethod.totalPrice")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -402,7 +406,7 @@ function PaymentMethod() {
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-light">
-                                            Total Ongkos Kirim
+                                            {t("paymentMethod.shippingCost")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -416,7 +420,7 @@ function PaymentMethod() {
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-light">
-                                            Diskon
+                                            {t("paymentMethod.discount")}
                                         </label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
@@ -430,7 +434,7 @@ function PaymentMethod() {
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">
-                                        Total Belanja
+                                        {t("paymentMethod.totalShopping")}
                                     </label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
@@ -446,7 +450,7 @@ function PaymentMethod() {
                                 className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]"
                                 onClick={handlePlaceOrder}>
                                 {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
-                                Buat Pesanan
+                                {t("paymentMethod.placeOrder")}
                             </div>
                             {/* </Link> */}
                         </div>
@@ -456,7 +460,7 @@ function PaymentMethod() {
                                 className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]"
                                 onClick={handlePlaceOrder}>
                                 {/* <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" /> */}
-                                Buat Pesanan
+                                {t("paymentMethod.placeOrder")}
                             </div>
                             {/* </Link> */}
                         </div>

@@ -27,8 +27,11 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
+import LanguageSelectorMobile from "./LanguageSelectorMobile"
+import { useTranslations } from "next-intl"
 
 function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
+    const t = useTranslations()
     const router = useRouter()
     const [showPopupMenuProfile, setShowPopupMenuProfile] = useState(false)
     const { logout } = useAuth({ middleware: "guest" })
@@ -115,7 +118,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 onClick={closePopupMenu}
                             />
                             <h2 className="ml-3 text-base font-bold">
-                                Menu Utama
+                                {t("mobileMenu.mainMenu")}
                             </h2>
                         </div>
                     </div>
@@ -123,34 +126,45 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                         <Link href="/">
                             <div className="flex items-center py-3">
                                 <HomeIcon className="h-6 w-6 cursor-pointer" />
-                                <div className="ml-3 text-sm">Home</div>
+                                <div className="ml-3 text-sm">
+                                    {t("mobileMenu.home")}
+                                </div>
                             </div>
                         </Link>
                         <div
                             className="flex items-center py-3"
                             onClick={handleToProducts}>
                             <ShoppingCartIcon className="h-6 w-6 cursor-pointer" />
-                            <div className="ml-3 text-sm">Shop</div>
+                            <div className="ml-3 text-sm">
+                                {t("mobileMenu.product")}
+                            </div>
                         </div>
                         <Link href="/about-us">
                             <div className="flex items-center py-3">
                                 <InformationCircleIcon className="h-6 w-6 cursor-pointer" />
-                                <div className="ml-3 text-sm">About Us</div>
+                                <div className="ml-3 text-sm">
+                                    {t("mobileMenu.about")}
+                                </div>
                             </div>
                         </Link>
                         <Link href="/contact-us">
                             <div className="flex items-center py-3">
                                 <PhoneIcon className="h-6 w-6 cursor-pointer" />
-                                <div className="ml-3 text-sm"> Contact Us</div>
+                                <div className="ml-3 text-sm">
+                                    {t("mobileMenu.contact")}
+                                </div>
                             </div>
                         </Link>
+                        <div className="flex items-center py-3">
+                            <LanguageSelectorMobile />
+                        </div>
                     </div>
                     <div className="mt-2 bg-white p-4">
                         <Link href="/login">
                             <div className="flex items-center py-3">
                                 <ArrowLeftEndOnRectangleIcon className="h-6 w-6 cursor-pointer" />
                                 <div className="ml-3 text-sm font-bold">
-                                    Masuk / Daftar
+                                    {t("mobileMenu.login")}
                                 </div>
                             </div>
                         </Link>
@@ -171,7 +185,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                         onClick={closePopupMenu}
                                     />
                                     <h2 className="ml-3 text-base font-bold">
-                                        Menu Utama
+                                        {t("mobileMenu.mainMenu")}
                                     </h2>
                                 </div>
                                 <div className="flex items-center">
@@ -209,7 +223,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <ShoppingCartIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Keranjang
+                                            {t("mobileMenu.cart")}
                                         </div>
                                     </div>
                                 </Link>
@@ -217,7 +231,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <CreditCardIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Menunggu Pembayaran
+                                            {t("mobileMenu.waitingPayment")}
                                         </div>
                                     </div>
                                 </Link>
@@ -225,7 +239,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Status Pesanan
+                                            {t("mobileMenu.orderStatus")}
                                         </div>
                                     </div>
                                 </Link>
@@ -233,7 +247,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <BanknotesIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Pembayaran Patungan
+                                            {t("mobileMenu.splitPayment")}
                                         </div>
                                     </div>
                                 </Link>
@@ -241,7 +255,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <StarIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Ulasan
+                                            {t("mobileMenu.review")}
                                         </div>
                                     </div>
                                 </Link>
@@ -251,7 +265,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <ShieldCheckIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Kebijakan Privasi
+                                            {t("mobileMenu.privacyPolicy")}
                                         </div>
                                     </div>
                                 </Link>
@@ -259,7 +273,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <DocumentTextIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Syarat & Ketentuan
+                                            {t("mobileMenu.termsAndConditions")}
                                         </div>
                                     </div>
                                 </Link>
@@ -267,7 +281,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <BanknotesIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            Tentang Pembayaran
+                                            {t("mobileMenu.aboutPayment")}
                                         </div>
                                     </div>
                                 </Link>
@@ -275,7 +289,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                     <div className="flex items-center py-3">
                                         <QuestionMarkCircleIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm">
-                                            How to Buy
+                                            {t("mobileMenu.howToBuy")}
                                         </div>
                                     </div>
                                 </Link>
@@ -303,7 +317,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                             onClick={closePopupMenu}
                                         />
                                         <h2 className="ml-3 text-base font-bold">
-                                            Menu Utama
+                                            {t("mobileMenu.mainMenu")}
                                         </h2>
                                     </div>
                                     <div className="flex items-center">
@@ -340,7 +354,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                 <div className="mt-2 bg-white p-4">
                                     <div className="flex items-center py-3">
                                         <div className="text-base font-bold">
-                                            Pengaturan Akun
+                                            {t("mobileMenu.settingAccount")}
                                         </div>
                                     </div>
                                     <Link href="/address">
@@ -348,12 +362,15 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                             <BuildingStorefrontIcon className="h-6 w-6 cursor-pointer" />
                                             <div className="ml-3">
                                                 <div className="pb-1 text-base font-bold">
-                                                    Daftar Alamat
+                                                    {t(
+                                                        "mobileMenu.listAddress",
+                                                    )}
                                                 </div>
                                                 <div className="text-xs">
                                                     <div className="cursor-pointer">
-                                                        Atur alamat pengiriman
-                                                        belanjaan
+                                                        {t(
+                                                            "mobileMenu.configAddress",
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,12 +398,15 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                                 <LockClosedIcon className="h-6 w-6 cursor-pointer" />
                                                 <div className="ml-3">
                                                     <div className="pb-1 text-base font-bold">
-                                                        Ubah Kata Sandi
+                                                        {t(
+                                                            "mobileMenu.changePassword",
+                                                        )}
                                                     </div>
                                                     <div className="text-xs">
                                                         <div className="cursor-pointer">
-                                                            Atur kata sandi yang
-                                                            kamu ingin gunakan
+                                                            {t(
+                                                                "mobileMenu.configPassword",
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -400,7 +420,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                         onClick={handleLogout}>
                                         <TrashIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm font-bold">
-                                            Hapus Akun
+                                            {t("mobileMenu.deleteAccount")}
                                         </div>
                                     </div>
                                     <div
@@ -408,7 +428,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                         onClick={handleLogout}>
                                         <ArrowRightStartOnRectangleIcon className="h-6 w-6 cursor-pointer" />
                                         <div className="ml-3 text-sm font-bold">
-                                            Keluar Akun
+                                            {t("mobileMenu.logout")}
                                         </div>
                                     </div>
                                 </div>

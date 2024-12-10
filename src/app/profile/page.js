@@ -20,8 +20,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Profile() {
+    const t = useTranslations()
     const { logout } = useAuth({ middleware: "guest" })
     const { user } = useAuth({ middleware: "auth" })
     const dispatch = useDispatch()
@@ -143,7 +145,9 @@ function Profile() {
             <Link href="/">
                 <div className="flex items-center border-[#F0F3F7] px-4 py-3 lg:hidden">
                     <ArrowLeftIcon className="h-6 w-6" />
-                    <div className="ml-2 font-semibold">Ubah Profil</div>
+                    <div className="ml-2 font-semibold">
+                        {t("profile.editProfile")}
+                    </div>
                 </div>
             </Link>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
@@ -152,18 +156,18 @@ function Profile() {
                 </div>
                 <div className="w-5/5 py-4 lg:w-4/5 lg:p-7 lg:px-4">
                     <div className="hidden pb-1 text-2xl font-bold lg:block">
-                        Profil
+                        {t("profile.profile")}
                     </div>
                     <div className="mt-5 hidden items-center justify-center lg:flex">
                         <Link
                             href="/profile"
                             className="item-center w-6/12 cursor-pointer border-b-4 border-[#007185] py-4 text-center font-bold text-[#007185] hover:border-[#007185] hover:text-[#007185]">
-                            Biodata
+                            {t("profile.biodata")}
                         </Link>
                         <Link
                             href="/address"
                             className="item-center w-6/12 cursor-pointer border-b-4 border-gray-100 py-4 text-center font-bold text-[#B1B1B1] hover:border-[#007185] hover:text-[#007185]">
-                            Daftar Alamat
+                            {t("profile.listAddress")}
                         </Link>
                     </div>
                     <div className="w-full rounded-xl bg-white py-4 lg:my-7 lg:flex lg:px-5 lg:shadow">
@@ -202,13 +206,13 @@ function Profile() {
                                 <div
                                     className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]"
                                     onClick={handleButtonClick}>
-                                    Pilih Foto
+                                    {t("profile.selectImage")}
                                 </div>
                                 {previewImage && (
                                     <div
                                         className="my-4 cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#f2d365]"
                                         onClick={handleSubmit}>
-                                        Simpan Perubahan
+                                        {t("profile.saveChange")}
                                     </div>
                                 )}
                                 <input
@@ -219,15 +223,13 @@ function Profile() {
                                     onChange={handleImageChange}
                                 />
                                 <div className="text-sm font-light text-[#6D7588]">
-                                    Besar file: maksimum 10.000.000 bytes (10
-                                    Megabytes). Ekstensi file yang
-                                    diperbolehkan: .JPG .JPEG .PNG
+                                    {t("profile.imageFormat")}
                                 </div>
                             </div>
                             {user?.data?.has_set_password && (
                                 <Link href="/change-password">
                                     <div className="my-4 cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]">
-                                        Ubah Kata Sandi
+                                        {t("profile.changePassword")}
                                     </div>
                                 </Link>
                             )}
@@ -235,13 +237,13 @@ function Profile() {
                                 className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]"
                                 onClick={handleLogout}>
                                 <ArrowRightStartOnRectangleIcon className="mr-3 h-6 w-6" />
-                                Keluar Akun
+                                {t("profile.logout")}
                             </div>
                             <div
                                 className="my-4 flex cursor-pointer items-center justify-center rounded-lg border bg-white px-6 py-2 text-center text-base font-bold hover:bg-[#f5f5f5]"
                                 onClick={() => setisDeleteAccount(true)}>
                                 <TrashIcon className="mr-3 h-6 w-6" />
-                                Hapus Akun
+                                {t("profile.deleteAccount")}
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center lg:hidden">
@@ -278,24 +280,24 @@ function Profile() {
                             <div
                                 className="mt-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-[#007185]"
                                 onClick={handleButtonClick}>
-                                Ubah Foto Profil
+                                {t("profile.updatePhoto")}
                             </div>
                             {previewImage && (
                                 <div
                                     className="mb-4 cursor-pointer items-center justify-center rounded-lg px-6 py-2 text-center text-sm font-bold text-secondary"
                                     onClick={handleSubmit}>
-                                    Simpan Perubahan
+                                    {t("profile.saveChange")}
                                 </div>
                             )}
                         </div>
                         <div className="flex-grow">
                             <div className="flex-grow border-t px-10 py-4 lg:border-none">
                                 <div className="mb-5 text-base font-bold">
-                                    Info Biodata Diri
+                                    {t("profile.personalInformation")}
                                 </div>
                                 <div className="flex py-3">
                                     <div className="w-1/3 text-base font-light">
-                                        Nama
+                                        {t("profile.name")}
                                     </div>
                                     <div className="w-2/3 text-base font-light">
                                         {user.data.name}
@@ -303,7 +305,7 @@ function Profile() {
                                 </div>
                                 <div className="flex py-3">
                                     <div className="w-1/3 text-base font-light">
-                                        Username
+                                        {t("profile.username")}
                                     </div>
                                     <div className="w-2/3 text-base font-light">
                                         {user.data.username}
@@ -311,15 +313,15 @@ function Profile() {
                                 </div>
                                 <div className="flex py-3">
                                     <div className="w-1/3 text-base font-light">
-                                        Tanggal Lahir
+                                        {t("profile.birthDate")}
                                     </div>
                                     <div className="w-2/3 text-base font-light">
-                                        28 September 1996
+                                        28 September 1990
                                     </div>
                                 </div>
                                 <div className="flex py-3">
                                     <div className="w-1/3 text-base font-light">
-                                        Jenis Kelamin
+                                        {t("profile.gender")}
                                     </div>
                                     <div className="w-2/3 text-base font-light">
                                         Laki-laki
@@ -328,11 +330,11 @@ function Profile() {
                             </div>
                             <div className="flex-grow border-t px-10 py-4 lg:border-none">
                                 <div className="mb-5 text-base font-bold">
-                                    Ubah Kontak
+                                    {t("profile.contactInformation")}
                                 </div>
                                 <div className="flex py-3">
                                     <div className="w-1/3 text-base font-light">
-                                        Email
+                                        {t("profile.email")}
                                     </div>
                                     <div className="w-2/3 text-base font-light">
                                         {user.data.email}
@@ -340,7 +342,7 @@ function Profile() {
                                 </div>
                                 <div className="flex py-3">
                                     <div className="w-1/3 text-base font-light">
-                                        Nomor HP
+                                        {t("profile.phone")}
                                     </div>
                                     <div className="w-2/3 text-base font-light">
                                         {user.data.phone_number}
@@ -353,7 +355,7 @@ function Profile() {
                         <div className="mt-10">
                             <Link href="/update-profile">
                                 <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Ubah Data
+                                    {t("profile.updateProfile")}
                                 </div>
                             </Link>
                         </div>
@@ -364,8 +366,8 @@ function Profile() {
                 isOpen={notification}
                 closeModal={handleCloseNotification}
                 type={"notification"}
-                title={"Pemberitahuan"}
-                message={`berhasil mengubah photo profil.`}
+                title={t("notification")}
+                message={t("profile.successUpdateImage")}
             />
             {/* <Footer /> */}
 
@@ -376,7 +378,7 @@ function Profile() {
                         className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
                         <div className="my-4 flex items-center justify-between">
                             <h2 className="text-xl font-semibold">
-                                Hapus Akun
+                                {t("profile.deleteAccount")}
                             </h2>
                             <XMarkIcon
                                 className="h-6 w-6 cursor-pointer"
@@ -384,9 +386,9 @@ function Profile() {
                             />
                         </div>
                         <div className="mb-2 py-1 text-sm text-[#6D7588]">
-                            Apakah anda yakin ingin menghapus akun ?
+                            {t("profile.areUSure")}
                             <br />
-                            Silahkan masukkan password anda untuk melanjutkan
+                            {t("profile.pleaseInput")}
                         </div>
                         <div className="py-1">
                             <div className="mb-2 text-sm font-bold text-[#6D7588]">
@@ -409,7 +411,7 @@ function Profile() {
                             <div
                                 className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 font-semibold hover:bg-[#e8bc00]"
                                 onClick={handleDeleteAccount}>
-                                Kirim
+                                {t("profile.send")}
                             </div>
                         </div>
                     </div>

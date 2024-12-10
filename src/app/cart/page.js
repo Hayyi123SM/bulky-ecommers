@@ -20,8 +20,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Cart() {
+    const t = useTranslations()
     const { user } = useAuth({ middleware: "auth" })
     const router = useRouter()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
@@ -139,7 +141,7 @@ function Cart() {
                             onClick={() => router.back()}
                         />
                     </Link>
-                    <div className="ml-2 font-semibold">Keranjang</div>
+                    <div className="ml-2 font-semibold">{t("cart.cart")}</div>
                 </div>
                 <Bars3BottomRightIcon
                     className="h-6 w-6"
@@ -155,7 +157,7 @@ function Cart() {
             <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
                     <div className="hidden text-2xl font-extrabold lg:block">
-                        Keranjang
+                        {t("cart.cart")}
                     </div>
                     <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 lg:py-10">
                         <div className="w-full lg:col-span-2">
@@ -180,7 +182,7 @@ function Cart() {
                                 </div>
                                 <div className="ml-2 text-sm leading-6">
                                     <label className="font-bold">
-                                        Pilih Semua
+                                        {t("cart.selectAll")}
                                     </label>
                                 </div>
                             </div>
@@ -236,7 +238,7 @@ function Cart() {
                         <div className="hidden w-full lg:block">
                             <div className="mb-0.5 rounded-t-lg bg-white px-5 py-4">
                                 <div className="text-md font-bold">
-                                    Ringkasan Belanja
+                                    {t("cart.summaryOrder")}
                                 </div>
                                 <div className="flex justify-between py-5">
                                     <div className="text-sm leading-6">
@@ -270,7 +272,7 @@ function Cart() {
                                             item => item.is_selected,
                                         )
                                     }>
-                                    Beli
+                                    {t("cart.buyNow")}
                                 </div>
                             </div>
                         </div>
@@ -303,7 +305,7 @@ function Cart() {
                                                 item => item.is_selected,
                                             )
                                         }>
-                                        Beli
+                                        {t("cart.buyNow")}
                                     </div>
                                 </div>
                             </div>
