@@ -142,14 +142,29 @@
     },
     "register": {
         "register": "Daftar",
+        "createAccount": "Buat Akun",
         "login": "Masuk",
         "forgotPassword": "Lupa Kata Sandi",
+        "name": "Nama",
+        "username": "Username",
         "email": "Email",
+        "phone": "Nomor Telepon",
         "password": "Kata Sandi",
+        "gender": "Jenis Kelamin",
+        "male": "Pria",
+        "female": "Wanita",
+        "passwordConfirmation": "Konfirmasi Kata Sandi",
         "rememberMe": "Ingat Saya",
         "loginWithGoogle": "Masuk dengan Google",
         "newAccount": "Buat Akun Baru",
-        "newUser": "Apakah Anda Pengguna Baru?"
+        "newUser": "Apakah Anda Pengguna Baru?",
+        "vocab1": "Dengan mendaftar, kamu menyetujui",
+        "vocab2": "Kebijakan Privasi",
+        "vocab3": ", serta",
+        "vocab4": "Syarat dan Ketentuan",
+        "vocab5": "yang berlaku",
+        "or": "atau",
+        "description": "Sebelum memulai berbelanja di Bulky kamu dapat membuat akun terlebih dahulu ya"
     },
     "forgotPassword": {
         "title": "Lupa Kata Sandi",
@@ -318,5 +333,30 @@
         "statusPayment": "Status Pembayaran",
         "remainingPayment": "Sisa Total Tagihan",
         "writeReview": "Beri Ulasan"
+    },
+    "addressForm": {
+        "titleAddress": "Tambah Alamat",
+        "titleEditAddress": "Ubah Alamat",
+        "update": "Ubah",
+        "label": "Label",
+        "name": "Nama",
+        "phone": "Nomor Telepon",
+        "address": "Alamat",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "save": "Simpan",
+        "cancel": "Batal",
+        "successMessage": "Alamat berhasil disimpan"
+    },
+    "changePassword": {
+        "titleChangePassword": "Ubah Kata Sandi",
+        "oldPassword": "Kata Sandi Lama",
+        "newPassword": "Kata Sandi Baru",
+        "confirmPassword": "Konfirmasi Kata Sandi Baru",
+        "update": "Ubah",
+        "cancel": "Batal",
+        "successMessage": "Kata sandi berhasil diubah",
+        "savePassword": "Simpan Kata Sandi",
+        "passwordRules": "Kata sandi harus terdiri dari minimal 8 karakter, terdiri dari huruf besar, huruf kecil, angka, dan simbol"
     }
 }

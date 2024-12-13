@@ -4,8 +4,10 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 function RegisterMethod() {
+    const t = useTranslations()
     const router = useRouter()
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#F5F5F5]">
@@ -30,16 +32,15 @@ function RegisterMethod() {
                                 onClick={() => router.back()}
                             />
                             <div className="ml-3 text-2xl font-bold">
-                                Buat Akun
+                                {t("register.createAccount")}
                             </div>
                         </div>
                         <div className="mb-2 py-2 text-sm text-[#6D7588]">
-                            Sebelum memulai berbelanja di Bulky kamu dapat
-                            membuat akun terlebih dahulu ya
+                            {t("register.description")}
                         </div>
                         <Link href="/register">
                             <div className="mb-4 cursor-pointer rounded-xl border border-[#BFC9D9] bg-white py-3 text-center text-sm font-bold hover:bg-[#F5F5F5]">
-                                Buat Akun Sekarang
+                                {t("register.createAccount")}
                             </div>
                         </Link>
                         <div className="flex items-center justify-center">
@@ -47,7 +48,7 @@ function RegisterMethod() {
                                 {" "}
                             </div>
                             <div className="px-2 text-sm text-[#6D7588]">
-                                Atau
+                                {t("register.or")}
                             </div>
                             <div className="w-full border-b border-[#BFC9D9]">
                                 {" "}
@@ -62,7 +63,7 @@ function RegisterMethod() {
                                 className="mr-2"
                                 priority={false}
                             />
-                            Masuk dengan Google
+                            {t("register.loginWithGoogle")}
                         </div>
                     </div>
                 </div>

@@ -142,14 +142,29 @@
     },
     "register": {
         "register": "Register",
+        "createAccount": "Create Account",
         "login": "Login",
         "forgotPassword": "Forgot Password",
+        "name": "Name",
+        "username": "Username",
         "email": "Email",
+        "phone": "Phone Number",
         "password": "Password",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "passwordConfirmation": "Confirm Password",
         "rememberMe": "Remember Me",
         "loginWithGoogle": "Login with Google",
-        "newAccount": "Create New Account",
-        "newUser": "Are You a New User?"
+        "newAccount": "Create a New Account",
+        "newUser": "Are You a New User?",
+        "vocab1": "By registering, you agree to",
+        "vocab2": "Privacy Policy",
+        "vocab3": ", and",
+        "vocab4": "Terms and Conditions",
+        "vocab5": "that apply",
+        "or": "or",
+        "description": "Before starting your shopping at Bulky, you can create an account first."
     },
     "forgotPassword": {
         "title": "Forgot Password",
@@ -318,5 +333,30 @@
         "statusPayment": "Payment Status",
         "remainingPayment": "Remaining Invoice Amount",
         "writeReview": "Write a Review"
+    },
+    "addressForm": {
+        "titleAddress": "Add Address",
+        "titleEditAddress": "Edit Address",
+        "update": "Edit",
+        "label": "Label",
+        "name": "Name",
+        "phone": "Phone Number",
+        "address": "Address",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "save": "Save",
+        "cancel": "Cancel",
+        "successMessage": "Address saved successfully"
+    },
+    "changePassword": {
+        "titleChangePassword": "Change Password",
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm New Password",
+        "update": "Change",
+        "cancel": "Cancel",
+        "successMessage": "Password changed successfully",
+        "savePassword": "Save Password",
+        "passwordRules": "Password must contain at least 8 characters, including uppercase, lowercase, numbers, and symbols"
     }
 }

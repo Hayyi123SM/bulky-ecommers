@@ -10,8 +10,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function Register() {
+    const t = useTranslations()
     const { register } = useAuth({
         middleware: "guest",
         redirectIfAuthenticated: "/",
@@ -133,19 +135,19 @@ function Register() {
                                     onClick={() => router.back()}
                                 />
                                 <div className="ml-3 text-2xl font-bold">
-                                    Buat Akun
+                                    {t("register.createAccount")}
                                 </div>
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Nama Lengkap
+                                    {t("register.name")}
                                 </div>
                                 <input
                                     type="text"
                                     value={name}
                                     onChange={e => setName(e.target.value)}
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="Nama Lengkap"
+                                    placeholder={t("register.name")}
                                 />
                                 <InputError
                                     messages={errors.name}
@@ -154,14 +156,14 @@ function Register() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Username
+                                    {t("register.username")}
                                 </div>
                                 <input
                                     type="text"
                                     value={username}
                                     onChange={e => setUsername(e.target.value)}
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="cth: jhondoe123"
+                                    placeholder={t("register.username")}
                                 />
                                 <InputError
                                     messages={errors.username}
@@ -258,7 +260,7 @@ function Register() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    No Telepon
+                                    {t("register.phone")}
                                 </div>
                                 <input
                                     type="text"
@@ -267,7 +269,7 @@ function Register() {
                                         setPhoneNumber(e.target.value)
                                     }
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="No Telepon"
+                                    placeholder={t("register.phone")}
                                 />
                                 <InputError
                                     messages={errors.phoneNumber}
@@ -276,7 +278,7 @@ function Register() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Jenis Kelamin
+                                    {t("register.gender")}
                                 </div>
                                 <div className="flex items-center">
                                     <div className="mr-5 flex items-center">
@@ -287,7 +289,7 @@ function Register() {
                                             className="h-4 w-4 border-gray-300 text-[#007185] focus:ring-[#007185]"
                                         />
                                         <label className="ml-3 block text-sm font-medium leading-6 text-[#6D7588]">
-                                            Laki-Laki
+                                            {t("register.male")}
                                         </label>
                                     </div>
                                     <div className="flex items-center">
@@ -298,14 +300,14 @@ function Register() {
                                             className="h-4 w-4 border-gray-300 text-[#007185] focus:ring-[#007185]"
                                         />
                                         <label className="ml-3 block text-sm font-medium leading-6 text-[#6D7588]">
-                                            Perempuan
+                                            {t("register.female")}
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Kata Sandi
+                                    {t("register.password")}
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
@@ -330,7 +332,7 @@ function Register() {
                             </div>
                             <div className="py-2">
                                 <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                    Konfirmasi Kata Sandi
+                                    {t("register.passwordConfirmation")}
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
@@ -356,26 +358,26 @@ function Register() {
                                 </div>
                             </div>
                             <div className="mb-2 py-2 text-sm text-[#6D7588]">
-                                Dengan mendaftar, kamu menyetujui
+                                {t("register.vocab1")}
                                 <Link
                                     href="/terms-and-conditions"
                                     className="ml-1 cursor-pointer font-bold text-[#007185]">
-                                    Syarat & Ketentuan
+                                    {t("register.vocab4")}
                                 </Link>
-                                , serta
+                                {t("register.vocab3")}
                                 <Link
                                     href="/privacy-policy"
                                     className="ml-1 cursor-pointer font-bold text-[#007185]">
-                                    Kebijakan Privasi
+                                    {t("register.vocab2")}
                                 </Link>
-                                yang berlaku.
+                                {t("register.vocab5")}
                             </div>
                             <button
                                 type="submit"
                                 className="mt-3 flex w-full cursor-pointer justify-center rounded-xl bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00]">
                                 {isLoading ? (
                                     <>
-                                        Tunggu Sebentar...
+                                        {t("waiting")}...
                                         <LoadingSpinner
                                             text={false}
                                             color="#000"
@@ -383,7 +385,7 @@ function Register() {
                                         />
                                     </>
                                 ) : (
-                                    "Daftar"
+                                    t("register.register")
                                 )}
                             </button>
                         </form>

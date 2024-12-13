@@ -10,8 +10,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function ChangePassword() {
+    const t = useTranslations()
     const dispatch = useDispatch()
     const router = useRouter()
     const [currentPassword, setCurrentPassword] = useState("")
@@ -63,7 +65,9 @@ function ChangePassword() {
                     className="h-6 w-6"
                     onClick={() => router.back()}
                 />
-                <div className="ml-2 font-semibold">Ubah Kata Sandi</div>
+                <div className="ml-2 font-semibold">
+                    {t("changePassword.titleChangePassword")}
+                </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -76,14 +80,14 @@ function ChangePassword() {
                             onClick={() => router.back()}
                         />
                         <div className="ml-2 font-semibold">
-                            Ubah Kata Sandi
+                            {t("changePassword.titleChangePassword")}
                         </div>
                     </div>
                     <form onSubmit={submitForm}>
                         <div className="items-center justify-between lg:mt-10 lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 text-sm font-semibold text-[#B1B1B1]">
-                                    Kata Sandi Saat Ini
+                                    {t("changePassword.oldPassword")}
                                 </div>
                                 <input
                                     type={
@@ -116,7 +120,7 @@ function ChangePassword() {
                         <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 text-sm font-semibold text-[#B1B1B1]">
-                                    Kata Sandi Baru
+                                    {t("changePassword.newPassword")}
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
@@ -143,7 +147,7 @@ function ChangePassword() {
                         <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 text-sm font-semibold text-[#B1B1B1]">
-                                    Konfirmasi Kata Sandi
+                                    {t("changePassword.confirmPassword")}
                                 </div>
                                 <input
                                     type={
@@ -174,8 +178,7 @@ function ChangePassword() {
                                     )}
                                 </div>
                                 <div className="mt-2 text-xs text-[#6D7588]">
-                                    Kata sandi dapat dikombinasikan antara
-                                    huruf, angka, dan karakter spesial.
+                                    {t("changePassword.passwordRules")}
                                 </div>
                             </div>
                         </div>
@@ -184,13 +187,13 @@ function ChangePassword() {
                                 <button
                                     type="submit"
                                     className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Simpan Kata Sandi
+                                    {t("changePassword.savePassword")}
                                 </button>
                             </div>
                             <div className="mt-3">
                                 <Link href="/profile">
                                     <div className="w-full cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                        Batalkan
+                                        {t("changePassword.cancel")}
                                     </div>
                                 </Link>
                             </div>
@@ -201,13 +204,13 @@ function ChangePassword() {
                                 <button
                                     type="submit"
                                     className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Simpan Kata Sandi
+                                    {t("changePassword.savePassword")}
                                 </button>
                             </div>
                             <div className="mt-3">
                                 <Link href="/profile">
                                     <div className="w-full cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                        Batalkan
+                                        {t("changePassword.cancel")}
                                     </div>
                                 </Link>
                             </div>

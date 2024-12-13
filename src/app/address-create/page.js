@@ -15,8 +15,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 function AddressCreate() {
+    const t = useTranslations()
     const router = useRouter()
     const dispatch = useDispatch()
     const [label, setlabel] = useState("")
@@ -116,7 +118,9 @@ function AddressCreate() {
                         onClick={() => router.back()}
                     />
                 </Link>
-                <div className="ml-2 font-semibold">Tambah Alamat</div>
+                <div className="ml-2 font-semibold">
+                    {t("addressForm.titleAddress")}
+                </div>
             </div>
             <div className="mx-auto min-h-screen max-w-7xl lg:flex">
                 <div className="hidden w-1/5 p-7 lg:block">
@@ -130,7 +134,9 @@ function AddressCreate() {
                                 onClick={() => router.back()}
                             />
                         </Link>
-                        <div className="ml-2 font-semibold">Tambah Alamat</div>
+                        <div className="ml-2 font-semibold">
+                            {t("addressForm.titleAddress")}
+                        </div>
                     </div>
                     <AuthSessionStatus className="mb-4" status={status} />
 
@@ -145,7 +151,7 @@ function AddressCreate() {
                             <div
                                 onClick={() => setIsShowMap(true)}
                                 className="cursor-pointer rounded-lg border border-[#007185] px-3 py-1 font-semibold text-[#007185] hover:bg-[#0071850D]">
-                                Ubah
+                                {t("addressForm.update")}
                             </div>
                         </div>
                     </div>
@@ -154,12 +160,12 @@ function AddressCreate() {
                         <div className="items-center justify-between lg:mt-5 lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
-                                    Label
+                                    {t("addressForm.label")}
                                 </div>
                                 <input
                                     type="text"
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="Cth: Perusahaan"
+                                    placeholder={t("addressForm.label")}
                                     onChange={e => setlabel(e.target.value)}
                                     value={label}
                                 />
@@ -172,12 +178,12 @@ function AddressCreate() {
                         <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
-                                    Nama
+                                    {t("addressForm.name")}
                                 </div>
                                 <input
                                     type="text"
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="Nama"
+                                    placeholder={t("addressForm.name")}
                                     onChange={e => setName(e.target.value)}
                                     value={name}
                                 />
@@ -190,12 +196,12 @@ function AddressCreate() {
                         <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
-                                    Nomor Telepon
+                                    {t("addressForm.phone")}
                                 </div>
                                 <input
                                     type="text"
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="Nomor Telepon"
+                                    placeholder={t("addressForm.phone")}
                                     onChange={e =>
                                         setPhoneNumber(e.target.value)
                                     }
@@ -210,12 +216,12 @@ function AddressCreate() {
                         <div className="mt-3 items-center justify-between lg:flex">
                             <div className="item-center lg:w-5/12">
                                 <div className="mb-1 font-semibold text-[#B1B1B1]">
-                                    Alamat
+                                    {t("addressForm.address")}
                                 </div>
                                 <input
                                     type="text"
                                     className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    placeholder="Alamat"
+                                    placeholder={t("addressForm.address")}
                                     onChange={e => setAddress(e.target.value)}
                                     value={address}
                                 />
@@ -332,12 +338,12 @@ function AddressCreate() {
                                 <button
                                     type="submit"
                                     className="mb-4 w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    Simpan
+                                    {t("addressForm.save")}
                                 </button>
                                 <Link
                                     href="/address"
                                     className="w-full cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                    Batalkan
+                                    {t("addressForm.cancel")}
                                 </Link>
                             </div>
                         </div>
@@ -348,7 +354,7 @@ function AddressCreate() {
                                     className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                     {isLoading ? (
                                         <>
-                                            Tunggu Sebentar...
+                                            {t("waiting")}...
                                             <LoadingSpinner
                                                 text={false}
                                                 color="#000"
@@ -356,14 +362,14 @@ function AddressCreate() {
                                             />
                                         </>
                                     ) : (
-                                        "Simpan"
+                                        t("addressForm.save")
                                     )}
                                 </button>
                             </div>
                             <div className="mt-3">
                                 <Link href="/profile">
                                     <div className="w-full cursor-pointer rounded-lg border border-[#BFC9D9] bg-white px-6 py-2 text-center text-sm font-bold hover:bg-[#f5f5f5]">
-                                        Batalkan
+                                        {t("addressForm.cancel")}
                                     </div>
                                 </Link>
                             </div>
@@ -382,8 +388,8 @@ function AddressCreate() {
             <PopupModal
                 isOpen={isShow}
                 type={"notification"}
-                title={"Pemberitahuan"}
-                message={`Selamat, alamat baru telah ditambahkan.`}
+                title={t("notification")}
+                message={t("addressForm.successMessage")}
                 urlConfirm="/address"
             />
             {/* <Footer /> */}
