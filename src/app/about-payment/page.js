@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function AboutPayment() {
     const t = useTranslations()
@@ -71,7 +72,12 @@ function AboutPayment() {
                             <div className="staticStyle">
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: aboutPayment.content,
+                                        __html:
+                                            Cookies.get("locale") === "id"
+                                                ? aboutPayment?.content_trans
+                                                      ?.id
+                                                : aboutPayment?.content_trans
+                                                      ?.en,
                                     }}
                                 />
                             </div>

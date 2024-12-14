@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function Cart() {
     const t = useTranslations()
@@ -215,7 +216,11 @@ function Cart() {
                                         </div>
                                         <div className="ml-5 w-2/5 text-sm leading-6">
                                             <label className="text-md">
-                                                {item.product.name}
+                                                {Cookies.get("locale") === "id"
+                                                    ? item?.product?.name_trans
+                                                          ?.id
+                                                    : item?.product?.name_trans
+                                                          ?.en}
                                             </label>
                                         </div>
                                         <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">

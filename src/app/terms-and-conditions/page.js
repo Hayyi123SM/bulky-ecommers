@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function TermsAndConditions() {
     const t = useTranslations()
@@ -52,7 +53,12 @@ function TermsAndConditions() {
                             <div className="staticStyle">
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: termsAndConditions.content,
+                                        __html:
+                                            Cookies.get("locale") === "id"
+                                                ? termsAndConditions
+                                                      ?.content_trans?.id
+                                                : termsAndConditions
+                                                      ?.content_trans?.en,
                                     }}
                                 />
                             </div>

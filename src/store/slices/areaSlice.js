@@ -15,7 +15,7 @@ export const fetchProvinces = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/area/provinces")
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching area:", error) // Log errors
@@ -28,11 +28,11 @@ export const fetchCities = createAsyncThunk(
     "area/fetchCities",
     async provinceId => {
         try {
-            console.log("====================================")
-            console.log("Province ID:", provinceId)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("Province ID:", provinceId)
+            // console.log("====================================")
             const response = await axios.get("/api/area/cities/" + provinceId)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching area:", error) // Log errors
@@ -46,7 +46,7 @@ export const fetchDistricts = createAsyncThunk(
     async cityId => {
         try {
             const response = await axios.get("/api/area/districts/" + cityId)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching area:", error) // Log errors
@@ -62,7 +62,7 @@ export const fetchSubDistricts = createAsyncThunk(
             const response = await axios.get(
                 "/api/area/sub-districts/" + districtId,
             )
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching area:", error) // Log errors
@@ -82,8 +82,8 @@ const areaSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchProvinces.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.provinces = action.payload.data
                 state.isLoading = false
             })
@@ -96,8 +96,8 @@ const areaSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchCities.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.cities = action.payload.data
                 state.isLoading = false
             })
@@ -110,8 +110,8 @@ const areaSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchDistricts.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.districts = action.payload.data
                 state.isLoading = false
             })
@@ -124,8 +124,8 @@ const areaSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchSubDistricts.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.subDistricts = action.payload.data
                 state.isLoading = false
             })

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { fetchPages } from "@/store/slices/pageSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import Cookies from "js-cookie"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
@@ -63,7 +64,10 @@ function Faq() {
                             <div className="staticStyle">
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: faq.content,
+                                        __html:
+                                            Cookies.get("locale") === "id"
+                                                ? faq?.content_trans?.id
+                                                : faq?.content_trans?.en,
                                     }}
                                 />
                             </div>

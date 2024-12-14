@@ -62,9 +62,9 @@ export const fetchOrderDetail = createAsyncThunk(
     "orders/fetchOrderDetail",
     async (orderId, { rejectWithValue }) => {
         try {
-            console.log("====================================")
-            console.log("Order ID:", orderId)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("Order ID:", orderId)
+            // console.log("====================================")
             const response = await axios.get(
                 `/api/orders/get-detail/${orderId}`,
             )
@@ -82,9 +82,9 @@ export const fetchInvoiceOrder = createAsyncThunk(
             const response = await axios.get(
                 `/api/orders/invoice/get-invoices-by-order/${orderId}`,
             )
-            console.log("====================================")
-            console.log("Order ID:", response.data.data)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("Order ID:", response.data.data)
+            // console.log("====================================")
             return response.data
         } catch (error) {
             return error.response.data
@@ -96,16 +96,16 @@ export const createPayment = createAsyncThunk(
     "orders/createPayment",
     async (data, { rejectWithValue }) => {
         try {
-            console.log("====================================")
-            console.log("Data:", data)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("Data:", data)
+            // console.log("====================================")
             const response = await axios.post(
                 "/api/orders/invoice/create-payment",
                 data,
             )
-            console.log("====================================")
-            console.log("Response:", response.data)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("Response:", response.data)
+            // console.log("====================================")
             return response.data
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -146,10 +146,10 @@ export const createReview = createAsyncThunk(
     "orders/createReview",
     async ({ formData, orderId }, { rejectWithValue }) => {
         try {
-            console.log("====================================")
-            console.log("Data being sent:", formData)
-            console.log("Order ID:", orderId)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("Data being sent:", formData)
+            // console.log("Order ID:", orderId)
+            // console.log("====================================")
 
             const response = await axios.post(
                 `/api/orders/review/${orderId}`, // orderId used here in the URL
@@ -206,8 +206,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchPaymentMethod.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.paymentMethod = action.payload.data
                 state.isLoading = false
             })
@@ -220,8 +220,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchOrders.fulfilled, (state, action) => {
-                console.log("Action in fulfilled order:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled order:", action)
+                // console.log("Current state:", state)
                 state.orders = action.payload.data
                 state.totalPages = action.payload?.meta?.last_page
                 state.currentPage = action.payload?.meta?.current_page
@@ -236,8 +236,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchOrderDetail.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.orderDetail = action.payload.data
                 state.isLoading = false
             })
@@ -250,8 +250,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchInvoiceOrder.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.invoiceOrders = action.payload.data
                 state.isLoading = false
             })
@@ -264,8 +264,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(createPayment.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.afterCreatePayment = action.payload.data
                 state.isLoading = false
             })
@@ -278,8 +278,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(setInvoiceAmount.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.afterSetInvoiceAmount = action.payload.data
                 state.isLoading = false
             })
@@ -292,8 +292,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(getMyInvoice.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.myInvoice = action.payload.data
                 state.isLoading = false
             })
@@ -307,7 +307,7 @@ const orderSlice = createSlice({
             })
             .addCase(createReview.fulfilled, (state, action) => {
                 console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Current state:", state)
                 state.isLoading = false
             })
             .addCase(createReview.rejected, (state, action) => {
@@ -319,8 +319,8 @@ const orderSlice = createSlice({
                 state.error = null
             })
             .addCase(getBudgets.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.budgets = action.payload.data
                 state.isLoading = false
             })
@@ -334,7 +334,7 @@ const orderSlice = createSlice({
             })
             .addCase(createWholesale.fulfilled, (state, action) => {
                 console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Current state:", state)
                 state.isLoading = false
             })
             .addCase(createWholesale.rejected, (state, action) => {

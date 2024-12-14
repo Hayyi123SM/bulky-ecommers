@@ -12,8 +12,11 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
+import { useAuth } from "@/hooks/auth"
 
 function OrderSplitDetail({ params }) {
+    const { user } = useAuth({ middleware: "auth" })
     const t = useTranslations()
     const orderSplitId = params.orderSplitId
     const dispatch = useDispatch()
@@ -28,6 +31,10 @@ function OrderSplitDetail({ params }) {
     // }
 
     // const totalPaidAmount = calculateTotalPaidAmount(order.invoices)
+
+    if (!user) {
+        return null // Hindari menampilkan konten jika sedang redirect
+    }
 
     useEffect(() => {
         dispatch(fetchOrderDetail(orderSplitId))
@@ -121,7 +128,12 @@ function OrderSplitDetail({ params }) {
                                             </div>
                                             <div className="ml-5 text-sm leading-6">
                                                 <div className="text-md pb-1">
-                                                    {item.product.name}
+                                                    {Cookies.get("locale") ===
+                                                    "id"
+                                                        ? item?.product
+                                                              ?.name_trans?.id
+                                                        : item?.product
+                                                              ?.name_trans?.en}
                                                 </div>
                                                 <div className="text-md font-bold">
                                                     {item.price.formatted}

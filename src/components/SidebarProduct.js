@@ -11,6 +11,7 @@ import {
     setFilters,
 } from "../store/slices/filterSlice"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function SidebarProduct({ category }) {
     const t = useTranslations()
@@ -261,7 +262,9 @@ function SidebarProduct({ category }) {
                                 </div>
                                 <div className="ml-2 text-sm leading-6">
                                     <label className="font-xs">
-                                        {category.name}
+                                        {Cookies.get("locale") === "id"
+                                            ? category?.name_trans?.id
+                                            : category?.name_trans?.en}
                                     </label>
                                 </div>
                             </div>
@@ -488,7 +491,9 @@ function SidebarProduct({ category }) {
                                 </div>
                                 <div className="ml-2 text-sm leading-6">
                                     <label className="font-xs">
-                                        {condition.title}
+                                        {Cookies.get("locale") === "id"
+                                            ? condition?.title_trans?.id
+                                            : condition?.title_trans?.en}
                                     </label>
                                 </div>
                             </div>
@@ -546,7 +551,9 @@ function SidebarProduct({ category }) {
                                 </div>
                                 <div className="ml-2 text-sm leading-6">
                                     <label className="font-xs">
-                                        {status.status}
+                                        {Cookies.get("locale") === "id"
+                                            ? status?.status_trans?.id
+                                            : status?.status_trans?.en}
                                     </label>
                                 </div>
                             </div>

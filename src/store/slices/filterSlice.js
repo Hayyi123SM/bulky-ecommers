@@ -27,7 +27,7 @@ export const fetchCategories = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/products/filter/categories")
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching filter categories:", error) // Log errors
@@ -41,7 +41,7 @@ export const fetchWarehouses = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/products/filter/warehouse")
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching filter warehouses:", error) // Log errors
@@ -55,7 +55,7 @@ export const fetchConditions = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/products/filter/conditions")
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching filter conditions:", error) // Log errors
@@ -69,7 +69,7 @@ export const fetchStatuses = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/products/filter/statuses")
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching filter statuses:", error) // Log errors
@@ -81,7 +81,7 @@ export const fetchStatuses = createAsyncThunk(
 export const fetchBrands = createAsyncThunk("filters/fetchBrands", async () => {
     try {
         const response = await axios.get("/api/products/filter/brands")
-        console.log("API response:", response.data) // Log the API response
+        // console.log("API response:", response.data) // Log the API response
         return response.data
     } catch (error) {
         console.error("Error fetching filter brands:", error) // Log errors
@@ -94,7 +94,7 @@ const filterSlice = createSlice({
     initialState,
     reducers: {
         setFilters(state, action) {
-            console.log("Action in setFilters:", action)
+            // console.log("Action in setFilters:", action)
             state.selectedFilters = {
                 ...state.selectedFilters,
                 ...action.payload,
@@ -125,8 +125,8 @@ const filterSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.categories = action.payload.data
                 state.isLoading = false
             })
@@ -141,8 +141,8 @@ const filterSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchWarehouses.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.warehouses = action.payload.data
                 state.isLoading = false
             })
@@ -157,8 +157,8 @@ const filterSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchConditions.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.conditions = action.payload.data
                 state.isLoading = false
             })
@@ -173,8 +173,8 @@ const filterSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchStatuses.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.statuses = action.payload.data
                 state.isLoading = false
             })
@@ -189,8 +189,8 @@ const filterSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchBrands.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.brands = action.payload.data
                 state.isLoading = false
             })

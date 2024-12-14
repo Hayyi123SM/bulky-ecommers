@@ -34,6 +34,7 @@ import { Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function ProductDetail({ params }) {
     const t = useTranslations()
@@ -287,7 +288,13 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="p-4 lg:w-1/2 lg:p-8">
                         <h1 className="mb-4 text-2xl font-bold">
-                            {loadingProducts ? <Skeleton /> : products.name}
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.name_trans?.id
+                            ) : (
+                                products?.name_trans?.en
+                            )}
                         </h1>
                         <div className="mb-1 text-xl font-bold text-[#007185]">
                             {loadingProducts ? (
@@ -426,8 +433,10 @@ function ProductDetail({ params }) {
                         <div className="w-5/6 text-base">
                             {loadingProducts ? (
                                 <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.condition?.title_trans?.id
                             ) : (
-                                products.condition?.title
+                                products?.condition?.title_trans?.en
                             )}
                         </div>
                     </div>
@@ -450,8 +459,10 @@ function ProductDetail({ params }) {
                         <div className="w-5/6 text-base">
                             {loadingProducts ? (
                                 <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.status?.status_trans?.id
                             ) : (
-                                products.status.status
+                                products?.status?.status_trans?.en
                             )}
                         </div>
                     </div>
@@ -468,8 +479,10 @@ function ProductDetail({ params }) {
                         <div className="w-5/6 text-base font-semibold text-[#007185]">
                             {loadingProducts ? (
                                 <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.category?.name_trans?.id
                             ) : (
-                                products.category?.name
+                                products?.category?.name_trans?.en
                             )}
                         </div>
                     </div>
@@ -478,8 +491,20 @@ function ProductDetail({ params }) {
                             <div
                                 dangerouslySetInnerHTML={{
                                     __html: showFullDescription
-                                        ? products.description // Show full description
-                                        : `${products.description.substring(0, 50)}...`, // Show shortened description
+                                        ? Cookies.get("locale") === "id"
+                                            ? products?.description_trans?.id
+                                            : products?.description_trans?.en // Show full description
+                                        : `${
+                                              Cookies.get("locale") === "id"
+                                                  ? products?.name_trans?.id?.substring(
+                                                        0,
+                                                        50,
+                                                    )
+                                                  : products?.name_trans?.en?.substring(
+                                                        0,
+                                                        50,
+                                                    )
+                                          }...`, // Show shortened description
                                 }}
                             />
                         </div>
@@ -559,7 +584,11 @@ function ProductDetail({ params }) {
                                               image={product.images[0]}
                                               productId={product.id}
                                               location={product.warehouse?.name}
-                                              title={product.name}
+                                              title={
+                                                  Cookies.get("locale") === "id"
+                                                      ? product?.name_trans?.id
+                                                      : product?.name_trans?.en
+                                              }
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}
                                               sale={

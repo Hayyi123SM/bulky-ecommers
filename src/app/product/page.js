@@ -25,6 +25,7 @@ import {
     useFetchProductsQuery,
 } from "../../store/slices/productSlice"
 import FloatingIcon from "@/components/FloatingIcon"
+import Cookies from "js-cookie"
 
 function Product({ searchParams }) {
     const category = useSearchParams().get("category")
@@ -328,7 +329,11 @@ function Product({ searchParams }) {
                                       productId={product.id}
                                       image={product.images[0]}
                                       location={product.warehouse.name}
-                                      title={product.name}
+                                      title={
+                                          Cookies.get("locale") === "id"
+                                              ? product?.name_trans?.id
+                                              : product?.name_trans?.en
+                                      }
                                       price={product.price.formatted}
                                       url={`/product/${product.slug}`}
                                       sale={product.show_price_before_discount}

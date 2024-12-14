@@ -13,8 +13,11 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
+import { useAuth } from "@/hooks/auth"
 
 function OrderDetail({ params }) {
+    const { user } = useAuth({ middleware: "auth" })
     const t = useTranslations()
     const router = useRouter()
     const orderId = params.orderId
@@ -37,6 +40,10 @@ function OrderDetail({ params }) {
     //         status: "Dispatched",
     //     },
     // ]
+
+    if (!user) {
+        return null // Hindari menampilkan konten jika sedang redirect
+    }
 
     useEffect(() => {
         dispatch(fetchOrderDetail(orderId))
@@ -112,7 +119,15 @@ function OrderDetail({ params }) {
                                                 </div>
                                                 <div className="ml-5 text-sm leading-6">
                                                     <div className="text-md pb-1">
-                                                        {item.product.name}
+                                                        {Cookies.get(
+                                                            "locale",
+                                                        ) === "id"
+                                                            ? item?.product
+                                                                  ?.name_trans
+                                                                  ?.id
+                                                            : item?.product
+                                                                  ?.name_trans
+                                                                  ?.en}
                                                     </div>
                                                     <div className="text-md font-bold">
                                                         {item.price.formatted}

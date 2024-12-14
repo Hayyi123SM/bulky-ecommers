@@ -12,7 +12,7 @@ export const fetchTestimonies = createAsyncThunk(
     async params => {
         try {
             const response = await axios.get("/api/testimony", { params })
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching testimony:", error) // Log errors
@@ -32,8 +32,8 @@ const testimonySlice = createSlice({
                 state.error = null
             })
             .addCase(fetchTestimonies.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.items = action.payload.data
                 state.isLoading = false
             })

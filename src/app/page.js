@@ -41,6 +41,7 @@ import "swiper/swiper-bundle.css"
 import Hero from "../../public/new/hero.webp"
 import Illustration from "../../public/new/Illustrations.webp"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function Home() {
     const t = useTranslations()
@@ -590,7 +591,11 @@ function Home() {
                                               productId={product.id}
                                               image={product.images[0]}
                                               location={product.warehouse.name}
-                                              title={product.name}
+                                              title={
+                                                  Cookies.get("locale") === "id"
+                                                      ? product?.name_trans?.id
+                                                      : product?.name_trans?.en
+                                              }
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}
                                               sale={

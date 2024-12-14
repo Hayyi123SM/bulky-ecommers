@@ -12,7 +12,7 @@ const initialState = {
 export const fetchPages = createAsyncThunk("pages/fetchPages", async params => {
     try {
         const response = await axios.get(`/api/pages/${params}`)
-        console.log("API response pages:", response.data.data) // Log the API response
+        // console.log("API response pages:", response.data.data) // Log the API response
         return response.data
     } catch (error) {
         console.error("Error fetching pages:", error) // Log errors
@@ -57,8 +57,8 @@ const pagesSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchPages.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.item = action.payload.data
                 state.isLoading = false
             })
@@ -71,8 +71,8 @@ const pagesSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchFloatingWhatsapp.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.floatingButton = action.payload.data
                 state.isLoading = false
             })
@@ -85,8 +85,8 @@ const pagesSlice = createSlice({
                 state.error = null
             })
             .addCase(getGeneralReview.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.reviews = action.payload.data
                 state.isLoading = false
             })

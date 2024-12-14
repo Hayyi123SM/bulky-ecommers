@@ -1,20 +1,20 @@
 "use client"
 
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { useAuth } from "@/hooks/auth"
-import InputError from "@/components/InputError"
 import AuthSessionStatus from "@/components/AuthSessionStatus"
-import { useDispatch, useSelector } from "react-redux"
+import InputError from "@/components/InputError"
 import LoadingSpinner from "@/components/LoadingSpinner"
+import { useAuth } from "@/hooks/auth"
 import {
     getCallbackGoogle,
     getRedrectUrlGoogle,
 } from "@/store/slices/authSlice"
-import { useSearchParams } from "next/navigation"
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import { useTranslations } from "next-intl"
+import Image from "next/image"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
 function Login() {
     const t = useTranslations()
@@ -32,9 +32,10 @@ function Login() {
     const redirectUrl = useSelector(state => state.auth.item)
     const error = useSelector(state => state.auth.error)
 
+    const redirect = useSearchParams().get("redirect") || "/"
     const { login } = useAuth({
         middleware: "guest",
-        redirectIfAuthenticated: "/",
+        // redirectIfAuthenticated: "/",
     })
 
     const togglePasswordVisibility = () => {
@@ -53,6 +54,7 @@ function Login() {
                 remember: shouldRemember,
                 setErrors,
                 setStatus,
+                redirectTo: redirect,
             },
             dispatch,
         )

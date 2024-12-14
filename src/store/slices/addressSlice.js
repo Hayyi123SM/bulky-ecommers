@@ -13,7 +13,7 @@ export const fetchAddresses = createAsyncThunk(
     async () => {
         try {
             const response = await axios.get("/api/user/address")
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching addresses:", error) // Log errors
@@ -40,7 +40,7 @@ export const addAddress = createAsyncThunk(
                 is_primary: data.isPrimary,
             }
             const response = await axios.post("/api/user/address/create", param)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error adding address:", error) // Log errors
@@ -54,7 +54,7 @@ export const fetchAddressDetail = createAsyncThunk(
     async id => {
         try {
             const response = await axios.get(`/api/user/address/detail/${id}`)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching address detail:", error) // Log errors
@@ -70,7 +70,7 @@ export const removeAddress = createAsyncThunk(
             const response = await axios.delete(
                 `/api/user/address/delete/${id}`,
             )
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error removing address:", error) // Log errors
@@ -98,7 +98,7 @@ export const updateAddress = createAsyncThunk(
                 is_primary: data.isPrimary,
             }
             const response = await axios.put(`/api/user/address/edit`, param)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error updating address:", error) // Log errors
@@ -114,7 +114,7 @@ export const setAddressPrimary = createAsyncThunk(
             const response = await axios.put(
                 `/api/user/address/set-primary/${id}`,
             )
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error setting address primary:", error) // Log errors

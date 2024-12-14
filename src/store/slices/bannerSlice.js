@@ -15,7 +15,7 @@ export const fetchBanners = createAsyncThunk(
             const response = await axios.get("/api/banners", {
                 params: { page: currentPage, limit: itemsPerPage },
             })
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching banners:", error) // Log errors
@@ -35,8 +35,8 @@ const bannerSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchBanners.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.items = action.payload.data
                 state.isLoading = false
             })

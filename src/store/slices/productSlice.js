@@ -94,9 +94,9 @@ export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async ({ currentPage, filters }) => {
         try {
-            console.log("====================================")
-            console.log("filters product", filters)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("filters product", filters)
+            // console.log("====================================")
             // Build the params object dynamically
             const params = {
                 page: currentPage,
@@ -123,9 +123,9 @@ export const fetchProducts = createAsyncThunk(
                 ...(filters.brands &&
                     filters.brands.length && { brands: filters.brands }),
             }
-            console.log("====================================")
-            console.log("params", params)
-            console.log("====================================")
+            // console.log("====================================")
+            // console.log("params", params)
+            // console.log("====================================")
             const response = await axios.get(`/api/products`, {
                 params,
                 paramsSerializer: params => {
@@ -142,7 +142,7 @@ export const fetchProducts = createAsyncThunk(
                 },
             })
 
-            console.log("API response Product:", response.data) // Log the API response
+            // console.log("API response Product:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching products:", error) // Log errors
@@ -168,7 +168,7 @@ export const fetchSearchProducts = createAsyncThunk(
                 },
             })
 
-            console.log("API response Search Product:", response.data) // Log the API response
+            // console.log("API response Search Product:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching products:", error) // Log errors
@@ -182,7 +182,7 @@ export const fetchProductDetail = createAsyncThunk(
     async slug => {
         try {
             const response = await axios.get(`/api/products/detail/${slug}`)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching product details:", error) // Log errors
@@ -196,7 +196,7 @@ export const fetchProductRelated = createAsyncThunk(
     async slug => {
         try {
             const response = await axios.get(`/api/products/related/${slug}`)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching products:", error) // Log errors
@@ -216,8 +216,8 @@ const productSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.items = action.payload.data
                 state.totalPages = action.payload.meta.last_page
                 state.currentPage = action.payload.meta.current_page
@@ -233,8 +233,8 @@ const productSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchSearchProducts.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.searchResults = action.payload.data
                 state.isLoading = false
             })
@@ -247,8 +247,8 @@ const productSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchProductDetail.fulfilled, (state, action) => {
-                console.log("Action in fulfilled productDetail:", action)
-                console.log("Current state productDetail:", state)
+                // console.log("Action in fulfilled productDetail:", action)
+                // console.log("Current state productDetail:", state)
                 state.productDetails = action.payload.data
                 state.isLoading = false
             })
@@ -261,8 +261,8 @@ const productSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchProductRelated.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.relatedProducts = action.payload.data
                 state.isLoading = false
             })

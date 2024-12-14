@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function Order() {
     const t = useTranslations()
@@ -335,7 +336,11 @@ function Order() {
                                     <div className="ml-5 text-sm leading-6">
                                         <div className="text-md pb-1">
                                             {order.items_count > 0 &&
-                                                order.items[0].product.name}
+                                            Cookies.get("locale") === "id"
+                                                ? order.items[0].product
+                                                      .name_trans?.id
+                                                : order.items[0].product
+                                                      .name_trans?.en}
                                         </div>
                                         <div className="text-md font-bold">
                                             {order.total_price.formatted}

@@ -33,7 +33,7 @@ export const fetchVideoDetail = createAsyncThunk(
     async videoId => {
         try {
             const response = await axios.get(`/api/videos/show/${videoId}`)
-            console.log("API response:", response.data) // Log the API response
+            // console.log("API response:", response.data) // Log the API response
             return response.data
         } catch (error) {
             console.error("Error fetching videos:", error) // Log errors
@@ -53,8 +53,8 @@ const videoSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchVideos.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.items = action.payload.data
                 state.totalPages = action.payload.meta.last_page
                 state.currentPage = action.payload.meta.current_page
@@ -69,8 +69,8 @@ const videoSlice = createSlice({
                 state.error = null
             })
             .addCase(fetchVideoDetail.fulfilled, (state, action) => {
-                console.log("Action in fulfilled:", action)
-                console.log("Current state:", state)
+                // console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
                 state.items = action.payload.data
                 state.isLoading = false
             })

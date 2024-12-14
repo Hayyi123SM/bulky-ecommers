@@ -1,12 +1,13 @@
 import axios from "@/lib/axios"
 import { setUser } from "@/store/slices/authSlice"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 import { useEffect } from "react"
 import useSWR from "swr"
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
     const params = useParams()
+    const pathname = usePathname()
     // const dispatch = useDispatch()
 
     const {
@@ -48,7 +49,10 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
-    const login = async ({ setErrors, setStatus, ...props }, dispatch) => {
+    const login = async (
+        { setErrors, setStatus, redirectTo, ...props },
+        dispatch,
+    ) => {
         await csrf()
 
         setErrors([])
@@ -57,21 +61,22 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         axios
             .post("/api/auth/web/login", props)
             .then(response => {
-                // Assuming the user data is in response.data.user
                 const userData = response.data.data
 
-                // Dispatch setUser to store user data in Redux
+                // Simpan user ke Redux store dan localStorage
                 dispatch(setUser(userData))
-
                 localStorage.setItem("user", JSON.stringify(userData))
 
-                // Optionally trigger any additional side effects like navigation or refetching data
-                mutate() // Call mutate or any other functions as needed
+                // Perbarui data user dan redirect ke halaman tujuan
+                mutate()
+                router.push(redirectTo || "/")
             })
             .catch(error => {
-                if (error.response.status !== 422) throw error
-
-                setErrors(error.response.data.errors)
+                if (error.response?.status === 422) {
+                    setErrors(error.response.data.errors)
+                } else {
+                    console.error("Login error:", error)
+                }
             })
     }
 
@@ -147,14 +152,32 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     useEffect(() => {
-        if (middleware === "guest" && redirectIfAuthenticated && user)
+        if (middleware === "guest" && redirectIfAuthenticated && user) {
             router.push(redirectIfAuthenticated)
+        }
+
         if (
             window.location.pathname === "/verify-email" &&
             user?.email_verified_at
-        )
+        ) {
             router.push(redirectIfAuthenticated)
-        if (middleware === "auth" && error) logout()
+        }
+
+        if (middleware === "auth" && !user) {
+            router.push(`/login?redirect=${pathname}`)
+        }
+
+        // if (middleware === "auth" && error) {
+        //     // Validasi apakah error terkait autentikasi
+        //     if (
+        //         error.response?.status === 401 ||
+        //         error.response?.status === 403
+        //     ) {
+        //         logout()
+        //     } else {
+        //         console.error("Unhandled error:", error)
+        //     }
+        // }
     }, [user, error])
 
     return {
