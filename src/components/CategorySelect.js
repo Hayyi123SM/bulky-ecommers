@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Bars3Icon } from "@heroicons/react/24/solid"
+import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 const CategorySelect = ({ options, onSelect, selectedId }) => {
+    const t = useTranslations()
     const [isOpen, setIsOpen] = useState(false)
     const [selectedOption, setSelectedOption] = useState(
         options.find(option => option.id === selectedId) || null,
@@ -52,11 +55,15 @@ const CategorySelect = ({ options, onSelect, selectedId }) => {
                     <span>
                         {selectedOption
                             ? selectedOption.postal_code
-                                ? selectedOption.name +
-                                  " - " +
-                                  selectedOption.postal_code
-                                : selectedOption.name
-                            : "All Categories"}
+                                ? Cookies.get("locale") === "id"
+                                    ? selectedOption?.name_trans?.id
+                                    : selectedOption?.name_trans?.en +
+                                      " - " +
+                                      selectedOption.postal_code
+                                : Cookies.get("locale") === "id"
+                                  ? selectedOption?.name_trans?.id
+                                  : selectedOption?.name_trans?.en
+                            : t("other.allCategory")}
                     </span>
                 </div>
                 <svg
@@ -83,8 +90,14 @@ const CategorySelect = ({ options, onSelect, selectedId }) => {
                             className="cursor-pointer px-4 py-2 hover:bg-gray-100"
                             onClick={() => handleSelect(option)}>
                             {option.postal_code
-                                ? option.name + " - " + option.postal_code
-                                : option.name}
+                                ? Cookies.get("locale") === "id"
+                                    ? option?.name_trans?.id
+                                    : option?.name_trans?.en +
+                                      " - " +
+                                      option.postal_code
+                                : Cookies.get("locale") === "id"
+                                  ? option?.name_trans?.id
+                                  : option?.name_trans?.en}
                         </div>
                     ))}
                 </div>

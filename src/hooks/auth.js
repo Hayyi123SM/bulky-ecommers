@@ -163,22 +163,23 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             router.push(redirectIfAuthenticated)
         }
 
-        if (middleware === "auth" && !user) {
-            router.push(`/login?redirect=${pathname}`)
-        }
-
-        // if (middleware === "auth" && error) {
-        //     // Validasi apakah error terkait autentikasi
-        //     if (
-        //         error.response?.status === 401 ||
-        //         error.response?.status === 403
-        //     ) {
-        //         logout()
-        //     } else {
-        //         console.error("Unhandled error:", error)
-        //     }
+        // if (middleware === "auth" && error?.response?.status !== 401) {
+        //     console.log("error", error)
+        //     router.push(`/login?redirect=${pathname}`)
         // }
-    }, [user, error])
+
+        if (middleware === "auth" && error) {
+            // Validasi apakah error terkait autentikasi
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+                logout()
+            } else {
+                console.error("Unhandled error:", error)
+            }
+        }
+    }, [user, error, pathname])
 
     return {
         user,

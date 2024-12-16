@@ -26,8 +26,10 @@ import {
 } from "../../store/slices/productSlice"
 import FloatingIcon from "@/components/FloatingIcon"
 import Cookies from "js-cookie"
+import { useTranslations } from "next-intl"
 
 function Product({ searchParams }) {
+    const t = useTranslations()
     const category = useSearchParams().get("category")
     // const category = searchParams?.category || ""
     const pages = searchParams?.page || 1
@@ -189,7 +191,7 @@ function Product({ searchParams }) {
                     <input
                         ref={inputRef}
                         className="w-full rounded-3xl border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
-                        placeholder="Cari barang"
+                        placeholder={t("other.search")}
                         value={searchQuery}
                         onChange={handleSearchInputChange}
                     />
@@ -219,7 +221,7 @@ function Product({ searchParams }) {
                                     ) : (
                                         <li className="flex items-center justify-between px-4 py-2">
                                             <p className="px-4 py-2">
-                                                Tidak ada hasil yang cocok
+                                            {t("other.noResult")}
                                             </p>
                                         </li>
                                     )}
@@ -310,8 +312,8 @@ function Product({ searchParams }) {
                     {/* {products && products.length > 0 && (
                         <> */}
                     <div className="pb-5 text-sm text-[#212121]">
-                        Menampilkan 1 - {loadingProducts ? 0 : products.length}{" "}
-                        barang dari {loadingProducts ? 0 : totalItems} Produk
+                        {t("other.show")} 1 - {loadingProducts ? 0 : products.length}{" "}
+                        {t("other.itemFrom")} {loadingProducts ? 0 : totalItems} {t("other.product")}
                     </div>
                     <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
                         {loadingProducts
@@ -400,7 +402,7 @@ function Product({ searchParams }) {
                             {/* Loading Spinner */}
                             {isLoadingPdf && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-white">
-                                    Tunggu Sebentar...
+                                    {t("waiting")}...
                                     <LoadingSpinner
                                         text={false}
                                         color="#000"

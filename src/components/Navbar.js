@@ -144,7 +144,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                         <input
                             ref={inputRef}
                             className="w-full rounded-3xl py-2 pl-14 text-black bg-search focus:border-secondary focus:outline-none"
-                            placeholder="Cari barang"
+                            placeholder={t("other.search")}
                             value={searchQuery}
                             onChange={handleSearchInputChange}
                         />
@@ -174,7 +174,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                         ) : (
                                             <li className="flex items-center justify-between px-4 py-2">
                                                 <p className="px-4 py-2">
-                                                    Tidak ada hasil yang cocok
+                                                    {t("other.noResult")}
                                                 </p>
                                             </li>
                                         )}
@@ -241,7 +241,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                     <input
                                         ref={inputRef}
                                         className="w-full rounded-xl border-2 border-[#212121] py-2 pl-14 text-black bg-search focus:border-2 focus:border-secondary focus:outline-none"
-                                        placeholder="Search..."
+                                        placeholder={t("other.search")}
                                         value={searchQuery}
                                         onChange={handleSearchInputChange}
                                     />
@@ -276,9 +276,9 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                     ) : (
                                                         <li className="flex items-center justify-between px-4 py-2">
                                                             <p className="px-4 py-2">
-                                                                Tidak ada
-                                                                hasilan yang
-                                                                cocok
+                                                                {t(
+                                                                    "other.noResult",
+                                                                )}
                                                             </p>
                                                         </li>
                                                     )}

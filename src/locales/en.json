@@ -358,5 +358,13 @@
         "successMessage": "Password changed successfully",
         "savePassword": "Save Password",
         "passwordRules": "Password must contain at least 8 characters, including uppercase, lowercase, numbers, and symbols"
+    },
+    "other": {
+        "noResult": "No matching results",
+        "search": "Search",
+        "allCategory": "All Categories",
+        "show": "Showing",
+    "itemFrom": "items of",
+    "product": "Product"
     }
 }
