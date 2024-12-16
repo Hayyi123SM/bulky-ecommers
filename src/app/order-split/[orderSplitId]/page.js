@@ -264,7 +264,7 @@ function OrderSplitDetail({ params }) {
                                         </div>
                                     </div>
                                 )}
-                                <div className="my-3 border-b p-1"></div>
+                                <div className="my-3 border-b p-1" />
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">
