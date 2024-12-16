@@ -211,13 +211,13 @@ function SidebarProduct({ category }) {
 
     return (
         <div className="hidden w-1/5 lg:block">
-            <div className="p-4 font-bold">Filter</div>
+            <div className="p-4 font-bold"> {t("other.filter")}</div>
 
             <div className="border-b py-2">
                 <div
                     className="mx-2 flex cursor-pointer items-center justify-center rounded-lg bg-secondary p-2 hover:opacity-80"
                     onClick={handleResetFilter}>
-                    Reset Filter
+                    {t("other.resetFilter")}
                 </div>
             </div>
             <div className="border-b py-2">

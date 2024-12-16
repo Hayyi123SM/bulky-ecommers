@@ -380,6 +380,8 @@
         "itemFrom": "items of",
         "product": "Product",
         "viewCart": "View Cart",
-        "continueShopping": "Continue Shopping"
+        "continueShopping": "Continue Shopping",
+        "filter": "Filter",
+        "resetFilter": "Reset Filter"
     }
 }
