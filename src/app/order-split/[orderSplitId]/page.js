@@ -16,7 +16,7 @@ import Cookies from "js-cookie"
 import { useAuth } from "@/hooks/auth"
 
 function OrderSplitDetail({ params }) {
-    const { user } = useAuth({ middleware: "auth" })
+    const { user, isValidating } = useAuth({ middleware: "auth" })
     const t = useTranslations()
     const orderSplitId = params.orderSplitId
     const dispatch = useDispatch()
@@ -24,22 +24,22 @@ function OrderSplitDetail({ params }) {
     const order = useSelector(state => state.orders.orderDetail)
     const myInvoice = useSelector(state => state.orders.myInvoice)
 
-    // const calculateTotalPaidAmount = (invoices = []) => {
-    //     return invoices
-    //         .filter(invoice => invoice.status.value === "pending")
-    //         .reduce((acc, invoice) => acc + invoice.amount.numeric, 0)
-    // }
+    useEffect(() => {
+        // Hanya jalankan efek jika user sudah tersedia
+        if (user) {
+            dispatch(fetchOrderDetail(orderSplitId))
+            dispatch(getMyInvoice(orderSplitId))
+        }
+    }, [dispatch, orderSplitId, user])
 
-    // const totalPaidAmount = calculateTotalPaidAmount(order.invoices)
-
-    if (!user) {
-        return null // Hindari menampilkan konten jika sedang redirect
+    // Early return hanya untuk rendering, pastikan semua hooks sudah dipanggil sebelumnya
+    if (isValidating) {
+        return <div>Loading...</div>
     }
 
-    useEffect(() => {
-        dispatch(fetchOrderDetail(orderSplitId))
-        dispatch(getMyInvoice(orderSplitId))
-    }, [dispatch, orderSplitId])
+    if (!user) {
+        return null
+    }
 
     const handleToPayment = () => {
         if (myInvoice.payment_url) {
@@ -264,7 +264,7 @@ function OrderSplitDetail({ params }) {
                                         </div>
                                     </div>
                                 )}
-                                <div className="my-3 border-b p-1"> </div>
+                                <div className="my-3 border-b p-1"></div>
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">
