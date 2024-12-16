@@ -23,16 +23,11 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
-import Cookies from "js-cookie"
 
 function PaymentMethod() {
     const t = useTranslations()
     const router = useRouter()
-    const [selectedOption, setSelectedOption] = useState(
-        Cookies.get("locale") === "id"
-            ? "Pilihan Cara Bayar"
-            : "Select Payment Method",
-    )
+    const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
     const [selectedIcon, setSelectedIcon] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAddFriend, setIsOpenAddFriend] = useState(false)
@@ -178,20 +173,17 @@ function PaymentMethod() {
                                         className={`flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33] ${paymentMethod === "none" && "border-red-500"}`}
                                         onClick={() => setIsOpen(!isOpen)}>
                                         <div className="flex items-center">
-                                            {(selectedOption !==
-                                                Cookies.get("locale")) ===
-                                            "id"
-                                                ? "Pilihan Cara Bayar"
-                                                : "Select Payment Method" && (
-                                                      <Image
-                                                          src={selectedIcon}
-                                                          width={24}
-                                                          height={24}
-                                                          alt="Gopay"
-                                                          className="mr-2"
-                                                          priority={false}
-                                                      />
-                                                  )}
+                                            {selectedOption !==
+                                                "Pilihan Cara Bayar" && (
+                                                <Image
+                                                    src={selectedIcon}
+                                                    width={24}
+                                                    height={24}
+                                                    alt="Gopay"
+                                                    className="mr-2"
+                                                    priority={false}
+                                                />
+                                            )}
                                             {selectedOption}
                                         </div>
                                         <div className="flex items-center">
