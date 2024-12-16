@@ -84,7 +84,7 @@ function Footer() {
                         <Link href="/contact-us">{t("footer.contactUs")}</Link>
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/faq">FAQ</Link>
+                        <Link href="/faq">{t("footer.faq")}</Link>
                     </div>
                     <div className="mt-3 text-sm">
                         <Link href="/terms-and-conditions">

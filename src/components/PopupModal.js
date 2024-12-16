@@ -1,6 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useTranslations } from "next-intl"
 
 const PopupModal = ({
     isOpen,
@@ -13,6 +14,7 @@ const PopupModal = ({
     cancelText = "Cancel",
     urlConfirm = "#",
 }) => {
+    const t = useTranslations()
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
@@ -96,14 +98,14 @@ const PopupModal = ({
                                 onClick={() =>
                                     (window.location.href = "/cart")
                                 }>
-                                Lihat Cart
+                                {t("other.viewCart")}
                             </div>
                             <div
                                 className="w-1/2 cursor-pointer rounded-lg bg-secondary px-4 py-2 text-center font-semibold hover:bg-[#e8bc00]"
                                 onClick={() =>
                                     (window.location.href = "/product")
                                 }>
-                                Lanjutkan Belanja
+                                {t("other.continueShopping")}
                             </div>
                         </>
                     )}

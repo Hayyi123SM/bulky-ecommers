@@ -14,14 +14,22 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function Payment({ params }) {
     const t = useTranslations()
     const router = useRouter()
     const invoiceId = params.invoiceId // Access the dynamic parameter
-    const [selectedOption, setSelectedOption] = useState("Pilihan Pembayaran")
-    const [selectedOptionCredit, setSelectedOptionCredit] =
-        useState("Pilihan Pembayaran")
+    const [selectedOption, setSelectedOption] = useState(
+        Cookies.get("locale") === "id"
+            ? "Pilihan Pembayaran"
+            : "Select Payment",
+    )
+    const [selectedOptionCredit, setSelectedOptionCredit] = useState(
+        Cookies.get("locale") === "id"
+            ? "Pilihan Pembayaran"
+            : "Select Payment",
+    )
     const [selectedIcon, setSelectedIcon] = useState(null)
     const [selectedId, setSelectedId] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
@@ -116,17 +124,20 @@ function Payment({ params }) {
                                         className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                         onClick={() => setIsOpen(!isOpen)}>
                                         <div className="flex items-center">
-                                            {selectedOption !==
-                                                "Pilihan Pembayaran" && (
-                                                <Image
-                                                    src={selectedIcon}
-                                                    width={24}
-                                                    height={24}
-                                                    alt="Gopay"
-                                                    className="mr-2"
-                                                    priority={false}
-                                                />
-                                            )}
+                                            {(selectedOption !==
+                                                Cookies.get("locale")) ===
+                                            "id"
+                                                ? "Pilihan Pembayaran"
+                                                : "Select Payment" && (
+                                                      <Image
+                                                          src={selectedIcon}
+                                                          width={24}
+                                                          height={24}
+                                                          alt="Gopay"
+                                                          className="mr-2"
+                                                          priority={false}
+                                                      />
+                                                  )}
                                             {selectedOption}
                                         </div>
                                         <ChevronDownIcon className="inline-block h-5 w-5" />
@@ -316,7 +327,7 @@ function Payment({ params }) {
                                     </label>
                                 </div>
                             </div>
-                            <div className="my-5 border-b p-1"> </div>
+                            <div className="my-5 border-b p-1"></div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">

@@ -500,13 +500,15 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
-                <div
-                    onClick={() => setShowAllConditions(!showAllConditions)}
-                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterConditions ? "visible" : "hidden"}`}>
-                    {showAllConditions
-                        ? t("filter.showLess")
-                        : t("filter.showMore")}
-                </div>
+                {conditions.length > 5 && (
+                    <div
+                        onClick={() => setShowAllConditions(!showAllConditions)}
+                        className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterConditions ? "visible" : "hidden"}`}>
+                        {showAllConditions
+                            ? t("filter.showLess")
+                            : t("filter.showMore")}
+                    </div>
+                )}
                 {/* )} */}
             </div>
             <div className="border-b py-2">
@@ -560,13 +562,15 @@ function SidebarProduct({ category }) {
                         ))
                     )}
                 </div>
-                <div
-                    onClick={() => setShowAllStatuses(!showAllStatuses)}
-                    className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterStatuses ? "visible" : "hidden"}`}>
-                    {showAllStatuses
-                        ? t("filter.showLess")
-                        : t("filter.showMore")}
-                </div>
+                {statuses.length > 5 && (
+                    <div
+                        onClick={() => setShowAllStatuses(!showAllStatuses)}
+                        className={`mx-2 cursor-pointer p-2 text-sm font-semibold text-[#007185] ${showFilterStatuses ? "visible" : "hidden"}`}>
+                        {showAllStatuses
+                            ? t("filter.showLess")
+                            : t("filter.showMore")}
+                    </div>
+                )}
                 {/* )} */}
             </div>
             {/*<div className="border-b py-2">

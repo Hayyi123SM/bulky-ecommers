@@ -14,13 +14,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         data: user,
         error,
         mutate,
+        isValidating,
     } = useSWR("/api/user", () =>
         axios
             .get("/api/user")
             .then(res => res.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error
-
                 router.push("/verify-email")
             }),
     )
@@ -69,6 +69,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
                 // Perbarui data user dan redirect ke halaman tujuan
                 mutate()
+                // console.log("redirectTo:", redirectTo)
                 router.push(redirectTo || "/")
             })
             .catch(error => {
@@ -152,34 +153,25 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     useEffect(() => {
+        if (!middleware) return // You can still conditionally run logic inside the useEffect, but not the hook itself.
+
         if (middleware === "guest" && redirectIfAuthenticated && user) {
             router.push(redirectIfAuthenticated)
         }
 
-        if (
-            window.location.pathname === "/verify-email" &&
-            user?.email_verified_at
-        ) {
-            router.push(redirectIfAuthenticated)
-        }
-
-        // if (middleware === "auth" && error?.response?.status !== 401) {
-        //     console.log("error", error)
-        //     router.push(`/login?redirect=${pathname}`)
-        // }
-
-        if (middleware === "auth" && error) {
-            // Validasi apakah error terkait autentikasi
-            if (
-                error.response?.status === 401 ||
-                error.response?.status === 403
-            ) {
-                logout()
-            } else {
-                console.error("Unhandled error:", error)
+        if (middleware === "auth") {
+            if (!isValidating && !user && error?.status === 401) {
+                router.push(`/login?redirect=${pathname}`)
             }
         }
-    }, [user, error, pathname])
+    }, [
+        isValidating,
+        user,
+        error,
+        pathname,
+        middleware,
+        redirectIfAuthenticated,
+    ])
 
     return {
         user,

@@ -6,8 +6,10 @@ import { MapPinIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useTranslations } from "next-intl"
 
 const PopupChangeAddress = ({ isOpen, closeModal }) => {
+    const t = useTranslations()
     const [isVisible, setIsVisible] = useState(false)
     const dispatch = useDispatch()
     const modalRef = useRef(null)
@@ -84,7 +86,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                     }`}>
                     <div className="my-4 flex items-center justify-between">
                         <h2 className="text-base font-semibold">
-                            Daftar Alamat
+                            {t("profile.listAddress")}
                         </h2>
 
                         <XMarkIcon
@@ -120,7 +122,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                         <div className="flex items-center py-4">
                                             <MapPinIcon className="h-5 w-5 text-[#007185]" />
                                             <div className="ml-2 text-xs font-bold text-[#007185]">
-                                                Sudah Pin Point
+                                                {t("profile.alreadyPinPoint")}
                                             </div>
                                         </div>
                                         <div
@@ -129,20 +131,20 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                                 handleSetAddress(address.id)
                                             }>
                                             <div className="w-full rounded-lg border py-2 text-center text-xs font-bold">
-                                                Pilih Alamat
+                                                {t("profile.selectAddress")}
                                             </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <div>Tidak Ada Alamat </div>
+                                <div> {t("profile.notHaveAddress")} </div>
                             )}
                             {/* End : View Mobile */}
                             <div className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg">
                                 <div className="mt-10">
                                     <Link href="/address">
                                         <div className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                            + Tambah Alamat
+                                            + {t("addressForm.titleAddress")}
                                         </div>
                                     </Link>
                                 </div>

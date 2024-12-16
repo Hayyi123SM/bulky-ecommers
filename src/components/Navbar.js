@@ -305,7 +305,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                     {carts
                                                         ? carts.items_count
                                                         : 0}{" "}
-                                                    Item
+                                                    {t("items")}
                                                 </span>
                                             </div>
                                         </div>
@@ -321,7 +321,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                             <div className="flex items-center px-2">
                                                 <div className="text-white hover:text-secondary">
                                                     <div className="text-sm">
-                                                        Hai
+                                                        {t("hai")}
                                                     </div>
                                                     <div className="flex cursor-pointer items-center">
                                                         <div className="line-clamp-1 text-sm font-bold">

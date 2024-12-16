@@ -7,11 +7,11 @@ import PopupModal from "@/components/PopupModal"
 import { useAuth } from "@/hooks/auth"
 import {
     fetchCarts,
-    toggleSelectItem,
-    toggleSelectAllItems,
-    updateSelectedItems,
     removeItems,
     setShippingMethod,
+    toggleSelectAllItems,
+    toggleSelectItem,
+    updateSelectedItems,
 } from "@/store/slices/cartSlice"
 import { Bars3BottomRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/solid"
@@ -333,7 +333,7 @@ function Cart() {
                         }`}>
                         <div className="my-4 flex items-center justify-between">
                             <h2 className="text-base font-semibold">
-                                Pilih Metode Pengiriman
+                                {t("cart.selectShippingMethod")}
                             </h2>
                             <XMarkIcon
                                 className="h-6 w-6 cursor-pointer"
@@ -342,7 +342,7 @@ function Cart() {
                         </div>
 
                         <p className="mb-6 text-gray-700">
-                            Silahkan pilih metode pengiriman
+                            {t("cart.description")}
                         </p>
 
                         <div className="flex justify-end space-x-3">
@@ -352,14 +352,14 @@ function Cart() {
                                     onClick={() =>
                                         handleCheckout("self_pickup")
                                     }>
-                                    Ambil Ditempat
+                                    {t("cart.selfPickup")}
                                 </button>
                                 <button
                                     className="w-1/2 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-[#e8bc00]"
                                     onClick={() =>
                                         handleCheckout("courier_pickup")
                                     }>
-                                    Menggunakan Deliveree
+                                    {t("cart.courierPickup")}
                                 </button>
                             </>
                         </div>

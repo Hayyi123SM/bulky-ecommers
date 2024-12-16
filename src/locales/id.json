@@ -35,6 +35,12 @@
     "waiting": "Tunggu Sebentar",
     "formWholesale": "Form Partai Besar/Borongan",
     "congratulationWholesale": "Selamat, wholesale berhasil dikirim.",
+    "items": "Item",
+    "hai": "Hai",
+    "shoesPallet": "PALET SEPATU",
+    "clothesPallet": "PALET PAKAIAN",
+    "electronicPallet": "PALET ELEKTRONIK",
+    "fmcgPallet": "PALET FMCG",
     "form": {
         "name": "Nama",
         "phone": "Telepon",
@@ -93,10 +99,11 @@
         "termsAndConditions": "Syarat dan Ketentuan",
         "services": "Layanan",
         "otherProducts": "Produk Lainnya",
-        "orderStatus": "Order & Status Return",
+        "orderStatus": "Pesanan & Status Pengembalian",
         "profile": "Profil Pengguna",
         "paymentMethod": "Metode Pembayaran",
-        "accessApp": "Akses Melalui Aplikasi"
+        "accessApp": "Akses Melalui Aplikasi",
+        "faq": "Sering Ditanyakan"
     },
     "product": {
         "showDetail": "Lihat Detail Produk",
@@ -184,7 +191,11 @@
         "cart": "Keranjang",
         "selectAll": "Pilih Semua",
         "summaryOrder": "Ringkasan Belanja",
-        "buyNow": "Beli Sekarang"
+        "buyNow": "Beli Sekarang",
+        "selectShippingMethod": "Pilih Metode Pengiriman",
+        "description": "Silahkan pilih metode pengiriman",
+        "selfPickup": "Ambil ditempat",
+        "courierPickup": "Menggunakan Deliveree"
     },
     "shipping": {
         "shipping": "Pengiriman",
@@ -277,7 +288,7 @@
         "areUSure": "Apakah anda yakin ingin menghapus akun?",
         "pleaseInput": "Silahkan masukkan password anda untuk melanjutkan",
         "addNewAddress": "Tambah Alamat Baru",
-        "alreadyPinPoint": "Sudah Memilih Alamat",
+        "alreadyPinPoint": "Sudah Pin Point",
         "changeAddress": "Ubah Alamat",
         "setPrimary": "Jadikan Alamat Utama",
         "deleteAddress": "Hapus",
@@ -288,7 +299,9 @@
         "successSetPrimary": "Selamat, berhasil menjadikan alamat utama.",
         "confirmSetPrimary": "Apakah anda yakin ingin menjadikan alamat utama?",
         "confirmDelete": "Apakah anda yakin ingin menghapus item ini?",
-        "successDelete": "Selamat, berhasil menghapus alamat."
+        "successDelete": "Selamat, berhasil menghapus alamat.",
+        "selectAddress": "Pilih Alamat",
+        "notHaveAddress": "Belum ada alamat"
     },
     "listOrder": {
         "waitingPayment": "Menunggu Pembayaran",
@@ -365,6 +378,8 @@
         "allCategory": "Semua Kategori",
         "show": "Menampilkan",
         "itemFrom": "barang dari",
-        "product": "Produk"
+        "product": "Produk",
+        "viewCart": "Lihat Keranjang",
+        "continueShopping": "Lanjutkan Belanja"
     }
 }

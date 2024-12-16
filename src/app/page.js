@@ -417,7 +417,7 @@ function Home() {
                                     70% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
-                                    PALET SEPATU
+                                    {t("shoesPallet")}
                                 </div>
                                 <div className="mb-5 text-lg">
                                     {t("dontMiss")}
@@ -446,7 +446,7 @@ function Home() {
                                     70% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
-                                    PALET FASHION
+                                    {t("fashionPallet")}
                                 </div>
                                 <div className="mb-5 text-lg">
                                     {t("dontMiss")}
@@ -475,7 +475,7 @@ function Home() {
                                     50% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
-                                    PALET ELEKTRONIK
+                                    {t("electronicPallet")}
                                 </div>
                                 <div className="mb-5 text-lg">
                                     {t("dontMiss")}
@@ -504,7 +504,7 @@ function Home() {
                                     60% OFF
                                 </div>
                                 <div className="py-2 text-2xl font-bold">
-                                    PALET FMCG
+                                    {t("fmcgPallet")}
                                 </div>
                                 <div className="mb-5 text-lg">
                                     {t("dontMiss")}
