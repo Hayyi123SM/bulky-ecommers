@@ -382,6 +382,8 @@
         "viewCart": "View Cart",
         "continueShopping": "Continue Shopping",
         "filter": "Filter",
-        "resetFilter": "Reset Filter"
+        "resetFilter": "Reset Filter",
+        "inputCoupon": "Input Coupon",
+        "searchYourFriend": "Search Your Friend"
     }
 }

@@ -23,11 +23,15 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function PaymentMethod() {
     const t = useTranslations()
     const router = useRouter()
-    const [selectedOption, setSelectedOption] = useState("Pilihan Cara Bayar")
+    const [selectedOption, setSelectedOption] = useState("")
+    const [defaultText, setDefaultText] = useState("")
+    const [singlePaymentText, setSinglePaymentText] = useState("")
+    const [splitPaymentText, setSplitPaymentText] = useState("")
     const [selectedIcon, setSelectedIcon] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenAddFriend, setIsOpenAddFriend] = useState(false)
@@ -47,17 +51,38 @@ function PaymentMethod() {
     console.log("coupon", coupon)
     console.log("====================================")
 
+    useEffect(() => {
+        // Ambil bahasa dari Cookies
+        const language = Cookies.get("locale") || "id" // Default ke 'id' jika cookie tidak ditemukan
+
+        // Sesuaikan teks default berdasarkan bahasa
+        const defaultText =
+            language === "en" ? "Select Payment Method" : "Pilihan Cara Bayar"
+
+        setSinglePaymentText(
+            language === "en" ? "Direct Payment" : "Bayar Langsung",
+        )
+        setSplitPaymentText(
+            language === "en"
+                ? "Split Payment with Friends"
+                : "Bayar Patungan dengan Teman",
+        )
+        setDefaultText(defaultText)
+        setSelectedOption(defaultText) // Set nilai awal `selectedOption`
+    }, [])
+
     const handleOptionClick = (icon, option) => {
-        setSelectedOption(option)
         setSelectedIcon(icon)
         setIsOpen(false)
 
         if (option === "Bayar Patungan dengan Teman") {
             setPaymentMethod("split_payment")
             setIsSplitPayment(true)
+            setSelectedOption(splitPaymentText)
         } else {
             setPaymentMethod("single_payment")
             setIsSplitPayment(false)
+            setSelectedOption(singlePaymentText)
         }
     }
 
@@ -173,8 +198,7 @@ function PaymentMethod() {
                                         className={`flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33] ${paymentMethod === "none" && "border-red-500"}`}
                                         onClick={() => setIsOpen(!isOpen)}>
                                         <div className="flex items-center">
-                                            {selectedOption !==
-                                                "Pilihan Cara Bayar" && (
+                                            {selectedOption !== defaultText && (
                                                 <Image
                                                     src={selectedIcon}
                                                     width={24}
@@ -321,7 +345,9 @@ function PaymentMethod() {
                                         <div className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-sm hover:rounded-lg hover:bg-[#F5F5F5]">
                                             <input
                                                 className="w-full rounded-lg border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
-                                                placeholder="Cari temanmu disini..."
+                                                placeholder={t(
+                                                    "other.searchYourFriend",
+                                                )}
                                                 type="text"
                                                 onChange={e =>
                                                     handleSearchFriend(
@@ -374,7 +400,7 @@ function PaymentMethod() {
                                 <div className="relative w-full lg:max-w-xl">
                                     <input
                                         className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none"
-                                        placeholder="Masukan Kode Kupon"
+                                        placeholder={t("other.inputCoupon")}
                                         onChange={e =>
                                             handleCoupon(e.target.value)
                                         }

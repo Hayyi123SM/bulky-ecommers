@@ -14,12 +14,14 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function Payment({ params }) {
     const t = useTranslations()
     const router = useRouter()
     const invoiceId = params.invoiceId // Access the dynamic parameter
-    const [selectedOption, setSelectedOption] = useState("Pilihan Pembayaran")
+    const [selectedOption, setSelectedOption] = useState("")
+    const [defaultText, setDefaultText] = useState("")
     const [selectedOptionCredit, setSelectedOptionCredit] =
         useState("Pilihan Pembayaran")
     const [selectedIcon, setSelectedIcon] = useState(null)
@@ -34,6 +36,18 @@ function Payment({ params }) {
     )
     const [order, setOrder] = useState(null)
     const myInvoice = useSelector(state => state.orders.myInvoice)
+
+    useEffect(() => {
+        // Ambil bahasa dari Cookies
+        const language = Cookies.get("locale") || "id" // Default ke 'id' jika cookie tidak ditemukan
+
+        // Sesuaikan teks default berdasarkan bahasa
+        const defaultText =
+            language === "en" ? "Select Payment" : "Pilihan Pembayaran"
+
+        setDefaultText(defaultText)
+        setSelectedOption(defaultText) // Set nilai awal `selectedOption`
+    }, [])
 
     useEffect(() => {
         const getOrder = JSON.parse(localStorage.getItem("order"))
@@ -116,8 +130,7 @@ function Payment({ params }) {
                                         className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 font-bold focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
                                         onClick={() => setIsOpen(!isOpen)}>
                                         <div className="flex items-center">
-                                            {selectedOption !==
-                                                "Pilihan Pembayaran" && (
+                                            {selectedOption !== defaultText && (
                                                 <Image
                                                     src={selectedIcon}
                                                     width={24}

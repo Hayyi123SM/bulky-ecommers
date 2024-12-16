@@ -382,6 +382,8 @@
         "viewCart": "Lihat Keranjang",
         "continueShopping": "Lanjutkan Belanja",
         "filter": "Penyaringan",
-        "resetFilter": "Atur Ulang"
+        "resetFilter": "Atur Ulang",
+        "inputCoupon": "Masukkan Kode Voucher",
+        "searchYourFriend": "Cari Temanmu"
     }
 }
