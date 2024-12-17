@@ -44,8 +44,19 @@ export const productApi = createApi({
     endpoints: builder => ({
         fetchProducts: builder.query({
             query: ({ currentPage, filters }) => {
+                const isFilterActive = Boolean(
+                    filters.search ||
+                        (filters.categories && filters.categories.length) ||
+                        (filters.conditions && filters.conditions.length) ||
+                        (filters.statuses && filters.statuses.length) ||
+                        (filters.warehouses && filters.warehouses.length) ||
+                        filters.minPrice ||
+                        filters.maxPrice ||
+                        (filters.brands && filters.brands.length),
+                )
+
                 const params = {
-                    page: currentPage,
+                    page: isFilterActive ? 1 : currentPage,
                     per_page: filters.perPage || 15,
                     ...(filters.search && { search: filters.search }),
                     ...(filters.categories &&
