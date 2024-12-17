@@ -53,9 +53,6 @@ export const getRedrectUrlGoogle = createAsyncThunk(
             console.log("getRedrectUrlGoogle", response.data.redirect_url)
             console.log("====================================")
 
-            if (response.data){
-                window.location.href = "/"
-            }
             return response.data
         } catch (error) {
             console.error("Error fetching getRedrectUrlGoogle:", error) // Log errors

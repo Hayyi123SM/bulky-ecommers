@@ -72,6 +72,9 @@ function Login() {
             if (code !== null) {
                 setIsProcessingCode(true)
                 dispatch(getCallbackGoogle(code))
+                setTimeout(() => {
+                    window.location.href = "/"
+                }, 4000)
                 setIsProcessingCode(false)
             }
         }
