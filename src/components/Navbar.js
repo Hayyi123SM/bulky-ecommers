@@ -17,6 +17,7 @@ import { Suspense, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import LanguageSelector from "./LanguageSelector"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     const t = useTranslations()
@@ -167,7 +168,15 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                     <li
                                                         ref={popupRef}
                                                         className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
-                                                        {product.name}
+                                                        {Cookies.get(
+                                                            "locale",
+                                                        ) === "id"
+                                                            ? product
+                                                                  ?.name_trans
+                                                                  ?.id
+                                                            : product
+                                                                  ?.name_trans
+                                                                  ?.en}
                                                     </li>
                                                 </Link>
                                             ))
@@ -266,9 +275,16 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                                         onMouseDown={e =>
                                                                             e.preventDefault()
                                                                         }>
-                                                                        {
-                                                                            product.name
-                                                                        }
+                                                                        {Cookies.get(
+                                                                            "locale",
+                                                                        ) ===
+                                                                        "id"
+                                                                            ? product
+                                                                                  ?.name_trans
+                                                                                  ?.id
+                                                                            : product
+                                                                                  ?.name_trans
+                                                                                  ?.en}
                                                                     </li>
                                                                 </Link>
                                                             ),
