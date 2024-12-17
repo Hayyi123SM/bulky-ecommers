@@ -101,6 +101,27 @@ function Product({ searchParams }) {
     console.log("filters product", filters)
     console.log("====================================")
 
+    const isFilterActive = Boolean(
+        filters.search ||
+            (filters.categories && filters.categories.length) ||
+            (filters.conditions && filters.conditions.length) ||
+            (filters.statuses && filters.statuses.length) ||
+            (filters.warehouses && filters.warehouses.length) ||
+            filters.minPrice ||
+            filters.maxPrice ||
+            (filters.brands && filters.brands.length),
+    )
+
+    useEffect(() => {
+        if (isFilterActive) {
+            setCurrentPage(1)
+            router.push(`?page=1`)
+        } else {
+            setCurrentPage(pages)
+            router.push(`?page=${pages}`)
+        }
+    }, [isFilterActive, pages])
+
     const {
         data,
         error,
@@ -221,7 +242,7 @@ function Product({ searchParams }) {
                                     ) : (
                                         <li className="flex items-center justify-between px-4 py-2">
                                             <p className="px-4 py-2">
-                                            {t("other.noResult")}
+                                                {t("other.noResult")}
                                             </p>
                                         </li>
                                     )}
@@ -312,8 +333,10 @@ function Product({ searchParams }) {
                     {/* {products && products.length > 0 && (
                         <> */}
                     <div className="pb-5 text-sm text-[#212121]">
-                        {t("other.show")} 1 - {loadingProducts ? 0 : products.length}{" "}
-                        {t("other.itemFrom")} {loadingProducts ? 0 : totalItems} {t("other.product")}
+                        {t("other.show")} 1 -{" "}
+                        {loadingProducts ? 0 : products.length}{" "}
+                        {t("other.itemFrom")} {loadingProducts ? 0 : totalItems}{" "}
+                        {t("other.product")}
                     </div>
                     <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
                         {loadingProducts
