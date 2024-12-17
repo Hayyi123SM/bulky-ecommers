@@ -9,8 +9,8 @@ export default function LanguageSelectorMobile() {
     const [currentLocale, setCurrentLocale] = useState("id")
 
     const languages = [
-        { code: "id", label: "ID", icon: "/ID.svg" },
-        { code: "en", label: "EN", icon: "/EN.svg" },
+        { code: "id", label: "ID", icon: "/ID.png" },
+        { code: "en", label: "EN", icon: "/EN.png" },
     ]
 
     useEffect(() => {
