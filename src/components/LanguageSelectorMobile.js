@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
+import Image from "next/image"
 
 export default function LanguageSelectorMobile() {
     const [isOpen, setIsOpen] = useState(false)
     const [currentLocale, setCurrentLocale] = useState("id")
 
     const languages = [
-        { code: "id", label: "ID", icon: "🇮🇩" },
-        { code: "en", label: "EN", icon: "🇺🇸" },
+        { code: "id", label: "ID", icon: "/ID.svg" },
+        { code: "en", label: "EN", icon: "/EN.svg" },
     ]
 
     useEffect(() => {
@@ -29,8 +30,15 @@ export default function LanguageSelectorMobile() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex cursor-pointer items-center">
                 <div className="flex h-6 w-6 items-center justify-center text-lg">
-                    {languages.find(lang => lang.code === currentLocale)
-                        ?.icon || "🌍"}
+                    <Image
+                        src={
+                            languages.find(lang => lang.code === currentLocale)
+                                ?.icon
+                        }
+                        width={40}
+                        height={40}
+                        className={"w-10"}
+                    />
                 </div>
                 <div className="ml-3 text-sm">
                     {currentLocale.toUpperCase()}
@@ -45,7 +53,14 @@ export default function LanguageSelectorMobile() {
                             key={lang.code}
                             onClick={() => handleLanguageChange(lang.code)}
                             className="flex cursor-pointer items-center px-4 py-2 hover:bg-gray-100">
-                            <span className="mr-2">{lang.icon}</span>
+                            <span className="mr-2">
+                                <Image
+                                    src={lang.icon}
+                                    width={40}
+                                    height={40}
+                                    className={"w-10"}
+                                />
+                            </span>
                             <span>{lang.label}</span>
                         </div>
                     ))}

@@ -3,14 +3,15 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
+import Image from "next/image"
 
 export default function LanguageSelector() {
     const [isOpen, setIsOpen] = useState(false)
     const [currentLocale, setCurrentLocale] = useState("id")
 
     const languages = [
-        { code: "id", label: "ID", icon: "🇮🇩" },
-        { code: "en", label: "EN", icon: "🇺🇸" },
+        { code: "id", label: "ID", icon: "/ID.svg" },
+        { code: "en", label: "EN", icon: "/EN.svg" },
     ]
 
     useEffect(() => {
@@ -31,8 +32,15 @@ export default function LanguageSelector() {
                 className="flex items-center rounded-md text-lg text-black hover:shadow-md focus:outline-none lg:text-white">
                 {/* Icon Bahasa */}
                 <span className="mr-2">
-                    {languages.find(lang => lang.code === currentLocale)
-                        ?.icon || "🌍"}
+                    <Image
+                        src={
+                            languages.find(lang => lang.code === currentLocale)
+                                ?.icon
+                        }
+                        width={40}
+                        height={40}
+                        className={"w-10"}
+                    />
                 </span>
                 {/* Label Bahasa */}
                 <span className="mr-2">
@@ -51,7 +59,14 @@ export default function LanguageSelector() {
                             key={lang.code}
                             onClick={() => handleLanguageChange(lang.code)}
                             className="flex w-full items-center px-3 py-2 text-left hover:bg-gray-100 focus:outline-none">
-                            <span className="mr-2">{lang.icon}</span>
+                            <span className="mr-2">
+                                <Image
+                                    src={lang.icon}
+                                    width={40}
+                                    height={40}
+                                    className={"w-10"}
+                                />
+                            </span>
                             <span>{lang.label}</span>
                         </button>
                     ))}
