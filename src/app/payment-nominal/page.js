@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+
 // import { useState } from "react"
 
 function PaymentNominal() {
@@ -169,7 +170,7 @@ function PaymentNominal() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="my-2 border-b p-1"> </div>
+                            <div className="my-2 border-b p-1"></div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm">
@@ -197,7 +198,10 @@ function PaymentNominal() {
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
                                     <label className="text-md font-light">
-                                        {order.paid_amount?.formatted}
+                                        {
+                                            myInvoice?.order?.paid_amount
+                                                ?.formatted
+                                        }
                                     </label>
                                 </div>
                             </div>
@@ -213,7 +217,7 @@ function PaymentNominal() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="my-2 border-b p-1"> </div>
+                            <div className="my-2 border-b p-1"></div>
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm">
