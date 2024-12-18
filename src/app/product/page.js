@@ -101,26 +101,16 @@ function Product({ searchParams }) {
     console.log("filters product", filters)
     console.log("====================================")
 
-    const isFilterActive = Boolean(
-        filters.search ||
-            (filters.categories && filters.categories.length) ||
-            (filters.conditions && filters.conditions.length) ||
-            (filters.statuses && filters.statuses.length) ||
-            (filters.warehouses && filters.warehouses.length) ||
-            filters.minPrice ||
-            filters.maxPrice ||
-            (filters.brands && filters.brands.length),
-    )
-
-    useEffect(() => {
-        if (isFilterActive) {
-            setCurrentPage(1)
-            router.push(`?page=1`)
-        } else {
-            setCurrentPage(pages)
-            router.push(`?page=${pages}`)
-        }
-    }, [isFilterActive, pages])
+    const isFilterActive = [
+        filters.search,
+        filters.categories?.length,
+        filters.conditions?.length,
+        filters.statuses?.length,
+        filters.warehouses?.length,
+        filters.minPrice,
+        filters.maxPrice,
+        filters.brands?.length,
+    ].some(Boolean)
 
     const {
         data,
@@ -132,7 +122,12 @@ function Product({ searchParams }) {
     const totalItems = data?.meta?.total || 0
     const totalPages = data?.meta?.last_page || 0
 
-    console.log("RTK QUERY", products)
+    useEffect(() => {
+        if (isFilterActive) {
+            setCurrentPage(1)
+            router.push("?page=1")
+        }
+    }, [isFilterActive, router])
 
     const handleSearchInputChange = e => {
         setSearchQuery(e.target.value)
