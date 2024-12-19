@@ -93,6 +93,7 @@ function Payment({ params }) {
 
     useEffect(() => {
         if (afterCreatePayment?.payment_url) {
+            window.history.replaceState(null, "", "/")
             window.location.href = afterCreatePayment.payment_url
         }
     }, [afterCreatePayment])

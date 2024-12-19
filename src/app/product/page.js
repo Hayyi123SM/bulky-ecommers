@@ -10,10 +10,7 @@ import PopupMenuMobile from "@/components/PopupMenuMobile"
 import ProductCard from "@/components/ProductCard"
 import SidebarProduct from "@/components/SidebarProduct"
 import { resetFilters, setFilters } from "@/store/slices/filterSlice"
-import {
-    AdjustmentsHorizontalIcon,
-    ArchiveBoxIcon,
-} from "@heroicons/react/24/outline"
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -27,6 +24,8 @@ import {
 import FloatingIcon from "@/components/FloatingIcon"
 import Cookies from "js-cookie"
 import { useTranslations } from "next-intl"
+import Image from "next/image"
+import { fetchCarts } from "@/store/slices/cartSlice"
 
 function Product({ searchParams }) {
     const t = useTranslations()
@@ -52,6 +51,7 @@ function Product({ searchParams }) {
     const dispatch = useDispatch()
     const filters = useSelector(state => state.filters.selectedFilters)
     const searchResults = useSelector(state => state.products.searchResults)
+    const carts = useSelector(state => state.carts.cart)
 
     const selectedFilters = useSelector(state => state.filters.selectedFilters)
     const categories = useSelector(state => state.filters.categories)
@@ -71,6 +71,10 @@ function Product({ searchParams }) {
             .replace("Rp", "")
             .trim() // Remove "Rp" prefix
     }
+
+    useEffect(() => {
+        dispatch(fetchCarts())
+    }, [])
 
     useEffect(() => {
         if (!category) {
@@ -247,7 +251,18 @@ function Product({ searchParams }) {
                     )}
                 </div>
                 <Link href="/cart">
-                    <ArchiveBoxIcon className="h-6 w-6" />
+                    <div className="relative flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
+                        <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs font-bold text-white">
+                            {carts ? carts.items_count : 0}
+                        </div>
+                        <Image
+                            src="/cart-black.svg"
+                            width={34}
+                            height={34}
+                            alt="Cart"
+                            className="h-8 w-8"
+                        />
+                    </div>
                 </Link>
                 <Bars3BottomRightIcon
                     className="h-6 w-6"

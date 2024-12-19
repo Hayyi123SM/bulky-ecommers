@@ -139,7 +139,7 @@ function Shipping() {
                                             </div>
                                         </div>
                                         <div className="mt-2 text-sm">
-                                            {cart.address.formatted_area}
+                                            {cart.address.address}
                                         </div>
                                         <div
                                             onClick={() =>

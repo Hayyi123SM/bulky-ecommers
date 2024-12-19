@@ -136,10 +136,26 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 priority={false}
                             />
                         </Link>
-                        <Bars3BottomRightIcon
-                            className="h-8 w-8 font-bold text-white"
-                            onClick={togglePopupMenu}
-                        />
+                        <div className="flex gap-2">
+                            <Link href="/cart">
+                                <div className="relative flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
+                                    <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-black">
+                                        {carts ? carts.items_count : 0}
+                                    </div>
+                                    <Image
+                                        src="/cart.png"
+                                        width={34}
+                                        height={34}
+                                        alt="Cart"
+                                        className="h-8 w-8"
+                                    />
+                                </div>
+                            </Link>
+                            <Bars3BottomRightIcon
+                                className="h-8 w-8 font-bold text-white"
+                                onClick={togglePopupMenu}
+                            />
+                        </div>
                     </div>
                     <div className="relative mt-2">
                         <input

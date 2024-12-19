@@ -147,7 +147,7 @@ function Address() {
                                                 {address.name}
                                             </div>
                                             <div className="pb-1 text-xs font-normal">
-                                                {address.phone_number}
+                                                {address.address}
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@ function Address() {
                                             {address.name}
                                         </div>
                                         <div className="pb-1 text-xs font-normal">
-                                            {address.phone_number}
+                                            {address.address}
                                         </div>
                                     </div>
                                     <div className="w-2/5">

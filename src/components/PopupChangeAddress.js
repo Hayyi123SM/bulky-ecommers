@@ -115,7 +115,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                                 </div>
                                                 <div className="text-sm">
                                                     {address.address},{" "}
-                                                    {address.formatted_area}
+                                                    {address.address}
                                                 </div>
                                             </div>
                                         </div>
