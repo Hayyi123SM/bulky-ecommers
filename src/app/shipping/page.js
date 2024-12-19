@@ -387,7 +387,8 @@ function Shipping() {
                                     </div>
                                 </div>
                             </div>
-                            {cart.shipping_cost.numeric !== 0 ? (
+                            {cart.shipping_cost.numeric !== 0 &&
+                            shippingCost ? (
                                 <div className="rounded-b-lg bg-white px-5 py-5">
                                     <div
                                         onClick={() => handleCheckout()}
@@ -414,12 +415,21 @@ function Shipping() {
                                     </div>
                                 </div>
                                 <div className="w-1/2">
-                                    <div
-                                        onClick={() => handleCheckout()}
-                                        className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
-                                        disabled={isLoading}>
-                                        {t("shipping.selectPayment")}
-                                    </div>
+                                    {cart.shipping_cost.numeric !== 0 &&
+                                    shippingCost ? (
+                                        <div
+                                            onClick={() => handleCheckout()}
+                                            className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                                            disabled={isLoading}>
+                                            {t("shipping.selectPayment")}
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold opacity-50 ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
+                                            disabled={isLoading}>
+                                            {t("shipping.selectPayment")}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

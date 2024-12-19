@@ -36,7 +36,7 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
             setTimeout(() => {
                 closeModal()
                 window.location.reload()
-            }, 1500)
+            }, 1000)
         } catch (error) {
             console.error("Error updating address or fetching carts:", error)
         }
@@ -142,6 +142,9 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
                                     </div>
                                 ))
                             ) : (
+                                <div> {t("profile.notHaveAddress")} </div>
+                            )}
+                            {addresses.length === 0 && (
                                 <div> {t("profile.notHaveAddress")} </div>
                             )}
                             {/* End : View Mobile */}
