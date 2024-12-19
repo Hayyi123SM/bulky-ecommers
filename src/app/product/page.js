@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {
     fetchSearchProducts,
     useFetchProductsQuery,
-} from "../../store/slices/productSlice"
+} from "@/store/slices/productSlice"
 import FloatingIcon from "@/components/FloatingIcon"
 import Cookies from "js-cookie"
 import { useTranslations } from "next-intl"
