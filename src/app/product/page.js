@@ -252,7 +252,7 @@ function Product({ searchParams }) {
                 </div>
                 <Link href="/cart">
                     <div className="relative flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
-                        <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs font-bold text-white">
+                        <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white text-xs font-bold text-black">
                             {carts ? carts.items_count : 0}
                         </div>
                         <Image

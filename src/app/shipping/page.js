@@ -387,13 +387,23 @@ function Shipping() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="rounded-b-lg bg-white px-5 py-5">
-                                <div
-                                    onClick={() => handleCheckout()}
-                                    className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                    {t("shipping.selectPayment")}
+                            {cart.shipping_cost.numeric !== 0 ? (
+                                <div className="rounded-b-lg bg-white px-5 py-5">
+                                    <div
+                                        onClick={() => handleCheckout()}
+                                        className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                        {t("shipping.selectPayment")}
+                                    </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="rounded-b-lg bg-white px-5 py-5">
+                                    <div
+                                        className="cursor-not-allowed rounded-lg bg-secondary py-2 text-center text-sm font-bold opacity-50 hover:bg-[#e8bc00]"
+                                        disabled>
+                                        {t("shipping.selectPayment")}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
                             <div className="flex items-center justify-between">

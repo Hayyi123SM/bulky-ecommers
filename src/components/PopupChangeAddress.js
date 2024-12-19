@@ -1,7 +1,7 @@
 "use client"
 
 import { fetchAddresses } from "@/store/slices/addressSlice"
-import { fetchCarts, setAddress } from "@/store/slices/cartSlice"
+import { fetchCarts, fetchCheckout, setAddress } from "@/store/slices/cartSlice"
 import { MapPinIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
@@ -28,13 +28,18 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
         }
     }, [isOpen])
 
-    const handleSetAddress = addressId => {
-        dispatch(setAddress({ address_id: addressId }))
-        dispatch(fetchCarts())
-        setTimeout(() => {
-            closeModal()
-            window.location.reload()
-        }, 1500)
+    const handleSetAddress = async addressId => {
+        try {
+            await dispatch(setAddress({ address_id: addressId })).unwrap()
+            await dispatch(fetchCarts()).unwrap()
+            await dispatch(fetchCheckout()).unwrap()
+            setTimeout(() => {
+                closeModal()
+                window.location.reload()
+            }, 1500)
+        } catch (error) {
+            console.error("Error updating address or fetching carts:", error)
+        }
     }
 
     const handleOverlayClick = e => {
