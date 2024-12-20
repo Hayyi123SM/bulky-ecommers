@@ -372,7 +372,7 @@ function Shipping() {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-sm">
-                                            {cart.shipping_cost.formatted}
+                                            {shippingCost.total_cost.formatted}
                                         </label>
                                     </div>
                                 </div>
