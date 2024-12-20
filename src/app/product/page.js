@@ -78,43 +78,77 @@ function Product({ searchParams }) {
 
     useEffect(() => {
         if (!category) {
-            console.log("====================================")
-            console.log("not category", category)
-            console.log("====================================")
             dispatch(resetFilters())
             localStorage.removeItem("category")
         } else {
-            console.log("====================================")
-            console.log("yes category", category)
-            console.log("====================================")
             dispatch(setFilters({ categories: [category] }))
             localStorage.setItem("category", category)
             router.push(`?category=${category}`)
         }
     }, [category])
 
+    // useEffect(() => {
+    //     const queryPage = new URLSearchParams(window.location.search).get(
+    //         "page",
+    //     )
+    //     const pageNumber = Number(queryPage) || 1
+    //     setCurrentPage(pageNumber)
+    // }, [router])
+
     useEffect(() => {
-        const queryPage = new URLSearchParams(window.location.search).get(
-            "page",
-        )
-        const pageNumber = Number(queryPage) || 1
-        setCurrentPage(pageNumber)
-    }, [router])
+        const queryParams = new URLSearchParams(window.location.search)
+        const initFilters = {
+            search: queryParams.get("search") || "",
+            categories: queryParams.get("categories")?.split(",") || [],
+            conditions: queryParams.get("conditions")?.split(",") || [],
+            statuses: queryParams.get("statuses")?.split(",") || [],
+            warehouses: queryParams.get("warehouses")?.split(",") || [],
+            minPrice: queryParams.get("minPrice") || null,
+            maxPrice: queryParams.get("maxPrice") || null,
+            brands: queryParams.get("brands")?.split(",") || [],
+        }
+
+        const initPage = Number(queryParams.get("page")) || 1
+
+        dispatch(setFilters(initFilters))
+        setCurrentPage(initPage)
+    }, [dispatch])
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams()
+
+        if (filters.search) queryParams.set("search", filters.search)
+        if (filters.categories?.length)
+            queryParams.set("categories", filters.categories.join(","))
+        if (filters.conditions?.length)
+            queryParams.set("conditions", filters.conditions.join(","))
+        if (filters.statuses?.length)
+            queryParams.set("statuses", filters.statuses.join(","))
+        if (filters.warehouses?.length)
+            queryParams.set("warehouses", filters.warehouses.join(","))
+        if (filters.minPrice) queryParams.set("minPrice", filters.minPrice)
+        if (filters.maxPrice) queryParams.set("maxPrice", filters.maxPrice)
+        if (filters.brands?.length)
+            queryParams.set("brands", filters.brands.join(","))
+        if (currentPage) queryParams.set("page", currentPage)
+
+        router.replace(`?${queryParams.toString()}`)
+    }, [filters, currentPage, router])
 
     console.log("====================================")
     console.log("filters product", filters)
     console.log("====================================")
 
-    const isFilterActive = [
-        filters.search,
-        filters.categories?.length,
-        filters.conditions?.length,
-        filters.statuses?.length,
-        filters.warehouses?.length,
-        filters.minPrice,
-        filters.maxPrice,
-        filters.brands?.length,
-    ].some(Boolean)
+    // const isFilterActive = [
+    //     filters.search,
+    //     filters.categories?.length,
+    //     filters.conditions?.length,
+    //     filters.statuses?.length,
+    //     filters.warehouses?.length,
+    //     filters.minPrice,
+    //     filters.maxPrice,
+    //     filters.brands?.length,
+    // ].some(Boolean)
 
     const {
         data,
@@ -127,11 +161,27 @@ function Product({ searchParams }) {
     const totalPages = data?.meta?.last_page || 0
 
     useEffect(() => {
-        if (isFilterActive) {
+        if (
+            filters.search ||
+            filters.categories?.length ||
+            filters.conditions?.length ||
+            filters.statuses?.length ||
+            filters.warehouses?.length ||
+            filters.minPrice ||
+            filters.maxPrice ||
+            filters.brands?.length
+        ) {
             setCurrentPage(1)
             router.push("?page=1")
         }
-    }, [isFilterActive, router])
+    }, [filters, router])
+
+    // useEffect(() => {
+    //     if (isFilterActive) {
+    //         setCurrentPage(1)
+    //         router.push("?page=1")
+    //     }
+    // }, [isFilterActive, router])
 
     const handleSearchInputChange = e => {
         setSearchQuery(e.target.value)
