@@ -110,7 +110,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
 
     const handleToProducts = () => {
         dispatch(resetFilters())
-        router.push("/product")
+        router.push("/product?page=1")
     }
 
     const visibilityClasses =

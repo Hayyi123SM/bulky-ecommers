@@ -103,7 +103,7 @@ const PopupModal = ({
                             <div
                                 className="w-1/2 cursor-pointer rounded-lg bg-secondary px-4 py-2 text-center font-semibold hover:bg-[#e8bc00]"
                                 onClick={() =>
-                                    (window.location.href = "/product")
+                                    (window.location.href = "/product?page=1")
                                 }>
                                 {t("other.continueShopping")}
                             </div>

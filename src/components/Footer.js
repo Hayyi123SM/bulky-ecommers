@@ -102,7 +102,9 @@ function Footer() {
                         {t("footer.services")}
                     </div>
                     <div className="mt-3 text-sm">
-                        <Link href="/product">{t("footer.otherProducts")}</Link>
+                        <Link href="/product?page=1">
+                            {t("footer.otherProducts")}
+                        </Link>
                     </div>
                     <div className="mt-3 text-sm">
                         <Link href="/order">{t("footer.orderStatus")}</Link>

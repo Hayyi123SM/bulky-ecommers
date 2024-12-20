@@ -257,7 +257,7 @@ function Home() {
                             </div>
                             <div className="mt-5 flex w-full items-center gap-4 text-center md:pr-28">
                                 <Link
-                                    href="/product"
+                                    href="/product?page=1"
                                     className="w-1/2 font-light">
                                     <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">
                                         {t("showAllProduct")}
@@ -566,7 +566,7 @@ function Home() {
                 <div className="mx-auto max-w-7xl p-5">
                     <div className="mt-2 flex justify-between py-5">
                         <div className="text-xl font-bold">New Pallets</div>
-                        <Link href="/product">
+                        <Link href="/product?page=1">
                             <div className="text-base font-semibold text-[#007185]">
                                 {t("showAll")}
                             </div>

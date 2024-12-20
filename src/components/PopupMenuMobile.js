@@ -101,7 +101,7 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
 
     const handleToProducts = () => {
         dispatch(resetFilters())
-        router.push("/product")
+        router.push("/product?page=1")
     }
 
     return (
