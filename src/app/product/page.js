@@ -130,9 +130,9 @@ function Product({ searchParams }) {
         if (filters.maxPrice) queryParams.set("maxPrice", filters.maxPrice)
         if (filters.brands?.length)
             queryParams.set("brands", filters.brands.join(","))
-        if (currentPage) queryParams.set("page", currentPage)
+        if (currentPage) queryParams.set("page", Number(currentPage))
 
-        router.replace(`?${queryParams.toString()}`)
+        router.push(`?${queryParams.toString()}`)
     }, [filters, currentPage, router])
 
     console.log("====================================")
@@ -172,7 +172,7 @@ function Product({ searchParams }) {
             filters.brands?.length
         ) {
             setCurrentPage(1)
-            router.push("?page=1")
+            // router.push("?page=1")
         }
     }, [filters, router])
 
