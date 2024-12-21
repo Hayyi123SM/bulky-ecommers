@@ -98,9 +98,9 @@ function OrderDetail({ params }) {
                                     {t("orderDetail.productBuy")}
                                 </div>
                                 {order &&
-                                    order.items &&
-                                    order.items.length > 0 &&
-                                    order.items.map((item, index) => (
+                                    order?.items &&
+                                    order?.items.length > 0 &&
+                                    order?.items.map((item, index) => (
                                         <div
                                             key={index}
                                             className="flex items-center justify-between py-2">
@@ -108,8 +108,8 @@ function OrderDetail({ params }) {
                                                 <div>
                                                     <Image
                                                         src={
-                                                            item.product
-                                                                .images[0]
+                                                            item?.product
+                                                                ?.images[0]
                                                         }
                                                         width={100}
                                                         height={100}
@@ -135,12 +135,12 @@ function OrderDetail({ params }) {
                                                 </div>
                                             </div>
 
-                                            {order.order_status.value ===
+                                            {order?.order_status.value ===
                                                 "delivered" &&
-                                                order.has_reviewed ===
+                                                order?.has_reviewed ===
                                                     false && (
                                                     <Link
-                                                        href={`/review-create?orderId=${orderId}&productId=${item.product.id}`}>
+                                                        href={`/review-create?orderId=${orderId}&productId=${item?.product?.id}`}>
                                                         <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                                             {t(
                                                                 "orderDetail.writeReview",
@@ -161,7 +161,7 @@ function OrderDetail({ params }) {
                                             {t("orderDetail.timeTransaction")}
                                         </div>
                                         <div className="w-1/2">
-                                            {order && order.order_date}
+                                            {order && order?.order_date}
                                         </div>
                                     </div>
                                     <div className="flex items-center p-1">
@@ -169,7 +169,7 @@ function OrderDetail({ params }) {
                                             {t("orderDetail.orderNumber")}
                                         </div>
                                         <div className="w-1/2">
-                                            {order && order.order_number}
+                                            {order && order?.order_number}
                                         </div>
                                     </div>
                                     <div className="flex items-center p-1">
@@ -178,8 +178,8 @@ function OrderDetail({ params }) {
                                         </div>
                                         <div className="w-1/2">
                                             {order &&
-                                                order.invoices &&
-                                                order.invoices[0]
+                                                order?.invoices &&
+                                                order?.invoices[0]
                                                     ?.payment_method?.name}
                                         </div>
                                     </div>
@@ -197,8 +197,9 @@ function OrderDetail({ params }) {
                                             Status
                                         </div>
                                         <div
-                                            className={`bg-[${order && order.order_status?.color}0D] w-fit rounded px-4 py-1 text-[9px] font-semibold text-[${order && order.order_status?.color}]`}>
-                                            {order && order.order_status?.label}
+                                            className={`bg-[${order && order?.order_status?.color}0D] w-fit rounded px-4 py-1 text-[9px] font-semibold text-[${order && order?.order_status?.color}]`}>
+                                            {order &&
+                                                order?.order_status?.label}
                                         </div>
                                     </div>
                                 </div>
@@ -207,20 +208,22 @@ function OrderDetail({ params }) {
                                         {t("orderDetail.address")}
                                     </div>
                                     <div className="w-1/2">
-                                        {order && order.shipping_address}
+                                        {order && order?.shipping_address}
                                     </div>
                                 </div>
-                                {order && order.shipping?.show_tracking_url && (
-                                    <div className="my-2 mb-4 border-b p-1 text-sm">
-                                        <div className="w-1/2 text-[#6D7588]">
-                                            Live Tracking Deliveree
+                                {order &&
+                                    order?.shipping?.show_tracking_url && (
+                                        <div className="my-2 mb-4 border-b p-1 text-sm">
+                                            <div className="w-1/2 text-[#6D7588]">
+                                                Live Tracking Deliveree
+                                            </div>
+                                            <div className="w-1/2">
+                                                {order &&
+                                                    order?.shipping
+                                                        ?.tracking_url}
+                                            </div>
                                         </div>
-                                        <div className="w-1/2">
-                                            {order &&
-                                                order.shipping?.tracking_url}
-                                        </div>
-                                    </div>
-                                )}
+                                    )}
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">
@@ -241,11 +244,11 @@ function OrderDetail({ params }) {
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-md font-light">
                                             {order &&
-                                                order.total_price?.formatted}
+                                                order?.total_price?.formatted}
                                         </label>
                                     </div>
                                 </div>
-                                {order && order.shipping && (
+                                {order && order?.shipping && (
                                     <div className="flex justify-between">
                                         <div className="text-sm leading-6">
                                             <label className="text-sm font-light">
@@ -255,13 +258,13 @@ function OrderDetail({ params }) {
                                         <div className="ml-5 text-right text-sm leading-6">
                                             <label className="text-md font-light">
                                                 {order &&
-                                                    order.shipping
+                                                    order?.shipping
                                                         ?.shipping_cost}
                                             </label>
                                         </div>
                                     </div>
                                 )}
-                                <div className="my-3 border-b p-1"> </div>
+                                <div className="my-3 border-b p-1" />
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">
@@ -270,7 +273,7 @@ function OrderDetail({ params }) {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-lg font-bold">
-                                            {order && order.total?.formatted}
+                                            {order && order?.total?.formatted}
                                         </label>
                                     </div>
                                 </div>

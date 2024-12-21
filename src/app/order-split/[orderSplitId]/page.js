@@ -152,7 +152,7 @@ function OrderSplitDetail({ params }) {
                                             {t("orderDetail.timeTransaction")}
                                         </div>
                                         <div className="w-1/2">
-                                            {order && order.order_date}
+                                            {order && order?.order_date}
                                         </div>
                                     </div>
                                     <div className="flex items-center p-1">
@@ -160,7 +160,7 @@ function OrderSplitDetail({ params }) {
                                             {t("orderDetail.orderNumber")}
                                         </div>
                                         <div className="w-1/2">
-                                            {order && order.order_number}
+                                            {order && order?.order_number}
                                         </div>
                                     </div>
                                     <div className="flex items-center p-1">
@@ -169,11 +169,11 @@ function OrderSplitDetail({ params }) {
                                         </div>
                                         <div className="w-1/2">
                                             {order > 0
-                                                ? order.invoices[0]
+                                                ? order?.invoices[0]
                                                       ?.payment_method?.name ===
                                                   null
                                                     ? "-"
-                                                    : order.invoices[0]
+                                                    : order?.invoices[0]
                                                           ?.payment_method?.name
                                                 : "-"}
                                         </div>
@@ -194,14 +194,14 @@ function OrderSplitDetail({ params }) {
                                             </div>
                                             <div className="text-[#007185] lg:w-1/2">
                                                 {myInvoice &&
-                                                    myInvoice.payment_url}
+                                                    myInvoice?.payment_url}
                                             </div>
                                         </div>
                                         <div
                                             className="ml-5 flex cursor-pointer items-center text-right text-sm"
                                             onClick={() =>
                                                 copyToClipboard(
-                                                    myInvoice.payment_url,
+                                                    myInvoice?.payment_url,
                                                 )
                                             }>
                                             <div className="mr-1 text-sm font-bold text-[#007185]">
@@ -216,7 +216,7 @@ function OrderSplitDetail({ params }) {
                                         {t("orderDetail.address")}
                                     </div>
                                     <div className="w-1/2">
-                                        {order && order.shipping_address}
+                                        {order && order?.shipping_address}
                                     </div>
                                 </div>
                                 <div
@@ -244,11 +244,11 @@ function OrderSplitDetail({ params }) {
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-md font-light">
                                             {order &&
-                                                order.total_price?.formatted}
+                                                order?.total_price?.formatted}
                                         </label>
                                     </div>
                                 </div>
-                                {order && order.shipping && (
+                                {order && order?.shipping && (
                                     <div className="flex justify-between">
                                         <div className="text-sm leading-6">
                                             <label className="text-sm font-light">
@@ -258,7 +258,7 @@ function OrderSplitDetail({ params }) {
                                         <div className="ml-5 text-right text-sm leading-6">
                                             <label className="text-md font-light">
                                                 {order &&
-                                                    order.shipping
+                                                    order?.shipping
                                                         ?.shipping_cost}
                                             </label>
                                         </div>
@@ -273,7 +273,7 @@ function OrderSplitDetail({ params }) {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-lg font-bold">
-                                            {order && order.total?.formatted}
+                                            {/*{order && order.total?.formatted}*/}
                                         </label>
                                     </div>
                                 </div>
@@ -283,9 +283,9 @@ function OrderSplitDetail({ params }) {
                                     {t("orderDetail.statusPayment")}
                                 </div>
                                 {order &&
-                                    order.invoices &&
-                                    order.invoices.map(invoice => (
-                                        <div key={invoice.id} className="my-1">
+                                    order?.invoices &&
+                                    order?.invoices.map(invoice => (
+                                        <div key={invoice?.id} className="my-1">
                                             <div className="flex items-center justify-between p-2 text-sm">
                                                 <div className="flex items-center">
                                                     <Image
@@ -298,23 +298,26 @@ function OrderSplitDetail({ params }) {
                                                     />
                                                     <div>
                                                         <div className="text-sm font-medium">
-                                                            {invoice.user.name}
+                                                            {
+                                                                invoice?.user
+                                                                    ?.name
+                                                            }
                                                         </div>
                                                         <div
-                                                            className={`w-fit rounded-lg bg-[${invoice.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice.status?.color}] lg:hidden`}>
+                                                            className={`w-fit rounded-lg bg-[${invoice?.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice?.status?.color}] lg:hidden`}>
                                                             {
-                                                                invoice.status
+                                                                invoice?.status
                                                                     ?.label
                                                             }
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div
-                                                    className={`ml-14 hidden w-fit rounded-lg bg-[${invoice.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice.status?.color}] lg:block`}>
-                                                    {invoice.status?.label}
+                                                    className={`ml-14 hidden w-fit rounded-lg bg-[${invoice?.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice?.status?.color}] lg:block`}>
+                                                    {invoice?.status?.label}
                                                 </div>
                                                 <div className="text-xs font-bold">
-                                                    {invoice.amount?.formatted}
+                                                    {invoice?.amount?.formatted}
                                                 </div>
                                             </div>
                                         </div>
@@ -328,7 +331,7 @@ function OrderSplitDetail({ params }) {
                                     <div className="font-extrabold">
                                         {/* {order && order.total_price?.formatted} */}
                                         {order &&
-                                            order.remaining_amount?.formatted}
+                                            order?.remaining_amount?.formatted}
                                     </div>
                                 </div>
                             </div>

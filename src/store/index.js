@@ -10,6 +10,7 @@ import areaSlice from "./slices/areaSlice"
 import addressSlice from "./slices/addressSlice"
 import testimonySlice from "./slices/testimonySlice"
 import pageSlice from "./slices/pageSlice"
+import { apiWithTokenSlice } from "@/store/slices/apiWithTokenSlice"
 
 export const store = configureStore({
     reducer: {
@@ -25,7 +26,10 @@ export const store = configureStore({
         address: addressSlice,
         testimony: testimonySlice,
         pages: pageSlice,
+        [apiWithTokenSlice.reducerPath]: apiWithTokenSlice.reducer,
     },
     middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(productApi.middleware),
+        getDefaultMiddleware()
+            .concat(productApi.middleware)
+            .concat(apiWithTokenSlice.middleware),
 })
