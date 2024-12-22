@@ -72,6 +72,41 @@ function SidebarProduct({ category }) {
         }
     }, [category])
 
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search)
+
+        // Extract parameters
+        const categories = queryParams.get("categories")?.split(",") || []
+        const brands = queryParams.get("brands")?.split(",") || []
+        const warehouses = queryParams.get("warehouses")?.split(",") || []
+        const conditions = queryParams.get("conditions")?.split(",") || []
+        const statuses = queryParams.get("statuses")?.split(",") || []
+        const minPrice = queryParams.get("minPrice") || null
+        const maxPrice = queryParams.get("maxPrice") || null
+
+        // Set to State
+        if (categories.length > 0) setSelectedCategories(categories)
+        if (brands.length > 0) setSelectedBrands(brands)
+        if (warehouses.length > 0) setSelectedWarehouses(warehouses)
+        if (conditions.length > 0) setSelectedConditions(conditions)
+        if (statuses.length > 0) setSelectedStatuses(statuses)
+        if (minPrice) setMinPrice(minPrice) // Format if required
+        if (maxPrice) setMaxPrice(maxPrice) // Format if required
+
+        // Dispatch Filters to Redux Store
+        dispatch(
+            setFilters({
+                categories,
+                brands,
+                warehouses,
+                conditions,
+                statuses,
+                minPrice: minPrice ? parseInt(minPrice, 10) : null,
+                maxPrice: maxPrice ? parseInt(maxPrice, 10) : null,
+            }),
+        )
+    }, [dispatch]) // Add any dependencies if required for specific conditions
+
     const toggleShowGroup = filter => {
         if (filter === "categories") {
             setShowFilterCategories(!showFilterCategories)

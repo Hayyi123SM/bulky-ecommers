@@ -132,7 +132,7 @@ function Product({ searchParams }) {
             queryParams.set("brands", filters.brands.join(","))
         if (currentPage) queryParams.set("page", Number(currentPage))
 
-        router.push(`?${queryParams.toString()}`)
+        router.replace(`?${queryParams.toString()}`)
     }, [filters, currentPage, router])
 
     console.log("====================================")
