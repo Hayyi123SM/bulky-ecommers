@@ -415,9 +415,11 @@ function Product({ searchParams }) {
                                       image={product.images[0]}
                                       location={product.warehouse.name}
                                       title={
-                                          Cookies.get("locale") === "id"
-                                              ? product?.name_trans?.id
-                                              : product?.name_trans?.en
+                                          Cookies.get("locale") === "en"
+                                              ? product?.name_trans?.en
+                                                  ? product.name_trans.en
+                                                  : product?.name_trans?.id
+                                              : product?.name_trans?.id
                                       }
                                       price={product.price.formatted}
                                       url={`/product/${product.slug}`}

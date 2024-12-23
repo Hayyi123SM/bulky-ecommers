@@ -336,11 +336,15 @@ function Order() {
                                     <div className="ml-5 text-sm leading-6">
                                         <div className="text-md pb-1">
                                             {order.items_count > 0 &&
-                                            Cookies.get("locale") === "id"
+                                            Cookies.get("locale") === "en"
                                                 ? order.items[0].product
-                                                      .name_trans?.id
+                                                      ?.name_trans?.en
+                                                    ? order.items[0].product
+                                                          .name_trans.en
+                                                    : order.items[0].product
+                                                          ?.name_trans?.id
                                                 : order.items[0].product
-                                                      .name_trans?.en}
+                                                      ?.name_trans?.id}
                                         </div>
                                         <div className="text-md font-bold">
                                             {order.total_price.formatted}

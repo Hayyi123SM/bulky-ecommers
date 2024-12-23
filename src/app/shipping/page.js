@@ -183,11 +183,16 @@ function Shipping() {
                                             <div className="ml-5 w-2/5 text-sm leading-6">
                                                 <label className="text-md">
                                                     {Cookies.get("locale") ===
-                                                    "id"
+                                                    "en"
                                                         ? item?.product
-                                                              ?.name_trans?.id
+                                                              ?.name_trans?.en
+                                                            ? item.product
+                                                                  .name_trans.en
+                                                            : item?.product
+                                                                  ?.name_trans
+                                                                  ?.id
                                                         : item?.product
-                                                              ?.name_trans?.en}
+                                                              ?.name_trans?.id}
                                                 </label>
                                             </div>
                                             <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">

@@ -108,6 +108,12 @@ function OrderDetail({ params }) {
                                                             ? item?.product
                                                                   ?.name_trans
                                                                   ?.en
+                                                                ? item.product
+                                                                      .name_trans
+                                                                      .en
+                                                                : item?.product
+                                                                      ?.name_trans
+                                                                      ?.id
                                                             : item?.product
                                                                   ?.name_trans
                                                                   ?.id}

@@ -290,10 +290,14 @@ function ProductDetail({ params }) {
                         <h1 className="mb-4 text-2xl font-bold">
                             {loadingProducts ? (
                                 <Skeleton />
-                            ) : Cookies.get("locale") === "id" ? (
-                                products?.name_trans?.id
+                            ) : Cookies.get("locale") === "en" ? (
+                                products?.name_trans?.en ? (
+                                    products.name_trans.en
+                                ) : (
+                                    products?.name_trans?.id
+                                )
                             ) : (
-                                products?.name_trans?.en
+                                products?.name_trans?.id
                             )}
                         </h1>
                         <div className="mb-1 text-xl font-bold text-[#007185]">

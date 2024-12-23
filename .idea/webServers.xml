@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7d037fe9-c76f-4fcc-a339-d7debe98f25e" name="Bulky">
+        <fileTransfer rootFolder="/home/bulky.id/public_html" accessType="SFTP" host="16.78.37.121" port="22" sshConfigId="de2d960a-b6a1-4213-bf4e-680337c8110c" sshConfig="bulky5609@16.78.37.121:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" isUseRsync="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
