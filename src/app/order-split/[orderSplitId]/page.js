@@ -129,11 +129,11 @@ function OrderSplitDetail({ params }) {
                                             <div className="ml-5 text-sm leading-6">
                                                 <div className="text-md pb-1">
                                                     {Cookies.get("locale") ===
-                                                    "id"
+                                                    "en"
                                                         ? item?.product
-                                                              ?.name_trans?.id
+                                                              ?.name_trans?.en
                                                         : item?.product
-                                                              ?.name_trans?.en}
+                                                              ?.name_trans?.id}
                                                 </div>
                                                 <div className="text-md font-bold">
                                                     {item.price.formatted}

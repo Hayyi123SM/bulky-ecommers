@@ -25,14 +25,14 @@ function OrderDetail({ params }) {
     const order = useSelector(state => state.orders.orderDetail)
     const myInvoice = useSelector(state => state.orders.myInvoice)
 
-    if (!user) {
-        return null // Hindari menampilkan konten jika sedang redirect
-    }
-
     useEffect(() => {
         dispatch(fetchOrderDetail(id))
         dispatch(getMyInvoice(id))
     }, [dispatch, id])
+
+    if (!user) {
+        return null // Hindari menampilkan konten jika sedang redirect
+    }
 
     // console.log("order:", order)
     if (!order) {
@@ -104,13 +104,13 @@ function OrderDetail({ params }) {
                                                     <div className="text-md pb-1">
                                                         {Cookies.get(
                                                             "locale",
-                                                        ) === "id"
+                                                        ) === "en"
                                                             ? item?.product
                                                                   ?.name_trans
-                                                                  ?.id
+                                                                  ?.en
                                                             : item?.product
                                                                   ?.name_trans
-                                                                  ?.en}
+                                                                  ?.id}
                                                     </div>
                                                     <div className="text-md font-bold">
                                                         {item?.price?.formatted}

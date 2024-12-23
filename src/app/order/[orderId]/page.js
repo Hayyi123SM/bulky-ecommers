@@ -41,13 +41,13 @@ function OrderDetail({ params }) {
     //     },
     // ]
 
-    if (!user) {
-        return null // Hindari menampilkan konten jika sedang redirect
-    }
-
     useEffect(() => {
         dispatch(fetchOrderDetail(orderId))
     }, [dispatch, orderId])
+
+    if (!user) {
+        return null // Hindari menampilkan konten jika sedang redirect
+    }
 
     // console.log("order:", order)
     // console.log("orderId:", orderId)
@@ -121,13 +121,13 @@ function OrderDetail({ params }) {
                                                     <div className="text-md pb-1">
                                                         {Cookies.get(
                                                             "locale",
-                                                        ) === "id"
+                                                        ) === "en"
                                                             ? item?.product
                                                                   ?.name_trans
-                                                                  ?.id
+                                                                  ?.en
                                                             : item?.product
                                                                   ?.name_trans
-                                                                  ?.en}
+                                                                  ?.id}
                                                     </div>
                                                     <div className="text-md font-bold">
                                                         {item.price.formatted}
