@@ -65,7 +65,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
         if (category) {
             dispatch(setFilters({ categories: [category.slug] }))
             localStorage.setItem("category", category.slug)
-            router.push(`/product?category=${category.slug}`)
+            router.push(`/product?categories=${category.slug}&page=1`)
         } else {
             localStorage.removeItem("category")
             router.push("/")
@@ -186,13 +186,19 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                         className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
                                                         {Cookies.get(
                                                             "locale",
-                                                        ) === "id"
+                                                        ) === "en"
                                                             ? product
                                                                   ?.name_trans
-                                                                  ?.id
+                                                                  ?.en
+                                                                ? product
+                                                                      .name_trans
+                                                                      .en
+                                                                : product
+                                                                      ?.name_trans
+                                                                      ?.id
                                                             : product
                                                                   ?.name_trans
-                                                                  ?.en}
+                                                                  ?.id}
                                                     </li>
                                                 </Link>
                                             ))
@@ -294,13 +300,19 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                                                         {Cookies.get(
                                                                             "locale",
                                                                         ) ===
-                                                                        "id"
+                                                                        "en"
                                                                             ? product
                                                                                   ?.name_trans
-                                                                                  ?.id
+                                                                                  ?.en
+                                                                                ? product
+                                                                                      .name_trans
+                                                                                      .en
+                                                                                : product
+                                                                                      ?.name_trans
+                                                                                      ?.id
                                                                             : product
                                                                                   ?.name_trans
-                                                                                  ?.en}
+                                                                                  ?.id}
                                                                     </li>
                                                                 </Link>
                                                             ),

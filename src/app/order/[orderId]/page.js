@@ -141,19 +141,21 @@ function OrderDetail({ params }) {
                                                 </div>
                                             </div>
 
-                                            {order?.order_status.value ===
+                                            {((order?.order_status?.value ===
                                                 "delivered" &&
-                                                order?.has_reviewed ===
-                                                    false && (
-                                                    <Link
-                                                        href={`/review-create?orderId=${orderId}&productId=${item?.product?.id}`}>
-                                                        <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                                            {t(
-                                                                "orderDetail.writeReview",
-                                                            )}
-                                                        </div>
-                                                    </Link>
-                                                )}
+                                                !order?.has_reviewed) ||
+                                                order?.shipping_method
+                                                    ?.value ===
+                                                    "self_pickup") && (
+                                                <Link
+                                                    href={`/review-create?orderId=${orderId}&productId=${item?.product?.id}`}>
+                                                    <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                                        {t(
+                                                            "orderDetail.writeReview",
+                                                        )}
+                                                    </div>
+                                                </Link>
+                                            )}
                                         </div>
                                     ))}
                             </div>

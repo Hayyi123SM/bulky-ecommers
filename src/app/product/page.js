@@ -83,7 +83,7 @@ function Product({ searchParams }) {
         } else {
             dispatch(setFilters({ categories: [category] }))
             localStorage.setItem("category", category)
-            router.push(`?category=${category}`)
+            router.push(`?categories=${category}&page=1`)
         }
     }, [category])
 

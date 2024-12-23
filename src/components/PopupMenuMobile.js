@@ -298,6 +298,9 @@ function PopupMenuMobile({ showPopupMenu, closePopupMenu }) {
                                         <div className="ml-3 text-sm">FAQ</div>
                                     </div>
                                 </Link>
+                                <div className="flex items-center py-3">
+                                    <LanguageSelectorMobile />
+                                </div>
                             </div>
                         </div>
                     </div>
