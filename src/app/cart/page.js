@@ -38,9 +38,9 @@ function Cart() {
     const [methodSelected, setMethodSelected] = useState(null)
     // const updateStatus = useSelector(state => state.carts.updateStatus)
     // const updateError = useSelector(state => state.carts.updateError)
-    console.log("====================================")
-    console.log("user", user)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("user", user)
+    // console.log("====================================")
     useEffect(() => {
         dispatch(fetchCarts())
     }, [dispatch, user])

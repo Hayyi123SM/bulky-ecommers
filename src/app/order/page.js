@@ -62,9 +62,9 @@ function Order() {
         setStatus(status)
         setIsOpenStatusMobile(false) // Close dropdown after selecting a status
         setStatus(status)
-        console.log("====================================")
-        console.log("status:", status)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("status:", status)
+        // console.log("====================================")
         dispatch(
             fetchOrders({
                 currentPage: 1,
@@ -115,12 +115,12 @@ function Order() {
         )
     }
 
-    console.log("====================================")
-    console.log("user:", user)
-    console.log("orders:", orders)
-    console.log("search:", search)
-    console.log("status:", status)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("user:", user)
+    // console.log("orders:", orders)
+    // console.log("search:", search)
+    // console.log("status:", status)
+    // console.log("====================================")
 
     return (
         <div>

@@ -47,9 +47,9 @@ function PaymentMethod() {
     const coupon = useSelector(state => state.carts.coupon)
     const [activeCoupon, setActiveCoupon] = useState(null)
 
-    console.log("====================================")
+    // console.log("====================================")
     console.log("coupon", coupon)
-    console.log("====================================")
+    // console.log("====================================")
 
     useEffect(() => {
         // Ambil bahasa dari Cookies

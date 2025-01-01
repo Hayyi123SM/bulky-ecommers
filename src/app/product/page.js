@@ -135,9 +135,9 @@ function Product({ searchParams }) {
         router.replace(`?${queryParams.toString()}`)
     }, [filters, currentPage, router])
 
-    console.log("====================================")
-    console.log("filters product", filters)
-    console.log("====================================")
+    // console.log("====================================")
+    // console.log("filters product", filters)
+    // console.log("====================================")
 
     // const isFilterActive = [
     //     filters.search,

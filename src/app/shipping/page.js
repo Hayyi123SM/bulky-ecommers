@@ -53,10 +53,10 @@ function Shipping() {
             document.body.classList.remove("modal-open")
         }
 
-        console.log("====================================")
-        console.log("shippingCost", shippingCost)
-        console.log("setAddress", setAddress)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("shippingCost", shippingCost)
+        // console.log("setAddress", setAddress)
+        // console.log("====================================")
     }, [showPopupMenu, shippingCost, setAddress])
 
     const closeModalUser = () => {

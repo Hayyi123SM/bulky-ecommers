@@ -37,14 +37,14 @@ function Profile() {
     const [error, setError] = useState(null)
 
     const handleLogout = async () => {
-        console.log("Handling logout...")
+        // console.log("Handling logout...")
         await logout({ redirect: "/" })
         dispatch(clearUser())
     }
 
     useEffect(() => {
         if (user !== undefined) {
-            console.log("Parsed user from local storage:", user)
+            // console.log("Parsed user from local storage:", user)
             setIsLoading(false)
         }
     }, [user])
@@ -64,7 +64,7 @@ function Profile() {
         // console.log("user:", user)
         if (!isLoading) {
             if (!user) {
-                console.log("Logging out as user and savedUser are null")
+                // console.log("Logging out as user and savedUser are null")
                 handleLogout()
             }
         }
@@ -113,10 +113,10 @@ function Profile() {
             if (response.data) {
                 setNotfication(true)
 
-                console.log("Update Profile Picture successfully!", response)
+                // console.log("Update Profile Picture successfully!", response)
             }
         } catch (error) {
-            console.error("Error Update Profile Picture:", error)
+            console.log("Error Update Profile Picture:", error)
         }
     }
 

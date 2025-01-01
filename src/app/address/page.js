@@ -42,7 +42,7 @@ function Address() {
     }
 
     const handleConfirmPrimary = () => {
-        console.log("Confirmed!")
+        // console.log("Confirmed!")
         dispatch(setAddressPrimary(itemId))
         closeModalPrimary()
         setIsShowPrimary(true)
@@ -62,7 +62,7 @@ function Address() {
     }
 
     const handleConfirm = () => {
-        console.log("Confirmed!")
+        // console.log("Confirmed!")
         dispatch(removeAddress(itemId))
         closeModal()
         setIsShow(true)

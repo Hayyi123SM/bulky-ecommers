@@ -42,7 +42,7 @@ function PaymentNominal() {
 
     useEffect(() => {
         const getOrder = JSON.parse(localStorage.getItem("order"))
-        console.log("getOrder", getOrder)
+        // console.log("getOrder", getOrder)
         setOrder(getOrder)
         dispatch(getMyInvoice(getOrder.id))
     }, [])
