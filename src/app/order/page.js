@@ -116,9 +116,9 @@ function Order() {
     }
 
     // console.log("====================================")
-    // console.log("user:", user)
+    console.log("user:", user)
     // console.log("orders:", orders)
-    // console.log("search:", search)
+    console.log("search:", search)
     // console.log("status:", status)
     // console.log("====================================")
 

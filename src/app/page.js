@@ -42,6 +42,8 @@ import Hero from "../../public/new/hero.webp"
 import Illustration from "../../public/new/Illustrations.webp"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
+import LiteYouTubeEmbed from "react-lite-youtube-embed"
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
 function Home() {
     const t = useTranslations()
@@ -864,7 +866,7 @@ function Home() {
                         {t("descriptionVideo")}
                     </div>
                     <div className="h-[300px] w-full md:h-[400px] lg:h-[450px] lg:w-2/3">
-                        <iframe
+                        {/*<iframe
                             className="h-full w-full" // Menyesuaikan iframe dengan ukuran parent
                             src="https://www.youtube.com/embed/gTQamrVevWE?si=8HxQ3jZMHPZcg_zM"
                             title="YouTube video player"
@@ -872,6 +874,10 @@ function Home() {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerPolicy="strict-origin-when-cross-origin"
                             allowFullScreen
+                        />*/}
+                        <LiteYouTubeEmbed
+                            id="gTQamrVevWE"
+                            title="YouTube video player"
                         />
                     </div>
                 </div>

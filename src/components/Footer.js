@@ -172,32 +172,46 @@ function Footer() {
                         {t("footer.accessApp")}
                     </div>
                     <div className="mt-3 flex items-center text-sm">
-                        <Image
-                            src={`/payment_method/apple.svg`}
-                            width={100}
-                            height={100}
-                            alt="Logo"
-                            priority={false}
-                            className="cursor-pointer"
-                            onClick={() =>
-                                window.open(
-                                    "https://apps.apple.com/app/bulky-id/id6738534149",
-                                )
-                            }
-                        />
-                        <Image
-                            src={`/payment_method/gplay.svg`}
-                            width={120}
-                            height={100}
-                            alt="Logo"
-                            priority={false}
-                            className="cursor-pointer"
-                            onClick={() =>
-                                window.open(
-                                    "https://play.google.com/store/apps/details?id=com.bulky.app",
-                                )
-                            }
-                        />
+                        <a
+                            href="https://apps.apple.com/app/bulky-id/id6738534149"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            <Image
+                                src={`/payment_method/apple.svg`}
+                                width={120}
+                                height={100}
+                                alt="Logo"
+                                priority={false}
+                                className="cursor-pointer"
+                            />
+                        </a>
+                        <a
+                            href="https://play.google.com/store/apps/details?id=com.bulky.app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => {
+                                try {
+                                    // Log or handle click events if needed
+                                    console.log(
+                                        "Opening Google Play Store...",
+                                        e,
+                                    )
+                                } catch (err) {
+                                    console.error(
+                                        "Error navigating to Play Store:",
+                                        err,
+                                    )
+                                }
+                            }}>
+                            <Image
+                                src={`/payment_method/gplay.svg`}
+                                width={120}
+                                height={100}
+                                alt="Google Play Logo"
+                                priority={false}
+                                className="cursor-pointer"
+                            />
+                        </a>
                     </div>
                 </div>
             </div>

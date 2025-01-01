@@ -57,7 +57,7 @@ function Payment({ params }) {
 
     // console.log("====================================")
     // console.log("myInvoice:", myInvoice)
-    // console.log("order:", order)
+    console.log("order:", order)
     // console.log("invoiceId:", invoiceId)
     // console.log("====================================")
     const handleOptionClick = (icon, option, id) => {
