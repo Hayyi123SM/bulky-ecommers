@@ -56,7 +56,7 @@ export const productApi = createApi({
                 )
 
                 const params = {
-                    page: isFilterActive ? 1 : currentPage,
+                    page: isFilterActive ? currentPage : currentPage,
                     per_page: filters.perPage || 15,
                     ...(filters.search && { search: filters.search }),
                     ...(filters.categories &&
