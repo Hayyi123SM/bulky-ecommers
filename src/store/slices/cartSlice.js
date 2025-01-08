@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import axios from "@/lib/axios"
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     cart: null,
@@ -98,12 +98,12 @@ export const setShippingMethod = createAsyncThunk(
 
 export const getShippingCost = createAsyncThunk(
     "carts/getShippingCost",
-    async () => {
+    async (_, { rejectWithValue }) => {
         try {
             const response = await axios.get("/api/carts/shipping-cost")
             return response.data
         } catch (error) {
-            throw error
+            return rejectWithValue(error.response.data)
         }
     },
 )
@@ -332,7 +332,7 @@ const cartSlice = createSlice({
             .addCase(getShippingCost.rejected, (state, action) => {
                 state.updateStatus = "failed"
                 state.isLoading = false
-                state.updateError = action.error.message
+                state.shippingCost = action.payload
             })
             .addCase(applyCoupon.pending, state => {
                 state.updateStatus = "loading"

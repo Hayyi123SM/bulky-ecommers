@@ -359,7 +359,9 @@
         "longitude": "Longitude",
         "save": "Save",
         "cancel": "Cancel",
-        "successMessage": "Address saved successfully"
+        "successMessage": "Address saved successfully",
+        "noMatchCost": "There is a shipping cost adjustment",
+        "notReachable": "Shipping Address Not Reachable"
     },
     "changePassword": {
         "titleChangePassword": "Change Password",

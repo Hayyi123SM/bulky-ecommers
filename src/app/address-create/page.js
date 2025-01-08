@@ -88,8 +88,8 @@ function AddressCreate() {
             // cityId,
             // districtId,
             // subDistrictId,
-            latitude: selectedLatitude,
-            longitude: selectedLongitude,
+            latitude: selectedLatitude ? selectedLatitude : latitude,
+            longitude: selectedLongitude ? selectedLongitude : longitude,
             isPrimary: false,
         }
 

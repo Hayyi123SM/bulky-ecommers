@@ -25,9 +25,10 @@ function Shipping() {
     const cart = useSelector(state => state.carts.checkout)
     const [isOpenModalUser, setIsOpenModalUser] = useState(false)
     const [openModalAddress, setOpenModalAddress] = useState(false)
+    const [noMatchCost, setOpenModalNoMatchCost] = useState(false)
+    const [statusShippingCost, setStatusShippingCost] = useState(false)
     const shippingCost = useSelector(state => state.carts.shippingCost)
     const setAddress = useSelector(state => state.carts.setAddress)
-    const isLoading = useSelector(state => state.carts.isLoading)
 
     useEffect(() => {
         dispatch(fetchCheckout())
@@ -64,8 +65,20 @@ function Shipping() {
     }
 
     const handleCheckout = () => {
-        if (cart.address.name == null) {
+        if (cart.address.name === null) {
             setOpenModalAddress(true) // Cegah lanjut jika belum ada alamat
+            return
+        }
+        if (
+            cart?.shipping_cost?.numeric ===
+            shippingCost?.data?.total_cost?.value
+        ) {
+            setOpenModalNoMatchCost(true) // Cegah lanjut jika belum ada alamat
+            return
+        }
+        console.log("shippingCost", shippingCost)
+        if (shippingCost?.shipping_cost === false) {
+            setStatusShippingCost(true)
             return
         }
         if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
@@ -395,8 +408,7 @@ function Shipping() {
                                     </div>
                                 </div>
                             </div>
-                            {cart.shipping_cost.numeric !== 0 &&
-                            shippingCost ? (
+                            {cart.shipping_cost.numeric > 0 && shippingCost ? (
                                 <div className="rounded-b-lg bg-white px-5 py-5">
                                     <div
                                         onClick={() => handleCheckout()}
@@ -423,18 +435,17 @@ function Shipping() {
                                     </div>
                                 </div>
                                 <div className="w-1/2">
-                                    {cart.shipping_cost.numeric !== 0 &&
+                                    {cart.shipping_cost.numeric > 0 &&
                                     shippingCost ? (
                                         <div
                                             onClick={() => handleCheckout()}
-                                            className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
-                                            disabled={isLoading}>
+                                            className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]`}>
                                             {t("shipping.selectPayment")}
                                         </div>
                                     ) : (
                                         <div
-                                            className={`rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold opacity-50 ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
-                                            disabled={isLoading}>
+                                            className={`cursor-not-allowed rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold opacity-50`}
+                                            disabled>
                                             {t("shipping.selectPayment")}
                                         </div>
                                     )}
@@ -460,6 +471,24 @@ function Shipping() {
                 message={t("shipping.messageAddress")}
                 confirmText={t("fillNow")}
                 cancelText={t("later")}
+            />
+
+            <PopupModal
+                isOpen={noMatchCost}
+                closeModal={() => setOpenModalNoMatchCost(false)}
+                type="notification"
+                title={t("notification")}
+                message={t("addressForm.noMatchCost")}
+                urlConfirm="/shipping"
+            />
+
+            <PopupModal
+                isOpen={statusShippingCost}
+                closeModal={() => setStatusShippingCost(false)}
+                type="notification"
+                title={t("notification")}
+                message={t("addressForm.notReachable")}
+                urlConfirm="/shipping"
             />
 
             <FloatingIcon />

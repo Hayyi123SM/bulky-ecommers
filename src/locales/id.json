@@ -359,7 +359,9 @@
         "longitude": "Longitude",
         "save": "Simpan",
         "cancel": "Batal",
-        "successMessage": "Alamat berhasil disimpan"
+        "successMessage": "Alamat berhasil disimpan",
+        "noMatchCost": "Ada penyesuaian biaya pengiriman",
+        "notReachable": "Alamat Pengiriman tidak terjangkau"
     },
     "changePassword": {
         "titleChangePassword": "Ubah Kata Sandi",
