@@ -93,7 +93,7 @@ export const productApi = createApi({
                 }
 
                 return {
-                    url: `/api/products?random=true&${searchParams.toString()}`,
+                    url: `/api/products?${searchParams.toString()}`,
                     method: "GET",
                 }
             },
