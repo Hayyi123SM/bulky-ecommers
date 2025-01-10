@@ -93,7 +93,7 @@ export const productApi = createApi({
                 }
 
                 return {
-                    url: `/api/products?${searchParams.toString()}`,
+                    url: `/api/products?random=true&${searchParams.toString()}`,
                     method: "GET",
                 }
             },
@@ -137,7 +137,7 @@ export const fetchProducts = createAsyncThunk(
             // console.log("====================================")
             // console.log("params", params)
             // console.log("====================================")
-            const response = await axios.get(`/api/products`, {
+            const response = await axios.get(`/api/products?random=true`, {
                 params,
                 paramsSerializer: params => {
                     const searchParams = new URLSearchParams(params)
