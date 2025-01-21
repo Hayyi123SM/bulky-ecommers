@@ -128,7 +128,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                     <div className="flex items-center justify-between">
                         <Link href="/">
                             <Image
-                                src="/bulky-L8.png"
+                                src="/bulky.svg"
                                 width={60}
                                 height={20}
                                 alt="Logo"
@@ -258,7 +258,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             <div className="item-center flex w-1/12">
                                 <Link href="/">
                                     <Image
-                                        src="/bulky-L8.png"
+                                        src="/bulky.svg"
                                         width={100}
                                         height={30}
                                         alt="Logo"

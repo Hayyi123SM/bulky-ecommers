@@ -20,7 +20,7 @@ function Footer() {
                 <div className="w-full p-5 md:w-2/5 lg:w-3/12 xl:w-3/12">
                     <Link href="/">
                         <Image
-                            src="/bulky-black.svg"
+                            src="/bulky.svg"
                             width={94}
                             height={32}
                             alt="Logo"
