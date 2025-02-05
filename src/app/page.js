@@ -16,16 +16,8 @@ import { getGeneralReview } from "@/store/slices/pageSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { fetchVideos } from "@/store/slices/videoSlice"
-import {
-    ChevronDownIcon,
-    ChevronUpIcon,
-    XMarkIcon,
-} from "@heroicons/react/24/outline"
-import {
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    StarIcon,
-} from "@heroicons/react/24/solid"
+import { ChevronDownIcon, ChevronUpIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { ArrowLeftIcon, ArrowRightIcon, StarIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -159,9 +151,7 @@ function Home() {
 
     useEffect(() => {
         if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
-            if (
-                JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
-            ) {
+            if (JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user) {
                 setIsOpenModal(true)
             }
         }
@@ -194,9 +184,7 @@ function Home() {
     }
 
     const handleCategoryChange = (e, category) => {
-        const updatedCategories = e.target.checked
-            ? [...selectedCategories, category.id]
-            : selectedCategories.filter(id => id !== category.id)
+        const updatedCategories = e.target.checked ? [...selectedCategories, category.id] : selectedCategories.filter(id => id !== category.id)
         setSelectedCategories(updatedCategories)
     }
 
@@ -241,36 +229,19 @@ function Home() {
             {/* Search results displayed outside the Navbar */}
             {/* Rest of your page content */}
             <Navbar togglePopupMenu={togglePopupMenu} visibleOn="both" />
-            {showPopupMenu && (
-                <PopupMenuMobile
-                    showPopupMenu={showPopupMenu}
-                    closePopupMenu={closePopupMenu}
-                />
-            )}
+            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />}
             <div className="">
                 <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-center md:flex-row">
                     <div className="w-full p-4 md:w-2/3 lg:w-1/2">
                         <div className="flex flex-col">
-                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">
-                                {t("welcome")}
-                            </div>
-                            <div className="mt-2 text-xl leading-7 md:pr-28">
-                                {t("description")}
-                            </div>
+                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">{t("welcome")}</div>
+                            <div className="mt-2 text-xl leading-7 md:pr-28">{t("description")}</div>
                             <div className="mt-5 flex w-full items-center gap-4 text-center md:pr-28">
-                                <Link
-                                    href="/product?page=1"
-                                    className="w-1/2 font-light">
-                                    <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">
-                                        {t("showAllProduct")}
-                                    </div>
+                                <Link href="/product?page=1" className="w-1/2 font-light">
+                                    <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">{t("showAllProduct")}</div>
                                 </Link>
-                                <Link
-                                    href="/video"
-                                    className="w-1/2 font-light">
-                                    <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">
-                                        {t("showVideo")}
-                                    </div>
+                                <Link href="/video" className="w-1/2 font-light">
+                                    <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">{t("showVideo")}</div>
                                 </Link>
                             </div>
                             <div className="mt-5 flex items-center gap-8 text-center md:pr-28">
@@ -300,16 +271,7 @@ function Home() {
                         </div>
                     </div>
                     <div className="w-full py-10 md:w-1/3 lg:w-1/2">
-                        <Image
-                            {...Hero}
-                            alt="Product"
-                            width={700}
-                            height={700}
-                            priority={true}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            quality={75}
-                            placeholder="blur"
-                        />
+                        <Image {...Hero} alt="Product" width={700} height={700} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} placeholder="blur" />
                     </div>
                 </div>
                 {/* <div className="w-full bg-secondary bg-opacity-20 p-6">
@@ -415,118 +377,58 @@ function Home() {
                     <div className="grid grid-cols-1 gap-5 py-10 md:grid-cols-2">
                         <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    70% OFF
-                                </div>
-                                <div className="py-2 text-2xl font-bold">
-                                    {t("shoesPallet")}
-                                </div>
-                                <div className="mb-5 text-lg">
-                                    {t("dontMiss")}
-                                </div>
-                                <div
-                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
-                                    onClick={() =>
-                                        handleSelectCategory("sepatu")
-                                    }>
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">70% OFF</div>
+                                <div className="py-2 text-2xl font-bold">{t("shoesPallet")}</div>
+                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
+                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("sepatu")}>
                                     {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
                             <div className="w-1/3 pt-12">
-                                <Image
-                                    src="/new/Pallet Sepatu.png"
-                                    alt="Product"
-                                    width={200}
-                                    height={200}
-                                />
+                                <Image src="/new/Pallet Sepatu.png" alt="Product" width={200} height={200} />
                             </div>
                         </div>
                         <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    70% OFF
-                                </div>
-                                <div className="py-2 text-2xl font-bold">
-                                    {t("fashionPallet")}
-                                </div>
-                                <div className="mb-5 text-lg">
-                                    {t("dontMiss")}
-                                </div>
-                                <div
-                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
-                                    onClick={() =>
-                                        handleSelectCategory("fashion-1")
-                                    }>
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">70% OFF</div>
+                                <div className="py-2 text-2xl font-bold">{t("fashionPallet")}</div>
+                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
+                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("fashion-1")}>
                                     {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
                             <div className="w-1/3 pt-12">
-                                <Image
-                                    src="/new/Pallet Fashion.png"
-                                    alt="Product"
-                                    width={200}
-                                    height={200}
-                                />
+                                <Image src="/new/Pallet Fashion.png" alt="Product" width={200} height={200} />
                             </div>
                         </div>
                         <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    50% OFF
-                                </div>
-                                <div className="py-2 text-2xl font-bold">
-                                    {t("electronicPallet")}
-                                </div>
-                                <div className="mb-5 text-lg">
-                                    {t("dontMiss")}
-                                </div>
-                                <div
-                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
-                                    onClick={() =>
-                                        handleSelectCategory("elektronik")
-                                    }>
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">50% OFF</div>
+                                <div className="py-2 text-2xl font-bold">{t("electronicPallet")}</div>
+                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
+                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("elektronik")}>
                                     {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
                             <div className="w-1/3 pt-12">
-                                <Image
-                                    src="/image 15.png"
-                                    alt="Product"
-                                    width={200}
-                                    height={200}
-                                />
+                                <Image src="/image 15.png" alt="Product" width={200} height={200} />
                             </div>
                         </div>
                         <div className="flex items-center bg-secondary bg-opacity-20">
                             <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">
-                                    60% OFF
-                                </div>
-                                <div className="py-2 text-2xl font-bold">
-                                    {t("fmcgPallet")}
-                                </div>
-                                <div className="mb-5 text-lg">
-                                    {t("dontMiss")}
-                                </div>
-                                <div
-                                    className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white"
-                                    onClick={() =>
-                                        handleSelectCategory("fmcg")
-                                    }>
+                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">60% OFF</div>
+                                <div className="py-2 text-2xl font-bold">{t("fmcgPallet")}</div>
+                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
+                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("fmcg")}>
                                     {t("buyNow")}
                                     <ArrowRightIcon className="ml-2 h-4 w-4" />
                                 </div>
                             </div>
                             <div className="w-1/3 pt-12">
-                                <Image
-                                    src="/new/Pallet FMCG.png"
-                                    alt="Product"
-                                    width={200}
-                                    height={200}
-                                />
+                                <Image src="/new/Pallet FMCG.png" alt="Product" width={200} height={200} />
                             </div>
                         </div>
                     </div>
@@ -537,31 +439,13 @@ function Home() {
                             <Skeleton height={324} />
                         ) : (
                             banners.map((banner, index) => (
-                                <div
-                                    key={index}
-                                    className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
-                                    <Image
-                                        src={banner.full_url}
-                                        alt={`Banner ${index}`}
-                                        fill
-                                        priority={false}
-                                        className="h-full w-full object-cover"
-                                    />
+                                <div key={index} className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
+                                    <Image src={banner.full_url} alt={`Banner ${index}`} fill priority={false} className="h-full w-full object-cover" />
                                 </div>
                             ))
                         )}
                         <div className="absolute bottom-5 left-5 flex space-x-2">
-                            {loadingBanners ? (
-                                <Skeleton height={324} />
-                            ) : (
-                                banners.map((_, index) => (
-                                    <div
-                                        key={index}
-                                        className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`}
-                                        onClick={() => setCurrent(index)}
-                                    />
-                                ))
-                            )}
+                            {loadingBanners ? <Skeleton height={324} /> : banners.map((_, index) => <div key={index} className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`} onClick={() => setCurrent(index)} />)}
                         </div>
                     </div>
                 </div>
@@ -569,64 +453,32 @@ function Home() {
                     <div className="mt-2 flex justify-between py-5">
                         <div className="text-xl font-bold">New Pallets</div>
                         <Link href="/product?page=1">
-                            <div className="text-base font-semibold text-[#007185]">
-                                {t("showAll")}
-                            </div>
+                            <div className="text-base font-semibold text-[#007185]">{t("showAll")}</div>
                         </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <div className="flex gap-4 lg:grid lg:grid-cols-6">
                             {loadingProducts
                                 ? Array.from({ length: 6 }).map((_, index) => (
-                                      <div
-                                          key={index}
-                                          className="min-w-[50%] md:min-w-0">
+                                      <div key={index} className="min-w-[50%] md:min-w-0">
                                           <Skeleton height={200} />
                                           <Skeleton count={5} />
                                       </div>
                                   ))
                                 : products.map(product => (
-                                      <div
-                                          key={product.id}
-                                          className="min-w-[50%] md:min-w-[30%]">
+                                      <div key={product.id} className="min-w-[50%] md:min-w-[30%]">
                                           <ProductCard
                                               productId={product.id}
                                               image={product.images[0]}
                                               location={product.warehouse.name}
-                                              title={
-                                                  Cookies.get("locale") === "en"
-                                                      ? product?.name_trans?.en
-                                                          ? product.name_trans
-                                                                .en
-                                                          : product?.name_trans
-                                                                ?.id
-                                                      : product?.name_trans?.id
-                                              }
+                                              title={Cookies.get("locale") === "en" ? (product?.name_trans?.en ? product.name_trans.en : product?.name_trans?.id) : product?.name_trans?.id}
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}
-                                              sale={
-                                                  product.show_price_before_discount
-                                              }
-                                              beforeDiscount={
-                                                  product.price_before_discount
-                                                      .formatted
-                                              }
-                                              percent={Math.round(
-                                                  ((product
-                                                      .price_before_discount
-                                                      .numeric -
-                                                      product.price.numeric) /
-                                                      product
-                                                          .price_before_discount
-                                                          .numeric) *
-                                                      100,
-                                              )}
+                                              sale={product.show_price_before_discount}
+                                              beforeDiscount={product.price_before_discount.formatted}
+                                              percent={Math.round(((product.price_before_discount.numeric - product.price.numeric) / product.price_before_discount.numeric) * 100)}
                                               totalQty={product.total_quantity}
-                                              isOpenPdf={() =>
-                                                  handlePackageDetail(
-                                                      product.pdf_file,
-                                                  )
-                                              }
+                                              isOpenPdf={() => handlePackageDetail(product.pdf_file)}
                                               soldOut={product.sold_out}
                                           />
                                       </div>
@@ -640,47 +492,22 @@ function Home() {
                         <div className="flex gap-4 lg:grid lg:grid-cols-4">
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image
-                                        src="/package box 07.png"
-                                        alt="box"
-                                        width={36}
-                                        height={36}
-                                    />
-                                    <div className="py-2 text-lg font-bold">
-                                        {t("sendCargo")}
-                                    </div>
-                                    <div className="text-base">
-                                        {t("services")}
-                                    </div>
+                                    <Image src="/package box 07.png" alt="box" width={36} height={36} />
+                                    <div className="py-2 text-lg font-bold">{t("sendCargo")}</div>
+                                    <div className="text-base">{t("services")}</div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image
-                                        src="/package box 8.png"
-                                        alt="box"
-                                        width={36}
-                                        height={36}
-                                    />
-                                    <div className="py-2 text-lg font-bold">
-                                        {t("legitSeller")}
-                                    </div>
-                                    <div className="text-base">
-                                        {t("qcDone")}
-                                    </div>
+                                    <Image src="/package box 8.png" alt="box" width={36} height={36} />
+                                    <div className="py-2 text-lg font-bold">{t("legitSeller")}</div>
+                                    <div className="text-base">{t("qcDone")}</div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image
-                                        src="/package box 9.png"
-                                        alt="box"
-                                        width={36}
-                                        height={36}
-                                    />
-                                    <div className="py-2 text-lg font-bold">
-                                        {t("paymentTerjamin")}
-                                    </div>
+                                    <Image src="/package box 9.png" alt="box" width={36} height={36} />
+                                    <div className="py-2 text-lg font-bold">{t("paymentTerjamin")}</div>
                                     <div className="text-base">
                                         <b>100%</b> {t("safetyPayment")}
                                     </div>
@@ -688,18 +515,9 @@ function Home() {
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image
-                                        src="/package box 10.png"
-                                        alt="box"
-                                        width={36}
-                                        height={36}
-                                    />
-                                    <div className="py-2 text-lg font-bold">
-                                        {t("support24Hours")}
-                                    </div>
-                                    <div className="text-base">
-                                        {t("supportPrivate")}
-                                    </div>
+                                    <Image src="/package box 10.png" alt="box" width={36} height={36} />
+                                    <div className="py-2 text-lg font-bold">{t("support24Hours")}</div>
+                                    <div className="text-base">{t("supportPrivate")}</div>
                                 </div>
                             </div>
                         </div>
@@ -707,37 +525,16 @@ function Home() {
                 </div>
                 <div className="mx-auto flex max-w-7xl flex-col items-center justify-center p-4 md:flex-row">
                     <div className="w-full md:w-1/2">
-                        <Image
-                            {...Illustration}
-                            alt="bulky"
-                            width={500}
-                            height={500}
-                            priority={true}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            quality={75}
-                            placeholder="blur"
-                        />
+                        <Image {...Illustration} alt="bulky" width={500} height={500} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} placeholder="blur" />
                     </div>
                     <div className="w-full md:w-1/2">
-                        <div className="text-4xl font-semibold">
-                            {t("aboutBulky")}
-                        </div>
-                        <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
-                            {t("aboutBulkyDescription")}
-                        </div>
+                        <div className="text-4xl font-semibold">{t("aboutBulky")}</div>
+                        <div className="mt-5 pr-20 text-sm leading-6 opacity-60">{t("aboutBulkyDescription")}</div>
                         <div className="mt-10 flex w-full justify-between pr-20">
                             <Link href="/about-us">
-                                <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
-                                    {t("learnNext")}
-                                </div>
+                                <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">{t("learnNext")}</div>
                             </Link>
-                            <Image
-                                src="/new/cartoon-2.png"
-                                alt="bulky"
-                                width={150}
-                                height={150}
-                                className="w-1/3"
-                            />
+                            <Image src="/new/cartoon-2.png" alt="bulky" width={150} height={150} className="w-1/3" />
                         </div>
                     </div>
                 </div>
@@ -862,9 +659,7 @@ function Home() {
                         <br />
                         {t("viewVideo")}
                     </div>
-                    <div className="my-2 flex justify-center text-center text-lg leading-9">
-                        {t("descriptionVideo")}
-                    </div>
+                    <div className="my-2 flex justify-center text-center text-lg leading-9">{t("descriptionVideo")}</div>
                     <div className="h-[300px] w-full md:h-[400px] lg:h-[450px] lg:w-2/3">
                         {/*<iframe
                             className="h-full w-full" // Menyesuaikan iframe dengan ukuran parent
@@ -875,63 +670,43 @@ function Home() {
                             referrerPolicy="strict-origin-when-cross-origin"
                             allowFullScreen
                         />*/}
-                        <LiteYouTubeEmbed
-                            id="gTQamrVevWE"
-                            title="YouTube video player"
-                        />
+                        <LiteYouTubeEmbed id="gTQamrVevWE" title="YouTube video player" />
                     </div>
                 </div>
                 <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
                     <div className="mx-auto max-w-7xl">
-                        <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
-                            {t("tipsAndTrick")}
-                        </div>
+                        <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">{t("tipsAndTrick")}</div>
                         <div className="my-2 flex justify-center text-center text-3xl font-semibold leading-9">
                             {t("academyBulky")} <br /> {t("buildFuture")}
                         </div>
                         <div className="mt-10 overflow-x-auto">
                             <div className="flex gap-4 lg:grid lg:grid-cols-4">
                                 {loadingVideos
-                                    ? Array.from({ length: 4 }).map(
-                                          (_, index) => (
-                                              <div
-                                                  key={index}
-                                                  className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
-                                                  <Skeleton height={150} />
-                                                  <Skeleton width="60%" />
-                                              </div>
-                                          ),
-                                      )
+                                    ? Array.from({ length: 4 }).map((_, index) => (
+                                          <div key={index} className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                              <Skeleton height={150} />
+                                              <Skeleton width="60%" />
+                                          </div>
+                                      ))
                                     : videos &&
                                       videos.length > 0 &&
                                       videos.map(video => (
-                                          <div
-                                              className="min-w-[100%] md:min-w-[30%] lg:min-w-0"
-                                              key={video.id}>
+                                          <div className="min-w-[100%] md:min-w-[30%] lg:min-w-0" key={video.id}>
                                               <Link href={`/video/${video.id}`}>
-                                                  <VideoThumbnail
-                                                      thumbnail={
-                                                          video.thumbnail
-                                                      }
-                                                      title={video.title}
-                                                  />
+                                                  <VideoThumbnail thumbnail={video.thumbnail} title={video.title} />
                                               </Link>
                                           </div>
                                       ))}
                             </div>
                         </div>
                         <Link href="/video">
-                            <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">
-                                {t("viewAllVideo")}
-                            </div>
+                            <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">{t("viewAllVideo")}</div>
                         </Link>
                     </div>
                 </div>
                 <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat lg:bg-[url('/new/cartoon-1.png')]">
                     <div className="mx-auto max-w-7xl px-4 py-10">
-                        <div className="mb-10 flex justify-center text-center text-2xl font-semibold leading-9">
-                            {t("testimonyUs")}
-                        </div>
+                        <div className="mb-10 flex justify-center text-center text-2xl font-semibold leading-9">{t("testimonyUs")}</div>
                         <div className="flex w-full grid-cols-1 items-center justify-center gap-10">
                             {/* <div className="w-1/3 rounded-lg bg-secondary bg-opacity-20 p-10">
                                 <div className="text-4xl font-bold">
@@ -1027,62 +802,29 @@ function Home() {
                                         ) : (
                                             reviews.map((review, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div
-                                                        key={review.id}
-                                                        className="flex h-56 min-w-[100%] flex-col justify-end rounded-lg p-4 md:pr-20">
-                                                        <div className="opacity-70">
-                                                            {review.comment}
-                                                        </div>
-                                                        <div className="mt-10 flex gap-3">
+                                                    <div key={review.id} className="flex h-56 min-w-[100%] flex-col justify-start rounded-lg p-4 md:pr-20">
+                                                        <div className="mb-3 flex gap-3">
                                                             {review.images &&
-                                                                review.images.map(
-                                                                    (
-                                                                        image,
-                                                                        index2,
-                                                                    ) => (
-                                                                        <div
-                                                                            key={
-                                                                                index2
-                                                                            }
-                                                                            className="h-12 w-12 rounded-full bg-cover bg-center"
-                                                                            style={{
-                                                                                backgroundImage: `url(${image.path})`,
-                                                                            }}
-                                                                        />
-                                                                    ),
-                                                                )}
+                                                                review.images.map((image, index2) => (
+                                                                    <div
+                                                                        key={index2}
+                                                                        className="h-12 w-12 rounded-full bg-cover bg-center"
+                                                                        style={{
+                                                                            backgroundImage: `url(${image.path})`,
+                                                                        }}
+                                                                    />
+                                                                ))}
                                                             <div className="flex flex-col">
-                                                                <div className="text-lg font-bold">
-                                                                    {
-                                                                        review.rated_by
-                                                                    }
-                                                                </div>
+                                                                <div className="text-lg font-bold">{review.rated_by}</div>
                                                                 <div className="flex">
-                                                                    {[
-                                                                        ...Array(
-                                                                            5,
-                                                                        ),
-                                                                    ].map(
-                                                                        (
-                                                                            _,
-                                                                            index3,
-                                                                        ) => (
-                                                                            <StarIcon
-                                                                                key={
-                                                                                    index3
-                                                                                }
-                                                                                className={`mr-1 h-4 w-4 cursor-pointer ${
-                                                                                    index3 <
-                                                                                    review.rating
-                                                                                        ? "text-secondary"
-                                                                                        : "text-[#BFC9D9]"
-                                                                                }`}
-                                                                            />
-                                                                        ),
-                                                                    )}
+                                                                    {[...Array(5)].map((_, index3) => (
+                                                                        <StarIcon key={index3} className={`mr-1 h-4 w-4 cursor-pointer ${index3 < review.rating ? "text-secondary" : "text-[#BFC9D9]"}`} />
+                                                                    ))}
                                                                 </div>
+                                                                <div className="mt-2 font-bold text-[#007185]">{Cookies.get("locale") === "en" ? (review?.product?.en ? review.product.en : review?.product?.id) : review?.product?.id}</div>
                                                             </div>
                                                         </div>
+                                                        <div className="opacity-70">{review.comment}</div>
                                                     </div>
                                                 </SwiperSlide>
                                             ))
@@ -1090,14 +832,10 @@ function Home() {
                                     </Swiper>
 
                                     {/* Custom Navigation Buttons */}
-                                    <button
-                                        ref={prevRef}
-                                        className="custom-swiper-button custom-swiper-button-prev">
+                                    <button ref={prevRef} className="custom-swiper-button custom-swiper-button-prev">
                                         <ArrowLeftIcon className="h-6 w-6" />
                                     </button>
-                                    <button
-                                        ref={nextRef}
-                                        className="custom-swiper-button custom-swiper-button-next">
+                                    <button ref={nextRef} className="custom-swiper-button custom-swiper-button-next">
                                         <ArrowRightIcon className="h-6 w-6" />
                                     </button>
 
@@ -1145,23 +883,12 @@ function Home() {
                 <div className="bg-secondary bg-opacity-20">
                     <div className="mx-auto max-w-5xl px-4 py-10">
                         <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
-                            <Image
-                                src="/box bulky-01 1.png"
-                                alt="Product"
-                                width={400}
-                                height={400}
-                            />
+                            <Image src="/box bulky-01 1.png" alt="Product" width={400} height={400} />
                             <div className="flex flex-col">
-                                <div className="text-4xl font-semibold">
-                                    {t("wantWholesaler")}
-                                </div>
-                                <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
-                                    {t("descriptionWholesale")}
-                                </div>
+                                <div className="text-4xl font-semibold">{t("wantWholesaler")}</div>
+                                <div className="mt-5 pr-20 text-sm leading-6 opacity-60">{t("descriptionWholesale")}</div>
                                 <div className="mt-6 flex justify-between pr-20">
-                                    <div
-                                        className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
-                                        onClick={() => setShowWholesale(true)}>
+                                    <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]" onClick={() => setShowWholesale(true)}>
                                         {t("registerNow")}
                                     </div>
                                 </div>
@@ -1170,21 +897,11 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <PopupModal
-                isOpen={isOpenModal}
-                closeModal={closeModal}
-                type="updateProfile"
-                title={t("notification")}
-                message={t("notificationMessage")}
-                confirmText={t("fillNow")}
-                cancelText={t("later")}
-            />
+            <PopupModal isOpen={isOpenModal} closeModal={closeModal} type="updateProfile" title={t("notification")} message={t("notificationMessage")} confirmText={t("fillNow")} cancelText={t("later")} />
 
             {isOpenPdf && (
                 <div onClick={() => setIsOpenPdf(false)}>
-                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]">
-                        {" "}
-                    </div>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]"></div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[500px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
                             {/* start: close modal */}
@@ -1211,11 +928,7 @@ function Home() {
                             {isLoadingPdf && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-white">
                                     {t("waiting")}...
-                                    <LoadingSpinner
-                                        text={false}
-                                        color="#000"
-                                        size={20}
-                                    />
+                                    <LoadingSpinner text={false} color="#000" size={20} />
                                 </div>
                             )}
                             {/* PDF Viewer */}
@@ -1253,117 +966,48 @@ function Home() {
             )}
 
             {showWholesale && (
-                <div
-                    className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}>
-                    <div
-                        className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
+                <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}>
+                    <div className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
                         <div className="my-4 flex items-center justify-between">
-                            <h2 className="text-xl font-semibold">
-                                {t("formWholesale")}
-                            </h2>
-                            <XMarkIcon
-                                className="h-6 w-6 cursor-pointer"
-                                onClick={handleCloseWholesale}
-                            />
+                            <h2 className="text-xl font-semibold">{t("formWholesale")}</h2>
+                            <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={handleCloseWholesale} />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                {t("form.name")}
-                            </div>
-                            <input
-                                type="text"
-                                value={nameWholesale}
-                                onChange={e => setNameWholesale(e.target.value)}
-                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                placeholder={t("placeholder.name")}
-                            />
-                            <InputError
-                                messages={errors && errors.name}
-                                className={"mt-2"}
-                            />
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.name")}</div>
+                            <input type="text" value={nameWholesale} onChange={e => setNameWholesale(e.target.value)} className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" placeholder={t("placeholder.name")} />
+                            <InputError messages={errors && errors.name} className={"mt-2"} />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                {t("form.phone")}
-                            </div>
-                            <input
-                                type="text"
-                                value={phoneWholesale}
-                                onChange={e =>
-                                    setPhoneWholesale(e.target.value)
-                                }
-                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                placeholder={t("placeholder.phone")}
-                            />
-                            <InputError
-                                messages={errors && errors.phone_number}
-                                className={"mt-2"}
-                            />
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.phone")}</div>
+                            <input type="text" value={phoneWholesale} onChange={e => setPhoneWholesale(e.target.value)} className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" placeholder={t("placeholder.phone")} />
+                            <InputError messages={errors && errors.phone_number} className={"mt-2"} />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                {t("form.address")}
-                            </div>
-                            <input
-                                type="text"
-                                value={addressWholesale}
-                                onChange={e =>
-                                    setAddressWholesale(e.target.value)
-                                }
-                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                placeholder={t("placeholder.address")}
-                            />
-                            <InputError
-                                messages={errors && errors.address}
-                                className={"mt-2"}
-                            />
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.address")}</div>
+                            <input type="text" value={addressWholesale} onChange={e => setAddressWholesale(e.target.value)} className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" placeholder={t("placeholder.address")} />
+                            <InputError messages={errors && errors.address} className={"mt-2"} />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                {t("form.budget")}
-                            </div>
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.budget")}</div>
                             <div className="relative w-full lg:max-w-xl">
-                                <div
-                                    className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
-                                    onClick={() => setIsOpen(!isOpen)}>
-                                    <div className="flex items-center">
-                                        {selectedOption}
-                                    </div>
-                                    {isOpen ? (
-                                        <ChevronUpIcon className="inline-block h-5 w-5" />
-                                    ) : (
-                                        <ChevronDownIcon className="inline-block h-5 w-5" />
-                                    )}
+                                <div className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" onClick={() => setIsOpen(!isOpen)}>
+                                    <div className="flex items-center">{selectedOption}</div>
+                                    {isOpen ? <ChevronUpIcon className="inline-block h-5 w-5" /> : <ChevronDownIcon className="inline-block h-5 w-5" />}
                                 </div>
 
                                 {/* Dropdown options */}
-                                <div
-                                    className={`absolute mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${
-                                        isOpen
-                                            ? "max-h-screen opacity-100"
-                                            : "max-h-0 overflow-hidden opacity-0"
-                                    }`}>
+                                <div className={`absolute mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${isOpen ? "max-h-screen opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
                                     {budgets.map((option, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
-                                            onClick={() =>
-                                                handleOptionClick(option)
-                                            }>
+                                        <div key={index} className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]" onClick={() => handleOptionClick(option)}>
                                             {option}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <InputError
-                                messages={errors && errors.budget}
-                                className={"mt-2"}
-                            />
+                            <InputError messages={errors && errors.budget} className={"mt-2"} />
                         </div>
                         <div className="mt-2 py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
-                                {t("form.productCategory")}
-                            </div>
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.productCategory")}</div>
                             <div className="grid max-h-32 grid-cols-2 gap-2 overflow-y-auto">
                                 <div className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
                                     <input
@@ -1371,56 +1015,35 @@ function Home() {
                                         aria-describedby="comments-description"
                                         name="comments"
                                         type="checkbox"
-                                        checked={
-                                            selectedCategories.length ===
-                                            categories.length
-                                        }
+                                        checked={selectedCategories.length === categories.length}
                                         onChange={handleSelectAllCategories}
                                         className="h-3 w-3 rounded border-black checked:bg-[#007185] checked:text-[#007185] focus:ring-0"
                                     />
-                                    <label
-                                        htmlFor={`selected-all`}
-                                        className="text-sm font-bold text-[#6D7588]">
+                                    <label htmlFor={`selected-all`} className="text-sm font-bold text-[#6D7588]">
                                         Semua Kategori
                                     </label>
                                 </div>
                                 {categories.map((category, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
+                                    <div key={index} className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
                                         <input
                                             id={`category-${category.id}`} // Unique ID for accessibility
                                             aria-describedby="comments-description"
                                             name="comments"
                                             type="checkbox"
-                                            checked={selectedCategories.includes(
-                                                category.id,
-                                            )}
-                                            onChange={e =>
-                                                handleCategoryChange(
-                                                    e,
-                                                    category,
-                                                )
-                                            }
+                                            checked={selectedCategories.includes(category.id)}
+                                            onChange={e => handleCategoryChange(e, category)}
                                             className="h-3 w-3 rounded border-black checked:bg-[#007185] checked:text-[#007185] focus:ring-0"
                                         />
-                                        <label
-                                            htmlFor={`category-${category.id}`}
-                                            className="text-sm font-bold text-[#6D7588]">
+                                        <label htmlFor={`category-${category.id}`} className="text-sm font-bold text-[#6D7588]">
                                             {category.name}
                                         </label>
                                     </div>
                                 ))}
                             </div>
-                            <InputError
-                                messages={errors && errors.categories}
-                                className={"mt-2"}
-                            />
+                            <InputError messages={errors && errors.categories} className={"mt-2"} />
                         </div>
                         <div className="mt-6 flex justify-center">
-                            <div
-                                className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
-                                onClick={handleSubmitWholesale}>
+                            <div className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]" onClick={handleSubmitWholesale}>
                                 {t("form.sendForm")}
                             </div>
                         </div>
@@ -1428,14 +1051,7 @@ function Home() {
                 </div>
             )}
 
-            <PopupModal
-                isOpen={showNotification}
-                closeModal={handleCloseWholesale}
-                type={"notification"}
-                title={t("notification")}
-                message={t("congratulationWholesale")}
-                urlConfirm="/"
-            />
+            <PopupModal isOpen={showNotification} closeModal={handleCloseWholesale} type={"notification"} title={t("notification")} message={t("congratulationWholesale")} urlConfirm="/" />
             <Footer />
 
             {/* <LoadingSpinner /> */}

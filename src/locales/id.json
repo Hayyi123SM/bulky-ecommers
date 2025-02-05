@@ -134,7 +134,11 @@
         "privacypolicy": "Kebijakan Privasi",
         "termsandconditions": "Syarat dan Ketentuan",
         "howtobuy": "Cara Membeli",
-        "aboutpayment": "Tentang Pembayaran"
+        "aboutpayment": "Tentang Pembayaran",
+        "aboutUsTitle1": "Memberdayakan Semua Bisnis",
+        "aboutUsTitle2": "Melalui Re-Commerce",
+        "aboutUsDesc": "Ada nilai dan permintaan yang luar biasa untuk inventaris retur, kelebihan, dan likuidasi lainnya. Dan kami percaya ada cara yang lebih baik untuk mengelolanya. Di Bulky, kami memberdayakan semua bisnis yang siap berkembang bersama kami.",
+        "mission": "Misi Kami"
     },
     "login": {
         "login": "Masuk",

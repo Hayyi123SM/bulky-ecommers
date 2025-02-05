@@ -17,20 +17,17 @@ const initialState = {
     coupon: null,
 }
 
-export const addToCart = createAsyncThunk(
-    "carts/addToCart",
-    async (data, { rejectWithValue }) => {
-        try {
-            const params = {
-                product_id: data,
-            }
-            const response = await axios.post("/api/carts/add", params)
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
+export const addToCart = createAsyncThunk("carts/addToCart", async (data, { rejectWithValue }) => {
+    try {
+        const params = {
+            product_id: data,
         }
-    },
-)
+        const response = await axios.post("/api/carts/add", params)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
 
 export const fetchCarts = createAsyncThunk("carts/fetchCarts", async () => {
     try {
@@ -41,141 +38,106 @@ export const fetchCarts = createAsyncThunk("carts/fetchCarts", async () => {
     }
 })
 
-export const fetchCheckout = createAsyncThunk(
-    "carts/fetchCheckout",
-    async () => {
-        try {
-            const response = await axios.get("/api/carts?mode=checkout")
-            return response.data
-        } catch (error) {
-            throw error
-        }
-    },
-)
+export const fetchCheckout = createAsyncThunk("carts/fetchCheckout", async () => {
+    try {
+        const response = await axios.get("/api/carts?mode=checkout")
+        return response.data
+    } catch (error) {
+        throw error
+    }
+})
 
-export const updateSelectedItems = createAsyncThunk(
-    "carts/updateSelectedItems",
-    async (cartItems, { rejectWithValue }) => {
-        try {
-            const response = await axios.patch("/api/carts/set-selected-item", {
-                cart_items: cartItems,
+export const updateSelectedItems = createAsyncThunk("carts/updateSelectedItems", async (cartItems, { rejectWithValue }) => {
+    try {
+        const response = await axios.patch("/api/carts/set-selected-item", {
+            cart_items: cartItems,
+        })
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const removeItems = createAsyncThunk("carts/removeItems", async (cartItems, { rejectWithValue }) => {
+    try {
+        const response = await axios.delete(`/api/carts/remove-item/${cartItems}`)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const setShippingMethod = createAsyncThunk("carts/setShippingMethod", async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios.patch("/api/carts/set-shipping-method", data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const getShippingCost = createAsyncThunk("carts/getShippingCost", async (_, { rejectWithValue }) => {
+    try {
+        const response = await axios.get("/api/carts/shipping-cost")
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const applyCoupon = createAsyncThunk("carts/applyCoupon", async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios.post("/api/carts/apply-coupon", data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const clearCoupon = createAsyncThunk("carts/clearCoupon", async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios.delete("/api/carts/clear-coupon", data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const setAddress = createAsyncThunk("carts/setAddress", async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios.patch("/api/carts/set-address", data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const placeOrders = createAsyncThunk("carts/placeOrders", async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios.post("/api/carts/place-order", data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const searchFriends = createAsyncThunk("carts/searchFriends", async (data, { rejectWithValue }) => {
+    try {
+        const params = {
+            search: data,
+        }
+        if (data === "") {
+            return initialState
+        } else {
+            const response = await axios.get("/api/carts/search-friend", {
+                params,
             })
             return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
         }
-    },
-)
-
-export const removeItems = createAsyncThunk(
-    "carts/removeItems",
-    async (cartItems, { rejectWithValue }) => {
-        try {
-            const response = await axios.delete(
-                `/api/carts/remove-item/${cartItems}`,
-            )
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const setShippingMethod = createAsyncThunk(
-    "carts/setShippingMethod",
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await axios.patch(
-                "/api/carts/set-shipping-method",
-                data,
-            )
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const getShippingCost = createAsyncThunk(
-    "carts/getShippingCost",
-    async (_, { rejectWithValue }) => {
-        try {
-            const response = await axios.get("/api/carts/shipping-cost")
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const applyCoupon = createAsyncThunk(
-    "carts/applyCoupon",
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await axios.post("/api/carts/apply-coupon", data)
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const clearCoupon = createAsyncThunk(
-    "carts/clearCoupon",
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await axios.delete("/api/carts/clear-coupon", data)
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const setAddress = createAsyncThunk(
-    "carts/setAddress",
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await axios.patch("/api/carts/set-address", data)
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const placeOrders = createAsyncThunk(
-    "carts/placeOrders",
-    async (data, { rejectWithValue }) => {
-        try {
-            const response = await axios.post("/api/carts/place-order", data)
-            return response.data
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
-
-export const searchFriends = createAsyncThunk(
-    "carts/searchFriends",
-    async (data, { rejectWithValue }) => {
-        try {
-            const params = {
-                search: data,
-            }
-            if (data === "") {
-                return initialState
-            } else {
-                const response = await axios.get("/api/carts/search-friend", {
-                    params,
-                })
-                return response.data
-            }
-        } catch (error) {
-            return rejectWithValue(error.response.data)
-        }
-    },
-)
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
 
 const cartSlice = createSlice({
     name: "carts",
@@ -189,14 +151,9 @@ const cartSlice = createSlice({
                 if (isSelected) {
                     state.selectedItems.push(item)
                 } else {
-                    state.selectedItems = state.selectedItems.filter(
-                        selectedItem => selectedItem.id !== itemId,
-                    )
+                    state.selectedItems = state.selectedItems.filter(selectedItem => selectedItem.id !== itemId)
                 }
-                state.totalPrice = state.selectedItems.reduce(
-                    (total, selectedItem) => total + selectedItem.price.numeric,
-                    0,
-                )
+                state.totalPrice = state.selectedItems.reduce((total, selectedItem) => total + selectedItem.price.numeric, 0)
             }
         },
         toggleSelectAllItems(state, action) {
@@ -211,10 +168,7 @@ const cartSlice = createSlice({
                 state.selectedItems = []
             }
 
-            state.totalPrice = state.selectedItems.reduce(
-                (total, selectedItem) => total + selectedItem.price.numeric,
-                0,
-            )
+            state.totalPrice = state.selectedItems.reduce((total, selectedItem) => total + selectedItem.price.numeric, 0)
         },
     },
     extraReducers: builder => {
@@ -343,6 +297,7 @@ const cartSlice = createSlice({
                 state.updateStatus = "succeeded"
                 state.isLoading = false
                 state.cart = action.payload.data
+                state.checkout = action.payload.data
             })
             .addCase(applyCoupon.rejected, (state, action) => {
                 state.updateStatus = "failed"

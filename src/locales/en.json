@@ -134,7 +134,11 @@
         "privacypolicy": "Privacy Policy",
         "termsandconditions": "Terms and Conditions",
         "howtobuy": "How to Buy",
-        "aboutpayment": "About Payment"
+        "aboutpayment": "About Payment",
+        "aboutUsTitle1": "Empowering All Businesses",
+        "aboutUsTitle2": "Through Re-Commerce",
+        "aboutUsDesc": "There is tremendous value and demand for returned,excess, and other liquidation inventory. And we belive there is a better way of doing it. At Bulky, we empower all businesses who are ready to grow with us.",
+        "mission": "Our Mission"
     },
     "login": {
         "login": "Login",
