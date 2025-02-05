@@ -299,16 +299,18 @@ function PaymentMethod() {
                                 </div>
                             </div>*/}
                             {cart.tax_enabled && (
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">PPN {cart.tax_rate.formatted}</label>
+                                <>
+                                    <div className="flex justify-between">
+                                        <div className="text-sm leading-6">
+                                            <label className="text-sm font-light">PPN {cart.tax_rate.formatted}</label>
+                                        </div>
+                                        <div className="ml-5 text-right text-sm leading-6">
+                                            <label className="text-md font-light">{cart.tax_amount.formatted}</label>
+                                        </div>
                                     </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">{cart.tax_amount.formatted}</label>
-                                    </div>
-                                </div>
+                                    <div className="my-5 border-b p-1" />
+                                </>
                             )}
-                            <div className="my-5 border-b p-1" />
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">{t("paymentMethod.totalShopping")}</label>
