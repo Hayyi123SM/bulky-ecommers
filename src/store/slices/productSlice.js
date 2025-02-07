@@ -101,120 +101,107 @@ export const productApi = createApi({
     }),
 })
 
-export const fetchProducts = createAsyncThunk(
-    "products/fetchProducts",
-    async ({ currentPage, filters }) => {
-        try {
-            // console.log("====================================")
-            // console.log("filters product", filters)
-            // console.log("====================================")
-            // Build the params object dynamically
-            const params = {
-                page: currentPage,
-                per_page: filters.perPage || 15,
-                ...(filters.search && { search: filters.search }),
-                ...(filters.categories &&
-                    filters.categories.length && {
-                        category: filters.categories.join(","),
-                    }),
-                ...(filters.conditions &&
-                    filters.conditions.length && {
-                        condition: filters.conditions.join(","),
-                    }),
-                ...(filters.statuses &&
-                    filters.statuses.length && {
-                        status: filters.statuses.join(","),
-                    }),
-                ...(filters.warehouses &&
-                    filters.warehouses.length && {
-                        warehouse: filters.warehouses.join(","),
-                    }),
-                ...(filters.minPrice && { price_min: filters.minPrice }),
-                ...(filters.maxPrice && { price_max: filters.maxPrice }),
-                ...(filters.brands &&
-                    filters.brands.length && { brands: filters.brands }),
-            }
-            // console.log("====================================")
-            // console.log("params", params)
-            // console.log("====================================")
-            const response = await axios.get(`/api/products?random=true`, {
-                params,
-                paramsSerializer: params => {
-                    const searchParams = new URLSearchParams(params)
-
-                    // Handle brands array
-                    if (filters.brands?.length) {
-                        filters.brands.forEach(brand => {
-                            searchParams.append("brands[]", brand)
-                        })
-                    }
-
-                    return searchParams.toString()
-                },
-            })
-
-            // console.log("API response Product:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching products:", error) // Log errors
-            throw error
+export const fetchProducts = createAsyncThunk("products/fetchProducts", async ({ currentPage, filters }) => {
+    try {
+        // console.log("====================================")
+        // console.log("filters product", filters)
+        // console.log("====================================")
+        // Build the params object dynamically
+        const params = {
+            page: currentPage,
+            per_page: filters.perPage || 15,
+            ...(filters.search && { search: filters.search }),
+            ...(filters.categories &&
+                filters.categories.length && {
+                    category: filters.categories.join(","),
+                }),
+            ...(filters.conditions &&
+                filters.conditions.length && {
+                    condition: filters.conditions.join(","),
+                }),
+            ...(filters.statuses &&
+                filters.statuses.length && {
+                    status: filters.statuses.join(","),
+                }),
+            ...(filters.warehouses &&
+                filters.warehouses.length && {
+                    warehouse: filters.warehouses.join(","),
+                }),
+            ...(filters.minPrice && { price_min: filters.minPrice }),
+            ...(filters.maxPrice && { price_max: filters.maxPrice }),
+            ...(filters.brands && filters.brands.length && { brands: filters.brands }),
         }
-    },
-)
+        // console.log("====================================")
+        // console.log("params", params)
+        // console.log("====================================")
+        const response = await axios.get(`/api/products?random=1`, {
+            params,
+            paramsSerializer: params => {
+                const searchParams = new URLSearchParams(params)
 
-export const fetchSearchProducts = createAsyncThunk(
-    "products/fetchSearchProducts",
-    async ({ currentPage, filters }) => {
-        try {
-            // Build the params object dynamically
-            const params = {
-                page: currentPage,
-                ...(filters.search && { search: filters.search }),
-            }
+                // Handle brands array
+                if (filters.brands?.length) {
+                    filters.brands.forEach(brand => {
+                        searchParams.append("brands[]", brand)
+                    })
+                }
 
-            const response = await axios.get(`/api/products`, {
-                params,
-                paramsSerializer: params => {
-                    return new URLSearchParams(params).toString()
-                },
-            })
+                return searchParams.toString()
+            },
+        })
 
-            // console.log("API response Search Product:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching products:", error) // Log errors
-            throw error
+        // console.log("API response Product:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching products:", error) // Log errors
+        throw error
+    }
+})
+
+export const fetchSearchProducts = createAsyncThunk("products/fetchSearchProducts", async ({ currentPage, filters }) => {
+    try {
+        // Build the params object dynamically
+        const params = {
+            page: currentPage,
+            ...(filters.search && { search: filters.search }),
         }
-    },
-)
 
-export const fetchProductDetail = createAsyncThunk(
-    "products/fetchProductDetail",
-    async slug => {
-        try {
-            const response = await axios.get(`/api/products/detail/${slug}`)
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching product details:", error) // Log errors
-            throw error
-        }
-    },
-)
+        const response = await axios.get(`/api/products`, {
+            params,
+            paramsSerializer: params => {
+                return new URLSearchParams(params).toString()
+            },
+        })
 
-export const fetchProductRelated = createAsyncThunk(
-    "products/fetchProductRelated",
-    async slug => {
-        try {
-            const response = await axios.get(`/api/products/related/${slug}`)
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching products:", error) // Log errors
-            throw error
-        }
-    },
-)
+        // console.log("API response Search Product:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching products:", error) // Log errors
+        throw error
+    }
+})
+
+export const fetchProductDetail = createAsyncThunk("products/fetchProductDetail", async slug => {
+    try {
+        const response = await axios.get(`/api/products/detail/${slug}`)
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching product details:", error) // Log errors
+        throw error
+    }
+})
+
+export const fetchProductRelated = createAsyncThunk("products/fetchProductRelated", async slug => {
+    try {
+        const response = await axios.get(`/api/products/related/${slug}`)
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching products:", error) // Log errors
+        throw error
+    }
+})
 
 const productSlice = createSlice({
     name: "products",
@@ -285,6 +272,5 @@ const productSlice = createSlice({
 })
 
 export const { useFetchProductsQuery } = productApi
-export const { setStateProduct, setProductName, initializeProduct } =
-    productSlice.actions
+export const { setStateProduct, setProductName, initializeProduct } = productSlice.actions
 export default productSlice.reducer
