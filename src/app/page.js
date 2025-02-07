@@ -802,19 +802,19 @@ function Home() {
                                         ) : (
                                             reviews.map((review, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div key={review.id} className="flex h-56 min-w-[100%] flex-col justify-start rounded-lg p-4 md:pr-20">
-                                                        <div className="mb-3 flex gap-3">
-                                                            {review.images &&
+                                                    <div key={review.id} className="flex h-56 w-full flex-col justify-start rounded-lg p-4 text-left">
+                                                        <div className="mb-3 flex items-start gap-3">
+                                                            {/*{review.images &&
                                                                 review.images.map((image, index2) => (
                                                                     <div
                                                                         key={index2}
                                                                         className="h-12 w-12 rounded-full bg-cover bg-center"
                                                                         style={{
-                                                                            backgroundImage: `url(${image.path})`,
+                                                                            backgroundImage: `url(${image.url})`,
                                                                         }}
                                                                     />
-                                                                ))}
-                                                            <div className="flex flex-col">
+                                                                ))}*/}
+                                                            <div className="flex w-full flex-col text-left">
                                                                 <div className="text-lg font-bold">{review.rated_by}</div>
                                                                 <div className="flex">
                                                                     {[...Array(5)].map((_, index3) => (
@@ -824,7 +824,7 @@ function Home() {
                                                                 <div className="mt-2 font-bold text-[#007185]">{Cookies.get("locale") === "en" ? (review?.product?.en ? review.product.en : review?.product?.id) : review?.product?.id}</div>
                                                             </div>
                                                         </div>
-                                                        <div className="opacity-70">{review.comment}</div>
+                                                        <div className="w-full opacity-70">{review.comment}</div>
                                                     </div>
                                                 </SwiperSlide>
                                             ))
@@ -839,42 +839,44 @@ function Home() {
                                         <ArrowRightIcon className="h-6 w-6" />
                                     </button>
 
-                                    <style>{`
-                                        .custom-swiper-button {
-                                            position: absolute;
-                                            top: 50%;
-                                            transform: translateY(-50%);
-                                            background-color: #ffcf02;
-                                            color: #000000;
-                                            padding: 10px;
-                                            border-radius: 50%;
-                                            cursor: pointer;
-                                            z-index: 10;
-                                        }
-
-                                        .custom-swiper-button-prev {
-                                            left: -30px;
-                                        }
-
-                                        .custom-swiper-button-next {
-                                            right: -30px;
-                                        }
-
-                                        @media (max-width: 426px) {
+                                    <style>
+                                        {`
                                             .custom-swiper-button {
-                                                padding: 8px;
-                                                top: 45%;
-                                                transform: translateY(-45%);
-                                                font-size: 12px;
+                                                position: absolute;
+                                                top: 50%;
+                                                transform: translateY(-50%);
+                                                background-color: #ffcf02;
+                                                color: #000000;
+                                                padding: 10px;
+                                                border-radius: 50%;
+                                                cursor: pointer;
+                                                z-index: 10;
                                             }
+
                                             .custom-swiper-button-prev {
-                                                left: -20px;
+                                                left: -30px;
                                             }
+
                                             .custom-swiper-button-next {
-                                                right: -20px;
+                                                right: -30px;
                                             }
-                                        }
-                                    `}</style>
+
+                                            @media (max-width: 426px) {
+                                                .custom-swiper-button {
+                                                    padding: 8px;
+                                                    top: 45%;
+                                                    transform: translateY(-45%);
+                                                    font-size: 12px;
+                                                }
+                                                .custom-swiper-button-prev {
+                                                    left: -20px;
+                                                }
+                                                .custom-swiper-button-next {
+                                                    right: -20px;
+                                                }
+                                            }
+                                        `}
+                                    </style>
                                 </div>
                             </div>
                         </div>
