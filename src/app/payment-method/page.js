@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
+import WarehouseInformation from "@/components/WarehouseInformation"
 
 function PaymentMethod() {
     const t = useTranslations()
@@ -256,6 +257,9 @@ function PaymentMethod() {
                                     <input className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none" placeholder={t("other.inputCoupon")} onChange={e => handleCoupon(e.target.value)} type="text" defaultValue={activeCoupon} />
                                 </div>
                             </div>
+                        </div>
+                        <div className="mt-5 h-fit w-full lg:max-w-xl lg:rounded-xl">
+                            <WarehouseInformation type={"Self Pickup"} />
                         </div>
                         <div className="mb-10 mt-5 h-fit w-full rounded-t-xl bg-white p-8 lg:mb-0 lg:max-w-xl">
                             <div className="py-2">
