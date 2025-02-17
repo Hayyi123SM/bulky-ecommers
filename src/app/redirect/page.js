@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation"
 
 function Redirect() {
     const orderId = useSearchParams().get("orderId")
+    const type = useSearchParams().get("type")
     const [isMobile, setIsMobile] = useState(false)
 
     useEffect(() => {
@@ -25,9 +26,16 @@ function Redirect() {
                 window.location.href = "/"
             }, 3000)
         } else {
-            setTimeout(() => {
-                window.location.href = "/order/" + orderId
-            }, 3000)
+            if (type === "order") {
+                setTimeout(() => {
+                    window.location.href = "/order/" + orderId
+                }, 3000)
+            }
+            if (type === "order-split") {
+                setTimeout(() => {
+                    window.location.href = "/order-split/" + orderId
+                }, 3000)
+            }
         }
     }, [isMobile])
 
