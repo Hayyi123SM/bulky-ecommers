@@ -5,7 +5,7 @@ import { MoonLoader } from "react-spinners"
 import { useSearchParams } from "next/navigation"
 
 function Redirect() {
-    const orderId = useSearchParams().get("orderId")
+    const orderId = useSearchParams().get("order_id")
     const type = useSearchParams().get("type")
     const [isMobile, setIsMobile] = useState(false)
 
@@ -41,7 +41,7 @@ function Redirect() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-white">
-            <div className="mr-2 text-lg text-black">{isMobile ? "Please wait... (Mobile)" : "Please wait... (Desktop)"}</div>
+            <div className="mr-2 text-lg text-black">{isMobile ? "Please wait.." : "Please wait..."}</div>
             <MoonLoader color="#FFCF02" size={30} aria-label="Loading Spinner" />
         </div>
     )
