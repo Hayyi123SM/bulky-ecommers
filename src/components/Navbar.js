@@ -3,11 +3,7 @@
 import CategorySelect from "@/components/CategorySelect"
 import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
-import {
-    fetchCategories,
-    resetFilters,
-    setFilters,
-} from "@/store/slices/filterSlice"
+import { fetchCategories, resetFilters, setFilters } from "@/store/slices/filterSlice"
 import { useFetchProductsQuery } from "@/store/slices/productSlice"
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -74,12 +70,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
 
     useEffect(() => {
         const handleClickOutside = event => {
-            if (
-                inputRef.current &&
-                !inputRef.current.contains(event.target) &&
-                popupRef.current &&
-                !popupRef.current.contains(event.target)
-            ) {
+            if (inputRef.current && !inputRef.current.contains(event.target) && popupRef.current && !popupRef.current.contains(event.target)) {
                 setTimeout(() => {
                     setShowSearchResults(false)
                 }, 200)
@@ -113,12 +104,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
         router.push("/product?page=1")
     }
 
-    const visibilityClasses =
-        visibleOn === "mobile"
-            ? "lg:hidden"
-            : visibleOn === "desktop"
-              ? "hidden lg:block"
-              : ""
+    const visibilityClasses = visibleOn === "mobile" ? "lg:hidden" : visibleOn === "desktop" ? "hidden lg:block" : ""
 
     return (
         <Suspense fallback={<div>Loading ... </div>}>
@@ -127,86 +113,34 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                 <nav className="block h-[160px] bg-[#212121] px-4 py-3 lg:hidden">
                     <div className="flex items-center justify-between">
                         <Link href="/">
-                            <Image
-                                src="/bulky.svg"
-                                width={60}
-                                height={20}
-                                alt="Logo"
-                                className="cursor-pointer"
-                                priority={false}
-                            />
+                            <Image src="/bulky.svg" width={60} height={20} alt="Logo" className="cursor-pointer" priority={false} />
                         </Link>
                         <div className="flex gap-2">
                             <Link href="/cart">
                                 <div className="relative flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
-                                    <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-black">
-                                        {carts ? carts.items_count : 0}
-                                    </div>
-                                    <Image
-                                        src="/cart.png"
-                                        width={34}
-                                        height={34}
-                                        alt="Cart"
-                                        className="h-8 w-8"
-                                    />
+                                    <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-black">{carts ? carts.items_count : 0}</div>
+                                    <Image src="/cart.png" width={34} height={34} alt="Cart" className="h-8 w-8" />
                                 </div>
                             </Link>
-                            <Bars3BottomRightIcon
-                                className="h-8 w-8 font-bold text-white"
-                                onClick={togglePopupMenu}
-                            />
+                            <Bars3BottomRightIcon className="h-8 w-8 font-bold text-white" onClick={togglePopupMenu} />
                         </div>
                     </div>
                     <div className="relative mt-2">
-                        <input
-                            ref={inputRef}
-                            className="w-full rounded-3xl py-2 pl-14 text-black bg-search focus:border-secondary focus:outline-none"
-                            placeholder={t("other.search")}
-                            value={searchQuery}
-                            onChange={handleSearchInputChange}
-                        />
+                        <input ref={inputRef} className="w-full rounded-3xl py-2 pl-14 text-black bg-search focus:border-secondary focus:outline-none" placeholder={t("other.search")} value={searchQuery} onChange={handleSearchInputChange} />
                         {showSearchResults && (
                             <>
-                                <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
-                                    {" "}
-                                </div>
+                                <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50" />
                                 <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
                                     <ul className="py-2">
-                                        {searchResults &&
-                                        searchResults.length > 0 ? (
+                                        {searchResults && searchResults.length > 0 ? (
                                             searchResults.map(product => (
-                                                <Link
-                                                    href={`/product/${product.slug}`}
-                                                    key={product.id}
-                                                    onMouseDown={e =>
-                                                        e.preventDefault()
-                                                    }>
-                                                    <li
-                                                        ref={popupRef}
-                                                        className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]">
-                                                        {Cookies.get(
-                                                            "locale",
-                                                        ) === "en"
-                                                            ? product
-                                                                  ?.name_trans
-                                                                  ?.en
-                                                                ? product
-                                                                      .name_trans
-                                                                      .en
-                                                                : product
-                                                                      ?.name_trans
-                                                                      ?.id
-                                                            : product
-                                                                  ?.name_trans
-                                                                  ?.id}
-                                                    </li>
-                                                </Link>
+                                                <li ref={popupRef} className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]" key={product.id} onMouseDown={e => e.preventDefault()} onClick={() => router.push(`/product/${product.slug}`)}>
+                                                    {Cookies.get("locale") === "en" ? (product?.name_trans?.en ? product.name_trans.en : product?.name_trans?.id) : product?.name_trans?.id}
+                                                </li>
                                             ))
                                         ) : (
                                             <li className="flex items-center justify-between px-4 py-2">
-                                                <p className="px-4 py-2">
-                                                    {t("other.noResult")}
-                                                </p>
+                                                <p className="px-4 py-2">{t("other.noResult")}</p>
                                             </li>
                                         )}
                                     </ul>
@@ -243,10 +177,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                         {/*/>*/}
 
                         <div className="w-full">
-                            <CategorySelect
-                                options={categories}
-                                onSelect={handleSelectCategory}
-                            />
+                            <CategorySelect options={categories} onSelect={handleSelectCategory} />
                         </div>
                     </div>
                 </nav>
@@ -257,73 +188,26 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                         <div className="item-center flex pt-2">
                             <div className="item-center flex w-1/12">
                                 <Link href="/">
-                                    <Image
-                                        src="/bulky.svg"
-                                        width={100}
-                                        height={30}
-                                        alt="Logo"
-                                        className="cursor-pointer"
-                                        priority={false}
-                                    />
+                                    <Image src="/bulky.svg" width={100} height={30} alt="Logo" className="cursor-pointer" priority={false} />
                                 </Link>
                             </div>
                             <div className="item-center flex pl-10 lg:w-8/12 xl:w-8/12 2xl:w-8/12">
                                 <div className="relative w-full">
-                                    <input
-                                        ref={inputRef}
-                                        className="w-full rounded-xl border-2 border-[#212121] py-2 pl-14 text-black bg-search focus:border-2 focus:border-secondary focus:outline-none"
-                                        placeholder={t("other.search")}
-                                        value={searchQuery}
-                                        onChange={handleSearchInputChange}
-                                    />
+                                    <input ref={inputRef} className="w-full rounded-xl border-2 border-[#212121] py-2 pl-14 text-black bg-search focus:border-2 focus:border-secondary focus:outline-none" placeholder={t("other.search")} value={searchQuery} onChange={handleSearchInputChange} />
                                     {showSearchResults && (
                                         <>
-                                            <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50">
-                                                {" "}
-                                            </div>
+                                            <div className="pointer-events-none fixed inset-0 top-[120px] z-40 bg-black bg-opacity-50" />
                                             <div className="absolute left-0 top-full z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
                                                 <ul className="py-2">
-                                                    {searchResults &&
-                                                    searchResults.length > 0 ? (
-                                                        searchResults.map(
-                                                            product => (
-                                                                <Link
-                                                                    href={`/product/${product.slug}`}
-                                                                    key={
-                                                                        product.id
-                                                                    }>
-                                                                    <li
-                                                                        className="m-2 flex items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]"
-                                                                        onMouseDown={e =>
-                                                                            e.preventDefault()
-                                                                        }>
-                                                                        {Cookies.get(
-                                                                            "locale",
-                                                                        ) ===
-                                                                        "en"
-                                                                            ? product
-                                                                                  ?.name_trans
-                                                                                  ?.en
-                                                                                ? product
-                                                                                      .name_trans
-                                                                                      .en
-                                                                                : product
-                                                                                      ?.name_trans
-                                                                                      ?.id
-                                                                            : product
-                                                                                  ?.name_trans
-                                                                                  ?.id}
-                                                                    </li>
-                                                                </Link>
-                                                            ),
-                                                        )
+                                                    {searchResults && searchResults.length > 0 ? (
+                                                        searchResults.map(product => (
+                                                            <li key={product.id} className="m-2 flex cursor-pointer items-center justify-between px-4 py-2 hover:rounded-lg hover:bg-[#F0F3F7]" onMouseDown={e => e.preventDefault()} onClick={() => router.push(`/product/${product.slug}`)}>
+                                                                {Cookies.get("locale") === "en" ? (product?.name_trans?.en ? product.name_trans.en : product?.name_trans?.id) : product?.name_trans?.id}
+                                                            </li>
+                                                        ))
                                                     ) : (
                                                         <li className="flex items-center justify-between px-4 py-2">
-                                                            <p className="px-4 py-2">
-                                                                {t(
-                                                                    "other.noResult",
-                                                                )}
-                                                            </p>
+                                                            <p className="px-4 py-2">{t("other.noResult")}</p>
                                                         </li>
                                                     )}
                                                 </ul>
@@ -337,41 +221,26 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                     <LanguageSelector />
                                     <Link href="/cart">
                                         <div className="flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
-                                            <Image
-                                                src="/cart.png"
-                                                width={34}
-                                                height={34}
-                                                alt="Cart"
-                                            />
+                                            <Image src="/cart.png" width={34} height={34} alt="Cart" />
                                             <div className="flex flex-col text-center text-xs">
                                                 {/* {t("orderCart")} */}
                                                 <span className="text-sm font-bold">
-                                                    {carts
-                                                        ? carts.items_count
-                                                        : 0}{" "}
-                                                    {t("items")}
+                                                    {carts ? carts.items_count : 0} {t("items")}
                                                 </span>
                                             </div>
                                         </div>
                                     </Link>
                                     {!user ? (
-                                        <Link
-                                            href="/login"
-                                            className="cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-sm hover:bg-[#e8bc00]">
+                                        <Link href="/login" className="cursor-pointer rounded-lg bg-secondary px-7 py-2 text-center text-sm hover:bg-[#e8bc00]">
                                             {t("navbar.login")}
                                         </Link>
                                     ) : (
                                         <Link href="/profile">
                                             <div className="flex items-center px-2">
                                                 <div className="text-white hover:text-secondary">
-                                                    <div className="text-sm">
-                                                        {t("hai")}
-                                                    </div>
+                                                    <div className="text-sm">{t("hai")}</div>
                                                     <div className="flex cursor-pointer items-center">
-                                                        <div className="line-clamp-1 text-sm font-bold">
-                                                            {user &&
-                                                                user.data.name}
-                                                        </div>
+                                                        <div className="line-clamp-1 text-sm font-bold">{user && user.data.name}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -409,31 +278,20 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             {/*/>*/}
 
                             <div className="w-3/12 pr-16">
-                                <CategorySelect
-                                    options={categories}
-                                    onSelect={handleSelectCategory}
-                                />
+                                <CategorySelect options={categories} onSelect={handleSelectCategory} />
                             </div>
                             <div className="flex w-7/12 items-center justify-between">
                                 <Link href="/">
-                                    <div className="px-8 text-white hover:text-secondary">
-                                        {t("navbar.home")}
-                                    </div>
+                                    <div className="px-8 text-white hover:text-secondary">{t("navbar.home")}</div>
                                 </Link>
-                                <div
-                                    className="cursor-pointer px-8 text-white hover:text-secondary"
-                                    onClick={handleToProducts}>
+                                <div className="cursor-pointer px-8 text-white hover:text-secondary" onClick={handleToProducts}>
                                     {t("navbar.product")}
                                 </div>
                                 <Link href="/about-us">
-                                    <div className="px-8 text-white hover:text-secondary">
-                                        {t("navbar.about")}
-                                    </div>
+                                    <div className="px-8 text-white hover:text-secondary">{t("navbar.about")}</div>
                                 </Link>
                                 <Link href="/contact-us">
-                                    <div className="px-8 text-white hover:text-secondary">
-                                        {t("navbar.contact")}
-                                    </div>
+                                    <div className="px-8 text-white hover:text-secondary">{t("navbar.contact")}</div>
                                 </Link>
                             </div>
                         </div>

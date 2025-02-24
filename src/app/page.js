@@ -145,7 +145,7 @@ function Home() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrent(prev => (prev === banners.length - 1 ? 0 : prev + 1))
-        }, 3000)
+        }, 15000)
         return () => clearInterval(interval)
     }, [banners.length])
 
