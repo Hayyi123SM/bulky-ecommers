@@ -905,7 +905,7 @@ function Home() {
 
             {isOpenPdf && (
                 <div onClick={() => setIsOpenPdf(false)}>
-                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]"></div>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]" />
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[500px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
                             {/* start: close modal */}

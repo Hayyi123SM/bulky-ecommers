@@ -53,7 +53,7 @@ function ContactUs() {
                         / {t("page.contactus")}
                     </div>
                 </div>
-                <div className="border-b border-[#F0F3F7] lg:mt-6"></div>
+                <div className="border-b border-[#F0F3F7] lg:mt-6" />
                 <div className="mx-auto max-w-7xl lg:p-7">
                     <div className="flex flex-col lg:flex-row">
                         <div className="lg:w-2/5">

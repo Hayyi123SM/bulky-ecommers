@@ -329,7 +329,7 @@ const orderSlice = createSlice({
                 state.error = action.error.message
                 state.isLoading = false
             })
-            .addCase(completeOrder.pending, (state, action) => {
+            .addCase(completeOrder.pending, state => {
                 state.isLoading = true
                 state.error = null
             })

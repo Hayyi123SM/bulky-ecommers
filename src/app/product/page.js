@@ -251,7 +251,7 @@ function Product({ searchParams }) {
                     <input ref={inputRef} className="w-full rounded-3xl border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0" placeholder={t("other.search")} value={searchQuery} onChange={handleSearchInputChange} />
                     {showSearchResults && (
                         <>
-                            <div className="pointer-events-none fixed inset-0 top-[67px] z-40 bg-black bg-opacity-50"></div>
+                            <div className="pointer-events-none fixed inset-0 top-[67px] z-40 bg-black bg-opacity-50" />
                             <div className="absolute left-0 z-50 mt-1 w-full rounded-lg border border-gray-300 bg-white shadow-lg">
                                 <ul className="py-2">
                                     {searchResults && searchResults.length > 0 ? (
@@ -460,7 +460,7 @@ function Product({ searchParams }) {
             </div>
             {isOpenPdf && (
                 <div onClick={() => setIsOpenPdf(false)}>
-                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]"></div>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]" />
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[500px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
                             {/* start: close modal */}
