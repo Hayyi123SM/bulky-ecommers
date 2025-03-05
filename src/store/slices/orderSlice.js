@@ -17,6 +17,7 @@ const initialState = {
     currentPage: 1,
     error: null,
     isLoading: false,
+    completeOrder: null,
 }
 
 export const getPickupInformation = createAsyncThunk("orders/getPickupInformation", async () => {
@@ -153,6 +154,15 @@ export const getBudgets = createAsyncThunk("orders/getBudgets", async () => {
 export const createWholesale = createAsyncThunk("orders/createWholesale", async (data, { rejectWithValue }) => {
     try {
         const response = await axios.post("/api/general/wholesale-form/send", data)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const completeOrder = createAsyncThunk("orders/completeOrder", async (orderId, { rejectWithValue }) => {
+    try {
+        const response = await axios.put(`/api/orders/complete/${orderId}`)
         return response.data
     } catch (error) {
         return rejectWithValue(error.response.data)
@@ -316,6 +326,19 @@ const orderSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(createWholesale.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
+            .addCase(completeOrder.pending, (state, action) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(completeOrder.fulfilled, (state, action) => {
+                console.log("Action in fulfilled:", action)
+                // console.log("Current state:", state)
+                state.isLoading = false
+            })
+            .addCase(completeOrder.rejected, (state, action) => {
                 state.error = action.error.message
                 state.isLoading = false
             })

@@ -274,6 +274,22 @@ function Home() {
                         <Image {...Hero} alt="Product" width={700} height={700} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} placeholder="blur" />
                     </div>
                 </div>
+                <div className="mx-auto max-w-7xl p-0 lg:p-5">
+                    <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
+                        {loadingBanners ? (
+                            <Skeleton height={324} />
+                        ) : (
+                            banners.map((banner, index) => (
+                                <div key={index} className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
+                                    <Image src={banner.full_url} alt={`Banner ${index}`} fill priority={false} className="h-full w-full object-cover" />
+                                </div>
+                            ))
+                        )}
+                        <div className="absolute bottom-5 left-5 flex space-x-2">
+                            {loadingBanners ? <Skeleton height={324} /> : banners.map((_, index) => <div key={index} className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`} onClick={() => setCurrent(index)} />)}
+                        </div>
+                    </div>
+                </div>
                 {/* <div className="w-full bg-secondary bg-opacity-20 p-6">
                     <div className="mx-auto flex max-w-7xl items-center">
                         <div className="flex w-full flex-col md:w-1/3">
@@ -430,22 +446,6 @@ function Home() {
                             <div className="w-1/3 pt-12">
                                 <Image src="/new/Pallet FMCG.png" alt="Product" width={200} height={200} />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="mx-auto max-w-7xl p-0 lg:p-5">
-                    <div className="relative mx-auto h-[120px] w-full overflow-hidden md:h-[224px] lg:h-[324px] lg:rounded-3xl">
-                        {loadingBanners ? (
-                            <Skeleton height={324} />
-                        ) : (
-                            banners.map((banner, index) => (
-                                <div key={index} className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
-                                    <Image src={banner.full_url} alt={`Banner ${index}`} fill priority={false} className="h-full w-full object-cover" />
-                                </div>
-                            ))
-                        )}
-                        <div className="absolute bottom-5 left-5 flex space-x-2">
-                            {loadingBanners ? <Skeleton height={324} /> : banners.map((_, index) => <div key={index} className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`} onClick={() => setCurrent(index)} />)}
                         </div>
                     </div>
                 </div>
@@ -802,18 +802,8 @@ function Home() {
                                         ) : (
                                             reviews.map((review, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div key={review.id} className="flex h-56 w-full flex-col justify-start rounded-lg p-4 text-left">
+                                                    <div key={review.id} className="flex min-h-60 w-full flex-col justify-start rounded-lg p-4 text-left">
                                                         <div className="mb-3 flex items-start gap-3">
-                                                            {/*{review.images &&
-                                                                review.images.map((image, index2) => (
-                                                                    <div
-                                                                        key={index2}
-                                                                        className="h-12 w-12 rounded-full bg-cover bg-center"
-                                                                        style={{
-                                                                            backgroundImage: `url(${image.url})`,
-                                                                        }}
-                                                                    />
-                                                                ))}*/}
                                                             <div className="flex w-full flex-col text-left">
                                                                 <div className="text-lg font-bold">{review.rated_by}</div>
                                                                 <div className="flex">
@@ -825,6 +815,18 @@ function Home() {
                                                             </div>
                                                         </div>
                                                         <div className="w-full opacity-70">{review.comment}</div>
+                                                        <div className="flex items-center gap-2">
+                                                            {review.images &&
+                                                                review.images.map((image, index2) => (
+                                                                    <div
+                                                                        key={index2}
+                                                                        className="mt-2 h-12 w-12 rounded bg-cover bg-center"
+                                                                        style={{
+                                                                            backgroundImage: `url(${image.url})`,
+                                                                        }}
+                                                                    />
+                                                                ))}
+                                                        </div>
                                                     </div>
                                                 </SwiperSlide>
                                             ))

@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import Cookies from "js-cookie"
 
 // import { useState } from "react"
 
@@ -121,14 +122,37 @@ function PaymentNominal() {
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">{t("paymentNominal.summaryOrder")}</div>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="text-sm leading-6">
-                                    <label className="text-sm font-light">{t("paymentNominal.totalPrice")}</label>
-                                </div>
-                                <div className="ml-5 text-right text-sm leading-6">
-                                    <label className="text-md font-light">{order.total_price?.formatted}</label>
-                                </div>
-                            </div>
+                            {/*<div className="flex justify-between">*/}
+                            {/*    <div className="text-sm leading-6">*/}
+                            {/*        <label className="text-sm font-light">{t("paymentNominal.totalPrice")}</label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="ml-5 text-right text-sm leading-6">*/}
+                            {/*        <label className="text-md font-light">{order.total_price?.formatted}</label>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {order?.items &&
+                                order?.items.map((item, index) => (
+                                    <>
+                                        <div key={index} className="flex justify-between">
+                                            <div className="text-sm leading-6">
+                                                <label className="text-sm font-light">{Cookies.get("locale") === "en" ? (item.product?.name_trans?.en ? item.product.name_trans.en : item.product?.name_trans?.id) : item.product?.name_trans?.id}</label>
+                                            </div>
+                                            <div className="ml-5 text-right text-sm leading-6">
+                                                <label className="text-md font-light">{item.product?.price.formatted}</label>
+                                            </div>
+                                        </div>
+                                        {item.discount_amount.numeric > 0 && (
+                                            <div className="flex justify-between">
+                                                <div className="text-sm leading-6">
+                                                    <label className="text-sm font-light">{t("paymentMethod.discount")}</label>
+                                                </div>
+                                                <div className="ml-5 text-right text-sm leading-6">
+                                                    <label className="text-md font-light text-red-500">- {item.discount_amount.formatted}</label>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
+                                ))}
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">{t("paymentNominal.shippingCost")}</label>
@@ -146,7 +170,7 @@ function PaymentNominal() {
                                     <label className="text-md font-light">{order.tax_amount.formatted}</label>
                                 </div>
                             </div>*/}
-                            {order.tax_enabled && (
+                            {order?.tax_enabled && (
                                 <>
                                     <div className="flex justify-between">
                                         <div className="text-sm leading-6">

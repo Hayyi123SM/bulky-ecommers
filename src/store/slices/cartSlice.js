@@ -15,6 +15,7 @@ const initialState = {
     setAddress: null,
     shippingCost: null,
     coupon: null,
+    activeCoupon: null,
 }
 
 export const addToCart = createAsyncThunk("carts/addToCart", async (data, { rejectWithValue }) => {
@@ -298,6 +299,7 @@ const cartSlice = createSlice({
                 state.isLoading = false
                 state.cart = action.payload.data
                 state.checkout = action.payload.data
+                state.activeCoupon = action.payload.data?.coupon_code || ""
             })
             .addCase(applyCoupon.rejected, (state, action) => {
                 state.updateStatus = "failed"

@@ -3,17 +3,18 @@
 import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
 import SidebarProfile from "@/components/SidebarProfile"
-import { fetchOrderDetail } from "@/store/slices/orderSlice"
+import { completeOrder, fetchOrderDetail } from "@/store/slices/orderSlice"
 import { ArrowLeftIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
 import { useAuth } from "@/hooks/auth"
 import WarehouseInformation from "@/components/WarehouseInformation"
+import PopupModal from "@/components/PopupModal"
 
 function OrderDetail({ params }) {
     const { user } = useAuth({ middleware: "auth" })
@@ -22,6 +23,8 @@ function OrderDetail({ params }) {
     const orderId = params.orderId
     const dispatch = useDispatch()
     const order = useSelector(state => state.orders.orderDetail)
+    const [notification, setNotfication] = useState(false)
+
     // const trackingData = [
     //     {
     //         location: "Jakarta",
@@ -43,6 +46,23 @@ function OrderDetail({ params }) {
     useEffect(() => {
         dispatch(fetchOrderDetail(orderId))
     }, [dispatch, orderId])
+
+    const handleChangeStatus = async () => {
+        try {
+            const response = await dispatch(completeOrder(orderId)).unwrap()
+
+            if (response.data) {
+                setNotfication(true)
+
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            }
+            console.log("Confirmed successfully!")
+        } catch (error) {
+            console.error("Error creating review:", error)
+        }
+    }
 
     if (!user) {
         return null // Hindari menampilkan konten jika sedang redirect
@@ -99,7 +119,7 @@ function OrderDetail({ params }) {
                                                 </div>
                                             </div>
 
-                                            {((order?.order_status?.value === "delivered" && !order?.has_reviewed) || order?.shipping_method?.value === "self_pickup") && (
+                                            {order?.order_status?.value === "completed" && !order?.has_reviewed && (
                                                 <Link href={`/review-create?orderId=${orderId}&productId=${item?.product?.id}`}>
                                                     <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">{t("orderDetail.writeReview")}</div>
                                                 </Link>
@@ -141,6 +161,11 @@ function OrderDetail({ params }) {
                                         <div className="w-1/2">{order && order?.shipping?.tracking_url}</div>
                                     </div>
                                 )}
+                                {order?.order_status?.value === "delivered" && (
+                                    <div className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]" onClick={handleChangeStatus}>
+                                        {t("orderDetail.itemReceived")}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="h-full lg:w-1/2">
@@ -150,14 +175,29 @@ function OrderDetail({ params }) {
                                         <div className="text-base font-bold">{t("orderDetail.summaryPayment")}</div>
                                     </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">{t("orderDetail.totalPrice")}</label>
-                                    </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">{order && order?.total_price?.formatted}</label>
-                                    </div>
-                                </div>
+                                {order?.items &&
+                                    order?.items.map((item, index) => (
+                                        <>
+                                            <div key={index} className="flex justify-between">
+                                                <div className="text-sm leading-6">
+                                                    <label className="text-sm font-light">{Cookies.get("locale") === "en" ? (item.product?.name_trans?.en ? item.product.name_trans.en : item.product?.name_trans?.id) : item.product?.name_trans?.id}</label>
+                                                </div>
+                                                <div className="ml-5 text-right text-sm leading-6">
+                                                    <label className="text-md font-light">{item.product?.price.formatted}</label>
+                                                </div>
+                                            </div>
+                                            {item.discount_amount.numeric > 0 && (
+                                                <div className="flex justify-between">
+                                                    <div className="text-sm leading-6">
+                                                        <label className="text-sm font-light">{t("paymentMethod.discount")}</label>
+                                                    </div>
+                                                    <div className="ml-5 text-right text-sm leading-6">
+                                                        <label className="text-md font-light text-red-500">- {item.discount_amount.formatted}</label>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </>
+                                    ))}
                                 {order && order?.shipping && (
                                     <div className="flex justify-between">
                                         <div className="text-sm leading-6">
@@ -228,6 +268,7 @@ function OrderDetail({ params }) {
                 </div>
             </div>
             {/* <Footer /> */}
+            <PopupModal isOpen={notification} closeModal={() => setNotfication(false)} type={"notification"} title={"Pemberitahuan"} message={`Berhasil konfirmasi pesanan.`} urlConfirm={"/order/" + orderId} />
 
             <FloatingIcon />
         </div>

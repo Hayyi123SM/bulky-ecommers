@@ -349,7 +349,8 @@
         "copy": "Copy",
         "statusPayment": "Payment Status",
         "remainingPayment": "Remaining Invoice Amount",
-        "writeReview": "Write a Review"
+        "writeReview": "Write a Review",
+        "itemReceived": "Item Received"
     },
     "addressForm": {
         "titleAddress": "Add Address",

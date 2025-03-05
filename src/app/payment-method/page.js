@@ -110,12 +110,18 @@ function PaymentMethod() {
     }
 
     const handleCoupon = coupon => {
-        if (coupon === null) {
-            dispatch(clearCoupon({ coupon_code: coupon }))
+        if (coupon === null || coupon === "") {
+            dispatch(clearCoupon({ coupon_code: "" }))
         } else {
             dispatch(applyCoupon({ coupon_code: coupon }))
         }
     }
+
+    useEffect(() => {
+        if (coupon) {
+            dispatch(applyCoupon({ coupon_code: coupon }))
+        }
+    }, [coupon])
 
     useEffect(() => {
         // console.log("====================================")
@@ -265,14 +271,37 @@ function PaymentMethod() {
                             <div className="py-2">
                                 <div className="py-2 text-base font-bold">{t("paymentMethod.summaryOrder")}</div>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="text-sm leading-6">
-                                    <label className="text-sm font-light">{t("paymentMethod.totalPrice")}</label>
-                                </div>
-                                <div className="ml-5 text-right text-sm leading-6">
-                                    <label className="text-md font-light">{cart.total_price.formatted}</label>
-                                </div>
-                            </div>
+                            {cart.items &&
+                                cart.items.map((item, index) => (
+                                    <>
+                                        <div key={index} className="flex justify-between">
+                                            <div className="text-sm leading-6">
+                                                <label className="text-sm font-light">{Cookies.get("locale") === "en" ? (item.product?.name_trans?.en ? item.product.name_trans.en : item.product?.name_trans?.id) : item.product?.name_trans?.id}</label>
+                                            </div>
+                                            <div className="ml-5 text-right text-sm leading-6">
+                                                <label className="text-md font-light">{item.product?.price.formatted}</label>
+                                            </div>
+                                        </div>
+                                        {item.discount_amount.numeric > 0 && (
+                                            <div className="flex justify-between">
+                                                <div className="text-sm leading-6">
+                                                    <label className="text-sm font-light">{t("paymentMethod.discount")}</label>
+                                                </div>
+                                                <div className="ml-5 text-right text-sm leading-6">
+                                                    <label className="text-md font-light text-red-500">- {item.discount_amount.formatted}</label>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
+                                ))}
+                            {/*<div className="flex justify-between">*/}
+                            {/*    <div className="text-sm leading-6">*/}
+                            {/*        <label className="text-sm font-light">{t("paymentMethod.totalPrice")}</label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="ml-5 text-right text-sm leading-6">*/}
+                            {/*        <label className="text-md font-light">{cart.total_price.formatted}</label>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                             {cart.shipping_method === "courier_pickup" && (
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
@@ -280,16 +309,6 @@ function PaymentMethod() {
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
                                         <label className="text-md font-light">{cart.shipping_cost.formatted}</label>
-                                    </div>
-                                </div>
-                            )}
-                            {cart.discount_amount.numeric > 0 && (
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">{t("paymentMethod.discount")}</label>
-                                    </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light text-red-500">- {cart.discount_amount.formatted}</label>
                                     </div>
                                 </div>
                             )}

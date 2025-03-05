@@ -349,7 +349,8 @@
         "copy": "Salin",
         "statusPayment": "Status Pembayaran",
         "remainingPayment": "Sisa Total Tagihan",
-        "writeReview": "Beri Ulasan"
+        "writeReview": "Beri Ulasan",
+        "itemReceived": "Barang Diterima"
     },
     "addressForm": {
         "titleAddress": "Tambah Alamat",
