@@ -23,37 +23,18 @@ function SidebarProfile() {
     return (
         <div>
             <div className="flex items-center">
-                {user.data.profile_picture !==
-                "https://back-office.bulky.id/storage/" ? (
+                {user.data.profile_picture !== "https://back-office.bulky.id/storage/" ? (
                     // If user has a stored photo, show it
-                    <Image
-                        src={user.data.profile_picture}
-                        width={56}
-                        height={56}
-                        alt="Profile"
-                        className="cursor-pointer"
-                        priority={false}
-                    />
+                    <Image src={user.data.profile_picture} width={56} height={56} alt="Profile" className="cursor-pointer" priority={false} />
                 ) : (
                     // Otherwise, show the default image
-                    <Image
-                        src="/bio.png"
-                        width={56}
-                        height={56}
-                        alt="Profile"
-                        className="cursor-pointer"
-                        priority={false}
-                    />
+                    <Image src="/bio.png" width={56} height={56} alt="Profile" className="cursor-pointer" priority={false} />
                 )}
                 <div className="ml-3">
-                    <div className="pb-1 text-base font-bold">
-                        {user.data.name}
-                    </div>
+                    <div className="pb-1 text-base font-bold">{user.data.name}</div>
                     <div className="text-sm">
                         <Link href="/update-profile">
-                            <div className="cursor-pointer text-[#007185]">
-                                Edit Profile
-                            </div>
+                            <div className="cursor-pointer text-[#007185]">Edit Profile</div>
                         </Link>
                     </div>
                 </div>
@@ -64,24 +45,16 @@ function SidebarProfile() {
                     Ulasan
                 </div>
             </Link> */}
-            <div className="border-b pb-5"> </div>
-            <div className="mt-5 text-base font-bold">
-                {t("mobileMenu.myorder")}
-            </div>
+            <div className="border-b pb-5" />
+            <div className="mt-5 text-base font-bold">{t("mobileMenu.myorder")}</div>
             <Link href="/waiting-payment">
-                <div className="mt-3 rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
-                    {t("mobileMenu.waitingPayment")}
-                </div>
+                <div className="mt-3 cursor-pointer rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">{t("mobileMenu.waitingPayment")}</div>
             </Link>
             <Link href="/order">
-                <div className="rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
-                    {t("mobileMenu.orderStatus")}
-                </div>
+                <div className="cursor-pointer rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">{t("mobileMenu.orderStatus")}</div>
             </Link>
             <Link href="/order-split">
-                <div className="rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">
-                    {t("mobileMenu.splitPayment")}
-                </div>
+                <div className="cursor-pointer rounded-lg py-3 pl-4 text-base font-light hover:bg-[#F5F5F5]">{t("mobileMenu.splitPayment")}</div>
             </Link>
             {/* <div className="mt-5 text-base font-bold">Profile Pengguna</div>
             <Link href="/bank-account">

@@ -226,7 +226,20 @@ function OrderSplitDetail({ params }) {
                                         </div>
                                     </div>
                                 )}
-                                <div className="my-3 border-b p-1" />
+                                <div className="my-5 border-b p-1" />
+                                {order.tax_enabled && (
+                                    <>
+                                        <div className="flex justify-between">
+                                            <div className="text-sm leading-6">
+                                                <label className="text-sm font-light">PPN {order.tax_rate.formatted}</label>
+                                            </div>
+                                            <div className="ml-5 text-right text-sm leading-6">
+                                                <label className="text-md font-light">{order.tax_amount.formatted}</label>
+                                            </div>
+                                        </div>
+                                        <div className="my-5 border-b p-1" />
+                                    </>
+                                )}
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">{t("orderDetail.totalInvoice")}</label>

@@ -220,7 +220,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 <div className="flex w-full items-center justify-between">
                                     <LanguageSelector />
                                     <Link href="/cart">
-                                        <div className="flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
+                                        <div className="flex cursor-pointer items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
                                             <Image src="/cart.png" width={34} height={34} alt="Cart" />
                                             <div className="flex flex-col text-center text-xs">
                                                 {/* {t("orderCart")} */}
@@ -236,7 +236,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                         </Link>
                                     ) : (
                                         <Link href="/profile">
-                                            <div className="flex items-center px-2">
+                                            <div className="flex cursor-pointer items-center px-2">
                                                 <div className="text-white hover:text-secondary">
                                                     <div className="text-sm">{t("hai")}</div>
                                                     <div className="flex cursor-pointer items-center">
@@ -282,16 +282,16 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                             </div>
                             <div className="flex w-7/12 items-center justify-between">
                                 <Link href="/">
-                                    <div className="px-8 text-white hover:text-secondary">{t("navbar.home")}</div>
+                                    <div className="cursor-pointer px-8 text-white hover:text-secondary">{t("navbar.home")}</div>
                                 </Link>
                                 <div className="cursor-pointer px-8 text-white hover:text-secondary" onClick={handleToProducts}>
                                     {t("navbar.product")}
                                 </div>
                                 <Link href="/about-us">
-                                    <div className="px-8 text-white hover:text-secondary">{t("navbar.about")}</div>
+                                    <div className="cursor-pointer px-8 text-white hover:text-secondary">{t("navbar.about")}</div>
                                 </Link>
                                 <Link href="/contact-us">
-                                    <div className="px-8 text-white hover:text-secondary">{t("navbar.contact")}</div>
+                                    <div className="cursor-pointer px-8 text-white hover:text-secondary">{t("navbar.contact")}</div>
                                 </Link>
                             </div>
                         </div>
