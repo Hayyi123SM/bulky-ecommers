@@ -391,6 +391,7 @@
         "filter": "Penyaringan",
         "resetFilter": "Atur Ulang",
         "inputCoupon": "Masukkan Kode Voucher",
-        "searchYourFriend": "Cari Temanmu"
+        "searchYourFriend": "Cari Temanmu",
+        "notFound": "Data Tidak Ditemukan"
     }
 }

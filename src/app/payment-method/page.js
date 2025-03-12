@@ -241,7 +241,7 @@ function PaymentMethod() {
                                             <input className="w-full rounded-lg border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0" placeholder={t("other.searchYourFriend")} type="text" onChange={e => handleSearchFriend(e.target.value)} />
                                         </div>
                                         <div className="max-h-60 overflow-auto">
-                                            {friendList &&
+                                            {friendList.length > 0 ? (
                                                 friendList.map(item => (
                                                     <div key={item.id} className="flex cursor-pointer items-center justify-between border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]" onClick={() => handleSelectedFriend(item)}>
                                                         <div className="flex items-center">
@@ -250,7 +250,12 @@ function PaymentMethod() {
                                                         </div>
                                                         {selectedFriend.some(friend => friend.id === item.id) && <CheckIcon className="ml-auto h-5 w-5 text-[#007185]" />}
                                                     </div>
-                                                ))}
+                                                ))
+                                            ) : (
+                                                <div className="flex items-center justify-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]">
+                                                    <div className="flex items-center">{t("other.notFound")}</div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

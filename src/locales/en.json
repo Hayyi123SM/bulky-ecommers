@@ -391,6 +391,7 @@
         "filter": "Filter",
         "resetFilter": "Reset Filter",
         "inputCoupon": "Input Coupon",
-        "searchYourFriend": "Search Your Friend"
+        "searchYourFriend": "Search Your Friend",
+        "notFound": "Data Not Found"
     }
 }
