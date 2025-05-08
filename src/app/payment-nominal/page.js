@@ -47,7 +47,8 @@ function PaymentNominal() {
     }, [])
 
     const totalPaidAmount = myInvoice?.order?.paid_amount?.numeric
-    const remainingAmount = order.total_price?.numeric - totalPaidAmount
+
+    const remainingAmount = order.total?.numeric - totalPaidAmount
 
     // console.log("====================================")
     // console.log("myInvoice", myInvoice)
