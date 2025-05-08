@@ -55,7 +55,7 @@ function PaymentNominal() {
     // console.log("====================================")
 
     const handleCreatePayment = () => {
-        if (amount <= 0) {
+        if (amount <= 0 || amount > remainingAmount) {
             setIsError(true)
             return
         }
@@ -78,7 +78,10 @@ function PaymentNominal() {
 
         setAmount(numericValue)
         setNumericAmount(formattedValue)
-        setIsError(false)
+
+        if (numericValue <= 0 || numericValue > remainingAmount) {
+            setIsError(true)
+        }
     }
 
     // console.log("====================================")
