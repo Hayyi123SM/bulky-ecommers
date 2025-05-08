@@ -260,10 +260,14 @@ function OrderSplitDetail({ params }) {
                                                     <Image src="https://dummyimage.com/400x400/b8b8b8/000105.png" width={40} height={40} alt="single" className="mr-4 rounded-full" priority={false} />
                                                     <div>
                                                         <div className="text-sm font-medium">{invoice?.user?.name}</div>
-                                                        <div className={`w-fit rounded-lg bg-[${invoice?.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice?.status?.color}] lg:hidden`}>{invoice?.status?.label}</div>
+                                                        <div className={`w-fit rounded-lg ${invoice?.status?.value === "cancelled" ? "bg-red-200 text-red-500" : invoice?.status?.value === "paid" ? "bg-green-200 text-green-500" : "bg-gray-500 text-white"} px-4 py-1 text-[9px] font-semibold lg:hidden`}>
+                                                            {invoice?.status?.label}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className={`ml-14 hidden w-fit rounded-lg bg-[${invoice?.status?.color}0D] px-4 py-1 text-[9px] font-semibold text-[${invoice?.status?.color}] lg:block`}>{invoice?.status?.label}</div>
+                                                <div className={`ml-14 hidden w-fit rounded-lg ${invoice?.status?.value === "cancelled" ? "bg-red-200 text-red-500" : invoice?.status?.value === "paid" ? "bg-green-200 text-green-500" : "bg-gray-500 text-white"} px-4 py-1 text-[9px] font-semibold lg:block`}>
+                                                    {invoice?.status?.label}
+                                                </div>
                                                 <div className="text-xs font-bold">{invoice?.amount?.formatted}</div>
                                             </div>
                                         </div>

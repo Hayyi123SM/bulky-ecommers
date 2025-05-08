@@ -148,7 +148,9 @@ function OrderDetail({ params }) {
                                     </div>
                                     <div className="flex items-center p-1">
                                         <div className="w-1/2 text-[#6D7588]">Status</div>
-                                        <div className={`bg-[${order && order?.order_status?.color}0D] w-fit rounded px-4 py-1 text-[9px] font-semibold text-[${order && order?.order_status?.color}]`}>{order && order?.order_status?.label}</div>
+                                        <div className={`${order?.order_status?.value === "cancelled" ? "bg-red-200 text-red-500" : order?.order_status?.value === "delivered" ? "bg-green-200 text-green-500" : "bg-gray-500 text-white"} w-fit rounded px-4 py-1 text-[9px] font-semibold`}>
+                                            {order && order?.order_status?.label}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="my-2 mb-4 border-b p-1 text-sm">
