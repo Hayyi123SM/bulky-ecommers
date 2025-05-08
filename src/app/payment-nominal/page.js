@@ -81,6 +81,8 @@ function PaymentNominal() {
 
         if (numericValue <= 0 || numericValue > remainingAmount) {
             setIsError(true)
+        } else {
+            setIsError(false)
         }
     }
 
