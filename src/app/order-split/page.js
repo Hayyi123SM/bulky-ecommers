@@ -61,6 +61,7 @@ function OrderSplit() {
                 // console.log("====================================")
                 // console.log("myInvoice:", myInvoice)
                 // console.log("====================================")
+                localStorage.setItem("order", JSON.stringify(myInvoice.order))
                 router.push("/payment-nominal/")
             }
         }

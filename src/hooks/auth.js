@@ -27,11 +27,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     const csrf = () => axios.get("/sanctum/csrf-cookie")
 
-    const register = async ({
-        setErrors,
-        redirectOnSuccess = "/",
-        ...props
-    }) => {
+    const register = async ({ setErrors, redirectOnSuccess = "/", ...props }) => {
         await csrf()
 
         setErrors([])
@@ -49,10 +45,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         }
     }
 
-    const login = async (
-        { setErrors, setStatus, redirectTo, ...props },
-        dispatch,
-    ) => {
+    const login = async ({ setErrors, setStatus, redirectTo, ...props }, dispatch) => {
         await csrf()
 
         setErrors([])
@@ -81,6 +74,35 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             })
     }
 
+    // const loginMobile = async ({ setErrors, setStatus, redirectTo, ...props }, dispatch) => {
+    //     setErrors([])
+    //     setStatus(null)
+    //
+    //     axios
+    //         .post("/api/auth/mobile/login", props)
+    //         .then(response => {
+    //             const { token, data: userData } = response.data
+    //
+    //             // Simpan token dan user ke localStorage
+    //             localStorage.setItem("token", token)
+    //             localStorage.setItem("user", JSON.stringify(userData))
+    //
+    //             // Set header Authorization untuk permintaan selanjutnya
+    //             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+    //
+    //             // Simpan ke Redux dan redirect
+    //             dispatch(setUser(userData))
+    //             router.push(redirectTo || "/")
+    //         })
+    //         .catch(error => {
+    //             if (error.response?.status === 422) {
+    //                 setErrors(error.response.data.errors)
+    //             } else {
+    //                 console.error("Login error:", error)
+    //             }
+    //         })
+    // }
+
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
         await csrf()
 
@@ -105,9 +127,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
         axios
             .post("/api/auth/reset-password", { token: params.token, ...props })
-            .then(response =>
-                router.push("/login?reset=" + btoa(response.data.status)),
-            )
+            .then(response => router.push("/login?reset=" + btoa(response.data.status)))
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
@@ -116,9 +136,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
 
     const resendEmailVerification = ({ setStatus }) => {
-        axios
-            .post("/email/verification-notification")
-            .then(response => setStatus(response.data.status))
+        axios.post("/email/verification-notification").then(response => setStatus(response.data.status))
     }
 
     const logout = async () => {
@@ -164,19 +182,13 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 router.push(`/login?redirect=${pathname}`)
             }
         }
-    }, [
-        isValidating,
-        user,
-        error,
-        pathname,
-        middleware,
-        redirectIfAuthenticated,
-    ])
+    }, [isValidating, user, error, pathname, middleware, redirectIfAuthenticated])
 
     return {
         user,
         register,
         login,
+        // loginMobile,
         forgotPassword,
         resetPassword,
         resendEmailVerification,
