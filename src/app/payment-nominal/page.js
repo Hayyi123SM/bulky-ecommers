@@ -43,7 +43,7 @@ function PaymentNominal() {
         const getOrder = JSON.parse(localStorage.getItem("order"))
         // console.log("getOrder", getOrder)
         setOrder(getOrder)
-        dispatch(getMyInvoice(getOrder.id))
+        dispatch(getMyInvoice(getOrder?.id))
     }, [])
 
     const totalPaidAmount = myInvoice?.order?.paid_amount?.numeric
@@ -61,13 +61,13 @@ function PaymentNominal() {
         }
         dispatch(
             setInvoiceAmount({
-                invoice_id: myInvoice.id,
+                invoice_id: myInvoice?.id,
                 amount: amount,
             }),
         )
 
         if (afterSetInvoiceAmount !== null) {
-            router.push("/payment-method/" + myInvoice.id)
+            router.push("/payment-method/" + myInvoice?.id)
         }
     }
 
