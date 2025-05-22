@@ -40,15 +40,29 @@ function PaymentNominal() {
     }
 
     useEffect(() => {
-        const getOrder = JSON.parse(localStorage.getItem("order"))
-        // console.log("getOrder", getOrder)
-        setOrder(getOrder)
-        dispatch(getMyInvoice(getOrder?.id))
+        try {
+            const rawOrder = localStorage.getItem("order")
+            if (!rawOrder) {
+                console.warn("Order not found in localStorage")
+                return
+            }
+
+            const getOrder = JSON.parse(rawOrder)
+            if (!getOrder || !getOrder.id) {
+                console.warn("Invalid order object:", getOrder)
+                return
+            }
+
+            setOrder(getOrder)
+            dispatch(getMyInvoice(getOrder.id))
+        } catch (err) {
+            console.error("Failed to parse order from localStorage", err)
+        }
     }, [])
 
     const totalPaidAmount = myInvoice?.order?.paid_amount?.numeric
 
-    const remainingAmount = order.total?.numeric - totalPaidAmount
+    const remainingAmount = (order?.total?.numeric || 0) - (totalPaidAmount || 0)
 
     // console.log("====================================")
     // console.log("myInvoice", myInvoice)
@@ -70,6 +84,12 @@ function PaymentNominal() {
             router.push("/payment-method/" + myInvoice?.id)
         }
     }
+
+    useEffect(() => {
+        if (afterSetInvoiceAmount) {
+            router.push("/payment-method/" + myInvoice?.id)
+        }
+    }, [afterSetInvoiceAmount])
 
     const handleSetAmount = e => {
         const rawValue = e.target.value.replace(/[^\d]/g, "")
@@ -96,7 +116,7 @@ function PaymentNominal() {
     //     console.log("====================================")
     // }, [afterSetInvoiceAmount])
 
-    if (!order) {
+    if (!order || !myInvoice || !myInvoice.order) {
         return <LoadingSpinner />
     }
 
@@ -138,8 +158,8 @@ function PaymentNominal() {
                             {/*</div>*/}
                             {order?.items &&
                                 order?.items.map((item, index) => (
-                                    <>
-                                        <div key={index} className="flex justify-between">
+                                    <div key={index}>
+                                        <div className="flex justify-between">
                                             <div className="text-sm leading-6">
                                                 <label className="text-sm font-light">{Cookies.get("locale") === "en" ? (item.product?.name_trans?.en ? item.product.name_trans.en : item.product?.name_trans?.id) : item.product?.name_trans?.id}</label>
                                             </div>
@@ -157,7 +177,7 @@ function PaymentNominal() {
                                                 </div>
                                             </div>
                                         )}
-                                    </>
+                                    </div>
                                 ))}
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
