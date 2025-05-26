@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig host="ec2-16-78-37-121.ap-southeast-3.compute.amazonaws.com" id="de2d960a-b6a1-4213-bf4e-680337c8110c" keyPath="$USER_HOME$/Bulky.pem" port="22" nameFormat="DESCRIPTIVE" username="ec2-user" useOpenSSHConfig="true" />
-    </configs>
-  </component>
-</project>
