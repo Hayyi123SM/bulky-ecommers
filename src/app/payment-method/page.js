@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
 import WarehouseInformation from "@/components/WarehouseInformation"
+import { cn, formatRupiah } from "@/lib/utils"
 
 function PaymentMethod() {
     const t = useTranslations()
@@ -35,6 +36,7 @@ function PaymentMethod() {
     const myInvoice = useSelector(state => state.orders.myInvoice)
     const coupon = useSelector(state => state.carts.coupon)
     const [activeCoupon, setActiveCoupon] = useState(null)
+    const [isInsurance, setIsInsurance] = useState(false)
 
     // console.log("====================================")
     console.log("coupon", coupon)
@@ -86,11 +88,11 @@ function PaymentMethod() {
             for (let i = 0; i < selectedFriend.length; i++) {
                 friend_ids.push(selectedFriend[i].id)
             }
-            dispatch(placeOrders({ payment_type, friend_ids }))
+            dispatch(placeOrders({ payment_type, friend_ids, is_insurance: isInsurance }))
         } else if (paymentMethod === "single_payment") {
             const payment_type = "single_payment"
             const friend_ids = []
-            dispatch(placeOrders({ payment_type, friend_ids }))
+            dispatch(placeOrders({ payment_type, friend_ids, is_insurance: isInsurance }))
         } else {
             setPaymentMethod("none")
         }
@@ -307,13 +309,23 @@ function PaymentMethod() {
                             {/*        <label className="text-md font-light">{cart.total_price.formatted}</label>*/}
                             {/*    </div>*/}
                             {/*</div>*/}
+                            <div className="my-5 border-b p-1" />
                             {cart.shipping_method === "courier_pickup" && (
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">{t("paymentMethod.shippingCost")}</label>
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex justify-between">
+                                        <div className="text-sm leading-6">
+                                            <label className="text-sm font-light">{t("paymentMethod.shippingCost")}</label>
+                                        </div>
+                                        <div className="ml-5 text-right text-sm leading-6">
+                                            <label className="text-md font-light">{cart.shipping_cost.formatted}</label>
+                                        </div>
                                     </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">{cart.shipping_cost.formatted}</label>
+                                    <div className="flex items-center justify-between">
+                                        <label className="flex items-center gap-2">
+                                            <input type="checkbox" className="rounded" checked={isInsurance} onChange={e => setIsInsurance(e.target.checked)} />
+                                            <span>Insurance</span>
+                                        </label>
+                                        <p className={cn("text-sm", !isInsurance && "line-through")}>{formatRupiah(cart.shipping_cost.insurance_amount)}</p>
                                     </div>
                                 </div>
                             )}
@@ -344,7 +356,7 @@ function PaymentMethod() {
                                     <label className="text-sm font-semibold">{t("paymentMethod.totalShopping")}</label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">
-                                    <label className="text-lg font-bold">{cart.total.formatted}</label>
+                                    <label className="text-lg font-bold">{isInsurance ? formatRupiah(cart.total.with_insurance) : cart.total.formatted}</label>
                                 </div>
                             </div>
                         </div>

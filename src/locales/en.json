@@ -199,7 +199,7 @@
         "selectShippingMethod": "Select Shipping Method",
         "description": "Please select shipping method",
         "selfPickup": "Pick Up",
-        "courierPickup": "Courier Deliveree"
+        "courierPickup": "Delivery Service"
     },
     "shipping": {
         "shipping": "Shipping",

@@ -252,6 +252,23 @@ function Payment({ params }) {
                             )}
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
+                                    <label className="text-sm font-light">Shipping Cost</label>
+                                </div>
+                                <div className="ml-5 text-right text-sm leading-6">
+                                    <label className="text-md font-light">{myInvoice.order.shipping.shipping_cost}</label>
+                                </div>
+                            </div>
+                            <div className="flex justify-between">
+                                <div className="text-sm leading-6">
+                                    <label className="text-sm font-light">Insurance</label>
+                                </div>
+                                <div className="ml-5 text-right text-sm leading-6">
+                                    <label className="text-md font-light">{myInvoice.order.shipping.insurance_amount}</label>
+                                </div>
+                            </div>
+                            <div className="my-5 border-b p-1" />
+                            <div className="flex justify-between">
+                                <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">{t("payment.total")}</label>
                                 </div>
                                 <div className="ml-5 text-right text-sm leading-6">

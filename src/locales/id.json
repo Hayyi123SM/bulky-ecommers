@@ -199,7 +199,7 @@
         "selectShippingMethod": "Pilih Metode Pengiriman",
         "description": "Silahkan pilih metode pengiriman",
         "selfPickup": "Ambil ditempat",
-        "courierPickup": "Menggunakan Deliveree"
+        "courierPickup": "Jasa Pengiriman"
     },
     "shipping": {
         "shipping": "Pengiriman",
