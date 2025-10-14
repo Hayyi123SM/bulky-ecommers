@@ -257,14 +257,6 @@ function OrderDetail({ params }) {
                                 )}
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">Shipping Cost</label>
-                                    </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">{order.shipping?.shipping_cost}</label>
-                                    </div>
-                                </div>
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
                                         <label className="text-sm font-light">Insurance</label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">

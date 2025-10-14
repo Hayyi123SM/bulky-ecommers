@@ -115,6 +115,7 @@
         "otherProducts": "Other Products"
     },
     "filter": {
+        "type": "Type",
         "category": "Category",
         "warehouse": "Warehouse",
         "price": "Price",
@@ -193,7 +194,10 @@
     },
     "cart": {
         "cart": "Cart",
-        "selectAll": "Select All",
+        "selectAll": {
+            "palet": "Select All Palet Products",
+            "container": "Container Products"
+        },
         "summaryOrder": "Shopping Summary",
         "buyNow": "Buy Now",
         "selectShippingMethod": "Select Shipping Method",

@@ -51,7 +51,7 @@ export const fetchCheckout = createAsyncThunk("carts/fetchCheckout", async () =>
 export const updateSelectedItems = createAsyncThunk("carts/updateSelectedItems", async (cartItems, { rejectWithValue }) => {
     try {
         const response = await axios.patch("/api/carts/set-selected-item", {
-            cart_items: cartItems,
+            ...cartItems,
         })
         return response.data
     } catch (error) {
@@ -146,7 +146,7 @@ const cartSlice = createSlice({
     reducers: {
         toggleSelectItem(state, action) {
             const { itemId, isSelected } = action.payload
-            const item = state.cart.items.find(item => item.id === itemId)
+            const item = state.cart.items.palet.find(item => item.id === itemId) ?? state.cart.items.container.find(item => item.id === itemId)
             if (item) {
                 item.is_selected = isSelected ? 1 : 0
                 if (isSelected) {
@@ -157,14 +157,14 @@ const cartSlice = createSlice({
                 state.totalPrice = state.selectedItems.reduce((total, selectedItem) => total + selectedItem.price.numeric, 0)
             }
         },
-        toggleSelectAllItems(state, action) {
+        toggleSelectAllPalet(state, action) {
             const isSelected = action.payload
-            state.cart.items.forEach(item => {
+            state.cart.items.palet.forEach(item => {
                 item.is_selected = isSelected ? 1 : 0
             })
 
             if (isSelected) {
-                state.selectedItems = [...state.cart.items]
+                state.selectedItems = [...state.cart.items.palet]
             } else {
                 state.selectedItems = []
             }
@@ -351,5 +351,5 @@ const cartSlice = createSlice({
     },
 })
 
-export const { toggleSelectItem, toggleSelectAllItems } = cartSlice.actions
+export const { toggleSelectItem, toggleSelectAllPalet } = cartSlice.actions
 export default cartSlice.reducer

@@ -115,6 +115,7 @@
         "otherProducts": "Produk Lainnya"
     },
     "filter": {
+        "type": "Tipe",
         "category": "Kategori",
         "warehouse": "Gudang",
         "price": "Harga",
@@ -193,7 +194,10 @@
     },
     "cart": {
         "cart": "Keranjang",
-        "selectAll": "Pilih Semua",
+        "selectAll": {
+            "palet": "Pilih Semua Product Palet",
+            "container": "Produk Kontainer"
+        },
         "summaryOrder": "Ringkasan Belanja",
         "buyNow": "Beli Sekarang",
         "selectShippingMethod": "Pilih Metode Pengiriman",

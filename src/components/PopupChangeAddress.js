@@ -7,8 +7,9 @@ import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"
 
-const PopupChangeAddress = ({ isOpen, closeModal }) => {
+const PopupChangeAddress = ({ isOpen, closeModal, message }) => {
     const t = useTranslations()
     const [isVisible, setIsVisible] = useState(false)
     const dispatch = useDispatch()
@@ -85,6 +86,12 @@ const PopupChangeAddress = ({ isOpen, closeModal }) => {
 
                         <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={closeModal} />
                     </div>
+                    {message && (
+                        <div className="flex items-center gap-3 rounded-md bg-red-100 px-5 py-2 text-xs">
+                            <ExclamationTriangleIcon className="size-4" />
+                            {message}
+                        </div>
+                    )}
                     <div className="mx-auto max-h-[70svh] min-h-[10svh] max-w-7xl overflow-auto">
                         <div className="mb-16 px-4">
                             {/* Start : View Mobile */}

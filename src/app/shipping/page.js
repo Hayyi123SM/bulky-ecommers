@@ -69,10 +69,7 @@ function Shipping() {
             setOpenModalAddress(true) // Cegah lanjut jika belum ada alamat
             return
         }
-        if (
-            cart?.shipping_cost?.numeric ===
-            shippingCost?.data?.total_cost?.value
-        ) {
+        if (cart?.shipping_cost?.numeric === shippingCost?.data?.total_cost?.value) {
             setOpenModalNoMatchCost(true) // Cegah lanjut jika belum ada alamat
             return
         }
@@ -82,9 +79,7 @@ function Shipping() {
             return
         }
         if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
-            if (
-                JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
-            ) {
+            if (JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user) {
                 setIsOpenModalUser(true)
             } else {
                 window.location.href = "/payment-method"
@@ -93,6 +88,14 @@ function Shipping() {
             window.location.href = "/payment-method"
         }
     }
+
+    const shippingError = "status" in (shippingCost ?? {}) && shippingCost.status === "unavailable_address"
+
+    useEffect(() => {
+        if (shippingError && !openModalAddress) {
+            setOpenModalAddress(true)
+        }
+    }, [shippingCost, openModalAddress])
 
     if (!cart) {
         return (
@@ -112,66 +115,36 @@ function Shipping() {
             <Navbar visibleOn="desktop" />
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <div className="flex items-center">
-                    <ArrowLeftIcon
-                        className="h-6 w-6"
-                        onClick={() => router.back()}
-                    />
-                    <div className="ml-2 font-semibold">
-                        {t("shipping.shipping")}
-                    </div>
+                    <ArrowLeftIcon className="h-6 w-6" onClick={() => router.back()} />
+                    <div className="ml-2 font-semibold">{t("shipping.shipping")}</div>
                 </div>
-                <Bars3BottomRightIcon
-                    className="h-6 w-6"
-                    onClick={togglePopupMenu}
-                />
+                <Bars3BottomRightIcon className="h-6 w-6" onClick={togglePopupMenu} />
             </div>
-            {showPopupMenu && (
-                <PopupMenuMobile
-                    showPopupMenu={showPopupMenu}
-                    closePopupMenu={closePopupMenu}
-                />
-            )}
+            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />}
             <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
-                    <div className="hidden text-2xl font-extrabold lg:block">
-                        {t("shipping.shipping")}
-                    </div>
+                    <div className="hidden text-2xl font-extrabold lg:block">{t("shipping.shipping")}</div>
                     <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 lg:py-10">
                         <div className="w-full lg:col-span-2">
                             <div className="mb-2 flex flex-col bg-white px-5 py-4 lg:mb-4 lg:rounded-lg">
-                                <div className="text-sm font-extrabold text-[#6D7588]">
-                                    {t("shipping.address")}
-                                </div>
+                                <div className="text-sm font-extrabold text-[#6D7588]">{t("shipping.address")}</div>
                                 {cart.address !== null ? (
                                     <>
                                         <div className="mt-3 flex items-center">
                                             <MapPinIcon className="mr-2 h-4 w-4 text-[#007185]" />
                                             <div className="text-sm font-extrabold">
-                                                {cart.address.label} .{" "}
-                                                {cart.address.name}
+                                                {cart.address.label} . {cart.address.name}
                                             </div>
                                         </div>
-                                        <div className="mt-2 text-sm">
-                                            {cart.address.address}
-                                        </div>
-                                        <div
-                                            onClick={() =>
-                                                setOpenModalAddress(true)
-                                            }
-                                            className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
+                                        <div className="mt-2 text-sm">{cart.address.address}</div>
+                                        <div onClick={() => setOpenModalAddress(true)} className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
                                             {t("shipping.changeAddress")}
                                         </div>
                                     </>
                                 ) : (
                                     <>
-                                        <div className="mt-4 text-sm">
-                                            {t("shipping.notYetAddress")}
-                                        </div>
-                                        <div
-                                            onClick={() =>
-                                                setOpenModalAddress(true)
-                                            }
-                                            className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
+                                        <div className="mt-4 text-sm">{t("shipping.notYetAddress")}</div>
+                                        <div onClick={() => setOpenModalAddress(true)} className="mt-4 w-fit cursor-pointer rounded-lg border border-[#BFC9D9] px-4 py-2 text-xs hover:bg-[#F5F5F5]">
                                             {t("shipping.selectAddress")}
                                         </div>
                                     </>
@@ -180,38 +153,15 @@ function Shipping() {
                             <div className="mb-2 rounded-lg py-4 lg:mb-4">
                                 {cart.items.length > 0 ? (
                                     cart.items.map(item => (
-                                        <div
-                                            className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4"
-                                            key={item.id}>
+                                        <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4" key={item.id}>
                                             <div className="flex w-1/5 items-center">
-                                                <Image
-                                                    src={item.product.images[0]}
-                                                    width={100}
-                                                    height={100}
-                                                    alt="cart-product"
-                                                    className="ml-3 w-2/3"
-                                                    priority={false}
-                                                />
+                                                <Image src={item.product.images[0]} width={100} height={100} alt="cart-product" className="ml-3 w-2/3" priority={false} />
                                             </div>
                                             <div className="ml-5 w-2/5 text-sm leading-6">
-                                                <label className="text-md">
-                                                    {Cookies.get("locale") ===
-                                                    "en"
-                                                        ? item?.product
-                                                              ?.name_trans?.en
-                                                            ? item.product
-                                                                  .name_trans.en
-                                                            : item?.product
-                                                                  ?.name_trans
-                                                                  ?.id
-                                                        : item?.product
-                                                              ?.name_trans?.id}
-                                                </label>
+                                                <label className="text-md">{Cookies.get("locale") === "en" ? (item?.product?.name_trans?.en ? item.product.name_trans.en : item?.product?.name_trans?.id) : item?.product?.name_trans?.id}</label>
                                             </div>
                                             <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">
-                                                <label className="text-md font-bold">
-                                                    {item.price.formatted}
-                                                </label>
+                                                <label className="text-md font-bold">{item.price.formatted}</label>
                                             </div>
                                         </div>
                                     ))
@@ -367,34 +317,29 @@ function Shipping() {
                         </div>
                         <div className="hidden w-full lg:block">
                             <div className="mb-0.5 rounded-t-lg bg-white px-5 py-1 pt-3">
-                                <div className="text-md mb-3 font-bold">
-                                    {t("shipping.summaryOrder")}
-                                </div>
+                                <div className="text-md mb-3 font-bold">{t("shipping.summaryOrder")}</div>
                                 <div className="flex justify-between pb-0.5">
                                     <div className="text-sm leading-6">
-                                        <label className="text-sm text-[#6D7588]">
-                                            {t("shipping.totalPrice")}
-                                        </label>
+                                        <label className="text-sm text-[#6D7588]">{t("shipping.totalPrice")}</label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-sm">
-                                            {cart.total_price.formatted}
-                                        </label>
+                                        <label className="text-sm">{!shippingError ? cart.total_price.formatted : "-"}</label>
                                     </div>
                                 </div>
                                 <div className="flex justify-between pb-0.5">
                                     <div className="text-sm leading-6">
-                                        <label className="text-sm text-[#6D7588]">
-                                            {t("shipping.shippingCost")}
-                                        </label>
+                                        <label className="text-sm text-[#6D7588]">PPN {cart.tax_rate.formatted}</label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-sm">
-                                            {
-                                                shippingCost?.total_cost
-                                                    ?.formatted
-                                            }
-                                        </label>
+                                        <label className="text-sm">{!shippingError ? cart.tax_amount.formatted : "-"}</label>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between pb-0.5">
+                                    <div className="text-sm leading-6">
+                                        <label className="text-sm text-[#6D7588]">{t("shipping.shippingCost")}</label>
+                                    </div>
+                                    <div className="ml-5 text-right text-sm leading-6">
+                                        <label className="text-sm">{!shippingError ? shippingCost?.total_cost?.formatted : "-"}</label>
                                     </div>
                                 </div>
                                 <div className="flex justify-between py-3">
@@ -402,25 +347,19 @@ function Shipping() {
                                         <label className="text-sm">Total</label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-base font-bold">
-                                            {cart.total?.formatted}
-                                        </label>
+                                        <label className="text-base font-bold">{!shippingError ? cart.total?.formatted : "-"}</label>
                                     </div>
                                 </div>
                             </div>
                             {cart.shipping_cost.numeric > 0 && shippingCost ? (
                                 <div className="rounded-b-lg bg-white px-5 py-5">
-                                    <div
-                                        onClick={() => handleCheckout()}
-                                        className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                    <div onClick={() => handleCheckout()} className="cursor-pointer rounded-lg bg-secondary py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                         {t("shipping.selectPayment")}
                                     </div>
                                 </div>
                             ) : (
                                 <div className="rounded-b-lg bg-white px-5 py-5">
-                                    <div
-                                        className="cursor-not-allowed rounded-lg bg-secondary py-2 text-center text-sm font-bold opacity-50 hover:bg-[#e8bc00]"
-                                        disabled>
+                                    <div className="cursor-not-allowed rounded-lg bg-secondary py-2 text-center text-sm font-bold opacity-50 hover:bg-[#e8bc00]" disabled>
                                         {t("shipping.selectPayment")}
                                     </div>
                                 </div>
@@ -430,22 +369,15 @@ function Shipping() {
                             <div className="flex items-center justify-between">
                                 <div className="w-1/2 text-sm leading-6">
                                     <label className="text-sm">Total</label>
-                                    <div className="text-base font-bold">
-                                        {cart.total?.formatted}
-                                    </div>
+                                    <div className="text-base font-bold">{!shippingError ? cart.total?.formatted : "-"}</div>
                                 </div>
                                 <div className="w-1/2">
-                                    {cart.shipping_cost.numeric > 0 &&
-                                    shippingCost ? (
-                                        <div
-                                            onClick={() => handleCheckout()}
-                                            className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]`}>
+                                    {cart.shipping_cost.numeric > 0 && shippingCost ? (
+                                        <div onClick={() => handleCheckout()} className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00]`}>
                                             {t("shipping.selectPayment")}
                                         </div>
                                     ) : (
-                                        <div
-                                            className={`cursor-not-allowed rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold opacity-50`}
-                                            disabled>
+                                        <div className={`cursor-not-allowed rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold opacity-50`} disabled>
                                             {t("shipping.selectPayment")}
                                         </div>
                                     )}
@@ -458,38 +390,13 @@ function Shipping() {
 
             {/* Popup Modal */}
 
-            <PopupChangeAddress
-                isOpen={openModalAddress}
-                closeModal={closeModalAddress}
-            />
+            <PopupChangeAddress isOpen={openModalAddress} closeModal={closeModalAddress} message={shippingError ? shippingCost.message : ""} />
 
-            <PopupModal
-                isOpen={isOpenModalUser}
-                closeModal={closeModalUser}
-                type="updateProfile"
-                title={t("notification")}
-                message={t("shipping.messageAddress")}
-                confirmText={t("fillNow")}
-                cancelText={t("later")}
-            />
+            <PopupModal isOpen={isOpenModalUser} closeModal={closeModalUser} type="updateProfile" title={t("notification")} message={t("shipping.messageAddress")} confirmText={t("fillNow")} cancelText={t("later")} />
 
-            <PopupModal
-                isOpen={noMatchCost}
-                closeModal={() => setOpenModalNoMatchCost(false)}
-                type="notification"
-                title={t("notification")}
-                message={t("addressForm.noMatchCost")}
-                urlConfirm="/shipping"
-            />
+            <PopupModal isOpen={noMatchCost} closeModal={() => setOpenModalNoMatchCost(false)} type="notification" title={t("notification")} message={t("addressForm.noMatchCost")} urlConfirm="/shipping" />
 
-            <PopupModal
-                isOpen={statusShippingCost}
-                closeModal={() => setStatusShippingCost(false)}
-                type="notification"
-                title={t("notification")}
-                message={t("addressForm.notReachable")}
-                urlConfirm="/shipping"
-            />
+            <PopupModal isOpen={statusShippingCost} closeModal={() => setStatusShippingCost(false)} type="notification" title={t("notification")} message={t("addressForm.notReachable")} urlConfirm="/shipping" />
 
             <FloatingIcon />
         </div>

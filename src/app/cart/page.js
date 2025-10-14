@@ -5,14 +5,7 @@ import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
 import { useAuth } from "@/hooks/auth"
-import {
-    fetchCarts,
-    removeItems,
-    setShippingMethod,
-    toggleSelectAllItems,
-    toggleSelectItem,
-    updateSelectedItems,
-} from "@/store/slices/cartSlice"
+import { fetchCarts, removeItems, setShippingMethod, toggleSelectAllPalet, toggleSelectItem, updateSelectedItems } from "@/store/slices/cartSlice"
 import { Bars3BottomRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
@@ -63,15 +56,14 @@ function Cart() {
 
     const handleSelectItem = (itemId, isSelected) => {
         dispatch(toggleSelectItem({ itemId, isSelected }))
-        dispatch(updateSelectedItems([{ id: itemId, selected: isSelected }]))
+        dispatch(updateSelectedItems({ cart_item_id: itemId, is_selected: isSelected }))
     }
 
-    const handleSelectAllItems = isSelected => {
-        dispatch(toggleSelectAllItems(isSelected))
-        const cartItems = cart.items.map(item => ({
-            id: item.id,
-            selected: isSelected,
-        }))
+    const handleSelectAllPalet = isSelected => {
+        dispatch(toggleSelectAllPalet(isSelected))
+        const cartItems = {
+            select_all_type: "palet",
+        }
         dispatch(updateSelectedItems(cartItems))
     }
 
@@ -97,9 +89,7 @@ function Cart() {
     const handleCheckout = method => {
         setMethodSelected(method)
         if (JSON.parse(localStorage.getItem("signinWithGoogle"))) {
-            if (
-                JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user
-            ) {
+            if (JSON.parse(localStorage.getItem("signinWithGoogle")).is_new_user) {
                 setIsOpenModalUser(true)
             } else {
                 dispatch(setShippingMethod({ method }))
@@ -129,7 +119,7 @@ function Cart() {
         )
     }
 
-    // console.log(cart.items)
+    // console.log(cart.items.palet)
 
     return (
         <div>
@@ -137,150 +127,97 @@ function Cart() {
             <div className="flex items-center justify-between border-[#F0F3F7] px-4 py-3 lg:hidden">
                 <div className="flex items-center">
                     <Link href="/product?page=1">
-                        <ArrowLeftIcon
-                            className="h-6 w-6"
-                            onClick={() => router.back()}
-                        />
+                        <ArrowLeftIcon className="h-6 w-6" onClick={() => router.back()} />
                     </Link>
                     <div className="ml-2 font-semibold">{t("cart.cart")}</div>
                 </div>
-                <Bars3BottomRightIcon
-                    className="h-6 w-6"
-                    onClick={togglePopupMenu}
-                />
+                <Bars3BottomRightIcon className="h-6 w-6" onClick={togglePopupMenu} />
             </div>
-            {showPopupMenu && (
-                <PopupMenuMobile
-                    showPopupMenu={showPopupMenu}
-                    closePopupMenu={closePopupMenu}
-                />
-            )}
+            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />}
             <div className="min-h-screen bg-[#F5F5F5] lg:p-10">
                 <div className="mx-auto max-w-7xl">
-                    <div className="hidden text-2xl font-extrabold lg:block">
-                        {t("cart.cart")}
-                    </div>
+                    <div className="hidden text-2xl font-extrabold lg:block">{t("cart.cart")}</div>
                     <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 lg:py-10">
-                        <div className="w-full lg:col-span-2">
-                            <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
-                                <div className="flex items-center">
-                                    <input
-                                        id="selectAll"
-                                        type="checkbox"
-                                        className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                                        checked={
-                                            cart.items.length > 0 &&
-                                            cart.items.every(
-                                                item => item.is_selected,
-                                            )
-                                        }
-                                        onChange={e =>
-                                            handleSelectAllItems(
-                                                e.target.checked,
-                                            )
-                                        }
-                                    />
-                                </div>
-                                <div className="ml-2 text-sm leading-6">
-                                    <label className="font-bold">
-                                        {t("cart.selectAll")}
-                                    </label>
-                                </div>
-                            </div>
-                            {cart.items.length > 0 ? (
-                                cart.items.map(item => (
-                                    <div
-                                        className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4"
-                                        key={item.id}>
-                                        <div className="flex w-1/5 items-center">
+                        <div className="flex w-full flex-col gap-4 lg:col-span-2">
+                            {cart.items.palet.length > 0 && (
+                                <div className="w-full">
+                                    <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
+                                        <div className="flex items-center">
                                             <input
-                                                id={`selectItem-${item.id}`}
+                                                id="selectAll"
                                                 type="checkbox"
                                                 className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
-                                                checked={item.is_selected}
-                                                onChange={e =>
-                                                    handleSelectItem(
-                                                        item.id,
-                                                        e.target.checked,
-                                                    )
-                                                }
-                                            />
-                                            <Image
-                                                src={item.product.images[0]}
-                                                width={100}
-                                                height={100}
-                                                alt="cart-product"
-                                                className="ml-3 w-2/3"
-                                                priority={false}
+                                                checked={cart.items.palet.length > 0 && cart.items.palet.every(item => item.is_selected)}
+                                                onChange={e => handleSelectAllPalet(e.target.checked)}
                                             />
                                         </div>
-                                        <div className="ml-5 w-2/5 text-sm leading-6">
-                                            <label className="text-md">
-                                                {Cookies.get("locale") === "en"
-                                                    ? item?.product?.name_trans
-                                                          ?.en
-                                                        ? item.product
-                                                              .name_trans.en
-                                                        : item?.product
-                                                              ?.name_trans?.id
-                                                    : item?.product?.name_trans
-                                                          ?.id}
-                                            </label>
-                                        </div>
-                                        <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">
-                                            <label className="text-md font-bold">
-                                                {item.price.formatted}
-                                            </label>
-                                            <TrashIcon
-                                                className="ml-2 h-5 w-5 cursor-pointer text-[#9FA6B0] hover:text-red-700"
-                                                onClick={() =>
-                                                    openModal(item.product.id)
-                                                }
-                                            />
+                                        <div className="ml-2 text-sm leading-6">
+                                            <label className="font-bold">{t("cart.selectAll.palet")}</label>
                                         </div>
                                     </div>
-                                ))
-                            ) : (
-                                <p>No items in cart.</p>
+                                    {cart.items.palet.map(item => (
+                                        <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4" key={item.id}>
+                                            <div className="flex w-1/5 items-center">
+                                                <input id={`selectItem-${item.id}`} type="checkbox" className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0" checked={item.is_selected} onChange={e => handleSelectItem(item.id, e.target.checked)} />
+                                                <Image src={item.product.images[0]} width={100} height={100} alt="cart-product" className="ml-3 w-2/3" priority={false} />
+                                            </div>
+                                            <div className="ml-5 w-2/5 text-sm leading-6">
+                                                <label className="text-md">{Cookies.get("locale") === "en" ? (item?.product?.name_trans?.en ? item.product.name_trans.en : item?.product?.name_trans?.id) : item?.product?.name_trans?.id}</label>
+                                            </div>
+                                            <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">
+                                                <label className="text-md font-bold">{item.price.formatted}</label>
+                                                <TrashIcon className="ml-2 h-5 w-5 cursor-pointer text-[#9FA6B0] hover:text-red-700" onClick={() => openModal(item.product.id)} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            {cart.items.container.length > 0 && (
+                                <div className="w-full">
+                                    <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
+                                        <div className="ml-2 text-sm leading-6">
+                                            <label className="font-bold">{t("cart.selectAll.container")}</label>
+                                        </div>
+                                    </div>
+                                    {cart.items.container.map(item => (
+                                        <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4" key={item.id}>
+                                            <div className="flex w-1/5 items-center">
+                                                <input id={`selectItem-${item.id}`} type="checkbox" className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0" checked={item.is_selected} onChange={e => handleSelectItem(item.id, e.target.checked)} />
+                                                <Image src={item.product.images[0]} width={100} height={100} alt="cart-product" className="ml-3 w-2/3" priority={false} />
+                                            </div>
+                                            <div className="ml-5 w-2/5 text-sm leading-6">
+                                                <label className="text-md">{Cookies.get("locale") === "en" ? (item?.product?.name_trans?.en ? item.product.name_trans.en : item?.product?.name_trans?.id) : item?.product?.name_trans?.id}</label>
+                                            </div>
+                                            <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">
+                                                <label className="text-md font-bold">{item.price.formatted}</label>
+                                                <TrashIcon className="ml-2 h-5 w-5 cursor-pointer text-[#9FA6B0] hover:text-red-700" onClick={() => openModal(item.product.id)} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
                         <div className="hidden w-full lg:block">
                             <div className="mb-0.5 rounded-t-lg bg-white px-5 py-4">
-                                <div className="text-md font-bold">
-                                    {t("cart.summaryOrder")}
-                                </div>
+                                <div className="text-md font-bold">{t("cart.summaryOrder")}</div>
                                 <div className="flex justify-between py-5">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm">Total</label>
                                     </div>
                                     <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-bold">
-                                            {cart.total_price.formatted}
-                                        </label>
+                                        <label className="text-md font-bold">{cart.total_price.formatted}</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="rounded-b-lg bg-white px-5 py-5">
                                 <div
-                                    onClick={
-                                        cart.items.some(
-                                            item => item.is_selected,
-                                        )
-                                            ? () => setIsShipping(true)
-                                            : null
-                                    }
-                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${
-                                        cart.items.some(
-                                            item => item.is_selected,
-                                        )
-                                            ? ""
-                                            : "cursor-not-allowed opacity-50"
-                                    }`}
-                                    disabled={
-                                        !cart.items.some(
-                                            item => item.is_selected,
-                                        )
-                                    }>
+                                    onClick={() => {
+                                        if (cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected)) {
+                                            setIsShipping(true)
+                                        }
+                                    }}
+                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
+                                    disabled={!cart.items.palet.some(item => item.is_selected) || !cart.items.container.some(item => item.is_selected)}>
                                     {t("cart.buyNow")}
                                 </div>
                             </div>
@@ -289,31 +226,17 @@ function Cart() {
                             <div className="flex items-center justify-between">
                                 <div className="w-1/2 text-sm leading-6">
                                     <label className="text-sm">Total</label>
-                                    <div className="text-base font-bold">
-                                        {cart.total_price.formatted}
-                                    </div>
+                                    <div className="text-base font-bold">{cart.total_price.formatted}</div>
                                 </div>
                                 <div className="w-1/2">
                                     <div
-                                        onClick={
-                                            cart.items.some(
-                                                item => item.is_selected,
-                                            )
-                                                ? () => setIsShipping(true)
-                                                : null
-                                        }
-                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${
-                                            cart.items.some(
-                                                item => item.is_selected,
-                                            )
-                                                ? ""
-                                                : "cursor-not-allowed opacity-50"
-                                        }`}
-                                        disabled={
-                                            !cart.items.some(
-                                                item => item.is_selected,
-                                            )
-                                        }>
+                                        onClick={() => {
+                                            if (cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected)) {
+                                                setIsShipping(true)
+                                            }
+                                        }}
+                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
+                                        disabled={!cart.items.palet.some(item => item.is_selected) || !cart.items.container.some(item => item.is_selected)}>
                                         {t("cart.buyNow")}
                                     </div>
                                 </div>
@@ -325,44 +248,21 @@ function Cart() {
 
             {/* Confirmation Modal */}
             {isShipping && (
-                <div
-                    className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 ${
-                        isShipping ? "opacity-100" : "opacity-0"
-                    }`}>
-                    <div
-                        className={`relative w-full max-w-lg transform rounded-lg bg-white p-6 transition-all duration-300 ease-out ${
-                            isShipping
-                                ? "translate-y-0 scale-100 opacity-100"
-                                : "translate-y-4 scale-95 opacity-0"
-                        }`}>
+                <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50 ${isShipping ? "opacity-100" : "opacity-0"}`}>
+                    <div className={`relative w-full max-w-lg transform rounded-lg bg-white p-6 transition-all duration-300 ease-out ${isShipping ? "translate-y-0 scale-100 opacity-100" : "translate-y-4 scale-95 opacity-0"}`}>
                         <div className="my-4 flex items-center justify-between">
-                            <h2 className="text-base font-semibold">
-                                {t("cart.selectShippingMethod")}
-                            </h2>
-                            <XMarkIcon
-                                className="h-6 w-6 cursor-pointer"
-                                onClick={() => setIsShipping(false)}
-                            />
+                            <h2 className="text-base font-semibold">{t("cart.selectShippingMethod")}</h2>
+                            <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={() => setIsShipping(false)} />
                         </div>
 
-                        <p className="mb-6 text-gray-700">
-                            {t("cart.description")}
-                        </p>
+                        <p className="mb-6 text-gray-700">{t("cart.description")}</p>
 
                         <div className="flex justify-end space-x-3">
                             <>
-                                <button
-                                    className="w-1/2 rounded-lg border px-4 py-2 text-sm font-semibold hover:bg-[#f5f5f5]"
-                                    onClick={() =>
-                                        handleCheckout("self_pickup")
-                                    }>
+                                <button className="w-1/2 rounded-lg border px-4 py-2 text-sm font-semibold hover:bg-[#f5f5f5]" onClick={() => handleCheckout("self_pickup")}>
                                     {t("cart.selfPickup")}
                                 </button>
-                                <button
-                                    className="w-1/2 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-[#e8bc00]"
-                                    onClick={() =>
-                                        handleCheckout("courier_pickup")
-                                    }>
+                                <button className="w-1/2 rounded-lg bg-secondary px-4 py-2 text-sm font-semibold hover:bg-[#e8bc00]" onClick={() => handleCheckout("courier_pickup")}>
                                     {t("cart.courierPickup")}
                                 </button>
                             </>
@@ -372,26 +272,9 @@ function Cart() {
             )}
 
             {/* Popup Modal */}
-            <PopupModal
-                isOpen={isModalOpen}
-                closeModal={closeModal}
-                type="confirmation"
-                title="Konfirmasi"
-                message="Apakah anda yakin ingin menghapus item ini?"
-                onConfirm={handleConfirm}
-                confirmText="Ya, Lanjutkan"
-                cancelText="Kembali"
-            />
+            <PopupModal isOpen={isModalOpen} closeModal={closeModal} type="confirmation" title="Konfirmasi" message="Apakah anda yakin ingin menghapus item ini?" onConfirm={handleConfirm} confirmText="Ya, Lanjutkan" cancelText="Kembali" />
 
-            <PopupModal
-                isOpen={isOpenModalUser}
-                closeModal={closeModalUser}
-                type="updateProfile"
-                title="Pemberitahuan"
-                message="Sebelum melakukan checkout, Anda harus melengkapi data diri"
-                confirmText="Lengkapi Sekarang"
-                cancelText="Nanti"
-            />
+            <PopupModal isOpen={isOpenModalUser} closeModal={closeModalUser} type="updateProfile" title="Pemberitahuan" message="Sebelum melakukan checkout, Anda harus melengkapi data diri" confirmText="Lengkapi Sekarang" cancelText="Nanti" />
 
             <FloatingIcon />
         </div>
