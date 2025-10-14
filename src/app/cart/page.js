@@ -212,12 +212,12 @@ function Cart() {
                             <div className="rounded-b-lg bg-white px-5 py-5">
                                 <div
                                     onClick={() => {
-                                        if (cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected)) {
+                                        if (cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected)) {
                                             setIsShipping(true)
                                         }
                                     }}
-                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
-                                    disabled={!cart.items.palet.some(item => item.is_selected) || !cart.items.container.some(item => item.is_selected)}>
+                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
+                                    disabled={!cart.items.palet?.some(item => item.is_selected) || !cart.items.container?.some(item => item.is_selected)}>
                                     {t("cart.buyNow")}
                                 </div>
                             </div>
@@ -231,12 +231,12 @@ function Cart() {
                                 <div className="w-1/2">
                                     <div
                                         onClick={() => {
-                                            if (cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected)) {
+                                            if (cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected)) {
                                                 setIsShipping(true)
                                             }
                                         }}
-                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${cart.items.palet.some(item => item.is_selected) || cart.items.container.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
-                                        disabled={!cart.items.palet.some(item => item.is_selected) || !cart.items.container.some(item => item.is_selected)}>
+                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
+                                        disabled={!cart.items.palet?.some(item => item.is_selected) || !cart.items.container?.some(item => item.is_selected)}>
                                         {t("cart.buyNow")}
                                     </div>
                                 </div>
