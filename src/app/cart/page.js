@@ -172,6 +172,30 @@ function Cart() {
                                     ))}
                                 </div>
                             )}
+                            {cart.items.truck_load.length > 0 && (
+                                <div className="w-full">
+                                    <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
+                                        <div className="ml-2 text-sm leading-6">
+                                            <label className="font-bold">{t("cart.selectAll.truck_load")}</label>
+                                        </div>
+                                    </div>
+                                    {cart.items.truck_load.map(item => (
+                                        <div className="mb-2 flex items-center bg-white px-5 py-4 lg:mb-4" key={item.id}>
+                                            <div className="flex w-1/5 items-center">
+                                                <input id={`selectItem-${item.id}`} type="checkbox" className="h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0" checked={item.is_selected} onChange={e => handleSelectItem(item.id, e.target.checked)} />
+                                                <Image src={item.product.images[0]} width={100} height={100} alt="cart-product" className="ml-3 w-2/3" priority={false} />
+                                            </div>
+                                            <div className="ml-5 w-2/5 text-sm leading-6">
+                                                <label className="text-md">{Cookies.get("locale") === "en" ? (item?.product?.name_trans?.en ? item.product.name_trans.en : item?.product?.name_trans?.id) : item?.product?.name_trans?.id}</label>
+                                            </div>
+                                            <div className="ml-5 flex w-2/5 items-center justify-end text-sm leading-6">
+                                                <label className="text-md font-bold">{item.price.formatted}</label>
+                                                <TrashIcon className="ml-2 h-5 w-5 cursor-pointer text-[#9FA6B0] hover:text-red-700" onClick={() => openModal(item.product.id)} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                             {cart.items.container.length > 0 && (
                                 <div className="w-full">
                                     <div className="mb-2 flex bg-white px-5 py-4 lg:mb-4 lg:rounded-t-lg">
@@ -212,12 +236,12 @@ function Cart() {
                             <div className="rounded-b-lg bg-white px-5 py-5">
                                 <div
                                     onClick={() => {
-                                        if (cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected)) {
+                                        if (cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) || cart.items.truck_load?.some(item => item.is_selected)) {
                                             setIsShipping(true)
                                         }
                                     }}
-                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
-                                    disabled={!cart.items.palet?.some(item => item.is_selected) || !cart.items.container?.some(item => item.is_selected)}>
+                                    className={`cursor-pointer rounded-lg bg-secondary py-2 text-center text-lg font-bold hover:bg-[#e8bc00] ${cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) || cart.items.truck_load?.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
+                                    disabled={!cart.items.palet?.some(item => item.is_selected) || !cart.items.container?.some(item => item.is_selected) || cart.items.truck_load?.some(item => item.is_selected)}>
                                     {t("cart.buyNow")}
                                 </div>
                             </div>
@@ -231,12 +255,12 @@ function Cart() {
                                 <div className="w-1/2">
                                     <div
                                         onClick={() => {
-                                            if (cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected)) {
+                                            if (cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) || cart.items.truck_load?.some(item => item.is_selected)) {
                                                 setIsShipping(true)
                                             }
                                         }}
-                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
-                                        disabled={!cart.items.palet?.some(item => item.is_selected) || !cart.items.container?.some(item => item.is_selected)}>
+                                        className={`cursor-pointer rounded-lg bg-secondary px-10 py-2 text-center text-base font-bold hover:bg-[#e8bc00] ${cart.items.palet?.some(item => item.is_selected) || cart.items.container?.some(item => item.is_selected) || cart.items.truck_load?.some(item => item.is_selected) ? "" : "cursor-not-allowed opacity-50"}`}
+                                        disabled={!cart.items.palet?.some(item => item.is_selected) || !cart.items.container?.some(item => item.is_selected) || cart.items.truck_load?.some(item => item.is_selected)}>
                                         {t("cart.buyNow")}
                                     </div>
                                 </div>
