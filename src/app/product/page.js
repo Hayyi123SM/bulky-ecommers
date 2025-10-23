@@ -142,7 +142,7 @@ function Product({ searchParams }) {
         const queryParams = new URLSearchParams()
 
         if (filters.search) queryParams.set("search", filters.search)
-        if (filters.packaging_type?.length) queryParams.set("packaging_type", filters.categories.join(","))
+        if (filters.packaging_type?.length) queryParams.set("packaging_type", filters.packaging_type.join(","))
         if (filters.categories?.length) queryParams.set("categories", filters.categories.join(","))
         if (filters.conditions?.length) queryParams.set("conditions", filters.conditions.join(","))
         if (filters.statuses?.length) queryParams.set("statuses", filters.statuses.join(","))
@@ -218,6 +218,8 @@ function Product({ searchParams }) {
         setIsPdf(pdf)
     }
     // Get the names of selected filters
+    const selectedCTypeNames = selectedFilters.packaging_type.map(i => i.split("_").join(" "))
+
     const selectedCategoryNames = categories.filter(category => selectedFilters.categories.includes(category.slug)).map(category => category.name)
 
     const selectedWarehouseNames = warehouses.filter(warehouse => selectedFilters.warehouses.includes(warehouse.id)).map(warehouse => warehouse.name)
@@ -284,6 +286,11 @@ function Product({ searchParams }) {
             </div>
             <div className="flex items-center p-4 lg:hidden">
                 <div className="mr-2 flex items-center overflow-x-auto">
+                    {selectedCTypeNames.map((name, index) => (
+                        <div key={`category-${index}`} className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base capitalize text-[#007185]">
+                            {name}
+                        </div>
+                    ))}
                     {selectedCategoryNames.map((name, index) => (
                         <div key={`category-${index}`} className="mr-1 flex-shrink-0 rounded-3xl border border-[#007185] bg-[#0071850D] px-4 py-2 text-base text-[#007185]">
                             {name}

@@ -46,6 +46,7 @@ export const productApi = createApi({
             query: ({ currentPage, filters }) => {
                 const isFilterActive = Boolean(
                     filters.search ||
+                        (filters.packaging_type && filters.packaging_type.length) ||
                         (filters.categories && filters.categories.length) ||
                         (filters.conditions && filters.conditions.length) ||
                         (filters.statuses && filters.statuses.length) ||
@@ -59,6 +60,10 @@ export const productApi = createApi({
                     page: isFilterActive ? currentPage : currentPage,
                     per_page: filters.perPage || 15,
                     ...(filters.search && { search: filters.search }),
+                    ...(filters.packaging_type &&
+                        filters.packaging_type.length && {
+                            packaging_type: filters.packaging_type.join(","),
+                        }),
                     ...(filters.categories &&
                         filters.categories.length && {
                             category: filters.categories.join(","),
@@ -111,6 +116,10 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async ({
             page: currentPage,
             per_page: filters.perPage || 15,
             ...(filters.search && { search: filters.search }),
+            ...(filters.packaging_type &&
+                filters.packaging_type.length && {
+                    packaging_type: filters.packaging_type.join(","),
+                }),
             ...(filters.categories &&
                 filters.categories.length && {
                     category: filters.categories.join(","),

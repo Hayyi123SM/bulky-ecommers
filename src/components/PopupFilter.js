@@ -1,11 +1,4 @@
-import {
-    fetchBrands,
-    fetchCategories,
-    fetchConditions,
-    fetchStatuses,
-    fetchWarehouses,
-    setFilters,
-} from "@/store/slices/filterSlice"
+import { fetchBrands, fetchCategories, fetchConditions, fetchStatuses, fetchWarehouses, setFilters } from "@/store/slices/filterSlice"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import { useEffect, useState } from "react"
 import Skeleton from "react-loading-skeleton"
@@ -15,27 +8,19 @@ import { useTranslations } from "next-intl"
 function PopupFilter({ closePopup }) {
     const t = useTranslations()
     const selectedFilters = useSelector(state => state.filters.selectedFilters)
-    const [selectedCategories, setSelectedCategories] = useState(
-        selectedFilters.categories || [],
-    )
-    const [selectedWarehouses, setSelectedWarehouses] = useState(
-        selectedFilters.warehouses || [],
-    )
-    const [selectedConditions, setSelectedConditions] = useState(
-        selectedFilters.conditions || [],
-    )
-    const [selectedStatuses, setSelectedStatuses] = useState(
-        selectedFilters.statuses || [],
-    )
-    const [selectedBrands, setSelectedBrands] = useState(
-        selectedFilters.brands || [],
-    )
+    const [selectedType, setSelectedType] = useState(selectedFilters.packaging_type || [])
+    const [selectedCategories, setSelectedCategories] = useState(selectedFilters.categories || [])
+    const [selectedWarehouses, setSelectedWarehouses] = useState(selectedFilters.warehouses || [])
+    const [selectedConditions, setSelectedConditions] = useState(selectedFilters.conditions || [])
+    const [selectedStatuses, setSelectedStatuses] = useState(selectedFilters.statuses || [])
+    const [selectedBrands, setSelectedBrands] = useState(selectedFilters.brands || [])
     const [minPrice, setMinPrice] = useState(selectedFilters.minPrice || null)
     const [maxPrice, setMaxPrice] = useState(selectedFilters.maxPrice || null)
     const [numericMinPrice, setNumericMinPrice] = useState(null)
     const [numericMaxPrice, setNumericMaxPrice] = useState(null)
 
     // State untuk toggle "Lihat Semua"
+    const [showType, setShowType] = useState(false)
     const [showAllCategories, setShowAllCategories] = useState(false)
     const [showAllWarehouses, setShowAllWarehouses] = useState(false)
     const [showAllConditions, setShowAllConditions] = useState(false)
@@ -70,12 +55,20 @@ function PopupFilter({ closePopup }) {
         dispatch(fetchBrands())
     }, [dispatch])
 
+    const handleTypeChange = (e, type) => {
+        if (selectedType.includes(type.slug)) {
+            // Unselect if already selected
+            setSelectedType([])
+        } else {
+            // Select the type
+            setSelectedType([type])
+        }
+    }
+
     const handleCategoryChange = (e, category) => {
         if (selectedCategories.includes(category.slug)) {
             // Unselect if already selected
-            setSelectedCategories(
-                selectedCategories.filter(catId => catId !== category.slug),
-            )
+            setSelectedCategories(selectedCategories.filter(catId => catId !== category.slug))
         } else {
             // Select the category
             setSelectedCategories([...selectedCategories, category.slug])
@@ -85,9 +78,7 @@ function PopupFilter({ closePopup }) {
     const handleWarehouseChange = (e, warehouse) => {
         if (selectedWarehouses.includes(warehouse.id)) {
             // Unselect if already selected
-            setSelectedWarehouses(
-                selectedWarehouses.filter(warId => warId !== warehouse.id),
-            )
+            setSelectedWarehouses(selectedWarehouses.filter(warId => warId !== warehouse.id))
         } else {
             // Select the warehouse
             setSelectedWarehouses([...selectedWarehouses, warehouse.id])
@@ -97,11 +88,7 @@ function PopupFilter({ closePopup }) {
     const handleConditionChange = (e, condition) => {
         if (selectedConditions.includes(condition.slug)) {
             // Unselect if already selected
-            setSelectedConditions(
-                selectedConditions.filter(
-                    condSlug => condSlug !== condition.slug,
-                ),
-            )
+            setSelectedConditions(selectedConditions.filter(condSlug => condSlug !== condition.slug))
         } else {
             // Select the condition
             setSelectedConditions([...selectedConditions, condition.slug])
@@ -111,9 +98,7 @@ function PopupFilter({ closePopup }) {
     const handleStatusChange = (e, status) => {
         if (selectedStatuses.includes(status.id)) {
             // Unselect if already selected
-            setSelectedStatuses(
-                selectedStatuses.filter(statId => statId !== status.id),
-            )
+            setSelectedStatuses(selectedStatuses.filter(statId => statId !== status.id))
         } else {
             // Select the status
             setSelectedStatuses([...selectedStatuses, status.id])
@@ -123,9 +108,7 @@ function PopupFilter({ closePopup }) {
     const handleBrandChange = (e, brand) => {
         if (selectedBrands.includes(brand.id)) {
             // Unselect if already selected
-            setSelectedBrands(
-                selectedBrands.filter(brandId => brandId !== brand.id),
-            )
+            setSelectedBrands(selectedBrands.filter(brandId => brandId !== brand.id))
         } else {
             // Select the brand
             setSelectedBrands([...selectedBrands, brand.id])
@@ -135,18 +118,13 @@ function PopupFilter({ closePopup }) {
     const handleMinPriceChange = e => {
         const rawMinValue = e.target.value.replace(/[^\d]/g, "")
         const numericMinValue = rawMinValue ? parseInt(rawMinValue, 10) : null
-        const formattedMinValue = rawMinValue
-            ? formatToIDR(numericMinValue)
-            : ""
+        const formattedMinValue = rawMinValue ? formatToIDR(numericMinValue) : ""
 
         setMinPrice(formattedMinValue) // Set the formatted value for display
 
         if (numericMinValue !== null) {
             if (maxPrice) {
-                const numericMaxPrice = parseInt(
-                    maxPrice.replace(/[^\d]/g, ""),
-                    10,
-                )
+                const numericMaxPrice = parseInt(maxPrice.replace(/[^\d]/g, ""), 10)
                 // Validate min price against max price
                 if (numericMinValue <= numericMaxPrice) {
                     setNumericMinPrice(numericMinValue)
@@ -162,9 +140,7 @@ function PopupFilter({ closePopup }) {
     const handleMaxPriceChange = e => {
         const rawMaxValue = e.target.value.replace(/[^\d]/g, "")
         const numericMaxValue = rawMaxValue ? parseInt(rawMaxValue, 10) : null
-        const formattedMaxValue = rawMaxValue
-            ? formatToIDR(numericMaxValue)
-            : ""
+        const formattedMaxValue = rawMaxValue ? formatToIDR(numericMaxValue) : ""
 
         setMaxPrice(formattedMaxValue) // Set the formatted value for display
 
@@ -190,6 +166,7 @@ function PopupFilter({ closePopup }) {
     const handleFilter = () => {
         dispatch(
             setFilters({
+                packaging_type: selectedType,
                 categories: selectedCategories,
                 warehouses: selectedWarehouses,
                 conditions: selectedConditions,
@@ -205,6 +182,7 @@ function PopupFilter({ closePopup }) {
     const handleResetFilter = () => {
         dispatch(
             setFilters({
+                packaging_type: [],
                 categories: [],
                 warehouses: [],
                 conditions: [],
@@ -214,6 +192,7 @@ function PopupFilter({ closePopup }) {
                 maxPrice: null,
             }),
         )
+        setSelectedType([])
         setSelectedCategories([])
         setSelectedWarehouses([])
         setSelectedConditions([])
@@ -230,53 +209,52 @@ function PopupFilter({ closePopup }) {
             <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
                 <div className="max-h-[95vh] w-full max-w-md overflow-y-auto rounded-lg bg-white p-6 pt-5 shadow-lg">
                     <div className="my-4 flex items-center justify-between">
-                        <h2 className="text-base font-semibold">
-                            {t("other.filter")}
-                        </h2>
-                        <XMarkIcon
-                            className="h-6 w-6 cursor-pointer"
-                            onClick={closePopup}
-                        />
+                        <h2 className="text-base font-semibold">{t("other.filter")}</h2>
+                        <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={closePopup} />
+                    </div>
+
+                    {/* type */}
+                    <div className="mb-4">
+                        <div className="mt-2 flex justify-between py-5">
+                            <div className="text-sm font-bold">{t("filter.type")}</div>
+                            <div onClick={() => setShowType(!showType)} className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                {showType ? t("filter.showLess") : t("filter.showMore")}
+                            </div>
+                        </div>
+                        <div className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${showType ? "max-h-full" : "max-h-24 overflow-y-auto"}`}>
+                            {loadingFilters ? (
+                                <Skeleton count={3} />
+                            ) : (
+                                [
+                                    { label: "Palet", value: "palet" },
+                                    { label: "Container", value: "container" },
+                                    { label: "Truck Load", value: "truck_load" },
+                                ].map(type => (
+                                    <div key={type.value} onClick={e => handleTypeChange(e, type.value)} className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${selectedType.includes(type.value) ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
+                                        {type.label}
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
 
                     {/* Kategori */}
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
-                            <div className="text-sm font-bold">
-                                {t("filter.category")}
-                            </div>
-                            <div
-                                onClick={() =>
-                                    setShowAllCategories(!showAllCategories)
-                                }
-                                className="cursor-pointer text-sm font-semibold text-[#007185]">
-                                {showAllCategories
-                                    ? t("filter.showLess")
-                                    : t("filter.showMore")}
+                            <div className="text-sm font-bold">{t("filter.category")}</div>
+                            <div onClick={() => setShowAllCategories(!showAllCategories)} className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                {showAllCategories ? t("filter.showLess") : t("filter.showMore")}
                             </div>
                         </div>
-                        <div
-                            className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
-                                showAllCategories
-                                    ? "max-h-full"
-                                    : "max-h-24 overflow-y-auto"
-                            }`}>
+                        <div className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${showAllCategories ? "max-h-full" : "max-h-24 overflow-y-auto"}`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
                             ) : (
                                 categories.map(category => (
                                     <div
                                         key={category.id}
-                                        onClick={e =>
-                                            handleCategoryChange(e, category)
-                                        }
-                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
-                                            selectedCategories.includes(
-                                                category.slug,
-                                            )
-                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
-                                                : "border-[#BFC9D9] text-[#6D7588]"
-                                        }`}>
+                                        onClick={e => handleCategoryChange(e, category)}
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${selectedCategories.includes(category.slug) ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
                                         {category.name}
                                     </div>
                                 ))
@@ -287,37 +265,17 @@ function PopupFilter({ closePopup }) {
                     {/* Brand */}
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
-                            <div className="text-sm font-bold">
-                                {t("filter.brand")}
-                            </div>
-                            <div
-                                onClick={() => setShowAllBrands(!showAllBrands)}
-                                className="cursor-pointer text-sm font-semibold text-[#007185]">
-                                {showAllBrands
-                                    ? t("filter.showLess")
-                                    : t("filter.showMore")}
+                            <div className="text-sm font-bold">{t("filter.brand")}</div>
+                            <div onClick={() => setShowAllBrands(!showAllBrands)} className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                {showAllBrands ? t("filter.showLess") : t("filter.showMore")}
                             </div>
                         </div>
-                        <div
-                            className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
-                                showAllBrands
-                                    ? "max-h-full"
-                                    : "max-h-24 overflow-y-auto"
-                            }`}>
+                        <div className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${showAllBrands ? "max-h-full" : "max-h-24 overflow-y-auto"}`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
                             ) : (
                                 brands.map(brand => (
-                                    <div
-                                        key={brand.id}
-                                        onClick={e =>
-                                            handleBrandChange(e, brand)
-                                        }
-                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
-                                            selectedBrands.includes(brand.id)
-                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
-                                                : "border-[#BFC9D9] text-[#6D7588]"
-                                        }`}>
+                                    <div key={brand.id} onClick={e => handleBrandChange(e, brand)} className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${selectedBrands.includes(brand.id) ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
                                         {brand.name}
                                     </div>
                                 ))
@@ -328,43 +286,22 @@ function PopupFilter({ closePopup }) {
                     {/* Lokasi */}
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
-                            <div className="text-sm font-bold">
-                                {t("filter.warehouse")}
-                            </div>
+                            <div className="text-sm font-bold">{t("filter.warehouse")}</div>
                             {warehouses.length > 5 && (
-                                <div
-                                    onClick={() =>
-                                        setShowAllWarehouses(!showAllWarehouses)
-                                    }
-                                    className="cursor-pointer text-sm font-semibold text-[#007185]">
-                                    {showAllWarehouses
-                                        ? "Lihat Lebih Sedikit"
-                                        : "Lihat Semua"}
+                                <div onClick={() => setShowAllWarehouses(!showAllWarehouses)} className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                    {showAllWarehouses ? "Lihat Lebih Sedikit" : "Lihat Semua"}
                                 </div>
                             )}
                         </div>
-                        <div
-                            className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
-                                showAllWarehouses
-                                    ? "max-h-full"
-                                    : "max-h-24 overflow-y-auto"
-                            }`}>
+                        <div className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${showAllWarehouses ? "max-h-full" : "max-h-24 overflow-y-auto"}`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
                             ) : (
                                 warehouses.map(warehouse => (
                                     <div
                                         key={warehouse.id}
-                                        onClick={e =>
-                                            handleWarehouseChange(e, warehouse)
-                                        }
-                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
-                                            selectedWarehouses.includes(
-                                                warehouse.id,
-                                            )
-                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
-                                                : "border-[#BFC9D9] text-[#6D7588]"
-                                        }`}>
+                                        onClick={e => handleWarehouseChange(e, warehouse)}
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${selectedWarehouses.includes(warehouse.id) ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
                                         {warehouse.name}
                                     </div>
                                 ))
@@ -375,41 +312,23 @@ function PopupFilter({ closePopup }) {
                     {/* Harga */}
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
-                            <div className="text-sm font-bold">
-                                {t("filter.price")}
-                            </div>
+                            <div className="text-sm font-bold">{t("filter.price")}</div>
                         </div>
                         <div className="flex items-center">
                             {loadingFilters ? (
                                 <Skeleton />
                             ) : (
                                 <div className="relative flex">
-                                    <div className="absolute left-3 top-1/2 flex h-10 -translate-y-1/2 items-center px-2 text-sm font-extrabold text-[#31353BAD]">
-                                        Rp
-                                    </div>
-                                    <input
-                                        type="text"
-                                        value={minPrice}
-                                        onChange={handleMinPriceChange}
-                                        className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0"
-                                        placeholder="Terendah"
-                                    />
+                                    <div className="absolute left-3 top-1/2 flex h-10 -translate-y-1/2 items-center px-2 text-sm font-extrabold text-[#31353BAD]">Rp</div>
+                                    <input type="text" value={minPrice} onChange={handleMinPriceChange} className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0" placeholder="Terendah" />
                                 </div>
                             )}
                             {loadingFilters ? (
                                 <Skeleton />
                             ) : (
                                 <div className="relative flex">
-                                    <div className="absolute left-3 top-1/2 flex h-10 -translate-y-1/2 items-center px-2 text-sm font-extrabold text-[#31353BAD]">
-                                        Rp
-                                    </div>
-                                    <input
-                                        type="text"
-                                        value={maxPrice}
-                                        onChange={handleMaxPriceChange}
-                                        className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0"
-                                        placeholder="Tertinggi"
-                                    />
+                                    <div className="absolute left-3 top-1/2 flex h-10 -translate-y-1/2 items-center px-2 text-sm font-extrabold text-[#31353BAD]">Rp</div>
+                                    <input type="text" value={maxPrice} onChange={handleMaxPriceChange} className="ml-1 h-10 w-full rounded-xl border border-gray-300 p-2 pl-10 focus:ring-0" placeholder="Tertinggi" />
                                 </div>
                             )}
                         </div>
@@ -418,41 +337,20 @@ function PopupFilter({ closePopup }) {
                     {/* Kondisi */}
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
-                            <div className="text-sm font-bold">
-                                {t("filter.condition")}
-                            </div>
-                            <div
-                                onClick={() =>
-                                    setShowAllConditions(!showAllConditions)
-                                }
-                                className="cursor-pointer text-sm font-semibold text-[#007185]">
-                                {showAllConditions
-                                    ? t("filter.showLess")
-                                    : t("filter.showMore")}
+                            <div className="text-sm font-bold">{t("filter.condition")}</div>
+                            <div onClick={() => setShowAllConditions(!showAllConditions)} className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                {showAllConditions ? t("filter.showLess") : t("filter.showMore")}
                             </div>
                         </div>
-                        <div
-                            className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
-                                showAllConditions
-                                    ? "max-h-full"
-                                    : "max-h-24 overflow-y-auto"
-                            }`}>
+                        <div className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${showAllConditions ? "max-h-full" : "max-h-24 overflow-y-auto"}`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
                             ) : (
                                 conditions.map(condition => (
                                     <div
                                         key={condition.slug}
-                                        onClick={e =>
-                                            handleConditionChange(e, condition)
-                                        }
-                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
-                                            selectedConditions.includes(
-                                                condition.slug,
-                                            )
-                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
-                                                : "border-[#BFC9D9] text-[#6D7588]"
-                                        }`}>
+                                        onClick={e => handleConditionChange(e, condition)}
+                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${selectedConditions.includes(condition.slug) ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
                                         {condition.title}
                                     </div>
                                 ))
@@ -464,36 +362,16 @@ function PopupFilter({ closePopup }) {
                     <div className="mb-4">
                         <div className="mt-2 flex justify-between py-5">
                             <div className="text-sm font-bold">Status</div>
-                            <div
-                                onClick={() =>
-                                    setShowAllStatuses(!showAllStatuses)
-                                }
-                                className="cursor-pointer text-sm font-semibold text-[#007185]">
-                                {showAllStatuses
-                                    ? t("filter.showLess")
-                                    : t("filter.showMore")}
+                            <div onClick={() => setShowAllStatuses(!showAllStatuses)} className="cursor-pointer text-sm font-semibold text-[#007185]">
+                                {showAllStatuses ? t("filter.showLess") : t("filter.showMore")}
                             </div>
                         </div>
-                        <div
-                            className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${
-                                showAllStatuses
-                                    ? "max-h-full"
-                                    : "max-h-24 overflow-y-auto"
-                            }`}>
+                        <div className={`flex flex-wrap items-center overflow-hidden transition-all duration-300 ${showAllStatuses ? "max-h-full" : "max-h-24 overflow-y-auto"}`}>
                             {loadingFilters ? (
                                 <Skeleton count={3} />
                             ) : (
                                 statuses.map(status => (
-                                    <div
-                                        key={status.id}
-                                        onClick={e =>
-                                            handleStatusChange(e, status)
-                                        }
-                                        className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${
-                                            selectedStatuses.includes(status.id)
-                                                ? "border-[#007185] bg-[#0071850D] text-[#007185]"
-                                                : "border-[#BFC9D9] text-[#6D7588]"
-                                        }`}>
+                                    <div key={status.id} onClick={e => handleStatusChange(e, status)} className={`mb-1 mr-1 flex-shrink-0 rounded-3xl border px-6 py-2 text-base ${selectedStatuses.includes(status.id) ? "border-[#007185] bg-[#0071850D] text-[#007185]" : "border-[#BFC9D9] text-[#6D7588]"}`}>
                                         {status.status}
                                     </div>
                                 ))
@@ -501,14 +379,10 @@ function PopupFilter({ closePopup }) {
                         </div>
                     </div>
 
-                    <div
-                        onClick={handleResetFilter}
-                        className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                    <div onClick={handleResetFilter} className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                         {t("other.resetFilter")}
                     </div>
-                    <div
-                        onClick={handleFilter}
-                        className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                    <div onClick={handleFilter} className="my-2 cursor-pointer items-center justify-center rounded-lg bg-secondary px-6 py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                         {t("other.filter")}
                     </div>
                 </div>

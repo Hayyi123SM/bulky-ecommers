@@ -2,6 +2,7 @@ import axios from "@/lib/axios"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+    packaging_type: [],
     categories: [],
     warehouses: [],
     conditions: [],
@@ -10,6 +11,7 @@ const initialState = {
     minPrice: null,
     maxPrice: null,
     selectedFilters: {
+        packaging_type: [],
         categories: [],
         warehouses: [],
         conditions: [],
@@ -22,61 +24,49 @@ const initialState = {
     isLoading: true,
 }
 
-export const fetchCategories = createAsyncThunk(
-    "filters/fetchCategories",
-    async () => {
-        try {
-            const response = await axios.get("/api/products/filter/categories")
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching filter categories:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const fetchCategories = createAsyncThunk("filters/fetchCategories", async () => {
+    try {
+        const response = await axios.get("/api/products/filter/categories")
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching filter categories:", error) // Log errors
+        throw error
+    }
+})
 
-export const fetchWarehouses = createAsyncThunk(
-    "filters/fetchWarehouses",
-    async () => {
-        try {
-            const response = await axios.get("/api/products/filter/warehouse")
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching filter warehouses:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const fetchWarehouses = createAsyncThunk("filters/fetchWarehouses", async () => {
+    try {
+        const response = await axios.get("/api/products/filter/warehouse")
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching filter warehouses:", error) // Log errors
+        throw error
+    }
+})
 
-export const fetchConditions = createAsyncThunk(
-    "filters/fetchConditions",
-    async () => {
-        try {
-            const response = await axios.get("/api/products/filter/conditions")
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching filter conditions:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const fetchConditions = createAsyncThunk("filters/fetchConditions", async () => {
+    try {
+        const response = await axios.get("/api/products/filter/conditions")
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching filter conditions:", error) // Log errors
+        throw error
+    }
+})
 
-export const fetchStatuses = createAsyncThunk(
-    "filters/fetchStatuses",
-    async () => {
-        try {
-            const response = await axios.get("/api/products/filter/statuses")
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching filter statuses:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const fetchStatuses = createAsyncThunk("filters/fetchStatuses", async () => {
+    try {
+        const response = await axios.get("/api/products/filter/statuses")
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching filter statuses:", error) // Log errors
+        throw error
+    }
+})
 
 export const fetchBrands = createAsyncThunk("filters/fetchBrands", async () => {
     try {
@@ -107,6 +97,7 @@ const filterSlice = createSlice({
         },
         resetFilters(state) {
             state.selectedFilters = {
+                packaging_type: [],
                 categories: [],
                 warehouses: [],
                 conditions: [],
