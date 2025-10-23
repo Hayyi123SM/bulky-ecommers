@@ -196,7 +196,8 @@
         "cart": "Cart",
         "selectAll": {
             "palet": "Select All Palet Products",
-            "container": "Container Products"
+            "container": "Container Products",
+            "truck_load": "Truck Load Products"
         },
         "summaryOrder": "Shopping Summary",
         "buyNow": "Buy Now",

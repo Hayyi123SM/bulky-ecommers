@@ -480,6 +480,7 @@ function Home() {
                                               totalQty={product.total_quantity}
                                               isOpenPdf={() => handlePackageDetail(product.pdf_file)}
                                               soldOut={product.sold_out}
+                                              type={product.packaging_type}
                                           />
                                       </div>
                                   ))}

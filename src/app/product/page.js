@@ -122,6 +122,7 @@ function Product({ searchParams }) {
         const queryParams = new URLSearchParams(window.location.search)
         const initFilters = {
             search: queryParams.get("search") || "",
+            packaging_type: queryParams.get("packaging_type")?.split(",") || [],
             categories: queryParams.get("categories")?.split(",") || [],
             conditions: queryParams.get("conditions")?.split(",") || [],
             statuses: queryParams.get("statuses")?.split(",") || [],
@@ -141,6 +142,7 @@ function Product({ searchParams }) {
         const queryParams = new URLSearchParams()
 
         if (filters.search) queryParams.set("search", filters.search)
+        if (filters.packaging_type?.length) queryParams.set("packaging_type", filters.categories.join(","))
         if (filters.categories?.length) queryParams.set("categories", filters.categories.join(","))
         if (filters.conditions?.length) queryParams.set("conditions", filters.conditions.join(","))
         if (filters.statuses?.length) queryParams.set("statuses", filters.statuses.join(","))
@@ -175,7 +177,7 @@ function Product({ searchParams }) {
     const totalPages = data?.meta?.last_page || 0
 
     useEffect(() => {
-        if (filters.search || filters.categories?.length || filters.conditions?.length || filters.statuses?.length || filters.warehouses?.length || filters.minPrice || filters.maxPrice || filters.brands?.length) {
+        if (filters.search || filters.packaging_type?.length || filters.categories?.length || filters.conditions?.length || filters.statuses?.length || filters.warehouses?.length || filters.minPrice || filters.maxPrice || filters.brands?.length) {
             setCurrentPage(1)
             // router.push("?page=1")
         }
@@ -352,6 +354,7 @@ function Product({ searchParams }) {
                                       totalQty={product.total_quantity}
                                       isOpenPdf={() => handlePackageDetail(product.pdf_file)}
                                       soldOut={product.sold_out}
+                                      type={product.packaging_type}
                                   />
                               ))}
                     </div>

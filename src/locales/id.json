@@ -196,7 +196,8 @@
         "cart": "Keranjang",
         "selectAll": {
             "palet": "Pilih Semua Product Palet",
-            "container": "Produk Kontainer"
+            "container": "Produk Kontainer",
+            "truck_load": "Produk Truck Load"
         },
         "summaryOrder": "Ringkasan Belanja",
         "buyNow": "Beli Sekarang",
