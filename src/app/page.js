@@ -7,10 +7,9 @@ import LoadingSpinner from "@/components/LoadingSpinner"
 import Navbar from "@/components/Navbar"
 import PopupMenuMobile from "@/components/PopupMenuMobile"
 import PopupModal from "@/components/PopupModal"
-import ProductCard from "@/components/ProductCard"
 import VideoThumbnail from "@/components/VideoThumbnail"
 import { fetchBanners } from "@/store/slices/bannerSlice"
-import { fetchCategories, setFilters } from "@/store/slices/filterSlice"
+import { fetchCategories } from "@/store/slices/filterSlice"
 import { createWholesale, getBudgets } from "@/store/slices/orderSlice"
 import { getGeneralReview } from "@/store/slices/pageSlice"
 import { fetchProducts } from "@/store/slices/productSlice"
@@ -44,17 +43,14 @@ function Home() {
     const router = useRouter()
     const dispatch = useDispatch()
     const banners = useSelector(state => state.banners.items)
-    const products = useSelector(state => state.products.items)
     const videos = useSelector(state => state.videos.items)
     // const testimonys = useSelector(state => state.testimony.items)
     const loadingBanners = useSelector(state => state.banners.isLoading)
-    const loadingProducts = useSelector(state => state.products.isLoading)
     const loadingVideos = useSelector(state => state.videos.isLoading)
     const loadingReviews = useSelector(state => state.pages.isLoading)
     const reviews = useSelector(state => state.pages.reviews)
     const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
-    const [isPdf, setIsPdf] = useState(null)
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [showWholesale, setShowWholesale] = useState(false)
     const prevRef = useRef(null)
@@ -129,10 +125,6 @@ function Home() {
         // }
     }
     const closePopupMenu = () => setShowPopupMenu(false)
-    const handlePackageDetail = pdf => {
-        setIsOpenPdf(true)
-        setIsPdf(pdf)
-    }
 
     useEffect(() => {
         if (showPopupMenu) {
@@ -166,12 +158,6 @@ function Home() {
             setIsLoadingPdf(true) // Reset loading setiap kali PDF dibuka
         }
     }, [isOpenPdf])
-
-    const handleSelectCategory = category => {
-        dispatch(setFilters({ categories: [category] }))
-        localStorage.setItem("category", category)
-        router.push(`/product?category=${category}`)
-    }
 
     const handleCloseWholesale = () => {
         setShowWholesale(false)
@@ -290,200 +276,56 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                {/* <div className="w-full bg-secondary bg-opacity-20 p-6">
-                    <div className="mx-auto flex max-w-7xl items-center">
-                        <div className="flex w-full flex-col md:w-1/3">
-                            <div className="mb-4 font-bold md:text-2xl lg:text-3xl">
-                                Partner Kami
-                            </div>
-                            <div className="mb-6 md:text-sm lg:text-lg">
-                                Terpercaya pada beberapa perusahaan
-                            </div>
-                        </div>
 
-                        <Swiper
-                            modules={[Autoplay]}
-                            spaceBetween={20}
-                            slidesPerView={4}
-                            loop={true}
-                            autoplay={{
-                                delay: 2000,
-                                disableOnInteraction: false,
-                            }}
-                            breakpoints={{
-                                425: {
-                                    slidesPerView: 2, // Show 2 slides
-                                },
-                                768: {
-                                    slidesPerView: 3, // Show 3 slides
-                                },
-                                1024: {
-                                    slidesPerView: 4, // Show 4 slides
-                                },
-                            }}
-                            className="flex items-center justify-center">
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo.webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo (2).webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo (3).webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo (4) s.png"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/lel.webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo (6).webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo (7).webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide className="flex justify-center">
-                                <Image
-                                    src="/new/logo (8).webp"
-                                    alt="Partner"
-                                    width={160}
-                                    height={50}
-                                />
-                            </SwiperSlide>
-                        </Swiper>
+                <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 p-5">
+                    <div className="mx-auto w-fit rounded-md bg-secondary px-5 py-2 font-semibold lg:mx-0">
+                        <h3>Our Product Type</h3>
                     </div>
-                </div> */}
-                <div className="mx-auto my-5 max-w-7xl p-0 lg:p-5">
-                    <div className="grid grid-cols-1 gap-5 py-10 md:grid-cols-2">
-                        <div className="flex items-center bg-secondary bg-opacity-20">
-                            <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">70% OFF</div>
-                                <div className="py-2 text-2xl font-bold">{t("shoesPallet")}</div>
-                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
-                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("sepatu")}>
-                                    {t("buyNow")}
-                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                    <div className="grid gap-5 lg:grid-cols-3">
+                        <div className="flex w-full flex-col items-center overflow-hidden rounded-lg bg-gray-100 text-center shadow md:text-left lg:text-center">
+                            <div className="flex flex-col items-center gap-3 p-3 md:flex-row md:gap-5 md:p-5 lg:flex-col">
+                                <div className="relative aspect-square w-24 flex-none">
+                                    <Image src={"/palet.webp"} fill alt="Palet" className="object-contain" />
+                                </div>
+                                <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
+                                    <h5 className="font-semibold">Palet Load</h5>
+                                    <p className="text-sm leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit exercitationem quibusdam ratione repellendus iure voluptate autem molestiae, earum labore pariatur.</p>
                                 </div>
                             </div>
-                            <div className="w-1/3 pt-12">
-                                <Image src="/new/Pallet Sepatu.png" alt="Product" width={200} height={200} />
-                            </div>
+                            <button className="group flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=palet")}>
+                                <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
+                                <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
+                            </button>
                         </div>
-                        <div className="flex items-center bg-secondary bg-opacity-20">
-                            <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">70% OFF</div>
-                                <div className="py-2 text-2xl font-bold">{t("fashionPallet")}</div>
-                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
-                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("fashion-1")}>
-                                    {t("buyNow")}
-                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                        <div className="flex w-full flex-col items-center overflow-hidden rounded-lg bg-gray-100 text-center shadow md:text-left lg:text-center">
+                            <div className="flex flex-col items-center gap-3 p-3 md:flex-row md:gap-5 md:p-5 lg:flex-col">
+                                <div className="relative aspect-square w-24 flex-none">
+                                    <Image src={"/truckload.webp"} fill alt="TruckLoad" className="object-contain" />
+                                </div>
+                                <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
+                                    <h5 className="font-semibold">Truck Load</h5>
+                                    <p className="text-sm leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit exercitationem quibusdam ratione repellendus iure voluptate autem molestiae, earum labore pariatur.</p>
                                 </div>
                             </div>
-                            <div className="w-1/3 pt-12">
-                                <Image src="/new/Pallet Fashion.png" alt="Product" width={200} height={200} />
-                            </div>
+                            <button className="group flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=truck_load")}>
+                                <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
+                                <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
+                            </button>
                         </div>
-                        <div className="flex items-center bg-secondary bg-opacity-20">
-                            <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">50% OFF</div>
-                                <div className="py-2 text-2xl font-bold">{t("electronicPallet")}</div>
-                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
-                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("elektronik")}>
-                                    {t("buyNow")}
-                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
+                        <div className="flex w-full flex-col items-center overflow-hidden rounded-lg bg-gray-100 text-center shadow md:text-left lg:text-center">
+                            <div className="flex flex-col items-center gap-3 p-3 md:flex-row md:gap-5 md:p-5 lg:flex-col">
+                                <div className="relative aspect-square w-24 flex-none">
+                                    <Image src={"/container.webp"} fill alt="Container" className="object-contain" />
+                                </div>
+                                <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
+                                    <h5 className="font-semibold">Container Load</h5>
+                                    <p className="text-sm leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit exercitationem quibusdam ratione repellendus iure voluptate autem molestiae, earum labore pariatur.</p>
                                 </div>
                             </div>
-                            <div className="w-1/3 pt-12">
-                                <Image src="/image 15.png" alt="Product" width={200} height={200} />
-                            </div>
-                        </div>
-                        <div className="flex items-center bg-secondary bg-opacity-20">
-                            <div className="w-2/3 p-4">
-                                <div className="mb-3 w-fit rounded bg-[#F5F5F5] p-2 text-xs">60% OFF</div>
-                                <div className="py-2 text-2xl font-bold">{t("fmcgPallet")}</div>
-                                <div className="mb-5 text-lg">{t("dontMiss")}</div>
-                                <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white" onClick={() => handleSelectCategory("fmcg")}>
-                                    {t("buyNow")}
-                                    <ArrowRightIcon className="ml-2 h-4 w-4" />
-                                </div>
-                            </div>
-                            <div className="w-1/3 pt-12">
-                                <Image src="/new/Pallet FMCG.png" alt="Product" width={200} height={200} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="mx-auto max-w-7xl p-5">
-                    <div className="mt-2 flex justify-between py-5">
-                        <div className="text-xl font-bold">New Pallets</div>
-                        <Link href="/product?page=1">
-                            <div className="text-base font-semibold text-[#007185]">{t("showAll")}</div>
-                        </Link>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <div className="flex gap-4 lg:grid lg:grid-cols-6">
-                            {loadingProducts
-                                ? Array.from({ length: 6 }).map((_, index) => (
-                                      <div key={index} className="min-w-[50%] md:min-w-0">
-                                          <Skeleton height={200} />
-                                          <Skeleton count={5} />
-                                      </div>
-                                  ))
-                                : products.map(product => (
-                                      <div key={product.id} className="min-w-[50%] md:min-w-[30%]">
-                                          <ProductCard
-                                              productId={product.id}
-                                              image={product.images[0]}
-                                              location={product.warehouse.name}
-                                              title={Cookies.get("locale") === "en" ? (product?.name_trans?.en ? product.name_trans.en : product?.name_trans?.id) : product?.name_trans?.id}
-                                              price={product.price.formatted}
-                                              url={`/product/${product.slug}`}
-                                              sale={product.show_price_before_discount}
-                                              beforeDiscount={product.price_before_discount.formatted}
-                                              percent={Math.round(((product.price_before_discount.numeric - product.price.numeric) / product.price_before_discount.numeric) * 100)}
-                                              totalQty={product.total_quantity}
-                                              isOpenPdf={() => handlePackageDetail(product.pdf_file)}
-                                              soldOut={product.sold_out}
-                                              type={product.packaging_type}
-                                          />
-                                      </div>
-                                  ))}
+                            <button className="group flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=container")}>
+                                <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
+                                <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -937,14 +779,6 @@ function Home() {
                                 </div>
                             )}
                             {/* PDF Viewer */}
-                            <iframe
-                                className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}
-                                src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(isPdf)}`}
-                                title="PDF File"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                onLoad={() => setIsLoadingPdf(false)} // Set loading false saat PDF selesai dimuat
-                            />
                             {/* <iframe
                                 src={isPdf}
                                 className={`h-full w-full ${isLoadingPdf ? "hidden" : "block"}`}

@@ -17,6 +17,7 @@ import WarehouseInformation from "@/components/WarehouseInformation"
 import PopupModal from "@/components/PopupModal"
 import axios from "@/lib/axios"
 import { baseUrl } from "@/lib/utils"
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline"
 
 function OrderDetail({ params }) {
     const { user } = useAuth({ middleware: "auth" })
@@ -68,17 +69,19 @@ function OrderDetail({ params }) {
     }
 
     useEffect(() => {
-        const handleGetTracking = async () => {
-            try {
-                const res = await axios.get(`${baseUrl}/api/orders/tracking/${orderId}`)
-                setTracking(res.data.data.status)
-            } catch (err) {
-                console.error("Error fetching tracking:", err)
+        if (order && order?.shipping?.shipping_provider === "Forwarder" && order?.shipping?.show_tracking_url) {
+            const handleGetTracking = async () => {
+                try {
+                    const res = await axios.get(`${baseUrl}/api/orders/tracking/${orderId}`)
+                    setTracking(res.data.data?.status ?? [])
+                } catch (err) {
+                    console.error("Error fetching tracking:", err)
+                }
             }
-        }
 
-        handleGetTracking()
-    }, [orderId])
+            handleGetTracking()
+        }
+    }, [orderId, order])
 
     if (!user) {
         return null // Hindari menampilkan konten jika sedang redirect
@@ -176,22 +179,29 @@ function OrderDetail({ params }) {
                                 {order && order?.shipping?.show_tracking_url && (
                                     <div className="my-2 mb-4 border-b p-1 text-sm">
                                         <div className="w-1/2 text-[#6D7588]">Live Tracking</div>
-                                        <div className="flex w-full flex-col py-4">
-                                            {tracking.map(track => (
-                                                <div key={`${track.status_date}-${track.status_name}-${track.status_time}`} className="flex h-16 items-center gap-5 px-4">
-                                                    <div className="relative flex h-full items-center justify-center">
-                                                        <div className="h-full w-[2.5px] bg-black" />
-                                                        <div className="absolute size-4 rounded-full border-2 border-black bg-white ring-2 ring-white" />
+                                        {order?.shipping?.shipping_provider !== "Deliveree" ? (
+                                            <div className="flex w-full flex-col py-4">
+                                                {tracking.map(track => (
+                                                    <div key={`${track.status_date}-${track.status_name}-${track.status_time}`} className="flex h-16 items-center gap-5 px-4">
+                                                        <div className="relative flex h-full items-center justify-center">
+                                                            <div className="h-full w-[2.5px] bg-black" />
+                                                            <div className="absolute size-4 rounded-full border-2 border-black bg-white ring-2 ring-white" />
+                                                        </div>
+                                                        <div className="flex flex-col gap-1">
+                                                            <p className="text-xs text-gray-600">
+                                                                {track.status_date} at {track.status_time}
+                                                            </p>
+                                                            <p className="text-sm font-semibold">{track.status_name}</p>
+                                                        </div>
                                                     </div>
-                                                    <div className="flex flex-col gap-1">
-                                                        <p className="text-xs text-gray-600">
-                                                            {track.status_date} at {track.status_time}
-                                                        </p>
-                                                        <p className="text-sm font-semibold">{track.status_name}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <Link target="_blank" href={order?.shipping?.tracking_url} className="mt-2 flex h-9 items-center gap-2 rounded-md border border-black px-5 py-2 hover:underline">
+                                                Redirect Tracking Web
+                                                <ArrowTopRightOnSquareIcon className="size-4" />
+                                            </Link>
+                                        )}
                                     </div>
                                 )}
                                 {order?.order_status?.value === "delivered" && (
@@ -255,15 +265,19 @@ function OrderDetail({ params }) {
                                         <div className="my-5 border-b p-1" />
                                     </>
                                 )}
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">Insurance</label>
-                                    </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">{order.shipping?.insurance_amount}</label>
-                                    </div>
-                                </div>
-                                <div className="my-5 border-b p-1" />
+                                {order && order?.shipping?.shipping_provider !== "Deliveree" && (
+                                    <>
+                                        <div className="flex justify-between">
+                                            <div className="text-sm leading-6">
+                                                <label className="text-sm font-light">Insurance</label>
+                                            </div>
+                                            <div className="ml-5 text-right text-sm leading-6">
+                                                <label className="text-md font-light">{order.shipping?.insurance_amount}</label>
+                                            </div>
+                                        </div>
+                                        <div className="my-5 border-b p-1" />
+                                    </>
+                                )}
                                 <div className="flex justify-between">
                                     <div className="text-sm leading-6">
                                         <label className="text-sm font-semibold">{t("orderDetail.totalInvoice")}</label>

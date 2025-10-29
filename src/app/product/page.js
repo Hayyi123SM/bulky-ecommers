@@ -331,6 +331,15 @@ function Product({ searchParams }) {
             <div className="mx-auto flex min-h-screen max-w-7xl">
                 <SidebarProduct category={category} />
                 <div className="w-full p-4 lg:w-4/5">
+                    <div className="relative mb-4 flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
+                        {loadingProducts ? (
+                            <div className="size-full animate-pulse rounded-lg bg-gray-200" />
+                        ) : (
+                            <div className="relative size-full overflow-hidden rounded-lg object-cover">
+                                <Image src={"/check-banner.webp"} fill alt="Banner 1" className="object-cover" />
+                            </div>
+                        )}
+                    </div>
                     {/* {products && products.length > 0 && (
                         <> */}
                     <div className="pb-5 text-sm text-[#212121]">

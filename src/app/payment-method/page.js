@@ -2,7 +2,7 @@
 
 import FloatingIcon from "@/components/FloatingIcon"
 import Navbar from "@/components/Navbar"
-import { applyCoupon, clearCoupon, fetchCheckout, placeOrders, searchFriends } from "@/store/slices/cartSlice"
+import { applyCoupon, fetchCheckout, placeOrders, searchFriends } from "@/store/slices/cartSlice"
 import { getMyInvoice } from "@/store/slices/orderSlice"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, CheckIcon, ChevronDownIcon, MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid"
@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
 import WarehouseInformation from "@/components/WarehouseInformation"
 import { cn, formatRupiah } from "@/lib/utils"
+import { useDebounce } from "@/hooks/use-debounce"
 
 function PaymentMethod() {
     const t = useTranslations()
@@ -37,6 +38,8 @@ function PaymentMethod() {
     const coupon = useSelector(state => state.carts.coupon)
     const [activeCoupon, setActiveCoupon] = useState(null)
     const [isInsurance, setIsInsurance] = useState(false)
+    const [discount, setDiscount] = useState()
+    const discountDebounce = useDebounce(discount)
 
     // console.log("====================================")
     console.log("coupon", coupon)
@@ -80,6 +83,10 @@ function PaymentMethod() {
             setActiveCoupon(cart.coupon_code)
         }
     }, [cart])
+
+    useEffect(() => {
+        handleCoupon(discountDebounce)
+    }, [discountDebounce])
     // "single_payment/split_payment"
     const handlePlaceOrder = () => {
         if (paymentMethod === "split_payment") {
@@ -113,7 +120,7 @@ function PaymentMethod() {
 
     const handleCoupon = coupon => {
         if (coupon === null || coupon === "") {
-            dispatch(clearCoupon({ coupon_code: "" }))
+            dispatch(applyCoupon({ coupon_code: "" }))
         } else {
             dispatch(applyCoupon({ coupon_code: coupon }))
         }
@@ -267,7 +274,7 @@ function PaymentMethod() {
                             <div className="py-2">
                                 <div className="py-2 text-sm font-bold text-[#6D7588]">{t("paymentMethod.coupon")}</div>
                                 <div className="relative w-full lg:max-w-xl">
-                                    <input className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none" placeholder={t("other.inputCoupon")} onChange={e => handleCoupon(e.target.value)} type="text" defaultValue={activeCoupon} />
+                                    <input className="w-full rounded-lg border px-2 py-2 text-black focus:border-secondary focus:outline-none" placeholder={t("other.inputCoupon")} onChange={e => setDiscount(e.target.value)} type="text" defaultValue={activeCoupon} />
                                 </div>
                             </div>
                         </div>
@@ -320,13 +327,15 @@ function PaymentMethod() {
                                             <label className="text-md font-light">{cart.shipping_cost.formatted}</label>
                                         </div>
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <label className="flex items-center gap-2">
-                                            <input type="checkbox" className="rounded" checked={isInsurance} onChange={e => setIsInsurance(e.target.checked)} />
-                                            <span>Insurance</span>
-                                        </label>
-                                        <p className={cn("text-sm", !isInsurance && "line-through")}>{formatRupiah(cart.shipping_cost.insurance_amount)}</p>
-                                    </div>
+                                    {cart.shipping_insurance.show && (
+                                        <div className="flex items-center justify-between">
+                                            <label className="flex items-center gap-2">
+                                                <input type="checkbox" className="rounded" checked={isInsurance} onChange={e => setIsInsurance(e.target.checked)} />
+                                                <span>Insurance</span>
+                                            </label>
+                                            <p className={cn("text-sm", !isInsurance && "line-through")}>{cart.shipping_insurance.formatted}</p>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                             <div className="my-5 border-b p-1" />

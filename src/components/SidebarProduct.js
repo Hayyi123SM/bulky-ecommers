@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchBrands, fetchCategories, fetchConditions, fetchStatuses, fetchWarehouses, setFilters } from "../store/slices/filterSlice"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
+import { useSearchParams } from "next/navigation"
 
 function SidebarProduct({ category }) {
     const t = useTranslations()
+    const serachParams = useSearchParams()
     const [selectedType, setSelectedType] = useState([])
     const [selectedCategories, setSelectedCategories] = useState([])
     const [selectedWarehouses, setSelectedWarehouses] = useState([])
@@ -126,8 +128,9 @@ function SidebarProduct({ category }) {
     }
 
     const handleTypeChange = value => {
-        setSelectedType(value)
-        dispatch(setFilters({ packaging_type: value }))
+        const updatedType = [value]
+        setSelectedType(updatedType)
+        dispatch(setFilters({ packaging_type: updatedType }))
     }
     const handleCategoryChange = (e, category) => {
         const updatedCategories = e.target.checked ? [...selectedCategories, category.slug] : selectedCategories.filter(slug => slug !== category.slug)
@@ -230,6 +233,14 @@ function SidebarProduct({ category }) {
         setMaxPrice(null)
     }
 
+    useEffect(() => {
+        if (selectedType.length === 0 && !serachParams.get("packaging_type")) {
+            setTimeout(() => {
+                handleTypeChange("palet")
+            }, 500)
+        }
+    }, [selectedType, dispatch, serachParams])
+
     return (
         <div className="hidden w-1/5 lg:block">
             <div className="p-4 font-bold"> {t("other.filter")}</div>
@@ -243,20 +254,56 @@ function SidebarProduct({ category }) {
                 <div className="mx-2 flex cursor-pointer items-center justify-between p-2">
                     <div className="font-bold">{t("filter.type")}</div>
                 </div>
-                <select
-                    id="select_type"
-                    className="ml-3 mr-5 h-9 w-[200px] flex-none appearance-none rounded-md text-xs focus-within:border-gray-500 focus-within:outline-none focus-within:ring-0 hover:bg-gray-200"
-                    onChange={e => {
-                        const valueFormat = e.target.value
-
-                        handleTypeChange(valueFormat === "all" || valueFormat === selectedType[0] ? [] : [e.target.value])
-                    }}
-                    value={selectedType?.[0] ? selectedType?.[0] : "all"}>
-                    <option value={"all"}>All Type</option>
-                    <option value={"palet"}>Palet</option>
-                    <option value={"container"}>Container</option>
-                    <option value={"truck_load"}>Truck Load</option>
-                </select>
+                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showFilterCategories && showAllCategories ? "max-h-full opacity-100" : showFilterCategories ? "max-h-32 overflow-y-auto opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className="flex px-4 py-1">
+                        <div className="flex items-center">
+                            <input
+                                id="comments"
+                                aria-describedby="comments-description"
+                                name="comments"
+                                type="checkbox"
+                                checked={selectedType.includes("palet")}
+                                onChange={() => handleTypeChange("palet")}
+                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                            />
+                        </div>
+                        <div className="ml-2 text-sm leading-6">
+                            <label className="font-xs">{Cookies.get("locale") === "id" ? "Palet" : "Palet"}</label>
+                        </div>
+                    </div>
+                    <div className="flex px-4 py-1">
+                        <div className="flex items-center">
+                            <input
+                                id="comments"
+                                aria-describedby="comments-description"
+                                name="comments"
+                                type="checkbox"
+                                checked={selectedType.includes("container")}
+                                onChange={() => handleTypeChange("container")}
+                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                            />
+                        </div>
+                        <div className="ml-2 text-sm leading-6">
+                            <label className="font-xs">{Cookies.get("locale") === "id" ? "Kontainer" : "Container"}</label>
+                        </div>
+                    </div>
+                    <div className="flex px-4 py-1">
+                        <div className="flex items-center">
+                            <input
+                                id="comments"
+                                aria-describedby="comments-description"
+                                name="comments"
+                                type="checkbox"
+                                checked={selectedType.includes("truck_load")}
+                                onChange={() => handleTypeChange("truck_load")}
+                                className="border-3 h-5 w-5 rounded border-black checked:bg-yellow-500 checked:text-yellow-500 focus:ring-0"
+                            />
+                        </div>
+                        <div className="ml-2 text-sm leading-6">
+                            <label className="font-xs">Truck Load</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className="border-b py-2">
                 <div className="mx-2 flex cursor-pointer items-center justify-between p-2 hover:rounded-lg hover:bg-gray-100" onClick={() => toggleShowGroup("categories")}>

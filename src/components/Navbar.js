@@ -3,7 +3,7 @@
 import CategorySelect from "@/components/CategorySelect"
 import { useAuth } from "@/hooks/auth"
 import { fetchCarts } from "@/store/slices/cartSlice"
-import { fetchCategories, resetFilters, setFilters } from "@/store/slices/filterSlice"
+import { fetchCategories, setFilters } from "@/store/slices/filterSlice"
 import { useFetchProductsQuery } from "@/store/slices/productSlice"
 import { Bars3BottomRightIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -98,11 +98,6 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
     //         behavior: "smooth",
     //     })
     // }
-
-    const handleToProducts = () => {
-        dispatch(resetFilters())
-        router.push("/product?page=1")
-    }
 
     const visibilityClasses = visibleOn === "mobile" ? "lg:hidden" : visibleOn === "desktop" ? "hidden lg:block" : ""
 
@@ -284,9 +279,9 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 <Link href="/">
                                     <div className="cursor-pointer px-8 text-white hover:text-secondary">{t("navbar.home")}</div>
                                 </Link>
-                                <div className="cursor-pointer px-8 text-white hover:text-secondary" onClick={handleToProducts}>
+                                <Link href={"/product"} className="cursor-pointer px-8 text-white hover:text-secondary">
                                     {t("navbar.product")}
-                                </div>
+                                </Link>
                                 <Link href="/about-us">
                                     <div className="cursor-pointer px-8 text-white hover:text-secondary">{t("navbar.about")}</div>
                                 </Link>
