@@ -11,6 +11,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
+import PopupDisclaimer from "@/components/PopupDisclaimer"
 
 function Payment({ params }) {
     const t = useTranslations()
@@ -28,6 +29,7 @@ function Payment({ params }) {
     const paymentMethod = useSelector(state => state.orders.paymentMethod)
     const afterCreatePayment = useSelector(state => state.orders.afterCreatePayment)
     const [order, setOrder] = useState(null)
+    const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false)
     const myInvoice = useSelector(state => state.orders.myInvoice)
 
     useEffect(() => {
@@ -73,6 +75,8 @@ function Payment({ params }) {
     useEffect(() => {
         dispatch(fetchPaymentMethod())
     }, [dispatch])
+
+    console.log(selectedId)
 
     const handleCreatePayment = () => {
         dispatch(
@@ -283,25 +287,25 @@ function Payment({ params }) {
                         </div>
                         <div className="mt-0.5 hidden h-fit w-full rounded-b-xl bg-white p-8 lg:block lg:max-w-xl">
                             {/* <Link href="/payment"> */}
-                            <div onClick={() => handleCreatePayment()} className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                            <button onClick={() => setIsDisclaimerOpen(true)} disabled={!selectedId} className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00] disabled:pointer-events-none disabled:opacity-50">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
                                 {t("payment.pay")}
-                            </div>
+                            </button>
                             {/* </Link> */}
                         </div>
-                        <div onClick={() => handleCreatePayment()} className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg lg:hidden">
+                        <button onClick={() => setIsDisclaimerOpen(true)} disabled={!selectedId} className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg disabled:pointer-events-none disabled:opacity-50 lg:hidden">
                             {/* <Link href="/payment"> */}
                             <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
                                 {t("payment.pay")}
                             </div>
                             {/* </Link> */}
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>
             {/* <Footer /> */}
-
+            <PopupDisclaimer isOpen={isDisclaimerOpen} closeModal={() => setIsDisclaimerOpen(false)} handlePay={handleCreatePayment} />
             <FloatingIcon />
         </div>
     )
