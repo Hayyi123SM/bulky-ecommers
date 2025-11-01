@@ -197,7 +197,7 @@
         "selectAll": {
             "palet": "Select All Palet Products",
             "container": "Container Products",
-            "truck_load": "Truck Load Products"
+            "truck_load": "TruckLoad Products"
         },
         "summaryOrder": "Shopping Summary",
         "buyNow": "Buy Now",
@@ -262,7 +262,10 @@
         "summaryOrder": "Payment Summary",
         "totalPrice": "Total Item Price",
         "total": "Total",
-        "pay": "Pay"
+        "pay": "Pay",
+        "accept": "Accept & Continue",
+        "reject": "Cancel",
+        "scroll": "Scroll down to accept"
     },
     "profile": {
         "profile": "Profile",

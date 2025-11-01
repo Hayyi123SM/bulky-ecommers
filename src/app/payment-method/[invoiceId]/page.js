@@ -254,25 +254,29 @@ function Payment({ params }) {
                                     <div className="my-5 border-b p-1" />
                                 </>
                             )}
-                            <div className="flex justify-between">
-                                <div className="text-sm leading-6">
-                                    <label className="text-sm font-light">Shipping Cost</label>
-                                </div>
-                                <div className="ml-5 text-right text-sm leading-6">
-                                    <label className="text-md font-light">{myInvoice.order?.shipping?.shipping_cost}</label>
-                                </div>
-                            </div>
-                            {myInvoice.order?.shipping?.shipping_provider !== "Deliveree" && (
-                                <div className="flex justify-between">
-                                    <div className="text-sm leading-6">
-                                        <label className="text-sm font-light">Insurance</label>
+                            {myInvoice.order?.shipping?.shipping_method?.value === "courier_pickup" && (
+                                <>
+                                    <div className="flex justify-between">
+                                        <div className="text-sm leading-6">
+                                            <label className="text-sm font-light">Shipping Cost</label>
+                                        </div>
+                                        <div className="ml-5 text-right text-sm leading-6">
+                                            <label className="text-md font-light">{myInvoice.order?.shipping?.shipping_cost}</label>
+                                        </div>
                                     </div>
-                                    <div className="ml-5 text-right text-sm leading-6">
-                                        <label className="text-md font-light">{myInvoice.order?.shipping.insurance_amount}</label>
-                                    </div>
-                                </div>
+                                    {myInvoice.order?.shipping?.shipping_provider !== "Deliveree" && (
+                                        <div className="flex justify-between">
+                                            <div className="text-sm leading-6">
+                                                <label className="text-sm font-light">Insurance</label>
+                                            </div>
+                                            <div className="ml-5 text-right text-sm leading-6">
+                                                <label className="text-md font-light">{myInvoice.order?.shipping?.insurance_amount}</label>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="my-5 border-b p-1" />
+                                </>
                             )}
-                            <div className="my-5 border-b p-1" />
                             <div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-semibold">{t("payment.total")}</label>
@@ -287,7 +291,7 @@ function Payment({ params }) {
                         </div>
                         <div className="mt-0.5 hidden h-fit w-full rounded-b-xl bg-white p-8 lg:block lg:max-w-xl">
                             {/* <Link href="/payment"> */}
-                            <button onClick={() => setIsDisclaimerOpen(true)} disabled={!selectedId} className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00] disabled:pointer-events-none disabled:opacity-50">
+                            <button onClick={() => setIsDisclaimerOpen(true)} disabled={!selectedId} className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00] disabled:pointer-events-none disabled:opacity-50">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
                                 {t("payment.pay")}
                             </button>
@@ -295,7 +299,7 @@ function Payment({ params }) {
                         </div>
                         <button onClick={() => setIsDisclaimerOpen(true)} disabled={!selectedId} className="fixed bottom-0 left-0 right-0 block w-full px-5 py-5 shadow-lg disabled:pointer-events-none disabled:opacity-50 lg:hidden">
                             {/* <Link href="/payment"> */}
-                            <div className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                            <div className="flex w-full cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                                 <ShieldCheckIcon className="mr-2 h-5 w-5 text-black" />
                                 {t("payment.pay")}
                             </div>

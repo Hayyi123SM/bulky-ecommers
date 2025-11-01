@@ -197,7 +197,7 @@
         "selectAll": {
             "palet": "Pilih Semua Product Palet",
             "container": "Produk Kontainer",
-            "truck_load": "Produk Truck Load"
+            "truck_load": "Produk TruckLoad"
         },
         "summaryOrder": "Ringkasan Belanja",
         "buyNow": "Beli Sekarang",
@@ -262,7 +262,10 @@
         "summaryOrder": "Ringkasan Pembayaran",
         "totalPrice": "Total Harga Barang",
         "total": "Total",
-        "pay": "Bayar"
+        "pay": "Bayar",
+        "accept": "Setuju & Lanjutkan",
+        "reject": "Kembali",
+        "scroll": "Gulir Kebawah untuk menyetujui"
     },
     "profile": {
         "profile": "Profil",
