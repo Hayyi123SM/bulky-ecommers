@@ -279,7 +279,7 @@ function Navbar({ togglePopupMenu, visibleOn = "both" }) {
                                 <Link href="/">
                                     <div className="cursor-pointer px-8 text-white hover:text-secondary">{t("navbar.home")}</div>
                                 </Link>
-                                <Link href={"/product"} className="cursor-pointer px-8 text-white hover:text-secondary">
+                                <Link href={"/product/select-type"} className="cursor-pointer px-8 text-white hover:text-secondary">
                                     {t("navbar.product")}
                                 </Link>
                                 <Link href="/about-us">
