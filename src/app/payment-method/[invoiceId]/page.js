@@ -46,7 +46,7 @@ function Payment({ params }) {
     useEffect(() => {
         const getOrder = JSON.parse(localStorage.getItem("order"))
         setOrder(getOrder)
-        dispatch(getMyInvoice(getOrder.id))
+        dispatch(getMyInvoice(invoiceId))
     }, [])
 
     // console.log("====================================")
