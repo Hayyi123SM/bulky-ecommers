@@ -7,22 +7,19 @@ const initialState = {
     isLoading: true,
 }
 
-export const fetchBanners = createAsyncThunk(
-    "banners/fetchBanners",
-    async currentPage => {
-        try {
-            const itemsPerPage = 10
-            const response = await axios.get("/api/banners", {
-                params: { page: currentPage, limit: itemsPerPage },
-            })
-            // console.log("API response:", response.data) // Log the API response
-            return response.data
-        } catch (error) {
-            console.error("Error fetching banners:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const fetchBanners = createAsyncThunk("banners/fetchBanners", async currentPage => {
+    try {
+        const itemsPerPage = 10
+        const response = await axios.get("/api/banners/home", {
+            params: { page: currentPage, limit: itemsPerPage },
+        })
+        // console.log("API response:", response.data) // Log the API response
+        return response.data
+    } catch (error) {
+        console.error("Error fetching banners:", error) // Log errors
+        throw error
+    }
+})
 
 const bannerSlice = createSlice({
     name: "products",
@@ -47,6 +44,5 @@ const bannerSlice = createSlice({
     },
 })
 
-export const { setStateProduct, setProductName, initializeProduct } =
-    bannerSlice.actions
+export const { setStateProduct, setProductName, initializeProduct } = bannerSlice.actions
 export default bannerSlice.reducer

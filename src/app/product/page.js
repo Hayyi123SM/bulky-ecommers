@@ -31,6 +31,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 import { fetchTestimonies } from "@/store/slices/testimonySlice"
 import { getGeneralReview } from "@/store/slices/pageSlice"
+import axios from "@/lib/axios"
 
 function Product({ searchParams }) {
     const t = useTranslations()
@@ -244,6 +245,35 @@ function Product({ searchParams }) {
         }
     }, [isOpenPdf])
 
+    const [image, setImage] = useState({
+        palet: "",
+        truck_load: "",
+        container: "",
+    })
+
+    const [loadingImage, setLoadingImage] = useState(false)
+
+    const handleGetBanner = async () => {
+        setLoadingImage(true)
+        try {
+            const res = await axios.get("/api/banners/product")
+            const dataImage = res.data.data
+            setImage({
+                palet: dataImage.palet.full_url,
+                truck_load: dataImage.truck_load.full_url,
+                container: dataImage.container.full_url,
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoadingImage(false)
+        }
+    }
+
+    useEffect(() => {
+        handleGetBanner()
+    }, [])
+
     if (error) return <div>Error: {error.data || error.message}</div>
 
     return (
@@ -279,7 +309,7 @@ function Product({ searchParams }) {
                 <Link href="/cart">
                     <div className="relative flex items-center justify-center gap-1 text-white hover:text-secondary lg:mx-5 xl:mx-10">
                         <div className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white text-xs font-bold text-black">{carts ? carts.items_count : 0}</div>
-                        <Image src="/cart-black.svg" width={34} height={34} alt="Cart" className="h-8 w-8" />
+                        <Image src={"/cart-black.svg"} width={34} height={34} alt="Cart" className="h-8 w-8" />
                     </div>
                 </Link>
                 <Bars3BottomRightIcon className="h-6 w-6" onClick={togglePopupMenu} />
@@ -330,13 +360,13 @@ function Product({ searchParams }) {
             {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />}
             <div className="mx-auto flex min-h-screen max-w-7xl">
                 <SidebarProduct category={category} />
-                <div className="w-full p-4 lg:w-4/5">
+                <div className="w-full p-4 pt-0 lg:w-4/5 lg:pt-4">
                     <div className="relative mb-4 flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        {loadingProducts ? (
-                            <div className="size-full animate-pulse rounded-lg bg-gray-200" />
+                        {loadingProducts || loadingImage ? (
+                            <div className="size-full animate-pulse rounded-lg bg-gray-200"></div>
                         ) : (
-                            <div className="relative size-full overflow-hidden rounded-lg object-cover">
-                                <Image src={"/check-banner.webp"} fill alt="Banner 1" className="object-cover" />
+                            <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                                <Image src={image[filters.packaging_type]} fill alt="Banner 1" className="object-cover" />
                             </div>
                         )}
                     </div>

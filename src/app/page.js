@@ -289,10 +289,10 @@ function Home() {
                                 </div>
                                 <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
                                     <h5 className="font-semibold">Palet Load</h5>
-                                    <p className="text-sm leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit exercitationem quibusdam ratione repellendus iure voluptate autem molestiae, earum labore pariatur.</p>
+                                    <p className="text-sm leading-relaxed">Layanan dengan muatan kargo kecil, memiliki estimasi muatan 1 paletyang terbagi berbagai kategori. Layanan ini hanya menjangkau pengiriman JABODETABEK dan BANDUNG</p>
                                 </div>
                             </div>
-                            <button className="group flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=palet")}>
+                            <button className="group mt-auto flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=palet")}>
                                 <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
                                 <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
                             </button>
@@ -304,10 +304,10 @@ function Home() {
                                 </div>
                                 <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
                                     <h5 className="font-semibold">Truck Load</h5>
-                                    <p className="text-sm leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit exercitationem quibusdam ratione repellendus iure voluptate autem molestiae, earum labore pariatur.</p>
+                                    <p className="text-sm leading-relaxed">Layanan dengan muatan kargo sedang, jenis barang bisa per kategori atau kategori campuran. Layanan ini cocok untuk usaha menengah dengan jangkauan pengiriman Pulau Sumatera, Jawa, dan Bali.</p>
                                 </div>
                             </div>
-                            <button className="group flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=truck_load")}>
+                            <button className="group mt-auto flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=truck_load")}>
                                 <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
                                 <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
                             </button>
@@ -319,10 +319,10 @@ function Home() {
                                 </div>
                                 <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
                                     <h5 className="font-semibold">Container Load</h5>
-                                    <p className="text-sm leading-relaxed">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit exercitationem quibusdam ratione repellendus iure voluptate autem molestiae, earum labore pariatur.</p>
+                                    <p className="text-sm leading-relaxed">Layanan dengan muatan kargo besar, jenis barang kategori campuran yang cocok untuk usaha menengah keatas. Layanan ini menjangkau wilayah luar pulau termasuk Kalimantan, Sulawesi, Maluku, Bangka dan lainnya.</p>
                                 </div>
                             </div>
-                            <button className="group flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=container")}>
+                            <button className="group mt-auto flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=container")}>
                                 <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
                                 <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
                             </button>

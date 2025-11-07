@@ -10,10 +10,11 @@ import FloatingIcon from "@/components/FloatingIcon"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchSearchProducts } from "@/store/slices/productSlice"
 import { ArrowRightIcon } from "@heroicons/react/24/outline"
+import axios from "@/lib/axios"
 
 function Product() {
     const t = useTranslations()
@@ -28,6 +29,11 @@ function Product() {
     const [searchQuery, setSearchQuery] = useState("")
     const [showSearchResults, setShowSearchResults] = useState(false)
     const [showPopupMenu, setShowPopupMenu] = useState(false)
+    const [image, setImage] = useState({
+        palet: "",
+        truck_load: "",
+        container: "",
+    })
 
     const togglePopupMenu = () => setShowPopupMenu(!showPopupMenu)
     const closePopupMenu = () => setShowPopupMenu(false)
@@ -42,6 +48,24 @@ function Product() {
             }),
         )
     }
+
+    const handleGetBanner = async () => {
+        try {
+            const res = await axios.get("/api/banners/product")
+            const dataImage = res.data.data
+            setImage({
+                palet: dataImage.palet.full_url,
+                truck_load: dataImage.truck_load.full_url,
+                container: dataImage.container.full_url,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        handleGetBanner()
+    }, [])
 
     return (
         <div>
@@ -102,8 +126,8 @@ function Product() {
                         </Link>
                     </div>
                     <div className="relative flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        <div className="relative size-full overflow-hidden rounded-lg object-cover">
-                            <Image src={"/check-banner.webp"} fill alt="Banner 1" className="object-cover" />
+                        <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                            <Image src={image.palet} fill alt="Banner 1" className="object-cover" />
                         </div>
                     </div>
                 </div>
@@ -126,8 +150,8 @@ function Product() {
                         </Link>
                     </div>
                     <div className="relative flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        <div className="relative size-full overflow-hidden rounded-lg object-cover">
-                            <Image src={"/check-banner.webp"} fill alt="Banner 1" className="object-cover" />
+                        <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                            <Image src={image.truck_load} fill alt="Banner 1" className="object-cover" />
                         </div>
                     </div>
                 </div>
@@ -154,8 +178,8 @@ function Product() {
                         </Link>
                     </div>
                     <div className="relative flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        <div className="relative size-full overflow-hidden rounded-lg object-cover">
-                            <Image src={"/check-banner.webp"} fill alt="Banner 1" className="object-cover" />
+                        <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                            <Image src={image.container} fill alt="Banner 1" className="object-cover" />
                         </div>
                     </div>
                 </div>
