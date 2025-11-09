@@ -151,7 +151,7 @@ function PaymentMethod() {
             router.push("/payment-nominal/")
         }
         if (order && myInvoice.need_input_amount === false) {
-            router.push("/payment-method/" + myInvoice.id)
+            router.push("/payment-method/" + myInvoice.order.id)
         }
     }, [myInvoice, router])
 
@@ -318,27 +318,29 @@ function PaymentMethod() {
                             {/*</div>*/}
                             <div className="my-5 border-b p-1" />
                             {cart.shipping_method === "courier_pickup" && (
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex justify-between">
-                                        <div className="text-sm leading-6">
-                                            <label className="text-sm font-light">{t("paymentMethod.shippingCost")}</label>
+                                <>
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex justify-between">
+                                            <div className="text-sm leading-6">
+                                                <label className="text-sm font-light">{t("paymentMethod.shippingCost")}</label>
+                                            </div>
+                                            <div className="ml-5 text-right text-sm leading-6">
+                                                <label className="text-md font-light">{cart.shipping_cost.formatted}</label>
+                                            </div>
                                         </div>
-                                        <div className="ml-5 text-right text-sm leading-6">
-                                            <label className="text-md font-light">{cart.shipping_cost.formatted}</label>
-                                        </div>
+                                        {cart.shipping_insurance.show && (
+                                            <div className="flex items-center justify-between">
+                                                <label className="flex items-center gap-2">
+                                                    <input type="checkbox" className="rounded" checked={isInsurance} onChange={e => setIsInsurance(e.target.checked)} />
+                                                    <span>Insurance</span>
+                                                </label>
+                                                <p className={cn("text-sm", !isInsurance && "line-through")}>{cart.shipping_insurance.formatted}</p>
+                                            </div>
+                                        )}
                                     </div>
-                                    {cart.shipping_insurance.show && (
-                                        <div className="flex items-center justify-between">
-                                            <label className="flex items-center gap-2">
-                                                <input type="checkbox" className="rounded" checked={isInsurance} onChange={e => setIsInsurance(e.target.checked)} />
-                                                <span>Insurance</span>
-                                            </label>
-                                            <p className={cn("text-sm", !isInsurance && "line-through")}>{cart.shipping_insurance.formatted}</p>
-                                        </div>
-                                    )}
-                                </div>
+                                    <div className="my-5 border-b p-1" />
+                                </>
                             )}
-                            <div className="my-5 border-b p-1" />
                             {/*<div className="flex justify-between">
                                 <div className="text-sm leading-6">
                                     <label className="text-sm font-light">Sub Total</label>

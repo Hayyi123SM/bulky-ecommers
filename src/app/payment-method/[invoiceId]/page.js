@@ -81,7 +81,7 @@ function Payment({ params }) {
     const handleCreatePayment = () => {
         dispatch(
             createPayment({
-                invoice_id: invoiceId,
+                invoice_id: myInvoice.order.invoices[0].id,
                 payment_method: selectedId,
             }),
         )
