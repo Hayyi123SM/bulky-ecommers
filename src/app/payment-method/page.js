@@ -145,7 +145,8 @@ function PaymentMethod() {
     useEffect(() => {
         // console.log("====================================")
         // console.log("order:", order)
-        // console.log("myInvoice:", myInvoice)
+        console.log("myInvoice:", myInvoice)
+        localStorage.setItem("invoice", JSON.stringify(myInvoice))
         // console.log("====================================")
         if (order && myInvoice.need_input_amount === true) {
             router.push("/payment-nominal/")
