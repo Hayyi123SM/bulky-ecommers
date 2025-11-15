@@ -116,7 +116,8 @@
         "discrepancy": {
             "label": "Discrepancy",
             "description": "Items variance (max. 2%) in pricing, quantity and condition."
-        }
+        },
+        "statusPackage": "Status Package"
     },
     "filter": {
         "type": "Type",

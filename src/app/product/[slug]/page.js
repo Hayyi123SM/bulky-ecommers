@@ -314,6 +314,10 @@ function ProductDetail({ params }) {
                         <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.status?.status_trans?.id : products?.status?.status_trans?.en}</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("product.statusPackage")} :</div>
+                        <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.status_package?.status_trans?.id : products?.status_package?.status_trans?.en}</div>
+                    </div>
+                    <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">Min Pesanan :</div>
                         <div className="w-5/6 text-base">1 Palet</div>
                     </div>
