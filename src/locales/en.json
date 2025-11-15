@@ -112,7 +112,11 @@
         "waiting": "Please Wait",
         "notAvailable": "Product Not Available",
         "outOfStock": "This item has been purchased by another Bulky user",
-        "otherProducts": "Other Products"
+        "otherProducts": "Other Products",
+        "discrepancy": {
+            "label": "Discrepancy",
+            "description": "Items variance (max. 2%) in pricing, quantity and condition."
+        }
     },
     "filter": {
         "type": "Type",

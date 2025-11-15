@@ -112,7 +112,11 @@
         "waiting": "Tunggu Sebentar",
         "notAvailable": "Produk Tidak Tersedia",
         "outOfStock": "Barang ini telah dibeli oleh pengguna Bulky lainnya",
-        "otherProducts": "Produk Lainnya"
+        "otherProducts": "Produk Lainnya",
+        "discrepancy": {
+            "label": "Diskrepansi",
+            "description": "ketidaksesuaian barang (maks. 2%) dengan list dalam harga, jumlah barang dan kondisi."
+        }
     },
     "filter": {
         "type": "Tipe",

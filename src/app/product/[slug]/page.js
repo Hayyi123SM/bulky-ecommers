@@ -8,7 +8,7 @@ import ProductCard from "@/components/ProductCard"
 import { useAuth } from "@/hooks/auth"
 import { addToCart } from "@/store/slices/cartSlice"
 import { fetchProductDetail, fetchProductRelated } from "@/store/slices/productSlice"
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon, StarIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -37,7 +37,6 @@ function ProductDetail({ params }) {
     const loadingProducts = useSelector(state => state.products.isLoading)
     const [isLoading, setIsloading] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
-    const [showFullDescription, setShowFullDescription] = useState(false)
     const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     // const [savedUser, setSavedUser] = useState(null)
     const { user } = useAuth()
@@ -72,10 +71,6 @@ function ProductDetail({ params }) {
 
     const togglePopupMenu = () => {
         setShowPopupMenu(!showPopupMenu)
-    }
-
-    const toggleDescription = () => {
-        setShowFullDescription(!showFullDescription)
     }
 
     const closePopupMenu = () => {
@@ -326,20 +321,16 @@ function ProductDetail({ params }) {
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("filter.category")} :</div>
                         <div className="w-5/6 text-base font-semibold text-[#007185]">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.category?.name_trans?.id : products?.category?.name_trans?.en}</div>
                     </div>
-                    <div className="py-10">
-                        <div className="staticStyle">
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: showFullDescription
-                                        ? Cookies.get("locale") === "id"
-                                            ? products?.description_trans?.id
-                                            : products?.description_trans?.en // Show full description
-                                        : `${Cookies.get("locale") === "id" ? products?.name_trans?.id?.substring(0, 50) : products?.name_trans?.en?.substring(0, 50)}...`, // Show shortened description
-                                }}
-                            />
-                        </div>
-                        <div className="cursor-pointer py-8 text-base font-bold text-[#007185]" onClick={toggleDescription}>
-                            {showFullDescription ? "Lihat Lebih Sedikit" : "Lihat Lebih Banyak"}
+                    <div className="flex border-b border-[#BFC9D9] py-2">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("product.discrepancy.label")} :</div>
+                        <div className="flex w-5/6 gap-6 text-base font-semibold text-[#007185]">
+                            <p>{products?.note_discrepancy}%</p>
+                            <div className="group relative">
+                                <ExclamationCircleIcon className="size-5" />
+                                <div className="absolute bottom-full left-1/2 z-10 mb-2 hidden w-72 -translate-x-1/2 transform rounded border border-gray-400 bg-white px-2 py-1 text-center text-sm font-normal text-black opacity-0 shadow-md transition-opacity duration-300 group-hover:block group-hover:opacity-100">
+                                    {t("product.discrepancy.description")}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
