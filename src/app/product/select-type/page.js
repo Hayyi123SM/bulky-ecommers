@@ -126,9 +126,13 @@ function Product() {
                         </Link>
                     </div>
                     <div className="relative flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
-                            <Image src={image.palet} fill alt="Banner 1" className="object-cover" />
-                        </div>
+                        {image.palet ? (
+                            <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                                <Image src={image.palet} fill alt="Banner 1" className="object-cover" />
+                            </div>
+                        ) : (
+                            <div className="size-full animate-pulse rounded-md bg-gray-100" />
+                        )}
                     </div>
                 </div>
                 <div className="flex w-full flex-col gap-2 px-2 md:gap-4 md:px-4">
@@ -150,9 +154,13 @@ function Product() {
                         </Link>
                     </div>
                     <div className="relative flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
-                            <Image src={image.truck_load} fill alt="Banner 1" className="object-cover" />
-                        </div>
+                        {image.truck_load ? (
+                            <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                                <Image src={image.truck_load} fill alt="Banner 1" className="object-cover" />
+                            </div>
+                        ) : (
+                            <div className="size-full animate-pulse rounded-md bg-gray-100" />
+                        )}
                     </div>
                 </div>
                 <div className="flex w-full flex-col gap-2 px-2 md:gap-4 md:px-4">
@@ -178,9 +186,13 @@ function Product() {
                         </Link>
                     </div>
                     <div className="relative flex aspect-[3/1] w-full items-center justify-center text-3xl md:aspect-[4/1]">
-                        <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
-                            <Image src={image.container} fill alt="Banner 1" className="object-cover" />
-                        </div>
+                        {image.container ? (
+                            <div className="relative size-full overflow-hidden rounded-lg object-cover shadow">
+                                <Image src={image.container} fill alt="Banner 1" className="object-cover" />
+                            </div>
+                        ) : (
+                            <div className="size-full animate-pulse rounded-md bg-gray-100" />
+                        )}
                     </div>
                 </div>
             </div>
