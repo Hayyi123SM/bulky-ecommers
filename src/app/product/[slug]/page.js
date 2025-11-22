@@ -302,31 +302,31 @@ function ProductDetail({ params }) {
                 <div className="p-4 lg:mt-20">
                     <div className="mb-4 text-2xl font-bold">Deskripsi</div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("filter.condition")} :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.condition_product")} :</div>
                         <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.condition?.title_trans?.id : products?.condition?.title_trans?.en}</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("filter.brand")} :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("filter.brand")} :</div>
                         <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : products.brands.map(brand => brand.name)}</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">Status Produk :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.source")} :</div>
                         <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.status?.status_trans?.id : products?.status?.status_trans?.en}</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("product.statusPackage")} :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.condition_package")} :</div>
                         <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.status_package?.status_trans?.id : products?.status_package?.status_trans?.en}</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">Min Pesanan :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">Min Pesanan :</div>
                         <div className="w-5/6 text-base">1 Palet</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("filter.category")} :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.category")} :</div>
                         <div className="w-5/6 text-base font-semibold text-[#007185]">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.category?.name_trans?.id : products?.category?.name_trans?.en}</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6 xl:w-1/6">{t("product.discrepancy.label")} :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.discrepancy.label")} :</div>
                         <div className="flex w-5/6 gap-6 text-base font-semibold text-[#007185]">
                             <p>{products?.note_discrepancy}%</p>
                             <div className="group relative">

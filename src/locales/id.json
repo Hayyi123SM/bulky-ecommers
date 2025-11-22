@@ -117,7 +117,10 @@
             "label": "Diskrepansi",
             "description": "ketidaksesuaian barang (maks. 2%) dengan list dalam harga, jumlah barang dan kondisi."
         },
-        "statusPackage": "Kondisi Paket"
+        "condition_product": "Kondisi Produk",
+        "source": "Asal Produk",
+        "condition_package": "Kondisi package",
+        "category": "Kategori Produk"
     },
     "filter": {
         "type": "Tipe",
