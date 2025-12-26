@@ -8,6 +8,7 @@ import { addToCart } from "@/store/slices/cartSlice"
 import { useRouter } from "next/navigation"
 import PopupModal from "./PopupModal"
 import { useTranslations } from "next-intl"
+import Image from "next/image"
 
 function ProductCard({ url = "#", image, location, title, price, sale = false, beforeDiscount, totalQty, isOpenPdf, percent = 0, productId, soldOut = false, type }) {
     const t = useTranslations()
@@ -36,7 +37,14 @@ function ProductCard({ url = "#", image, location, title, price, sale = false, b
 
     return (
         <>
-            <div className={`flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}>
+            <div className={`relative flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}>
+                {type === "truck_load" && (
+                    <div className="absolute left-0 top-0 z-10 flex w-full flex-col gap-3">
+                        <div className="relative aspect-square w-1/4">
+                            <Image src={"/sale_sticker_transparent.png"} alt="sale banner" fill className="object-contain" />
+                        </div>
+                    </div>
+                )}
                 <Link href={url}>
                     <div className="relative aspect-square w-full rounded-t-lg bg-cover bg-center" style={{ backgroundImage: `url(${image})` }}>
                         {/* The aspect-square ensures it stays square */}

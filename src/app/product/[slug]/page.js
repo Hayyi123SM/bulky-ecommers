@@ -23,6 +23,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper-bundle.css"
 import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
+import { cn } from "@/lib/utils"
 
 function ProductDetail({ params }) {
     const t = useTranslations()
@@ -176,16 +177,30 @@ function ProductDetail({ params }) {
                             <Skeleton height={400} />
                         ) : (
                             <div className="relative flex items-center justify-center">
+                                <div className="absolute left-0 top-0 z-10 flex w-full flex-col gap-1">
+                                    {products?.packaging_type === "truck_load" && (
+                                        <div className="relative aspect-square w-1/6">
+                                            <Image src={"/sale_sticker_transparent.png"} alt="sale banner" fill className="object-contain" />
+                                        </div>
+                                    )}
+                                    {products?.category?.slug === "elektronik" && (
+                                        <div className="aspect-square w-[13%]">
+                                            <div className={cn("relative m-4 size-full overflow-hidden rounded-full", products?.packaging_type === "truck_load" && "my-0")}>
+                                                <Image src={"/passed_qc_sticker.png"} alt="passed qc banner" fill className="object-contain" />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                                 {/* Main Image */}
                                 <Image src={mainImage} alt="main product" width={500} height={400} priority={true} />
 
                                 {/* Previous Image Button */}
-                                <div className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2" onClick={showPreviousImage}>
+                                <div className="absolute left-0 top-1/2 z-20 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2" onClick={showPreviousImage}>
                                     <ChevronLeftIcon className="h-5 w-5" />
                                 </div>
 
                                 {/* Next Image Button */}
-                                <div className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2" onClick={showNextImage}>
+                                <div className="absolute right-0 top-1/2 z-20 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2" onClick={showNextImage}>
                                     <ChevronRightIcon className="h-5 w-5" />
                                 </div>
                             </div>
@@ -204,6 +219,20 @@ function ProductDetail({ params }) {
                             ) : (
                                 productImages.map((image, index) => (
                                     <SwiperSlide key={index}>
+                                        <div className="absolute left-0 top-0 z-10 flex w-full flex-col gap-1">
+                                            {products?.packaging_type === "truck_load" && (
+                                                <div className="relative aspect-square w-1/6 md:w-[14%]">
+                                                    <Image src={"/sale_sticker_transparent.png"} alt="sale banner" fill className="object-contain" />
+                                                </div>
+                                            )}
+                                            {products?.category?.slug === "elektronik" && (
+                                                <div className="aspect-square w-[13%] md:w-[11%]">
+                                                    <div className="relative mx-4 size-full overflow-hidden rounded-full">
+                                                        <Image src={"/passed_qc_sticker.png"} alt="passed qc banner" fill className="object-contain" />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                         <Image src={image} alt={`product-${index}`} width={1000} height={1000} priority={false} />
                                     </SwiperSlide>
                                 ))
@@ -226,7 +255,14 @@ function ProductDetail({ params }) {
                         `}</style>
                     </div>
                     <div className="p-4 lg:w-1/2 lg:p-8">
-                        <h1 className="mb-4 text-2xl font-bold">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "en" ? products?.name_trans?.en ? products.name_trans.en : products?.name_trans?.id : products?.name_trans?.id}</h1>
+                        <div className="mb-4 flex items-center gap-3">
+                            <h1 className="text-2xl font-bold">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "en" ? products?.name_trans?.en ? products.name_trans.en : products?.name_trans?.id : products?.name_trans?.id}</h1>
+                            {products?.category?.slug === "elektronik" && (
+                                <div className="relative size-8 overflow-hidden rounded-full">
+                                    <Image src={"/passed_qc_sticker.png"} alt="passed qc banner" fill className="object-contain" />
+                                </div>
+                            )}
+                        </div>
                         <div className="mb-1 text-xl font-bold text-[#007185]">{loadingProducts ? <Skeleton /> : products.price?.formatted}</div>
                         <div className="mb-4 text-xl font-bold text-[#007185]">
                             {products.show_price_before_discount && (
