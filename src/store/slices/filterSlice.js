@@ -2,7 +2,6 @@ import axios from "@/lib/axios"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    packaging_type: [],
     categories: [],
     warehouses: [],
     conditions: [],
@@ -11,7 +10,6 @@ const initialState = {
     minPrice: null,
     maxPrice: null,
     selectedFilters: {
-        packaging_type: [],
         categories: [],
         warehouses: [],
         conditions: [],
@@ -97,7 +95,6 @@ const filterSlice = createSlice({
         },
         resetFilters(state) {
             state.selectedFilters = {
-                packaging_type: [],
                 categories: [],
                 warehouses: [],
                 conditions: [],
@@ -108,10 +105,10 @@ const filterSlice = createSlice({
             }
         },
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder
             // Fetch categories
-            .addCase(fetchCategories.pending, state => {
+            .addCase(fetchCategories.pending, (state) => {
                 state.isLoading = true
                 state.error = null
             })
@@ -127,7 +124,7 @@ const filterSlice = createSlice({
             })
 
             // Fetch warehouses
-            .addCase(fetchWarehouses.pending, state => {
+            .addCase(fetchWarehouses.pending, (state) => {
                 state.isLoading = true
                 state.error = null
             })
@@ -143,7 +140,7 @@ const filterSlice = createSlice({
             })
 
             // Fetch conditions
-            .addCase(fetchConditions.pending, state => {
+            .addCase(fetchConditions.pending, (state) => {
                 state.isLoading = true
                 state.error = null
             })
@@ -159,7 +156,7 @@ const filterSlice = createSlice({
             })
 
             // Fetch statuses
-            .addCase(fetchStatuses.pending, state => {
+            .addCase(fetchStatuses.pending, (state) => {
                 state.isLoading = true
                 state.error = null
             })
@@ -175,7 +172,7 @@ const filterSlice = createSlice({
             })
 
             // Fetch brands
-            .addCase(fetchBrands.pending, state => {
+            .addCase(fetchBrands.pending, (state) => {
                 state.isLoading = true
                 state.error = null
             })

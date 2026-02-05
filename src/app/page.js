@@ -19,7 +19,6 @@ import { ChevronDownIcon, ChevronUpIcon, XMarkIcon } from "@heroicons/react/24/o
 import { ArrowLeftIcon, ArrowRightIcon, StarIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import { useDispatch, useSelector } from "react-redux"
@@ -40,15 +39,14 @@ function Home() {
     const t = useTranslations()
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const [current, setCurrent] = useState(0)
-    const router = useRouter()
     const dispatch = useDispatch()
-    const banners = useSelector(state => state.banners.items)
-    const videos = useSelector(state => state.videos.items)
+    const banners = useSelector((state) => state.banners.items)
+    const videos = useSelector((state) => state.videos.items)
     // const testimonys = useSelector(state => state.testimony.items)
-    const loadingBanners = useSelector(state => state.banners.isLoading)
-    const loadingVideos = useSelector(state => state.videos.isLoading)
-    const loadingReviews = useSelector(state => state.pages.isLoading)
-    const reviews = useSelector(state => state.pages.reviews)
+    const loadingBanners = useSelector((state) => state.banners.isLoading)
+    const loadingVideos = useSelector((state) => state.videos.isLoading)
+    const loadingReviews = useSelector((state) => state.pages.isLoading)
+    const reviews = useSelector((state) => state.pages.reviews)
     const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -57,7 +55,7 @@ function Home() {
     const nextRef = useRef(null)
     const [isClient, setIsClient] = useState(false)
     const [swiperInstance, setSwiperInstance] = useState(null)
-    const categories = useSelector(state => state.filters.categories)
+    const categories = useSelector((state) => state.filters.categories)
     const [selectedCategories, setSelectedCategories] = useState([])
 
     const [nameWholesale, setNameWholesale] = useState("")
@@ -65,8 +63,8 @@ function Home() {
     const [phoneWholesale, setPhoneWholesale] = useState("")
     const [addressWholesale, setAddressWholesale] = useState("")
     const [isOpen, setIsOpen] = useState(false)
-    const budgets = useSelector(state => state.orders.budgets)
-    const errors = useSelector(state => state.orders.errors)
+    const budgets = useSelector((state) => state.orders.budgets)
+    const errors = useSelector((state) => state.orders.errors)
     const [showNotification, setShowNotification] = useState(false)
 
     useEffect(() => {
@@ -136,7 +134,7 @@ function Home() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrent(prev => (prev === banners.length - 1 ? 0 : prev + 1))
+            setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1))
         }, 15000)
         return () => clearInterval(interval)
     }, [banners.length])
@@ -164,20 +162,22 @@ function Home() {
         setShowNotification(false)
     }
 
-    const handleOptionClick = name => {
+    const handleOptionClick = (name) => {
         setSelectedOption(name)
         setIsOpen(false)
     }
 
     const handleCategoryChange = (e, category) => {
-        const updatedCategories = e.target.checked ? [...selectedCategories, category.id] : selectedCategories.filter(id => id !== category.id)
+        const updatedCategories = e.target.checked
+            ? [...selectedCategories, category.id]
+            : selectedCategories.filter((id) => id !== category.id)
         setSelectedCategories(updatedCategories)
     }
 
-    const handleSelectAllCategories = e => {
+    const handleSelectAllCategories = (e) => {
         if (e.target.checked) {
             // Select all category IDs
-            const allCategoryIds = categories.map(category => category.id)
+            const allCategoryIds = categories.map((category) => category.id)
             setSelectedCategories(allCategoryIds)
         } else {
             // Deselect all categories
@@ -185,7 +185,7 @@ function Home() {
         }
     }
 
-    const handleSubmitWholesale = async e => {
+    const handleSubmitWholesale = async (e) => {
         e.preventDefault()
 
         const data = {
@@ -215,19 +215,29 @@ function Home() {
             {/* Search results displayed outside the Navbar */}
             {/* Rest of your page content */}
             <Navbar togglePopupMenu={togglePopupMenu} visibleOn="both" />
-            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />}
+            {showPopupMenu && (
+                <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />
+            )}
             <div className="">
                 <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-center md:flex-row">
                     <div className="w-full p-4 md:w-2/3 lg:w-1/2">
                         <div className="flex flex-col">
-                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">{t("welcome")}</div>
-                            <div className="mt-2 text-xl leading-7 md:pr-28">{t("description")}</div>
+                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">
+                                {t("welcome")}
+                            </div>
+                            <div className="mt-2 text-xl leading-7 md:pr-28">
+                                {t("description")}
+                            </div>
                             <div className="mt-5 flex w-full items-center gap-4 text-center md:pr-28">
                                 <Link href="/product?page=1" className="w-1/2 font-light">
-                                    <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">{t("showAllProduct")}</div>
+                                    <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">
+                                        {t("showAllProduct")}
+                                    </div>
                                 </Link>
                                 <Link href="/video" className="w-1/2 font-light">
-                                    <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">{t("showVideo")}</div>
+                                    <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">
+                                        {t("showVideo")}
+                                    </div>
                                 </Link>
                             </div>
                             <div className="mt-5 flex items-center gap-8 text-center md:pr-28">
@@ -257,7 +267,16 @@ function Home() {
                         </div>
                     </div>
                     <div className="w-full py-10 md:w-1/3 lg:w-1/2">
-                        <Image {...Hero} alt="Product" width={700} height={700} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} placeholder="blur" />
+                        <Image
+                            {...Hero}
+                            alt="Product"
+                            width={700}
+                            height={700}
+                            priority={true}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            quality={75}
+                            placeholder="blur"
+                        />
                     </div>
                 </div>
                 <div className="mx-auto max-w-7xl p-0 lg:p-5">
@@ -266,66 +285,32 @@ function Home() {
                             <Skeleton height={324} />
                         ) : (
                             banners.map((banner, index) => (
-                                <div key={index} className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}>
-                                    <Image src={banner.full_url} alt={`Banner ${index}`} fill priority={false} className="h-full w-full object-cover" />
+                                <div
+                                    key={index}
+                                    className={`absolute inset-0 transition-transform duration-1000 ${index === current ? "translate-x-0" : index < current ? "-translate-x-full" : "translate-x-full"}`}
+                                >
+                                    <Image
+                                        src={banner.full_url}
+                                        alt={`Banner ${index}`}
+                                        fill
+                                        priority={false}
+                                        className="h-full w-full object-cover"
+                                    />
                                 </div>
                             ))
                         )}
                         <div className="absolute bottom-5 left-5 flex space-x-2">
-                            {loadingBanners ? <Skeleton height={324} /> : banners.map((_, index) => <div key={index} className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`} onClick={() => setCurrent(index)} />)}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 p-5">
-                    <div className="mx-auto w-fit rounded-md bg-secondary px-5 py-2 font-semibold lg:mx-0">
-                        <h3>Our Product Type</h3>
-                    </div>
-                    <div className="grid gap-5 lg:grid-cols-3">
-                        <div className="flex w-full flex-col items-center overflow-hidden rounded-lg bg-gray-100 text-center shadow md:text-left lg:text-center">
-                            <div className="flex flex-col items-center gap-3 p-3 md:flex-row md:gap-5 md:p-5 lg:flex-col">
-                                <div className="relative aspect-square w-24 flex-none">
-                                    <Image src={"/palet.webp"} fill alt="Palet" className="object-contain" />
-                                </div>
-                                <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
-                                    <h5 className="font-semibold">Palet Load</h5>
-                                    <p className="text-sm leading-relaxed">Layanan dengan muatan kargo kecil, memiliki estimasi muatan 1 paletyang terbagi berbagai kategori. Layanan ini hanya menjangkau pengiriman JABODETABEK dan BANDUNG</p>
-                                </div>
-                            </div>
-                            <button className="group mt-auto flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=palet")}>
-                                <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
-                                <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
-                            </button>
-                        </div>
-                        <div className="flex w-full flex-col items-center overflow-hidden rounded-lg bg-gray-100 text-center shadow md:text-left lg:text-center">
-                            <div className="flex flex-col items-center gap-3 p-3 md:flex-row md:gap-5 md:p-5 lg:flex-col">
-                                <div className="relative aspect-square w-24 flex-none">
-                                    <Image src={"/truckload.webp"} fill alt="TruckLoad" className="object-contain" />
-                                </div>
-                                <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
-                                    <h5 className="font-semibold">Truck Load</h5>
-                                    <p className="text-sm leading-relaxed">Layanan dengan muatan kargo sedang, jenis barang bisa per kategori atau kategori campuran. Layanan ini cocok untuk usaha menengah dengan jangkauan pengiriman Pulau Sumatera, Jawa, dan Bali.</p>
-                                </div>
-                            </div>
-                            <button className="group mt-auto flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=truck_load")}>
-                                <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
-                                <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
-                            </button>
-                        </div>
-                        <div className="flex w-full flex-col items-center overflow-hidden rounded-lg bg-gray-100 text-center shadow md:text-left lg:text-center">
-                            <div className="flex flex-col items-center gap-3 p-3 md:flex-row md:gap-5 md:p-5 lg:flex-col">
-                                <div className="relative aspect-square w-24 flex-none">
-                                    <Image src={"/container.webp"} fill alt="Container" className="object-contain" />
-                                </div>
-                                <div className="flex flex-col gap-2 lg:items-center lg:gap-3">
-                                    <h5 className="font-semibold">Container Load</h5>
-                                    <p className="text-sm leading-relaxed">Layanan dengan muatan kargo besar, jenis barang kategori campuran yang cocok untuk usaha menengah keatas. Layanan ini menjangkau wilayah luar pulau termasuk Kalimantan, Sulawesi, Maluku, Bangka dan lainnya.</p>
-                                </div>
-                            </div>
-                            <button className="group mt-auto flex h-9 w-full flex-none items-center justify-end gap-2 bg-secondary px-3 py-2 text-sm font-medium lg:px-5" onClick={() => router.push("/product?packaging_type=container")}>
-                                <p className="transition-all group-hover:-translate-x-5">Lihat Semua Product</p>
-                                <ArrowRightIcon className="size-3.5 transition-all group-hover:-translate-x-5" />
-                            </button>
+                            {loadingBanners ? (
+                                <Skeleton height={324} />
+                            ) : (
+                                banners.map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={`h-2 w-2 cursor-pointer lg:rounded-full ${current === index ? "bg-white" : "bg-gray-400"}`}
+                                        onClick={() => setCurrent(index)}
+                                    />
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -335,22 +320,39 @@ function Home() {
                         <div className="flex gap-4 lg:grid lg:grid-cols-4">
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image src="/package box 07.png" alt="box" width={36} height={36} />
+                                    <Image
+                                        src="/package box 07.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
                                     <div className="py-2 text-lg font-bold">{t("sendCargo")}</div>
                                     <div className="text-base">{t("services")}</div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image src="/package box 8.png" alt="box" width={36} height={36} />
+                                    <Image
+                                        src="/package box 8.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
                                     <div className="py-2 text-lg font-bold">{t("legitSeller")}</div>
                                     <div className="text-base">{t("qcDone")}</div>
                                 </div>
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image src="/package box 9.png" alt="box" width={36} height={36} />
-                                    <div className="py-2 text-lg font-bold">{t("paymentTerjamin")}</div>
+                                    <Image
+                                        src="/package box 9.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
+                                    <div className="py-2 text-lg font-bold">
+                                        {t("paymentTerjamin")}
+                                    </div>
                                     <div className="text-base">
                                         <b>100%</b> {t("safetyPayment")}
                                     </div>
@@ -358,8 +360,15 @@ function Home() {
                             </div>
                             <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
                                 <div className="flex flex-col items-center p-4 text-center">
-                                    <Image src="/package box 10.png" alt="box" width={36} height={36} />
-                                    <div className="py-2 text-lg font-bold">{t("support24Hours")}</div>
+                                    <Image
+                                        src="/package box 10.png"
+                                        alt="box"
+                                        width={36}
+                                        height={36}
+                                    />
+                                    <div className="py-2 text-lg font-bold">
+                                        {t("support24Hours")}
+                                    </div>
                                     <div className="text-base">{t("supportPrivate")}</div>
                                 </div>
                             </div>
@@ -368,16 +377,35 @@ function Home() {
                 </div>
                 <div className="mx-auto flex max-w-7xl flex-col items-center justify-center p-4 md:flex-row">
                     <div className="w-full md:w-1/2">
-                        <Image {...Illustration} alt="bulky" width={500} height={500} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} placeholder="blur" />
+                        <Image
+                            {...Illustration}
+                            alt="bulky"
+                            width={500}
+                            height={500}
+                            priority={true}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            quality={75}
+                            placeholder="blur"
+                        />
                     </div>
                     <div className="w-full md:w-1/2">
                         <div className="text-4xl font-semibold">{t("aboutBulky")}</div>
-                        <div className="mt-5 pr-20 text-sm leading-6 opacity-60">{t("aboutBulkyDescription")}</div>
+                        <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
+                            {t("aboutBulkyDescription")}
+                        </div>
                         <div className="mt-10 flex w-full justify-between pr-20">
                             <Link href="/about-us">
-                                <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">{t("learnNext")}</div>
+                                <div className="flex w-fit items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-white">
+                                    {t("learnNext")}
+                                </div>
                             </Link>
-                            <Image src="/new/cartoon-2.png" alt="bulky" width={150} height={150} className="w-1/3" />
+                            <Image
+                                src="/new/cartoon-2.png"
+                                alt="bulky"
+                                width={150}
+                                height={150}
+                                className="w-1/3"
+                            />
                         </div>
                     </div>
                 </div>
@@ -502,7 +530,9 @@ function Home() {
                         <br />
                         {t("viewVideo")}
                     </div>
-                    <div className="my-2 flex justify-center text-center text-lg leading-9">{t("descriptionVideo")}</div>
+                    <div className="my-2 flex justify-center text-center text-lg leading-9">
+                        {t("descriptionVideo")}
+                    </div>
                     <div className="h-[300px] w-full md:h-[400px] lg:h-[450px] lg:w-2/3">
                         {/*<iframe
                             className="h-full w-full" // Menyesuaikan iframe dengan ukuran parent
@@ -518,7 +548,9 @@ function Home() {
                 </div>
                 <div className="mt-10 bg-secondary bg-opacity-20 px-4 py-10">
                     <div className="mx-auto max-w-7xl">
-                        <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">{t("tipsAndTrick")}</div>
+                        <div className="flex justify-center pt-10 text-center text-xs font-semibold text-[#007185]">
+                            {t("tipsAndTrick")}
+                        </div>
                         <div className="my-2 flex justify-center text-center text-3xl font-semibold leading-9">
                             {t("academyBulky")} <br /> {t("buildFuture")}
                         </div>
@@ -526,30 +558,43 @@ function Home() {
                             <div className="flex gap-4 lg:grid lg:grid-cols-4">
                                 {loadingVideos
                                     ? Array.from({ length: 4 }).map((_, index) => (
-                                          <div key={index} className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                          <div
+                                              key={index}
+                                              className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                          >
                                               <Skeleton height={150} />
                                               <Skeleton width="60%" />
                                           </div>
                                       ))
                                     : videos &&
                                       videos.length > 0 &&
-                                      videos.map(video => (
-                                          <div className="min-w-[100%] md:min-w-[30%] lg:min-w-0" key={video.id}>
+                                      videos.map((video) => (
+                                          <div
+                                              className="min-w-[100%] md:min-w-[30%] lg:min-w-0"
+                                              key={video.id}
+                                          >
                                               <Link href={`/video/${video.id}`}>
-                                                  <VideoThumbnail thumbnail={video.thumbnail} title={video.title} />
+                                                  <VideoThumbnail
+                                                      thumbnail={video.thumbnail}
+                                                      title={video.title}
+                                                  />
                                               </Link>
                                           </div>
                                       ))}
                             </div>
                         </div>
                         <Link href="/video">
-                            <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">{t("viewAllVideo")}</div>
+                            <div className="flex justify-center pt-10 text-center text-sm font-semibold text-[#007185] underline">
+                                {t("viewAllVideo")}
+                            </div>
                         </Link>
                     </div>
                 </div>
                 <div className="w-full bg-transparent bg-contain bg-right-bottom bg-no-repeat lg:bg-[url('/new/cartoon-1.png')]">
                     <div className="mx-auto max-w-7xl px-4 py-10">
-                        <div className="mb-10 flex justify-center text-center text-2xl font-semibold leading-9">{t("testimonyUs")}</div>
+                        <div className="mb-10 flex justify-center text-center text-2xl font-semibold leading-9">
+                            {t("testimonyUs")}
+                        </div>
                         <div className="flex w-full grid-cols-1 items-center justify-center gap-10">
                             {/* <div className="w-1/3 rounded-lg bg-secondary bg-opacity-20 p-10">
                                 <div className="text-4xl font-bold">
@@ -639,36 +684,57 @@ function Home() {
                                             768: { slidesPerView: 2 }, // md: 2 slides
                                             1024: { slidesPerView: 3 }, // lg and above: 3 slides
                                         }}
-                                        onSwiper={setSwiperInstance}>
+                                        onSwiper={setSwiperInstance}
+                                    >
                                         {loadingReviews ? (
                                             <Skeleton height={1000} />
                                         ) : (
                                             reviews.map((review, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div key={review.id} className="flex min-h-60 w-full flex-col justify-start rounded-lg p-4 text-left">
+                                                    <div
+                                                        key={review.id}
+                                                        className="flex min-h-60 w-full flex-col justify-start rounded-lg p-4 text-left"
+                                                    >
                                                         <div className="mb-3 flex items-start gap-3">
                                                             <div className="flex w-full flex-col text-left">
-                                                                <div className="text-lg font-bold">{review.rated_by}</div>
-                                                                <div className="flex">
-                                                                    {[...Array(5)].map((_, index3) => (
-                                                                        <StarIcon key={index3} className={`mr-1 h-4 w-4 cursor-pointer ${index3 < review.rating ? "text-secondary" : "text-[#BFC9D9]"}`} />
-                                                                    ))}
+                                                                <div className="text-lg font-bold">
+                                                                    {review.rated_by}
                                                                 </div>
-                                                                <div className="mt-2 font-bold text-[#007185]">{Cookies.get("locale") === "en" ? (review?.product?.en ? review.product.en : review?.product?.id) : review?.product?.id}</div>
+                                                                <div className="flex">
+                                                                    {[...Array(5)].map(
+                                                                        (_, index3) => (
+                                                                            <StarIcon
+                                                                                key={index3}
+                                                                                className={`mr-1 h-4 w-4 cursor-pointer ${index3 < review.rating ? "text-secondary" : "text-[#BFC9D9]"}`}
+                                                                            />
+                                                                        ),
+                                                                    )}
+                                                                </div>
+                                                                <div className="mt-2 font-bold text-[#007185]">
+                                                                    {Cookies.get("locale") === "en"
+                                                                        ? review?.product?.en
+                                                                            ? review.product.en
+                                                                            : review?.product?.id
+                                                                        : review?.product?.id}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="w-full opacity-70">{review.comment}</div>
+                                                        <div className="w-full opacity-70">
+                                                            {review.comment}
+                                                        </div>
                                                         <div className="flex items-center gap-2">
                                                             {review.images &&
-                                                                review.images.map((image, index2) => (
-                                                                    <div
-                                                                        key={index2}
-                                                                        className="mt-2 h-12 w-12 rounded bg-cover bg-center"
-                                                                        style={{
-                                                                            backgroundImage: `url(${image.url})`,
-                                                                        }}
-                                                                    />
-                                                                ))}
+                                                                review.images.map(
+                                                                    (image, index2) => (
+                                                                        <div
+                                                                            key={index2}
+                                                                            className="mt-2 h-12 w-12 rounded bg-cover bg-center"
+                                                                            style={{
+                                                                                backgroundImage: `url(${image.url})`,
+                                                                            }}
+                                                                        />
+                                                                    ),
+                                                                )}
                                                         </div>
                                                     </div>
                                                 </SwiperSlide>
@@ -677,10 +743,16 @@ function Home() {
                                     </Swiper>
 
                                     {/* Custom Navigation Buttons */}
-                                    <button ref={prevRef} className="custom-swiper-button custom-swiper-button-prev">
+                                    <button
+                                        ref={prevRef}
+                                        className="custom-swiper-button custom-swiper-button-prev"
+                                    >
                                         <ArrowLeftIcon className="h-6 w-6" />
                                     </button>
-                                    <button ref={nextRef} className="custom-swiper-button custom-swiper-button-next">
+                                    <button
+                                        ref={nextRef}
+                                        className="custom-swiper-button custom-swiper-button-next"
+                                    >
                                         <ArrowRightIcon className="h-6 w-6" />
                                     </button>
 
@@ -730,12 +802,22 @@ function Home() {
                 <div className="bg-secondary bg-opacity-20">
                     <div className="mx-auto max-w-5xl px-4 py-10">
                         <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
-                            <Image src="/box bulky-01 1.png" alt="Product" width={400} height={400} />
+                            <Image
+                                src="/box bulky-01 1.png"
+                                alt="Product"
+                                width={400}
+                                height={400}
+                            />
                             <div className="flex flex-col">
                                 <div className="text-4xl font-semibold">{t("wantWholesaler")}</div>
-                                <div className="mt-5 pr-20 text-sm leading-6 opacity-60">{t("descriptionWholesale")}</div>
+                                <div className="mt-5 pr-20 text-sm leading-6 opacity-60">
+                                    {t("descriptionWholesale")}
+                                </div>
                                 <div className="mt-6 flex justify-between pr-20">
-                                    <div className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]" onClick={() => setShowWholesale(true)}>
+                                    <div
+                                        className="flex w-fit cursor-pointer items-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
+                                        onClick={() => setShowWholesale(true)}
+                                    >
                                         {t("registerNow")}
                                     </div>
                                 </div>
@@ -744,7 +826,15 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <PopupModal isOpen={isOpenModal} closeModal={closeModal} type="updateProfile" title={t("notification")} message={t("notificationMessage")} confirmText={t("fillNow")} cancelText={t("later")} />
+            <PopupModal
+                isOpen={isOpenModal}
+                closeModal={closeModal}
+                type="updateProfile"
+                title={t("notification")}
+                message={t("notificationMessage")}
+                confirmText={t("fillNow")}
+                cancelText={t("later")}
+            />
 
             {isOpenPdf && (
                 <div onClick={() => setIsOpenPdf(false)}>
@@ -805,39 +895,88 @@ function Home() {
             )}
 
             {showWholesale && (
-                <div className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}>
-                    <div className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}>
+                <div
+                    className={`fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50`}
+                >
+                    <div
+                        className={`relative w-full max-w-md transform rounded-lg bg-white p-6 transition-all duration-300 ease-out`}
+                    >
                         <div className="my-4 flex items-center justify-between">
                             <h2 className="text-xl font-semibold">{t("formWholesale")}</h2>
-                            <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={handleCloseWholesale} />
+                            <XMarkIcon
+                                className="h-6 w-6 cursor-pointer"
+                                onClick={handleCloseWholesale}
+                            />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.name")}</div>
-                            <input type="text" value={nameWholesale} onChange={e => setNameWholesale(e.target.value)} className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" placeholder={t("placeholder.name")} />
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                {t("form.name")}
+                            </div>
+                            <input
+                                type="text"
+                                value={nameWholesale}
+                                onChange={(e) => setNameWholesale(e.target.value)}
+                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                placeholder={t("placeholder.name")}
+                            />
                             <InputError messages={errors && errors.name} className={"mt-2"} />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.phone")}</div>
-                            <input type="text" value={phoneWholesale} onChange={e => setPhoneWholesale(e.target.value)} className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" placeholder={t("placeholder.phone")} />
-                            <InputError messages={errors && errors.phone_number} className={"mt-2"} />
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                {t("form.phone")}
+                            </div>
+                            <input
+                                type="text"
+                                value={phoneWholesale}
+                                onChange={(e) => setPhoneWholesale(e.target.value)}
+                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                placeholder={t("placeholder.phone")}
+                            />
+                            <InputError
+                                messages={errors && errors.phone_number}
+                                className={"mt-2"}
+                            />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.address")}</div>
-                            <input type="text" value={addressWholesale} onChange={e => setAddressWholesale(e.target.value)} className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" placeholder={t("placeholder.address")} />
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                {t("form.address")}
+                            </div>
+                            <input
+                                type="text"
+                                value={addressWholesale}
+                                onChange={(e) => setAddressWholesale(e.target.value)}
+                                className="h-10 w-full rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                placeholder={t("placeholder.address")}
+                            />
                             <InputError messages={errors && errors.address} className={"mt-2"} />
                         </div>
                         <div className="py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.budget")}</div>
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                {t("form.budget")}
+                            </div>
                             <div className="relative w-full lg:max-w-xl">
-                                <div className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]" onClick={() => setIsOpen(!isOpen)}>
+                                <div
+                                    className="flex h-10 w-full cursor-pointer items-center justify-between rounded-lg border border-gray-300 p-2 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    onClick={() => setIsOpen(!isOpen)}
+                                >
                                     <div className="flex items-center">{selectedOption}</div>
-                                    {isOpen ? <ChevronUpIcon className="inline-block h-5 w-5" /> : <ChevronDownIcon className="inline-block h-5 w-5" />}
+                                    {isOpen ? (
+                                        <ChevronUpIcon className="inline-block h-5 w-5" />
+                                    ) : (
+                                        <ChevronDownIcon className="inline-block h-5 w-5" />
+                                    )}
                                 </div>
 
                                 {/* Dropdown options */}
-                                <div className={`absolute mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${isOpen ? "max-h-screen opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
+                                <div
+                                    className={`absolute mt-1 w-full rounded-lg border border-[#F0F3F7] bg-white p-2 shadow-lg transition-all duration-300 ease-in-out ${isOpen ? "max-h-screen opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}
+                                >
                                     {budgets.map((option, index) => (
-                                        <div key={index} className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]" onClick={() => handleOptionClick(option)}>
+                                        <div
+                                            key={index}
+                                            className="flex cursor-pointer items-center border-b border-[#F0F3F7] p-2 text-xs hover:rounded-lg hover:bg-[#F5F5F5]"
+                                            onClick={() => handleOptionClick(option)}
+                                        >
                                             {option}
                                         </div>
                                     ))}
@@ -846,7 +985,9 @@ function Home() {
                             <InputError messages={errors && errors.budget} className={"mt-2"} />
                         </div>
                         <div className="mt-2 py-1">
-                            <div className="mb-2 text-sm font-bold text-[#6D7588]">{t("form.productCategory")}</div>
+                            <div className="mb-2 text-sm font-bold text-[#6D7588]">
+                                {t("form.productCategory")}
+                            </div>
                             <div className="grid max-h-32 grid-cols-2 gap-2 overflow-y-auto">
                                 <div className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
                                     <input
@@ -858,22 +999,31 @@ function Home() {
                                         onChange={handleSelectAllCategories}
                                         className="h-3 w-3 rounded border-black checked:bg-[#007185] checked:text-[#007185] focus:ring-0"
                                     />
-                                    <label htmlFor={`selected-all`} className="text-sm font-bold text-[#6D7588]">
+                                    <label
+                                        htmlFor={`selected-all`}
+                                        className="text-sm font-bold text-[#6D7588]"
+                                    >
                                         Semua Kategori
                                     </label>
                                 </div>
                                 {categories.map((category, index) => (
-                                    <div key={index} className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]">
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2 p-0.5 focus:border-black focus:bg-[#0071850D] focus:ring-4 focus:ring-[#00D5FB33]"
+                                    >
                                         <input
                                             id={`category-${category.id}`} // Unique ID for accessibility
                                             aria-describedby="comments-description"
                                             name="comments"
                                             type="checkbox"
                                             checked={selectedCategories.includes(category.id)}
-                                            onChange={e => handleCategoryChange(e, category)}
+                                            onChange={(e) => handleCategoryChange(e, category)}
                                             className="h-3 w-3 rounded border-black checked:bg-[#007185] checked:text-[#007185] focus:ring-0"
                                         />
-                                        <label htmlFor={`category-${category.id}`} className="text-sm font-bold text-[#6D7588]">
+                                        <label
+                                            htmlFor={`category-${category.id}`}
+                                            className="text-sm font-bold text-[#6D7588]"
+                                        >
                                             {category.name}
                                         </label>
                                     </div>
@@ -882,7 +1032,10 @@ function Home() {
                             <InputError messages={errors && errors.categories} className={"mt-2"} />
                         </div>
                         <div className="mt-6 flex justify-center">
-                            <div className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]" onClick={handleSubmitWholesale}>
+                            <div
+                                className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-secondary bg-secondary px-4 py-2 hover:bg-[#e8bc00]"
+                                onClick={handleSubmitWholesale}
+                            >
                                 {t("form.sendForm")}
                             </div>
                         </div>
@@ -890,7 +1043,14 @@ function Home() {
                 </div>
             )}
 
-            <PopupModal isOpen={showNotification} closeModal={handleCloseWholesale} type={"notification"} title={t("notification")} message={t("congratulationWholesale")} urlConfirm="/" />
+            <PopupModal
+                isOpen={showNotification}
+                closeModal={handleCloseWholesale}
+                type={"notification"}
+                title={t("notification")}
+                message={t("congratulationWholesale")}
+                urlConfirm="/"
+            />
             <Footer />
 
             {/* <LoadingSpinner /> */}

@@ -8,7 +8,13 @@ import ProductCard from "@/components/ProductCard"
 import { useAuth } from "@/hooks/auth"
 import { addToCart } from "@/store/slices/cartSlice"
 import { fetchProductDetail, fetchProductRelated } from "@/store/slices/productSlice"
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline"
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    ChevronUpIcon,
+    ExclamationCircleIcon,
+} from "@heroicons/react/24/outline"
 import { ArrowLeftIcon, Bars3BottomRightIcon, StarIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -33,9 +39,9 @@ function ProductDetail({ params }) {
     const [showPopupMenu, setShowPopupMenu] = useState(false)
     const router = useRouter()
     const dispatch = useDispatch()
-    const products = useSelector(state => state.products.productDetails)
-    const relatedProducts = useSelector(state => state.products.relatedProducts)
-    const loadingProducts = useSelector(state => state.products.isLoading)
+    const products = useSelector((state) => state.products.productDetails)
+    const relatedProducts = useSelector((state) => state.products.relatedProducts)
+    const loadingProducts = useSelector((state) => state.products.isLoading)
     const [isLoading, setIsloading] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isLoadingPdf, setIsLoadingPdf] = useState(false)
@@ -78,7 +84,7 @@ function ProductDetail({ params }) {
         setShowPopupMenu(false)
     }
 
-    const handleAddToCart = product => {
+    const handleAddToCart = (product) => {
         setIsloading(true)
         if (user) {
             dispatch(addToCart(product))
@@ -126,7 +132,9 @@ function ProductDetail({ params }) {
                     <Bars3BottomRightIcon className="h-6 w-6" onClick={togglePopupMenu} />
                 </div>
             </div>
-            {showPopupMenu && <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />}
+            {showPopupMenu && (
+                <PopupMenuMobile showPopupMenu={showPopupMenu} closePopupMenu={closePopupMenu} />
+            )}
             <div className="mx-auto max-w-7xl lg:p-8 lg:px-44">
                 <div className="flex flex-col gap-2 lg:flex-row">
                     <div className="scrollbar-hide relative hidden max-h-[400px] flex-col overflow-y-auto whitespace-nowrap lg:flex">
@@ -144,14 +152,27 @@ function ProductDetail({ params }) {
                                                 behavior: "smooth",
                                             })
                                         }
-                                    }}>
+                                    }}
+                                >
                                     <ChevronUpIcon className="h-5 w-5" />
                                 </div>
 
                                 {/* Image Thumbnails */}
-                                <div ref={scrollRef} className="scrollbar-hide flex flex-col gap-1 overflow-y-auto">
+                                <div
+                                    ref={scrollRef}
+                                    className="scrollbar-hide flex flex-col gap-1 overflow-y-auto"
+                                >
                                     {productImages.map((image, index) => (
-                                        <Image key={index} src={image} alt={`product-${index}`} width={80} height={80} className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${mainImage === image ? "border-[#007185]" : "border-[#BFC9D9]"}`} onClick={() => setMainImage(image)} priority={false} />
+                                        <Image
+                                            key={index}
+                                            src={image}
+                                            alt={`product-${index}`}
+                                            width={80}
+                                            height={80}
+                                            className={`mb-3 cursor-pointer border-2 hover:border-[#007185] ${mainImage === image ? "border-[#007185]" : "border-[#BFC9D9]"}`}
+                                            onClick={() => setMainImage(image)}
+                                            priority={false}
+                                        />
                                     ))}
                                 </div>
 
@@ -165,7 +186,8 @@ function ProductDetail({ params }) {
                                                 behavior: "smooth",
                                             })
                                         }
-                                    }}>
+                                    }}
+                                >
                                     <ChevronDownIcon className="h-5 w-5" />
                                 </div>
                             </>
@@ -178,29 +200,45 @@ function ProductDetail({ params }) {
                         ) : (
                             <div className="relative flex items-center justify-center">
                                 <div className="absolute left-0 top-0 z-10 flex w-full flex-col gap-1">
-                                    {products?.packaging_type === "truck_load" && (
-                                        <div className="relative aspect-square w-1/6">
-                                            <Image src={"/sale_sticker_transparent.png"} alt="sale banner" fill className="object-contain" />
-                                        </div>
-                                    )}
                                     {products?.category?.slug === "elektronik" && (
                                         <div className="aspect-square w-[13%]">
-                                            <div className={cn("relative m-4 size-full overflow-hidden rounded-full", products?.packaging_type === "truck_load" && "my-0")}>
-                                                <Image src={"/passed_qc_sticker.png"} alt="passed qc banner" fill className="object-contain" />
+                                            <div
+                                                className={cn(
+                                                    "relative m-4 size-full overflow-hidden rounded-full",
+                                                )}
+                                            >
+                                                <Image
+                                                    src={"/passed_qc_sticker.png"}
+                                                    alt="passed qc banner"
+                                                    fill
+                                                    className="object-contain"
+                                                />
                                             </div>
                                         </div>
                                     )}
                                 </div>
                                 {/* Main Image */}
-                                <Image src={mainImage} alt="main product" width={500} height={400} priority={true} />
+                                <Image
+                                    src={mainImage}
+                                    alt="main product"
+                                    width={500}
+                                    height={400}
+                                    priority={true}
+                                />
 
                                 {/* Previous Image Button */}
-                                <div className="absolute left-0 top-1/2 z-20 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2" onClick={showPreviousImage}>
+                                <div
+                                    className="absolute left-0 top-1/2 z-20 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2"
+                                    onClick={showPreviousImage}
+                                >
                                     <ChevronLeftIcon className="h-5 w-5" />
                                 </div>
 
                                 {/* Next Image Button */}
-                                <div className="absolute right-0 top-1/2 z-20 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2" onClick={showNextImage}>
+                                <div
+                                    className="absolute right-0 top-1/2 z-20 -translate-y-1/2 cursor-pointer bg-white bg-opacity-50 p-2"
+                                    onClick={showNextImage}
+                                >
                                     <ChevronRightIcon className="h-5 w-5" />
                                 </div>
                             </div>
@@ -213,27 +251,34 @@ function ProductDetail({ params }) {
                             pagination={{
                                 type: "fraction",
                             }}
-                            modules={[Pagination, Navigation]}>
+                            modules={[Pagination, Navigation]}
+                        >
                             {loadingProducts ? (
                                 <Skeleton height={1000} />
                             ) : (
                                 productImages.map((image, index) => (
                                     <SwiperSlide key={index}>
                                         <div className="absolute left-0 top-0 z-10 flex w-full flex-col gap-1">
-                                            {products?.packaging_type === "truck_load" && (
-                                                <div className="relative aspect-square w-1/6 md:w-[14%]">
-                                                    <Image src={"/sale_sticker_transparent.png"} alt="sale banner" fill className="object-contain" />
-                                                </div>
-                                            )}
                                             {products?.category?.slug === "elektronik" && (
                                                 <div className="aspect-square w-[13%] md:w-[11%]">
                                                     <div className="relative mx-4 size-full overflow-hidden rounded-full">
-                                                        <Image src={"/passed_qc_sticker.png"} alt="passed qc banner" fill className="object-contain" />
+                                                        <Image
+                                                            src={"/passed_qc_sticker.png"}
+                                                            alt="passed qc banner"
+                                                            fill
+                                                            className="object-contain"
+                                                        />
                                                     </div>
                                                 </div>
                                             )}
                                         </div>
-                                        <Image src={image} alt={`product-${index}`} width={1000} height={1000} priority={false} />
+                                        <Image
+                                            src={image}
+                                            alt={`product-${index}`}
+                                            width={1000}
+                                            height={1000}
+                                            priority={false}
+                                        />
                                     </SwiperSlide>
                                 ))
                             )}
@@ -256,40 +301,80 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="p-4 lg:w-1/2 lg:p-8">
                         <div className="mb-4 flex items-center gap-3">
-                            <h1 className="text-2xl font-bold">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "en" ? products?.name_trans?.en ? products.name_trans.en : products?.name_trans?.id : products?.name_trans?.id}</h1>
+                            <h1 className="text-2xl font-bold">
+                                {loadingProducts ? (
+                                    <Skeleton />
+                                ) : Cookies.get("locale") === "en" ? (
+                                    products?.name_trans?.en ? (
+                                        products.name_trans.en
+                                    ) : (
+                                        products?.name_trans?.id
+                                    )
+                                ) : (
+                                    products?.name_trans?.id
+                                )}
+                            </h1>
                             {products?.category?.slug === "elektronik" && (
                                 <div className="relative size-8 overflow-hidden rounded-full">
-                                    <Image src={"/passed_qc_sticker.png"} alt="passed qc banner" fill className="object-contain" />
+                                    <Image
+                                        src={"/passed_qc_sticker.png"}
+                                        alt="passed qc banner"
+                                        fill
+                                        className="object-contain"
+                                    />
                                 </div>
                             )}
                         </div>
-                        <div className="mb-1 text-xl font-bold text-[#007185]">{loadingProducts ? <Skeleton /> : products.price?.formatted}</div>
+                        <div className="mb-1 text-xl font-bold text-[#007185]">
+                            {loadingProducts ? <Skeleton /> : products.price?.formatted}
+                        </div>
                         <div className="mb-4 text-xl font-bold text-[#007185]">
                             {products.show_price_before_discount && (
                                 <div className="flex items-center">
-                                    <div className="text-xs font-bold text-gray-400 line-through">{products.price_before_discount.formatted}</div>
-                                    <div className="ml-1 text-xs font-bold text-[#007185]">{Math.round(((products.price_before_discount.numeric - products.price.numeric) / products.price_before_discount.numeric) * 100)}%</div>
+                                    <div className="text-xs font-bold text-gray-400 line-through">
+                                        {products.price_before_discount.formatted}
+                                    </div>
+                                    <div className="ml-1 text-xs font-bold text-[#007185]">
+                                        {Math.round(
+                                            ((products.price_before_discount.numeric -
+                                                products.price.numeric) /
+                                                products.price_before_discount.numeric) *
+                                                100,
+                                        )}
+                                        %
+                                    </div>
                                 </div>
                             )}
                         </div>
                         <div className="mb-1 flex items-center">
                             <div className="mr-2 w-4/12 text-base text-[#6D7588]">ID Palet</div>
-                            <div className="w-8/12 text-base font-bold">{loadingProducts ? <Skeleton /> : products.id_pallet}</div>
+                            <div className="w-8/12 text-base font-bold">
+                                {loadingProducts ? <Skeleton /> : products.id_pallet}
+                            </div>
                         </div>
                         <div className="mb-1 flex items-center">
                             <div className="mr-2 w-4/12 text-base text-[#6D7588]">Quantity</div>
-                            <div className="w-8/12 text-base font-bold">{loadingProducts ? <Skeleton /> : products.total_quantity} pcs</div>
+                            <div className="w-8/12 text-base font-bold">
+                                {loadingProducts ? <Skeleton /> : products.total_quantity} pcs
+                            </div>
                         </div>
                         <div className="mb-1 flex items-center">
                             <div className="mr-2 w-4/12 text-base text-[#6D7588]">Location</div>
-                            <div className="w-8/12 text-base font-bold">{products.warehouse.name}</div>
+                            <div className="w-8/12 text-base font-bold">
+                                {products.warehouse.name}
+                            </div>
                         </div>
                         <div className="mb-8 flex items-center">
-                            <div className="mr-2 w-4/12 text-base text-[#6D7588]">Detail Pallet</div>
+                            <div className="mr-2 w-4/12 text-base text-[#6D7588]">
+                                Detail Pallet
+                            </div>
                             <div className="w-8/12 text-base font-bold">
                                 {/* 5.00 lbs per lot / 0.77 pounds per lot
                                 dimensional weight */}
-                                <span className="ml-1 cursor-pointer text-[#007185] underline" onClick={handlePackageDetail}>
+                                <span
+                                    className="ml-1 cursor-pointer text-[#007185] underline"
+                                    onClick={handlePackageDetail}
+                                >
                                     (Package Details)
                                 </span>
                             </div>
@@ -319,10 +404,15 @@ function ProductDetail({ params }) {
                                 <div className="hidden items-center py-3 lg:flex">
                                     <div className="ml-2 text-xs">{t("product.outOfStock")}</div>
                                 </div>
-                                <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">{t("product.notAvailable")}</div>
+                                <div className="hidden rounded-lg bg-[#F5F5F5] py-3 text-center text-lg font-bold text-[#BFC9D9] lg:block">
+                                    {t("product.notAvailable")}
+                                </div>
                             </>
                         ) : (
-                            <div onClick={() => handleAddToCart(products.id)} className="hidden cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:flex">
+                            <div
+                                onClick={() => handleAddToCart(products.id)}
+                                className="hidden cursor-pointer justify-center rounded-lg bg-secondary py-3 text-center text-lg font-bold hover:bg-[#e8bc00] lg:flex"
+                            >
                                 {isLoading ? (
                                     <>
                                         {t("waiting")}...
@@ -338,31 +428,83 @@ function ProductDetail({ params }) {
                 <div className="p-4 lg:mt-20">
                     <div className="mb-4 text-2xl font-bold">Deskripsi</div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.condition_product")} :</div>
-                        <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.condition?.title_trans?.id : products?.condition?.title_trans?.en}</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("product.condition_product")} :
+                        </div>
+                        <div className="w-5/6 text-base">
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.condition?.title_trans?.id
+                            ) : (
+                                products?.condition?.title_trans?.en
+                            )}
+                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("filter.brand")} :</div>
-                        <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : products.brands.map(brand => brand.name)}</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("filter.brand")} :
+                        </div>
+                        <div className="w-5/6 text-base">
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : (
+                                products.brands.map((brand) => brand.name)
+                            )}
+                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.source")} :</div>
-                        <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.status?.status_trans?.id : products?.status?.status_trans?.en}</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("product.source")} :
+                        </div>
+                        <div className="w-5/6 text-base">
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.status?.status_trans?.id
+                            ) : (
+                                products?.status?.status_trans?.en
+                            )}
+                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.condition_package")} :</div>
-                        <div className="w-5/6 text-base">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.status_package?.status_trans?.id : products?.status_package?.status_trans?.en}</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("product.condition_package")} :
+                        </div>
+                        <div className="w-5/6 text-base">
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.status_package?.status_trans?.id
+                            ) : (
+                                products?.status_package?.status_trans?.en
+                            )}
+                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">Min Pesanan :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            Min Pesanan :
+                        </div>
                         <div className="w-5/6 text-base">1 Palet</div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.category")} :</div>
-                        <div className="w-5/6 text-base font-semibold text-[#007185]">{loadingProducts ? <Skeleton /> : Cookies.get("locale") === "id" ? products?.category?.name_trans?.id : products?.category?.name_trans?.en}</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("product.category")} :
+                        </div>
+                        <div className="w-5/6 text-base font-semibold text-[#007185]">
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.category?.name_trans?.id
+                            ) : (
+                                products?.category?.name_trans?.en
+                            )}
+                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">{t("product.discrepancy.label")} :</div>
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("product.discrepancy.label")} :
+                        </div>
                         <div className="flex w-5/6 gap-6 text-base font-semibold text-[#007185]">
                             <p>{products?.note_discrepancy}%</p>
                             <div className="group relative">
@@ -381,16 +523,28 @@ function ProductDetail({ params }) {
                         <div className="border-b border-[#BFC9D9] py-2">
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, index) => (
-                                    <StarIcon key={index} className={`mr-1 h-4 w-4 cursor-pointer ${index < products.reviews?.[0]?.rating ? "text-secondary" : "text-[#BFC9D9]"}`} />
+                                    <StarIcon
+                                        key={index}
+                                        className={`mr-1 h-4 w-4 cursor-pointer ${index < products.reviews?.[0]?.rating ? "text-secondary" : "text-[#BFC9D9]"}`}
+                                    />
                                 ))}
                             </div>
                             <div className="py-3 font-semibold">{products.reviews?.rated_by}</div>
                             <div className="flex items-center py-3">
                                 {products.reviews?.[0]?.images.map((image, index) => (
-                                    <Image key={index} src={image.url} alt={image} width={100} height={100} className="mr-2 h-16 w-16 cursor-pointer rounded-lg" />
+                                    <Image
+                                        key={index}
+                                        src={image.url}
+                                        alt={image}
+                                        width={100}
+                                        height={100}
+                                        className="mr-2 h-16 w-16 cursor-pointer rounded-lg"
+                                    />
                                 ))}
                             </div>
-                            <div className="flex items-center">{products.reviews?.[0]?.comment}</div>
+                            <div className="flex items-center">
+                                {products.reviews?.[0]?.comment}
+                            </div>
                         </div>
                     </div>
                 )}
@@ -403,27 +557,43 @@ function ProductDetail({ params }) {
                                 ? Array.from({
                                       length: relatedProducts.length,
                                   }).map((_, index) => (
-                                      <div key={index} className="min-w-[50%] md:min-w-[30%] lg:min-w-0">
+                                      <div
+                                          key={index}
+                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                      >
                                           <Skeleton height={200} />
                                           <Skeleton count={5} />
                                       </div>
                                   ))
-                                : relatedProducts.map(product => (
-                                      <div className="min-w-[50%] md:min-w-[30%] lg:min-w-0" key={product.id}>
+                                : relatedProducts.map((product) => (
+                                      <div
+                                          className="min-w-[50%] md:min-w-[30%] lg:min-w-0"
+                                          key={product.id}
+                                      >
                                           <ProductCard
                                               image={product.images[0]}
                                               productId={product.id}
                                               location={product.warehouse?.name}
-                                              title={Cookies.get("locale") === "id" ? product?.name_trans?.id : product?.name_trans?.en}
+                                              title={
+                                                  Cookies.get("locale") === "id"
+                                                      ? product?.name_trans?.id
+                                                      : product?.name_trans?.en
+                                              }
                                               price={product.price.formatted}
                                               url={`/product/${product.slug}`}
                                               sale={product.show_price_before_discount}
-                                              beforeDiscount={product.price_before_discount.formatted}
-                                              percent={Math.round(((product.price_before_discount.numeric - product.price.numeric) / product.price_before_discount.numeric) * 100)}
+                                              beforeDiscount={
+                                                  product.price_before_discount.formatted
+                                              }
+                                              percent={Math.round(
+                                                  ((product.price_before_discount.numeric -
+                                                      product.price.numeric) /
+                                                      product.price_before_discount.numeric) *
+                                                      100,
+                                              )}
                                               totalQty={product.total_quantity}
                                               isOpenPdf={handlePackageDetail}
                                               soldOut={product.sold_out}
-                                              type={product.packaging_type}
                                           />
                                       </div>
                                   ))}
@@ -432,10 +602,19 @@ function ProductDetail({ params }) {
 
                     <div className="fixed bottom-0 left-0 right-0 block w-full bg-white px-5 py-5 shadow-lg lg:hidden">
                         {products && products.sold_out ? (
-                            <div className="w-full cursor-pointer rounded-lg bg-[#F5F5F5] px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">{t("product.notAvailable")}</div>
+                            <div className="w-full cursor-pointer rounded-lg bg-[#F5F5F5] px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
+                                {t("product.notAvailable")}
+                            </div>
                         ) : (
-                            <div onClick={() => handleAddToCart(products.id)} className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]">
-                                {isLoading ? t("waiting") + "... " + <LoadingSpinner text={false} color="#000" size={22} /> : t("product.addToCart")}
+                            <div
+                                onClick={() => handleAddToCart(products.id)}
+                                className="w-full cursor-pointer rounded-lg bg-secondary px-6 py-2 text-center text-sm font-bold hover:bg-[#e8bc00]"
+                            >
+                                {isLoading
+                                    ? t("waiting") +
+                                      "... " +
+                                      <LoadingSpinner text={false} color="#000" size={22} />
+                                    : t("product.addToCart")}
                             </div>
                         )}
                     </div>
@@ -443,7 +622,9 @@ function ProductDetail({ params }) {
             </div>
             {isOpenPdf && (
                 <div onClick={() => setIsOpenPdf(false)}>
-                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]"> </div>
+                    <div className="pointer-events-none fixed inset-0 z-40 bg-black bg-opacity-50 lg:top-[120px]">
+                        {" "}
+                    </div>
                     <div className="fixed top-[4rem] z-50 flex h-[calc(100%-4rem)] w-full items-center justify-center">
                         <div className="relative h-[800px] max-h-[calc(100%-4rem)] w-[90%] max-w-[500px] bg-white p-4 shadow-lg md:h-[800px] lg:h-[700px] xl:h-[800px]">
                             {/* start: close modal */}

@@ -1,6 +1,15 @@
 module.exports = {
     images: {
-        domains: ["via.placeholder.com", "cdn.dummyjson.com", "dummyimage.com", "octagon.test", "back-office.bulky.id", "localhost", "192.168.1.11", "panel-bulky.wms-liquid8.online"],
+        domains: [
+            "via.placeholder.com",
+            "cdn.dummyjson.com",
+            "dummyimage.com",
+            "octagon.test",
+            "back-office.bulky.id",
+            "localhost",
+            "192.168.1.11",
+            "debug.bulky.id",
+        ],
         remotePatterns: [
             {
                 protocol: "https",
@@ -24,4 +33,4 @@ module.exports = {
     experimental: {
         missingSuspenseWithCSRBailout: false,
     },
-}
+};
