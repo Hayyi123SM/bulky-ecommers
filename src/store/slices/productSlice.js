@@ -1,7 +1,7 @@
-import axios from "@/lib/axios"
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { createApi } from "@reduxjs/toolkit/query/react"
-import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss"
+import axios from "@/lib/axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
 const initialState = {
     items: [],
@@ -13,7 +13,7 @@ const initialState = {
     currentPage: 1,
     error: null,
     isLoading: true,
-}
+};
 
 // Custom baseQuery to use axios instance
 const axiosBaseQuery =
@@ -25,22 +25,24 @@ const axiosBaseQuery =
                 method,
                 data,
                 params,
-            })
-            return { data: result.data }
+            });
+            return { data: result.data };
         } catch (axiosError) {
-            let err = axiosError
+            let err = axiosError;
             return {
                 error: {
                     status: err.response?.status,
                     data: err.response?.data || err.message,
                 },
-            }
+            };
         }
-    }
+    };
 
 export const productApi = createApi({
     reducerPath: "productApi",
-    baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
+    baseQuery: axiosBaseQuery({
+        baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
+    }),
     endpoints: (builder) => ({
         fetchProducts: builder.query({
             query: ({ currentPage, filters }) => {
@@ -53,7 +55,7 @@ export const productApi = createApi({
                     filters.minPrice ||
                     filters.maxPrice ||
                     (filters.brands && filters.brands.length),
-                )
+                );
 
                 const params = {
                     page: isFilterActive ? currentPage : currentPage,
@@ -81,25 +83,25 @@ export const productApi = createApi({
                         filters.brands.length && {
                             brands: filters.brands,
                         }),
-                }
+                };
 
-                const searchParams = new URLSearchParams(params)
+                const searchParams = new URLSearchParams(params);
 
                 // Handle brands array
                 if (filters.brands?.length) {
                     filters.brands.forEach((brand) => {
-                        searchParams.append("brands[]", brand)
-                    })
+                        searchParams.append("brands[]", brand);
+                    });
                 }
 
                 return {
                     url: `/api/products?${searchParams.toString()}`,
                     method: "GET",
-                }
+                };
             },
         }),
     }),
-})
+});
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
@@ -132,34 +134,34 @@ export const fetchProducts = createAsyncThunk(
                 ...(filters.minPrice && { price_min: filters.minPrice }),
                 ...(filters.maxPrice && { price_max: filters.maxPrice }),
                 ...(filters.brands && filters.brands.length && { brands: filters.brands }),
-            }
+            };
             // console.log("====================================")
             // console.log("params", params)
             // console.log("====================================")
             const response = await axios.get(`/api/products?random=1`, {
                 params,
                 paramsSerializer: (params) => {
-                    const searchParams = new URLSearchParams(params)
+                    const searchParams = new URLSearchParams(params);
 
                     // Handle brands array
                     if (filters.brands?.length) {
                         filters.brands.forEach((brand) => {
-                            searchParams.append("brands[]", brand)
-                        })
+                            searchParams.append("brands[]", brand);
+                        });
                     }
 
-                    return searchParams.toString()
+                    return searchParams.toString();
                 },
-            })
+            });
 
             // console.log("API response Product:", response.data) // Log the API response
-            return response.data
+            return response.data;
         } catch (error) {
-            console.error("Error fetching products:", error) // Log errors
-            throw error
+            console.error("Error fetching products:", error); // Log errors
+            throw error;
         }
     },
-)
+);
 
 export const fetchSearchProducts = createAsyncThunk(
     "products/fetchSearchProducts",
@@ -169,48 +171,48 @@ export const fetchSearchProducts = createAsyncThunk(
             const params = {
                 page: currentPage,
                 ...(filters.search && { search: filters.search }),
-            }
+            };
 
             const response = await axios.get(`/api/products`, {
                 params,
                 paramsSerializer: (params) => {
-                    return new URLSearchParams(params).toString()
+                    return new URLSearchParams(params).toString();
                 },
-            })
+            });
 
             // console.log("API response Search Product:", response.data) // Log the API response
-            return response.data
+            return response.data;
         } catch (error) {
-            console.error("Error fetching products:", error) // Log errors
-            throw error
+            console.error("Error fetching products:", error); // Log errors
+            throw error;
         }
     },
-)
+);
 
 export const fetchProductDetail = createAsyncThunk("products/fetchProductDetail", async (slug) => {
     try {
-        const response = await axios.get(`/api/products/detail/${slug}`)
+        const response = await axios.get(`/api/products/detail/${slug}`);
         // console.log("API response:", response.data) // Log the API response
-        return response.data
+        return response.data;
     } catch (error) {
-        console.error("Error fetching product details:", error) // Log errors
-        throw error
+        console.error("Error fetching product details:", error); // Log errors
+        throw error;
     }
-})
+});
 
 export const fetchProductRelated = createAsyncThunk(
     "products/fetchProductRelated",
     async (slug) => {
         try {
-            const response = await axios.get(`/api/products/related/${slug}`)
+            const response = await axios.get(`/api/products/related/${slug}`);
             // console.log("API response:", response.data) // Log the API response
-            return response.data
+            return response.data;
         } catch (error) {
-            console.error("Error fetching products:", error) // Log errors
-            throw error
+            console.error("Error fetching products:", error); // Log errors
+            throw error;
         }
     },
-)
+);
 
 const productSlice = createSlice({
     name: "products",
@@ -219,67 +221,67 @@ const productSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchProducts.pending, (state) => {
-                state.isLoading = true
-                state.error = null
+                state.isLoading = true;
+                state.error = null;
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 // console.log("Action in fulfilled:", action)
                 // console.log("Current state:", state)
-                state.items = action.payload.data
-                state.totalPages = action.payload.meta.last_page
-                state.currentPage = action.payload.meta.current_page
-                state.totalItems = action.payload.meta.total
-                state.isLoading = false
+                state.items = action.payload.data;
+                state.totalPages = action.payload.meta.last_page;
+                state.currentPage = action.payload.meta.current_page;
+                state.totalItems = action.payload.meta.total;
+                state.isLoading = false;
             })
             .addCase(fetchProducts.rejected, (state, action) => {
-                state.error = action.error.message
-                state.isLoading = false
+                state.error = action.error.message;
+                state.isLoading = false;
             })
             .addCase(fetchSearchProducts.pending, (state) => {
-                state.isLoading = true
-                state.error = null
+                state.isLoading = true;
+                state.error = null;
             })
             .addCase(fetchSearchProducts.fulfilled, (state, action) => {
                 // console.log("Action in fulfilled:", action)
                 // console.log("Current state:", state)
-                state.searchResults = action.payload.data
-                state.isLoading = false
+                state.searchResults = action.payload.data;
+                state.isLoading = false;
             })
             .addCase(fetchSearchProducts.rejected, (state, action) => {
-                state.error = action.error.message
-                state.isLoading = false
+                state.error = action.error.message;
+                state.isLoading = false;
             })
             .addCase(fetchProductDetail.pending, (state) => {
-                state.isLoading = true
-                state.error = null
+                state.isLoading = true;
+                state.error = null;
             })
             .addCase(fetchProductDetail.fulfilled, (state, action) => {
                 // console.log("Action in fulfilled productDetail:", action)
                 // console.log("Current state productDetail:", state)
-                state.productDetails = action.payload.data
-                state.isLoading = false
+                state.productDetails = action.payload.data;
+                state.isLoading = false;
             })
             .addCase(fetchProductDetail.rejected, (state, action) => {
-                state.error = action.error.message
-                state.isLoading = false
+                state.error = action.error.message;
+                state.isLoading = false;
             })
             .addCase(fetchProductRelated.pending, (state) => {
-                state.isLoading = true
-                state.error = null
+                state.isLoading = true;
+                state.error = null;
             })
             .addCase(fetchProductRelated.fulfilled, (state, action) => {
                 // console.log("Action in fulfilled:", action)
                 // console.log("Current state:", state)
-                state.relatedProducts = action.payload.data
-                state.isLoading = false
+                state.relatedProducts = action.payload.data;
+                state.isLoading = false;
             })
             .addCase(fetchProductRelated.rejected, (state, action) => {
-                state.error = action.error.message
-                state.isLoading = false
-            })
+                state.error = action.error.message;
+                state.isLoading = false;
+            });
     },
-})
+});
 
-export const { useFetchProductsQuery } = productApi
-export const { setStateProduct, setProductName, initializeProduct } = productSlice.actions
-export default productSlice.reducer
+export const { useFetchProductsQuery } = productApi;
+export const { setStateProduct, setProductName, initializeProduct } = productSlice.actions;
+export default productSlice.reducer;

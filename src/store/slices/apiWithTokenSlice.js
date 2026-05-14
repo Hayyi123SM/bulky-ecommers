@@ -1,23 +1,17 @@
-import { createApi } from "@reduxjs/toolkit/query/react"
-import axios from "axios"
-import Cookies from "js-cookie"
+import { createApi } from "@reduxjs/toolkit/query/react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const getToken = () => {
-    const token = Cookies.get("token")
-    return token ? JSON.parse(token) : null
-}
+    const token = Cookies.get("token");
+    return token ? JSON.parse(token) : null;
+};
 // Create an axios baseQuery function for RTK Query
 const axiosBaseQuery =
     ({ baseUrl }) =>
-    async ({
-        url,
-        method,
-        data,
-        params,
-        headers = { "Content-Type": "application/json" },
-    }) => {
+    async ({ url, method, data, params, headers = { "Content-Type": "application/json" } }) => {
         try {
-            const token = getToken()
+            const token = getToken();
             const result = await axios({
                 url: baseUrl + url,
                 method,
@@ -27,91 +21,91 @@ const axiosBaseQuery =
                     ...headers,
                     Authorization: `Bearer ${token}`,
                 },
-            })
-            return { data: result.data }
+            });
+            return { data: result.data };
         } catch (axiosError) {
-            let err = axiosError
+            let err = axiosError;
             return {
                 error: {
                     status: err.response?.status,
                     data: err.response?.data || err.message,
                 },
-            }
+            };
         }
-    }
+    };
 
 export const apiWithTokenSlice = createApi({
     reducerPath: "api",
     baseQuery: axiosBaseQuery({
         baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
     }),
-    endpoints: builder => ({
+    endpoints: (builder) => ({
         // POST
         login: builder.mutation({
-            query: credentials => ({
+            query: (credentials) => ({
                 url: "/login",
                 method: "POST",
                 data: credentials,
             }),
         }),
         loginWithGoogle: builder.mutation({
-            query: idToken => ({
+            query: (idToken) => ({
                 url: "/login/social",
                 method: "POST",
                 data: idToken,
             }),
         }),
         logout: builder.mutation({
-            query: credentials => ({
+            query: (credentials) => ({
                 url: "/logout",
                 method: "POST",
                 data: credentials,
             }),
         }),
         register: builder.mutation({
-            query: userData => ({
+            query: (userData) => ({
                 url: "/register",
                 method: "POST",
                 data: userData,
             }),
         }),
         forgotPassword: builder.mutation({
-            query: email => ({
+            query: (email) => ({
                 url: "/forgot-password",
                 method: "POST",
                 data: email,
             }),
         }),
         otp: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/validate-otp",
                 method: "POST",
                 data: data,
             }),
         }),
         resetPassword: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/create-new-password",
                 method: "POST",
                 data: data,
             }),
         }),
         validatePassword: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/validate-password",
                 method: "POST",
                 data: data,
             }),
         }),
         resetPin: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/create-new-pin",
                 method: "POST",
                 data: data,
             }),
         }),
         updateProfile: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/profile/update",
                 method: "POST",
                 data: data,
@@ -121,7 +115,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         validatePin: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/validate-pin",
                 method: "POST",
                 data: data,
@@ -145,7 +139,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         storeVisaApplicant: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/create/visa-applicants",
                 method: "POST",
                 data: data,
@@ -155,14 +149,14 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         changePassword: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/change-password",
                 method: "POST",
                 data: data,
             }),
         }),
         storeBankAccount: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/bank-account",
                 method: "POST",
                 data: data,
@@ -176,7 +170,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         storePartner: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/partners",
                 method: "POST",
                 data: data,
@@ -186,21 +180,21 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         storeWithdrawal: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/partner/withdraw",
                 method: "POST",
                 data: data,
             }),
         }),
         storeVisaOrder: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/create/visa-order",
                 method: "POST",
                 data: data,
             }),
         }),
         storeAllMissingRequirement: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/get-missing-requirements",
                 method: "POST",
                 data: data,
@@ -217,28 +211,28 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         storeMerchant: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/merchants",
                 method: "POST",
                 data: data,
             }),
         }),
         storeSubscription: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/subscriptions",
                 method: "POST",
                 data: data,
             }),
         }),
         storeMerchantWithdrawal: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/merchant/withdraw",
                 method: "POST",
                 data: data,
             }),
         }),
         storeMerchantVoucher: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/merchant/voucher",
                 method: "POST",
                 data: data,
@@ -258,7 +252,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         storeMerchantReview: builder.mutation({
-            query: data => ({
+            query: (data) => ({
                 url: "/merchant-review",
                 method: "POST",
                 data: data,
@@ -270,21 +264,21 @@ export const apiWithTokenSlice = createApi({
 
         // GET
         profile: builder.query({
-            query: params => ({
+            query: (params) => ({
                 url: "/profile",
                 method: "GET",
                 params: params,
             }),
         }),
         getAllApplicants: builder.query({
-            query: params => ({
+            query: (params) => ({
                 url: "/visa-applicants",
                 method: "GET",
                 params: params,
             }),
         }),
         getAllApplicantById: builder.query({
-            query: visa_applicant_id => ({
+            query: (visa_applicant_id) => ({
                 url: `/visa-applicants/${visa_applicant_id}`,
                 method: "GET",
             }),
@@ -320,7 +314,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getDetailProduct: builder.query({
-            query: product_id => ({
+            query: (product_id) => ({
                 url: `/products/${product_id}`,
                 method: "GET",
             }),
@@ -374,7 +368,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getPartnerWithdrawHistory: builder.query({
-            query: type => ({
+            query: (type) => ({
                 url: `/partner/history?type=${type}`,
                 method: "GET",
             }),
@@ -386,7 +380,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getAllMissingRequirement: builder.query({
-            query: applicant_id => ({
+            query: (applicant_id) => ({
                 url: `/visa-applicant/${applicant_id}/missing-requirements`,
                 method: "GET",
             }),
@@ -404,7 +398,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getSubBusinessCategory: builder.query({
-            query: category_id => ({
+            query: (category_id) => ({
                 url: `/merchant/category/sub_category/${category_id}`,
                 method: "GET",
             }),
@@ -434,12 +428,12 @@ export const apiWithTokenSlice = createApi({
                     ...(search && { search }), // Handle search keyword
                     ...(start_date && { start_date }), // Handle specific start date
                     ...(end_date && { end_date }), // Handle specific end date
-                })
+                });
 
                 return {
                     url: `/merchant/history${params.toString() ? `?${params.toString()}` : ""}`,
                     method: "GET",
-                }
+                };
             },
         }),
         getMerchantVoucher: builder.query({
@@ -449,7 +443,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getDetailMerchantVoucher: builder.query({
-            query: voucher_id => ({
+            query: (voucher_id) => ({
                 url: `/merchant/voucher/${voucher_id}/show`,
                 method: "GET",
             }),
@@ -467,19 +461,19 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getExperienceSubCategory: builder.query({
-            query: category_id => ({
+            query: (category_id) => ({
                 url: `/merchant/category/sub_category/${category_id}`,
                 method: "GET",
             }),
         }),
         getMerchantSubCategory: builder.query({
-            query: sub_category_id => ({
+            query: (sub_category_id) => ({
                 url: `/merchants/sub-category/${sub_category_id}`,
                 method: "GET",
             }),
         }),
         getMerchantDetail: builder.query({
-            query: merchant_id => ({
+            query: (merchant_id) => ({
                 url: `/merchants/${merchant_id}/details`,
                 method: "GET",
             }),
@@ -497,7 +491,7 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         getActivityOrderDetail: builder.query({
-            query: activity_order_id => ({
+            query: (activity_order_id) => ({
                 url: `/activity/order/${activity_order_id}`,
                 method: "GET",
             }),
@@ -511,19 +505,19 @@ export const apiWithTokenSlice = createApi({
             }),
         }),
         deleteBankAccount: builder.mutation({
-            query: bank_account_id => ({
+            query: (bank_account_id) => ({
                 url: `/bank-account/${bank_account_id}`,
                 method: "DELETE",
             }),
         }),
         deleteMerchantVoucher: builder.mutation({
-            query: voucher_id => ({
+            query: (voucher_id) => ({
                 url: `/merchant/voucher/${voucher_id}`,
                 method: "DELETE",
             }),
         }),
     }),
-})
+});
 
 export const {
     useLoginMutation,
@@ -596,4 +590,4 @@ export const {
     useRemoveDocumentMutation,
     useDeleteBankAccountMutation,
     useDeleteMerchantVoucherMutation,
-} = apiWithTokenSlice
+} = apiWithTokenSlice;

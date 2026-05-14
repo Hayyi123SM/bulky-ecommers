@@ -1,149 +1,140 @@
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline"
-import { MapIcon } from "@heroicons/react/24/solid"
-import {
-    Autocomplete,
-    GoogleMap,
-    Marker,
-    useLoadScript,
-} from "@react-google-maps/api"
-import { useRef, useState, useEffect } from "react"
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { MapIcon } from "@heroicons/react/24/solid";
+import { Autocomplete, GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { useRef, useState, useEffect } from "react";
 
-const libraries = ["places"]
+const libraries = ["places"];
 const mapContainerStyle = {
     width: "100%",
     height: "100%",
-}
+};
 
 function PopupAddress({ closePopup, onSave }) {
-    const coords = { lat: -6.4361817, lng: 106.8459034 }
-    const [searchQuery, setSearchQuery] = useState("")
-    const [autocomplete, setAutocomplete] = useState(null)
-    const [mapCenter, setMapCenter] = useState(coords)
-    const [latitude, setLatitude] = useState(null)
-    const [longitude, setLongitude] = useState(null)
-    const [address, setAddress] = useState("") // State for the address
-    const inputRef = useRef(null)
-    const [showMaps, setShowMaps] = useState(false)
-    const [popupHeight, setPopupHeight] = useState("auto")
+    const coords = { lat: -6.4361817, lng: 106.8459034 };
+    const [searchQuery, setSearchQuery] = useState("");
+    const [autocomplete, setAutocomplete] = useState(null);
+    const [mapCenter, setMapCenter] = useState(coords);
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [address, setAddress] = useState(""); // State for the address
+    const inputRef = useRef(null);
+    const [showMaps, setShowMaps] = useState(false);
+    const [popupHeight, setPopupHeight] = useState("auto");
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         libraries,
-    })
+    });
 
-    const handleSearchInputChange = e => {
-        setSearchQuery(e.target.value)
-    }
+    const handleSearchInputChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
 
     const handlePlaceChanged = () => {
         try {
             if (autocomplete !== null) {
-                const place = autocomplete.getPlace()
+                const place = autocomplete.getPlace();
                 if (place.geometry && place.geometry.location) {
-                    const lat = place.geometry.location.lat()
-                    const lng = place.geometry.location.lng()
-                    setLatitude(lat)
-                    setLongitude(lng)
-                    setMapCenter({ lat, lng })
-                    setShowMaps(true)
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+                    setLatitude(lat);
+                    setLongitude(lng);
+                    setMapCenter({ lat, lng });
+                    setShowMaps(true);
 
                     // Extracting formatted address
                     if (place.formatted_address) {
-                        setAddress(place.formatted_address)
+                        setAddress(place.formatted_address);
                     }
                 }
             }
         } catch (error) {
-            console.error("Error processing place selection:", error)
+            console.error("Error processing place selection:", error);
         }
-    }
+    };
 
-    const onLoadAutocomplete = autocompleteInstance => {
-        setAutocomplete(autocompleteInstance)
-    }
+    const onLoadAutocomplete = (autocompleteInstance) => {
+        setAutocomplete(autocompleteInstance);
+    };
 
     useEffect(() => {
         if (autocomplete) {
             const listener = autocomplete.addListener("place_changed", () => {
-                const predictions = document.querySelectorAll(".pac-item")
+                const predictions = document.querySelectorAll(".pac-item");
                 if (predictions.length > 0) {
-                    setPopupHeight("90vh") // Adjust the popup height when suggestions appear
+                    setPopupHeight("90vh"); // Adjust the popup height when suggestions appear
                 } else {
-                    setPopupHeight("auto") // Reset when no suggestions
+                    setPopupHeight("auto"); // Reset when no suggestions
                 }
-            })
-            return () => listener.remove()
+            });
+            return () => listener.remove();
         }
-    }, [autocomplete])
+    }, [autocomplete]);
 
     // Geocoder to get address based on latitude and longitude
     const geocodeLatLng = (lat, lng) => {
-        const geocoder = new window.google.maps.Geocoder()
-        const latlng = { lat, lng }
+        const geocoder = new window.google.maps.Geocoder();
+        const latlng = { lat, lng };
         geocoder.geocode({ location: latlng }, (results, status) => {
             if (status === "OK") {
                 if (results[0]) {
-                    setAddress(results[0].formatted_address) // Update address state with formatted address
+                    setAddress(results[0].formatted_address); // Update address state with formatted address
                 } else {
-                    console.error("No results found")
+                    console.error("No results found");
                 }
             } else {
-                console.error("Geocoder failed due to: " + status)
+                console.error("Geocoder failed due to: " + status);
             }
-        })
-    }
+        });
+    };
 
     // Handle marker drag event to update the marker's coordinates and get address
-    const handleMarkerDragEnd = e => {
-        const newLat = e.latLng.lat()
-        const newLng = e.latLng.lng()
-        setLatitude(newLat)
-        setLongitude(newLng)
-        setMapCenter({ lat: newLat, lng: newLng })
+    const handleMarkerDragEnd = (e) => {
+        const newLat = e.latLng.lat();
+        const newLng = e.latLng.lng();
+        setLatitude(newLat);
+        setLongitude(newLng);
+        setMapCenter({ lat: newLat, lng: newLng });
 
         // Fetch the address from the new latitude and longitude
-        geocodeLatLng(newLat, newLng)
-    }
+        geocodeLatLng(newLat, newLng);
+    };
 
     // Function to use the user's current location
     const getCurrentLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                position => {
-                    const lat = position.coords.latitude
-                    const lng = position.coords.longitude
-                    setLatitude(lat)
-                    setLongitude(lng)
-                    setMapCenter({ lat, lng })
-                    setShowMaps(true)
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    setLatitude(lat);
+                    setLongitude(lng);
+                    setMapCenter({ lat, lng });
+                    setShowMaps(true);
 
                     // Fetch the address for the current location
-                    geocodeLatLng(lat, lng)
+                    geocodeLatLng(lat, lng);
                 },
-                error => {
-                    console.error("Error getting current location: ", error)
-                    alert("Unable to retrieve your location.")
+                (error) => {
+                    console.error("Error getting current location: ", error);
+                    alert("Unable to retrieve your location.");
                 },
-            )
+            );
         } else {
-            alert("Geolocation is not supported by your browser.")
+            alert("Geolocation is not supported by your browser.");
         }
-    }
+    };
 
     return (
         <div>
             <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
                 <div
                     className="max-h-[95vh] w-full max-w-3xl overflow-y-auto rounded-lg bg-white p-6 pt-5 shadow-lg"
-                    style={{ height: popupHeight }}>
+                    style={{ height: popupHeight }}
+                >
                     <div className="my-4 flex items-center justify-between">
-                        <h2 className="text-base font-semibold">
-                            Ubah Pin Poin
-                        </h2>
-                        <XMarkIcon
-                            className="h-6 w-6 cursor-pointer"
-                            onClick={closePopup}
-                        />
+                        <h2 className="text-base font-semibold">Ubah Pin Poin</h2>
+                        <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={closePopup} />
                     </div>
 
                     {!showMaps ? (
@@ -151,7 +142,8 @@ function PopupAddress({ closePopup, onSave }) {
                             {isLoaded ? (
                                 <Autocomplete
                                     onLoad={onLoadAutocomplete}
-                                    onPlaceChanged={handlePlaceChanged}>
+                                    onPlaceChanged={handlePlaceChanged}
+                                >
                                     <input
                                         ref={inputRef}
                                         className="w-full rounded-xl border py-2 pl-14 text-black bg-search focus:border-secondary focus:ring-0"
@@ -177,13 +169,13 @@ function PopupAddress({ closePopup, onSave }) {
                                 <>
                                     <div
                                         className="overflow-hidden rounded-t-xl shadow"
-                                        style={{ height: "400px" }}>
+                                        style={{ height: "400px" }}
+                                    >
                                         <GoogleMap
-                                            mapContainerStyle={
-                                                mapContainerStyle
-                                            }
+                                            mapContainerStyle={mapContainerStyle}
                                             center={mapCenter}
-                                            zoom={19}>
+                                            zoom={19}
+                                        >
                                             <Marker
                                                 position={mapCenter}
                                                 draggable={true} // Enable dragging
@@ -207,13 +199,15 @@ function PopupAddress({ closePopup, onSave }) {
                                 <div className="flex w-full items-center justify-between">
                                     <div
                                         onClick={() => setShowMaps(false)}
-                                        className="flex cursor-pointer items-center rounded-lg border px-4 py-2">
+                                        className="flex cursor-pointer items-center rounded-lg border px-4 py-2"
+                                    >
                                         <MagnifyingGlassIcon className="mr-2 h-6 w-6" />
                                         Cari Ulang Alamat
                                     </div>
                                     <div
                                         onClick={getCurrentLocation}
-                                        className="flex cursor-pointer items-center rounded-lg border px-4 py-2 text-[#007185]">
+                                        className="flex cursor-pointer items-center rounded-lg border px-4 py-2 text-[#007185]"
+                                    >
                                         <MapIcon className="mr-2 h-6 w-6" />
                                         Gunakan Lokasi Saat Ini
                                     </div>
@@ -221,9 +215,8 @@ function PopupAddress({ closePopup, onSave }) {
                             </div>
                             <div
                                 className="mt-3 flex cursor-pointer items-center justify-center rounded-lg bg-secondary px-4 py-2 font-semibold"
-                                onClick={() =>
-                                    onSave(latitude, longitude, address)
-                                }>
+                                onClick={() => onSave(latitude, longitude, address)}
+                            >
                                 {" "}
                                 {/* Use onSave to pass the data */}
                                 Simpan
@@ -233,7 +226,7 @@ function PopupAddress({ closePopup, onSave }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default PopupAddress
+export default PopupAddress;
