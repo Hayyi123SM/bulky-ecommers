@@ -113,8 +113,18 @@ function PaymentMethod() {
         }
     };
 
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+    useEffect(() => {
+        if (debouncedSearchTerm) {
+            dispatch(searchFriends(debouncedSearchTerm));
+        }
+    }, [debouncedSearchTerm, dispatch]);
+
     const handleSearchFriend = (username) => {
-        dispatch(searchFriends(username));
+        setSearchTerm(username);
         // console.log("friendList:", friendList)
     };
 
