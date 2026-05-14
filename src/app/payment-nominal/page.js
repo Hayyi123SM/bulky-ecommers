@@ -61,7 +61,7 @@ function PaymentNominal() {
         }
         dispatch(
             setInvoiceAmount({
-                invoice_id: myInvoice.order.id,
+                invoice_id: myInvoice.id,
                 amount: amount,
             }),
         );
