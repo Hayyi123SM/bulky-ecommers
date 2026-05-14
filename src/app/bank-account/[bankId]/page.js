@@ -241,7 +241,7 @@ function BankAccountUpdate({ params }) {
                                         value={latitude}
                                     />
                                     <InputError
-                                        messages={errors && errors && errors.latitude}
+                                        messages={errors && errors.latitude}
                                         className={"mt-2"}
                                     />
                                 </div>
@@ -257,7 +257,7 @@ function BankAccountUpdate({ params }) {
                                         value={longitude}
                                     />
                                     <InputError
-                                        messages={errors && errors && errors.longitude}
+                                        messages={errors && errors.longitude}
                                         className={"mt-2"}
                                     />
                                 </div>
