@@ -1,53 +1,53 @@
-"use client"
+"use client";
 
-import FloatingIcon from "@/components/FloatingIcon"
-import LoadingSpinner from "@/components/LoadingSpinner"
-import Navbar from "@/components/Navbar"
-import PopupMenuMobile from "@/components/PopupMenuMobile"
-import ProductCard from "@/components/ProductCard"
-import { useAuth } from "@/hooks/auth"
-import { addToCart } from "@/store/slices/cartSlice"
-import { fetchProductDetail, fetchProductRelated } from "@/store/slices/productSlice"
+import FloatingIcon from "@/components/FloatingIcon";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import Navbar from "@/components/Navbar";
+import PopupMenuMobile from "@/components/PopupMenuMobile";
+import ProductCard from "@/components/ProductCard";
+import { useAuth } from "@/hooks/auth";
+import { addToCart } from "@/store/slices/cartSlice";
+import { fetchProductDetail, fetchProductRelated } from "@/store/slices/productSlice";
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
     ChevronUpIcon,
     ExclamationCircleIcon,
-} from "@heroicons/react/24/outline"
-import { ArrowLeftIcon, Bars3BottomRightIcon, StarIcon } from "@heroicons/react/24/solid"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import Skeleton from "react-loading-skeleton"
-import { useDispatch, useSelector } from "react-redux"
-import "swiper/css"
-import "swiper/css/navigation"
-import "swiper/css/pagination"
-import { Navigation, Pagination } from "swiper/modules"
-import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/swiper-bundle.css"
-import { useTranslations } from "next-intl"
-import Cookies from "js-cookie"
-import { cn } from "@/lib/utils"
+} from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, Bars3BottomRightIcon, StarIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import { useTranslations } from "next-intl";
+import Cookies from "js-cookie";
+import { cn } from "@/lib/utils";
 
 function ProductDetail({ params }) {
-    const t = useTranslations()
-    const productId = params.slug // Access the dynamic parameter
-    const [mainImage, setMainImage] = useState("")
-    const [productImages, setProductImages] = useState([])
-    const [showPopupMenu, setShowPopupMenu] = useState(false)
-    const router = useRouter()
-    const dispatch = useDispatch()
-    const products = useSelector((state) => state.products.productDetails)
-    const relatedProducts = useSelector((state) => state.products.relatedProducts)
-    const loadingProducts = useSelector((state) => state.products.isLoading)
-    const [isLoading, setIsloading] = useState(false)
-    const [isOpenPdf, setIsOpenPdf] = useState(false)
-    const [isLoadingPdf, setIsLoadingPdf] = useState(false)
+    const t = useTranslations();
+    const productId = params.slug; // Access the dynamic parameter
+    const [mainImage, setMainImage] = useState("");
+    const [productImages, setProductImages] = useState([]);
+    const [showPopupMenu, setShowPopupMenu] = useState(false);
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.productDetails);
+    const relatedProducts = useSelector((state) => state.products.relatedProducts);
+    const loadingProducts = useSelector((state) => state.products.isLoading);
+    const [isLoading, setIsloading] = useState(false);
+    const [isOpenPdf, setIsOpenPdf] = useState(false);
+    const [isLoadingPdf, setIsLoadingPdf] = useState(false);
     // const [savedUser, setSavedUser] = useState(null)
-    const { user } = useAuth()
-    const scrollRef = useRef(null)
+    const { user } = useAuth();
+    const scrollRef = useRef(null);
 
     // useEffect(() => {
     // const getUser = localStorage.getItem("user")
@@ -56,71 +56,71 @@ function ProductDetail({ params }) {
 
     useEffect(() => {
         if (productId) {
-            dispatch(fetchProductDetail(productId))
-            dispatch(fetchProductRelated(productId))
+            dispatch(fetchProductDetail(productId));
+            dispatch(fetchProductRelated(productId));
         }
-    }, [dispatch, productId])
+    }, [dispatch, productId]);
 
     useEffect(() => {
         if (products?.images?.length > 0) {
-            setMainImage(products.images[0])
-            setProductImages(products.images)
+            setMainImage(products.images[0]);
+            setProductImages(products.images);
         }
-    }, [products])
+    }, [products]);
 
     useEffect(() => {
         if (showPopupMenu) {
-            document.body.classList.add("modal-open")
+            document.body.classList.add("modal-open");
         } else {
-            document.body.classList.remove("modal-open")
+            document.body.classList.remove("modal-open");
         }
-    }, [showPopupMenu])
+    }, [showPopupMenu]);
 
     const togglePopupMenu = () => {
-        setShowPopupMenu(!showPopupMenu)
-    }
+        setShowPopupMenu(!showPopupMenu);
+    };
 
     const closePopupMenu = () => {
-        setShowPopupMenu(false)
-    }
+        setShowPopupMenu(false);
+    };
 
     const handleAddToCart = (product) => {
-        setIsloading(true)
+        setIsloading(true);
         if (user) {
-            dispatch(addToCart(product))
+            dispatch(addToCart(product));
             setTimeout(() => {
-                router.push("/cart")
-            }, 1000)
+                router.push("/cart");
+            }, 1000);
         } else {
-            router.push("/login")
+            router.push("/login");
         }
-    }
+    };
 
     const handlePackageDetail = () => {
-        setIsOpenPdf(true)
-    }
+        setIsOpenPdf(true);
+    };
 
     useEffect(() => {
         if (isOpenPdf) {
-            setIsLoadingPdf(true) // Reset loading setiap kali PDF dibuka
+            setIsLoadingPdf(true); // Reset loading setiap kali PDF dibuka
         }
-    }, [isOpenPdf])
+    }, [isOpenPdf]);
 
     const showPreviousImage = () => {
-        const currentIndex = productImages.indexOf(mainImage)
-        const newIndex = currentIndex === 0 ? productImages.length - 1 : currentIndex - 1
-        setMainImage(productImages[newIndex])
-    }
+        const currentIndex = productImages.indexOf(mainImage);
+        const newIndex = currentIndex === 0 ? productImages.length - 1 : currentIndex - 1;
+        setMainImage(productImages[newIndex]);
+    };
 
     const showNextImage = () => {
-        const currentIndex = productImages.indexOf(mainImage)
-        const newIndex = currentIndex === productImages.length - 1 ? 0 : currentIndex + 1
-        setMainImage(productImages[newIndex])
-    }
+        const currentIndex = productImages.indexOf(mainImage);
+        const newIndex = currentIndex === productImages.length - 1 ? 0 : currentIndex + 1;
+        setMainImage(productImages[newIndex]);
+    };
 
     if (!products || !products.condition) {
         // Optionally, you can return a loading state here
-        return <LoadingSpinner />
+        return <LoadingSpinner />;
     }
 
     return (
@@ -150,7 +150,7 @@ function ProductDetail({ params }) {
                                             scrollRef.current.scrollBy({
                                                 top: -100,
                                                 behavior: "smooth",
-                                            })
+                                            });
                                         }
                                     }}
                                 >
@@ -184,7 +184,7 @@ function ProductDetail({ params }) {
                                             scrollRef.current.scrollBy({
                                                 top: 100,
                                                 behavior: "smooth",
-                                            })
+                                            });
                                         }
                                     }}
                                 >
@@ -429,15 +429,15 @@ function ProductDetail({ params }) {
                     <div className="mb-4 text-2xl font-bold">Deskripsi</div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
-                            {t("product.condition_product")} :
+                            {t("product.category")} :
                         </div>
-                        <div className="w-5/6 text-base">
+                        <div className="w-5/6 text-base font-semibold text-[#007185]">
                             {loadingProducts ? (
                                 <Skeleton />
                             ) : Cookies.get("locale") === "id" ? (
-                                products?.condition?.title_trans?.id
+                                products?.category?.name_trans?.id
                             ) : (
-                                products?.condition?.title_trans?.en
+                                products?.category?.name_trans?.en
                             )}
                         </div>
                     </div>
@@ -469,6 +469,20 @@ function ProductDetail({ params }) {
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
+                            {t("product.condition_product")} :
+                        </div>
+                        <div className="w-5/6 text-base">
+                            {loadingProducts ? (
+                                <Skeleton />
+                            ) : Cookies.get("locale") === "id" ? (
+                                products?.condition?.title_trans?.id
+                            ) : (
+                                products?.condition?.title_trans?.en
+                            )}
+                        </div>
+                    </div>
+                    <div className="flex border-b border-[#BFC9D9] py-2">
+                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
                             {t("product.condition_package")} :
                         </div>
                         <div className="w-5/6 text-base">
@@ -486,20 +500,6 @@ function ProductDetail({ params }) {
                             Min Pesanan :
                         </div>
                         <div className="w-5/6 text-base">1 Palet</div>
-                    </div>
-                    <div className="flex border-b border-[#BFC9D9] py-2">
-                        <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
-                            {t("product.category")} :
-                        </div>
-                        <div className="w-5/6 text-base font-semibold text-[#007185]">
-                            {loadingProducts ? (
-                                <Skeleton />
-                            ) : Cookies.get("locale") === "id" ? (
-                                products?.category?.name_trans?.id
-                            ) : (
-                                products?.category?.name_trans?.en
-                            )}
-                        </div>
                     </div>
                     <div className="flex border-b border-[#BFC9D9] py-2">
                         <div className="w-3/6 text-base font-semibold md:w-2/6 lg:w-2/6">
@@ -682,7 +682,7 @@ function ProductDetail({ params }) {
             {/* <Footer /> */}
             <FloatingIcon />
         </div>
-    )
+    );
 }
 
-export default ProductDetail
+export default ProductDetail;
