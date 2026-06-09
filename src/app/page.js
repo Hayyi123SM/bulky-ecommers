@@ -47,8 +47,7 @@ function Home() {
     const loadingVideos = useSelector(state => state.videos.isLoading)
     const loadingReviews = useSelector(state => state.pages.isLoading)
     const reviews = useSelector(state => state.pages.reviews)
-    const homeHero = useSelector(state => state.pages.homeHero)
-    const [isLoadingPdf, setIsLoadingPdf] = useState(false)
+    const homeHero = useSelector(state => state.pages.homeHero)    const [cachedHomeHero, setCachedHomeHero] = useState(null)    const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [showWholesale, setShowWholesale] = useState(false)
@@ -70,6 +69,18 @@ function Home() {
 
     useEffect(() => {
         setIsClient(true) // This ensures that Swiper only renders on the client
+        
+        // Load cached homeHero from localStorage
+        if (typeof window !== "undefined") {
+            const cached = localStorage.getItem("homeHero")
+            if (cached) {
+                try {
+                    setCachedHomeHero(JSON.parse(cached))
+                } catch (e) {
+                    console.error("Error parsing cached homeHero:", e)
+                }
+            }
+        }
     }, [])
 
     useEffect(() => {
@@ -116,6 +127,14 @@ function Home() {
         dispatch(fetchHomeHero())
         // localStorage.setItem("signinWithGoogle", JSON.stringify(dummy))
     }, [dispatch])
+
+    // Save homeHero to localStorage when API fetch succeeds
+    useEffect(() => {
+        if (homeHero && typeof window !== "undefined") {
+            localStorage.setItem("homeHero", JSON.stringify(homeHero))
+            setCachedHomeHero(homeHero)
+        }
+    }, [homeHero])
 
     const togglePopupMenu = () => {
         // if (!user) {
@@ -220,8 +239,8 @@ function Home() {
                 <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-center md:flex-row">
                     <div className="w-full p-4 md:w-2/3 lg:w-1/2">
                         <div className="flex flex-col">
-                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">{homeHero?.title_trans?.[Cookies.get("locale") || "id"] || t("welcome")}</div>
-                            <div className="mt-2 text-xl leading-7 md:pr-28">{homeHero?.subtitle_trans?.[Cookies.get("locale") || "id"] || t("description")}</div>
+                            <div className="text-2xl font-bold leading-[60px] md:text-4xl lg:text-5xl">{cachedHomeHero?.title_trans?.[Cookies.get("locale") || "id"] || t("welcome")}</div>
+                            <div className="mt-2 text-xl leading-7 md:pr-28">{cachedHomeHero?.subtitle_trans?.[Cookies.get("locale") || "id"] || t("description")}</div>
                             <div className="mt-5 flex w-full items-center gap-4 text-center md:pr-28">
                                 <Link href="/product?page=1" className="w-1/2 font-light">
                                     <div className="rounded-lg border border-secondary bg-secondary py-3 hover:bg-white md:px-3 md:py-2 lg:px-4 lg:py-3">{t("showAllProduct")}</div>
@@ -257,8 +276,8 @@ function Home() {
                         </div>
                     </div>
                     <div className="w-full py-10 md:w-1/3 lg:w-1/2">
-                        {homeHero?.full_url ? (
-                            <Image src={homeHero.full_url} alt="Product" width={700} height={700} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} />
+                        {cachedHomeHero?.full_url ? (
+                            <Image src={cachedHomeHero.full_url} alt="Product" width={700} height={700} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} />
                         ) : (
                             <Image {...Hero} alt="Product" width={700} height={700} priority={true} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={75} placeholder="blur" />
                         )}
