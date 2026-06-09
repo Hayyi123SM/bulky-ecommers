@@ -5,6 +5,7 @@ const initialState = {
     item: {},
     floatingButton: {},
     reviews: [],
+    homeHero: null,
     error: null,
     isLoading: true,
 }
@@ -20,31 +21,35 @@ export const fetchPages = createAsyncThunk("pages/fetchPages", async params => {
     }
 })
 
-export const fetchFloatingWhatsapp = createAsyncThunk(
-    "pages/fetchFloatingWhatsapp",
-    async () => {
-        try {
-            const response = await axios.get("/api/general/floating-button")
-            return response.data
-        } catch (error) {
-            console.error("Error fetching pages:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const fetchFloatingWhatsapp = createAsyncThunk("pages/fetchFloatingWhatsapp", async () => {
+    try {
+        const response = await axios.get("/api/general/floating-button")
+        return response.data
+    } catch (error) {
+        console.error("Error fetching pages:", error) // Log errors
+        throw error
+    }
+})
 
-export const getGeneralReview = createAsyncThunk(
-    "pages/getGeneralReview",
-    async () => {
-        try {
-            const response = await axios.get("/api/general/reviews")
-            return response.data
-        } catch (error) {
-            console.error("Error fetching pages:", error) // Log errors
-            throw error
-        }
-    },
-)
+export const getGeneralReview = createAsyncThunk("pages/getGeneralReview", async () => {
+    try {
+        const response = await axios.get("/api/general/reviews")
+        return response.data
+    } catch (error) {
+        console.error("Error fetching pages:", error) // Log errors
+        throw error
+    }
+})
+
+export const fetchHomeHero = createAsyncThunk("pages/fetchHomeHero", async () => {
+    try {
+        const response = await axios.get("/api/general/home-hero")
+        return response.data
+    } catch (error) {
+        console.error("Error fetching home hero:", error) // Log errors
+        throw error
+    }
+})
 
 const pagesSlice = createSlice({
     name: "products",
@@ -94,9 +99,20 @@ const pagesSlice = createSlice({
                 state.error = action.error.message
                 state.isLoading = false
             })
+            .addCase(fetchHomeHero.pending, state => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchHomeHero.fulfilled, (state, action) => {
+                state.homeHero = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(fetchHomeHero.rejected, (state, action) => {
+                state.error = action.error.message
+                state.isLoading = false
+            })
     },
 })
 
-export const { setStateProduct, setProductName, initializeProduct } =
-    pagesSlice.actions
+export const { setStateProduct, setProductName, initializeProduct } = pagesSlice.actions
 export default pagesSlice.reducer
