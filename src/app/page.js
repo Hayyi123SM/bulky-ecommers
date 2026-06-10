@@ -47,7 +47,9 @@ function Home() {
     const loadingVideos = useSelector(state => state.videos.isLoading)
     const loadingReviews = useSelector(state => state.pages.isLoading)
     const reviews = useSelector(state => state.pages.reviews)
-    const homeHero = useSelector(state => state.pages.homeHero)    const [cachedHomeHero, setCachedHomeHero] = useState(null)    const [isLoadingPdf, setIsLoadingPdf] = useState(false)
+    const homeHero = useSelector(state => state.pages.homeHero)
+    const [cachedHomeHero, setCachedHomeHero] = useState(null)
+    const [isLoadingPdf, setIsLoadingPdf] = useState(false)
     const [isOpenPdf, setIsOpenPdf] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [showWholesale, setShowWholesale] = useState(false)
@@ -69,7 +71,7 @@ function Home() {
 
     useEffect(() => {
         setIsClient(true) // This ensures that Swiper only renders on the client
-        
+
         // Load cached homeHero from localStorage
         if (typeof window !== "undefined") {
             const cached = localStorage.getItem("homeHero")
@@ -249,7 +251,7 @@ function Home() {
                                     <div className="rounded-lg border border-secondary py-3 hover:bg-secondary md:px-3 md:py-2 lg:px-4 lg:py-3">{t("showVideo")}</div>
                                 </Link>
                             </div>
-                            <div className="mt-5 flex items-center gap-8 text-center md:pr-28">
+                            {/* <div className="mt-5 flex items-center gap-8 text-center md:pr-28">
                                 <div>
                                     <div className="flex items-center border-b border-dashed border-black pb-2">
                                         <StarIcon className="h-5 w-5 text-secondary" />
@@ -272,7 +274,7 @@ function Home() {
                                     </div>
                                     <div className="mt-1">Bapak Yudi</div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="w-full py-10 md:w-1/3 lg:w-1/2">
