@@ -8,21 +8,9 @@ import { addToCart } from "@/store/slices/cartSlice"
 import { useRouter } from "next/navigation"
 import PopupModal from "./PopupModal"
 import { useTranslations } from "next-intl"
+import Image from "next/image"
 
-function ProductCard({
-    url = "#",
-    image,
-    location,
-    title,
-    price,
-    sale = false,
-    beforeDiscount,
-    totalQty,
-    isOpenPdf,
-    percent = 0,
-    productId,
-    soldOut = false,
-}) {
+function ProductCard({ url = "#", image, location, title, price, sale = false, beforeDiscount, totalQty, isOpenPdf, percent = 0, productId, soldOut = false, showSaleRibbon = false }) {
     const t = useTranslations()
     const { user } = useAuth()
     const dispatch = useDispatch()
@@ -30,7 +18,7 @@ function ProductCard({
     const router = useRouter()
     const [showModal, setShowModal] = useState(false)
 
-    const handleAddToCart = (product) => {
+    const handleAddToCart = product => {
         setIsloading(true)
         if (user) {
             dispatch(addToCart(product.productId))
@@ -49,14 +37,10 @@ function ProductCard({
 
     return (
         <>
-            <div
-                className={`relative flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}
-            >
+            <div className={`relative flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}>
+                {showSaleRibbon && <Image src="/product/sale_ribbon.png" alt="Sale" width={100} height={100} className="absolute left-0 top-0 z-20" />}
                 <Link href={url}>
-                    <div
-                        className="relative aspect-square w-full rounded-t-lg bg-cover bg-center"
-                        style={{ backgroundImage: `url(${image})` }}
-                    />
+                    <div className="relative aspect-square w-full rounded-t-lg bg-cover bg-center" style={{ backgroundImage: `url(${image})` }} />
                 </Link>
                 <div className="h-[180px] flex-grow px-1 py-4">
                     <Link href={url}>
@@ -65,12 +49,8 @@ function ProductCard({
                         <div className="py-1 text-base font-bold text-[#007185]">{price}</div>
                         {sale && (
                             <div className="flex items-center">
-                                <div className="text-xs font-bold text-gray-400 line-through">
-                                    {beforeDiscount}
-                                </div>
-                                <div className="ml-1 text-xs font-bold text-[#007185]">
-                                    {percent}%
-                                </div>
+                                <div className="text-xs font-bold text-gray-400 line-through">{beforeDiscount}</div>
+                                <div className="ml-1 text-xs font-bold text-[#007185]">{percent}%</div>
                             </div>
                         )}
                         <div className="flex items-center py-1">
@@ -78,22 +58,14 @@ function ProductCard({
                         </div>
                     </Link>
                 </div>
-                <div
-                    onClick={isOpenPdf}
-                    className="mb-2 flex cursor-pointer items-center justify-between border-b border-t border-[#F0F3F7] px-1 py-4 hover:rounded-lg hover:bg-[#f5f5f5]"
-                >
+                <div onClick={isOpenPdf} className="mb-2 flex cursor-pointer items-center justify-between border-b border-t border-[#F0F3F7] px-1 py-4 hover:rounded-lg hover:bg-[#f5f5f5]">
                     <div className="text-sm font-bold">{t("product.showDetail")}</div>
                     <Square2StackIcon className="h-5 w-5 text-[#007185]" />
                 </div>
                 {soldOut ? (
-                    <div className="flex items-center justify-center rounded-lg bg-[#F5F5F5] py-3 text-center text-sm font-bold text-[#BFC9D9]">
-                        {t("product.addToCart")}
-                    </div>
+                    <div className="flex items-center justify-center rounded-lg bg-[#F5F5F5] py-3 text-center text-sm font-bold text-[#BFC9D9]">{t("product.addToCart")}</div>
                 ) : (
-                    <div
-                        onClick={() => handleAddToCart({ productId })}
-                        className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]"
-                    >
+                    <div onClick={() => handleAddToCart({ productId })} className="flex cursor-pointer items-center justify-center rounded-lg bg-secondary py-3 text-center text-sm font-bold hover:bg-[#e8bc00]">
                         {isLoading ? (
                             <>
                                 {t("product.waiting")}...
@@ -106,13 +78,7 @@ function ProductCard({
                 )}
             </div>
 
-            <PopupModal
-                isOpen={showModal}
-                closeModal={handleCloseModal}
-                type="addToCart"
-                title={t("notification")}
-                message={t("product.successAddCart")}
-            />
+            <PopupModal isOpen={showModal} closeModal={handleCloseModal} type="addToCart" title={t("notification")} message={t("product.successAddCart")} />
         </>
     )
 }
