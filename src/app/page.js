@@ -469,6 +469,25 @@ function Home() {
                     </div>
                 </div> */}
 
+                {/* <div className="mb-8 grid grid-cols-2 gap-2 lg:grid-cols-5">
+                    <ProductCard
+                        key={999}
+                        productId={999}
+                        image="/new/fmcg.jpeg"
+                        location="Bandung Distribution Center"
+                        title="Indomie Goreng 1 Dus (40 pcs)"
+                        price="Rp 118.000"
+                        url="/product/indomie-goreng-1-dus"
+                        sale={true}
+                        beforeDiscount="Rp 135.000"
+                        percent={13}
+                        totalQty={85}
+                        isOpenPdf={() => console.log("Open PDF")}
+                        soldOut={false}
+                        showSaleRibbon={true}
+                    />
+                </div> */}
+
                 <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center px-4 py-10">
                     <div className="text-3xl font-bold">
                         {t("whatInBulky")}
