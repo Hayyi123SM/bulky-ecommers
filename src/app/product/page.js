@@ -343,6 +343,7 @@ function Product({ searchParams }) {
                             totalQty={85}
                             isOpenPdf={() => console.log("Open PDF")}
                             soldOut={false}
+                            showSaleRibbon={true}
                         /> */}
                         {loadingProducts
                             ? Array.from({
