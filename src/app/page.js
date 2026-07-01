@@ -34,7 +34,6 @@ import { useTranslations } from "next-intl"
 import Cookies from "js-cookie"
 import LiteYouTubeEmbed from "react-lite-youtube-embed"
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
-import ProductCard from "@/components/ProductCard"
 
 function Home() {
     const t = useTranslations()

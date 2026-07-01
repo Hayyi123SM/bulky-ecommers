@@ -38,8 +38,8 @@ function ProductCard({ url = "#", image, location, title, price, sale = false, b
     return (
         <>
             <div className={`relative flex flex-col rounded-lg border border-[#F0F3F7] bg-white p-1`}>
-                {/* {showSaleRibbon && <Image src="/product/sale_ribbon.png" alt="Sale" width={120} height={120} className="absolute left-0 top-0 z-20" />} */}
-                <Image src="/product/sale_ribbon.png" alt="Sale" width={120} height={120} className="absolute left-0 top-0 z-20" />
+                {showSaleRibbon && <Image src="/product/sale_ribbon.png" alt="Sale" width={120} height={120} className="absolute left-0 top-0 z-20" />}
+                {/* <Image src="/product/sale_ribbon.png" alt="Sale" width={120} height={120} className="absolute left-0 top-0 z-20" /> */}
                 <Link href={url}>
                     <div className="relative aspect-square w-full rounded-t-lg bg-cover bg-center" style={{ backgroundImage: `url(${image})` }} />
                 </Link>
